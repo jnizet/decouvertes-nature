@@ -7,6 +7,9 @@ $enable-validation-icons: false;
 
 $primary: #0075bf;
 
+$form-label-margin-bottom: .2rem;
+$form-label-font-weight: 500;
+
 @import '~bootstrap/scss/functions';
 @import '~bootstrap/scss/variables';
 @import '~bootstrap/scss/mixins';

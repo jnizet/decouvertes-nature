@@ -1,7 +1,15 @@
 <val-default-errors>
   <ng-template valError="required" let-label>{{ label || 'Ce champ' }} est obligatoire</ng-template>
-  <ng-template valError="email" let-label>{{ label || 'Ce champ' }} doit être une adresse email valide</ng-template>
+  <ng-template valError="email" let-label
+    >{{ label || 'Ce champ' }} doit être une adresse email valide</ng-template
+  >
   <ng-template valError="minlength" let-error="error" let-label>
     {{ label || 'Ce champ' }} doit contenir au moins {{ error.requiredLength | number }} caractères
   </ng-template>
+  <ng-template valError="min" let-error="error" let-label
+    >{{ label || 'Ce champ' }} doit être supérieur ou égal à {{ error.min | number }}</ng-template
+  >
+  <ng-template valError="ngbDate" let-label
+    >{{ label || 'Ce champ' }} n'est pas une date acceptée</ng-template
+  >
 </val-default-errors>

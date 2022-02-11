@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { LOCALE_ID, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppComponent } from './app.component';
@@ -10,6 +10,7 @@ import { RouterModule } from '@angular/router';
 import { APP_ROUTES } from './app.routes';
 import { NavbarModule } from './navbar/navbar.module';
 import { ValidationModule } from './validation/validation.module';
+import '@angular/common/locales/global/fr';
 
 @NgModule({
   declarations: [AppComponent],
@@ -23,7 +24,12 @@ import { ValidationModule } from './validation/validation.module';
     NavbarModule,
     ValidationModule
   ],
-  providers: [],
+  providers: [
+    {
+      provide: LOCALE_ID,
+      useValue: 'fr-FR'
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {}
