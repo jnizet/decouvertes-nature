@@ -1,0 +1,26 @@
+<div class="row justify-content-md-center">
+  <div class="col col-md-6 col-lg-4">
+    <h1>Identification</h1>
+    <form [formGroup]="form" (ngSubmit)="login()">
+      <div class="mb-3">
+        <label for="email" class="form-label">Adresse email</label>
+        <input formControlName="email" type="email" class="form-control" id="email" />
+        <val-errors controlName="email" label="L'adresse email"></val-errors>
+      </div>
+      <div class="mb-3">
+        <label for="password" class="form-label">Mot de passe</label>
+        <input formControlName="password" type="password" class="form-control" id="password" />
+        <val-errors controlName="password" label="Le mot de passe"></val-errors>
+      </div>
+
+      <div class="d-flex align-items-center">
+        <button class="btn btn-primary">S'identifier</button>
+        <div *ngIf="loginError" class="text-danger ms-3">L'adresse email ou le mot de passe est incorrect.</div>
+      </div>
+
+      <div class="mt-4 text-center">
+        <a routerLink="/reset-password">Oops, j'ai oublié mon mot de passe&nbsp;!</a>
+      </div>
+    </form>
+  </div>
+</div>
