@@ -5,6 +5,7 @@
       <img src="/assets/logo.png" style="max-height: 50px" alt="" />
     </a>
     <button
+      *ngIf="vm.user"
       class="navbar-toggler"
       type="button"
       aria-controls="navbar"
@@ -33,7 +34,9 @@
             aria-labelledby="user-dropdown"
             class="dropdown-menu-end dropdown-menu-dark"
           >
-            <a class="dropdown-item" routerLink="/change-password"> Changer de mot de passe </a>
+            <a class="dropdown-item" routerLink="/change-password" (click)="expanded = false">
+              Changer de mot de passe
+            </a>
           </div>
         </li>
         <li class="nav-item">
