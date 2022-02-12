@@ -14,7 +14,7 @@
         <p class="text-muted mt-1" style="white-space: pre-line">{{ activity.description }}</p>
       </div>
       <div class="col-lg-4 d-flex align-items-stretch">
-        <div class="info rounded p-2 flex-grow-1">
+        <div class="bg-info-card rounded p-2 flex-grow-1">
           <div>
             <dn-icon class="me-1" [icon]="icons.location"></dn-icon>
             <span class="visually-hidden">Lieu</span>
@@ -53,7 +53,7 @@
         </div>
       </div>
       <div class="col-lg-4 d-flex align-items-stretch">
-        <div class="info rounded p-2 flex-grow-1">
+        <div class="bg-info-card rounded p-2 flex-grow-1">
           <div *ngIf="activity.bookingMandatory">
             <dn-icon class="me-1" [icon]="icons.bookingMandatory"></dn-icon>
             <span>Réservation obligatoire</span>
