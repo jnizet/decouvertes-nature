@@ -15,6 +15,7 @@ import { ActivityCardComponent } from './activity-card/activity-card.component';
 import { ActivityComponent } from './activity/activity.component';
 import { IconModule } from '../icon/icon.module';
 import { ConfirmModule } from '../confirm/confirm.module';
+import { MonthPipeModule } from '../month-pipe/month-pipe.module';
 
 @NgModule({
   declarations: [
@@ -34,7 +35,8 @@ import { ConfirmModule } from '../confirm/confirm.module';
     DatepickerModule,
     ActivityTypePipeModule,
     IconModule,
-    ConfirmModule
+    ConfirmModule,
+    MonthPipeModule
   ]
 })
 export class ActivityModule {}
