@@ -131,7 +131,6 @@ export class ActivityEditionComponent {
   readonly knownLabels = KNOWN_LABELS;
   readonly knownOrganizations = KNOWN_ORGANIZATIONS;
   icons = {
-    bookToRoom: bookmarkPlus,
     save: fileArrowUp
   };
 
