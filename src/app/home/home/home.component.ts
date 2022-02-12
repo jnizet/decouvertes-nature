@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { map, Observable } from 'rxjs';
 import { Auth, authState, User } from '@angular/fire/auth';
-import { boxArrowInRight } from '../../bootstrap-icons/bootstrap-icons';
+import { boxArrowInRight, calendar2Event, cardList } from '../../bootstrap-icons/bootstrap-icons';
 
 @Component({
   selector: 'dn-home',
@@ -11,7 +11,9 @@ import { boxArrowInRight } from '../../bootstrap-icons/bootstrap-icons';
 export class HomeComponent {
   vm$: Observable<{ user: User | null }>;
   icons = {
-    login: boxArrowInRight
+    login: boxArrowInRight,
+    activities: cardList,
+    calendar: calendar2Event
   };
 
   constructor(auth: Auth) {

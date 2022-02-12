@@ -25,4 +25,22 @@
       </a>
     </div>
   </div>
+  <div *ngIf="vm.user" class="row">
+    <div class="col-6 col-lg-3 offset-lg-3">
+      <a routerLink="/activities" class="d-block btn btn-outline-primary h-100">
+        <div class="fs-1">
+          <dn-icon [icon]="icons.activities"></dn-icon>
+        </div>
+        <div class="fs-4">Liste des activités</div>
+      </a>
+    </div>
+    <div class="col-6 col-lg-3">
+      <a routerLink="/calendar" class="d-block btn btn-outline-primary h-100">
+        <div class="fs-1">
+          <dn-icon [icon]="icons.calendar"></dn-icon>
+        </div>
+        <div class="fs-4">Calendrier des activités</div>
+      </a>
+    </div>
+  </div>
 </ng-container>

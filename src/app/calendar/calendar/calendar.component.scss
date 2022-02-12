@@ -1,4 +1,5 @@
-.g-1px {
-  --bs-gutter-x: 1px;
-  --bs-gutter-y: 1px;
+@import '../../../common';
+
+.no-activity {
+  color: $gray-300;
 }

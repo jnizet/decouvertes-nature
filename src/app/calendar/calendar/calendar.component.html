@@ -32,6 +32,9 @@
         <h3 class="fs-6 text-black m-0">{{ month.month | month: 'without-year' }}</h3>
       </div>
       <div class="px-2 py-1">
+        <div *ngIf="month.activities.length === 0" class="m-5 text-center h-100 no-activity">
+          Aucune activité
+        </div>
         <div *ngFor="let activity of month.activities">
           <span class="text-light bg-primary px-1 rounded" aria-hidden="true">{{
             activity.dayRange
