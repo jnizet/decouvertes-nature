@@ -25,8 +25,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { bookmarkPlus, fileArrowUp } from '../../bootstrap-icons/bootstrap-icons';
 
 interface Timing {
-  startDate: LocalDate;
-  endDate: LocalDate;
+  startDate: LocalDate | null;
+  endDate: LocalDate | null;
   startTime: LocalTime;
   endTime: LocalTime;
 }
@@ -77,7 +77,7 @@ const KNOWN_ORGANIZATIONS = ['Ocivélo', 'Vélo en Forez', 'Lerpt-Environnement'
   styleUrls: ['./activity-edition.component.scss']
 })
 export class ActivityEditionComponent {
-  mode: 'create' | 'edit' | null = null;
+  mode: 'create' | 'edit' | 'duplicate' | null = null;
   editedActivity: Activity | null = null;
 
   readonly form: FormGroup;
@@ -189,7 +189,7 @@ export class ActivityEditionComponent {
         first()
       )
       .subscribe(activity => {
-        this.mode = activity ? 'edit' : 'create';
+        this.mode = activity ? (route.snapshot.data['duplicate'] ? 'duplicate' : 'edit') : 'create';
         this.editedActivity = activity;
 
         if (activity) {
@@ -199,9 +199,9 @@ export class ActivityEditionComponent {
             description: activity.description,
             animator: activity.animator,
             timing: {
-              startDate: activity.startDate,
+              startDate: this.mode === 'edit' ? activity.startDate : null,
               startTime: activity.startTime,
-              endDate: activity.endDate,
+              endDate: this.mode === 'edit' ? activity.startDate : null,
               endTime: activity.endTime
             },
             location: activity.location,
@@ -279,9 +279,9 @@ export class ActivityEditionComponent {
       maxNumberOfParticipants: formValue.maxNumberOfParticipants,
       paymentRequired: formValue.paymentRequired,
       price: formValue.price ?? null,
-      startDate: formValue.timing.startDate,
+      startDate: formValue.timing.startDate!,
       startTime: formValue.timing.startTime,
-      endDate: formValue.timing.endDate,
+      endDate: formValue.timing.endDate!,
       endTime: formValue.timing.endTime,
       location: this.locationInputFormatter(formValue.location!),
       intercommunality: formValue.intercommunality,
@@ -296,7 +296,7 @@ export class ActivityEditionComponent {
     };
 
     const result$ =
-      this.mode === 'create'
+      this.mode === 'create' || this.mode === 'duplicate'
         ? this.activityService.create(command)
         : this.activityService
             .update(this.editedActivity!.id, command)

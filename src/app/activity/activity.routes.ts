@@ -19,5 +19,12 @@ export const ACTIVITY_ROUTES: Routes = [
   {
     path: ':id/edit',
     component: ActivityEditionComponent
+  },
+  {
+    path: ':id/duplicate',
+    component: ActivityEditionComponent,
+    data: {
+      duplicate: true
+    }
   }
 ];

@@ -13,9 +13,10 @@ import {
   peopleFill,
   piggyBank,
   pinMap,
+  subtract,
   tag,
   telephone,
-  trash,
+  trash3,
   unlock
 } from '../../bootstrap-icons/bootstrap-icons';
 import { barredIcon, barredWheelchair, wheelchair } from '../../icon/icons';
@@ -48,7 +49,8 @@ export class ActivityComponent {
     edit: pencilSquare,
     accessible: wheelchair,
     notAccessible: barredWheelchair,
-    delete: trash
+    delete: trash3,
+    duplicate: subtract
   };
 
   constructor(
