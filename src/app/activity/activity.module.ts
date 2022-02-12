@@ -14,6 +14,7 @@ import { ActivityTypePipeModule } from '../activity-type-pipe/activity-type-pipe
 import { ActivityCardComponent } from './activity-card/activity-card.component';
 import { ActivityComponent } from './activity/activity.component';
 import { IconModule } from '../icon/icon.module';
+import { ConfirmModule } from '../confirm/confirm.module';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,8 @@ import { IconModule } from '../icon/icon.module';
     NgbTypeaheadModule,
     DatepickerModule,
     ActivityTypePipeModule,
-    IconModule
+    IconModule,
+    ConfirmModule
   ]
 })
 export class ActivityModule {}

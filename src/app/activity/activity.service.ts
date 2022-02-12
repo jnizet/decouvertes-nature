@@ -3,6 +3,7 @@ import {
   collection,
   collectionData,
   CollectionReference,
+  deleteDoc,
   doc,
   docData,
   Firestore,
@@ -157,5 +158,9 @@ export class ActivityService {
         })
       )
       .subscribe();
+  }
+
+  deleteActivity(id: string): Observable<void> {
+    return from(deleteDoc(doc(this.activityCollection, id)));
   }
 }

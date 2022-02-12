@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Observable, switchMap } from 'rxjs';
 import { Activity, ActivityService } from '../activity.service';
 import {
@@ -15,9 +15,11 @@ import {
   pinMap,
   tag,
   telephone,
+  trash,
   unlock
 } from '../../bootstrap-icons/bootstrap-icons';
 import { barredIcon, barredWheelchair, wheelchair } from '../../icon/icons';
+import { ConfirmService } from '../../confirm/confirm.service';
 
 @Component({
   selector: 'dn-activity',
@@ -45,12 +47,28 @@ export class ActivityComponent {
     participants: people,
     edit: pencilSquare,
     accessible: wheelchair,
-    notAccessible: barredWheelchair
+    notAccessible: barredWheelchair,
+    delete: trash
   };
 
-  constructor(route: ActivatedRoute, activityService: ActivityService) {
+  constructor(
+    route: ActivatedRoute,
+    private activityService: ActivityService,
+    private confirmService: ConfirmService,
+    private router: Router
+  ) {
     this.activity$ = route.paramMap.pipe(
       switchMap(paramMap => activityService.get(paramMap.get('id')!))
     );
+  }
+
+  deleteActivity(activity: Activity) {
+    this.confirmService
+      .confirm({
+        message:
+          'Voulez-vous vraiment supprimer cette activité\u00a0?\nLa suppression est définitive et irréversible.'
+      })
+      .pipe(switchMap(() => this.activityService.deleteActivity(activity.id)))
+      .subscribe(() => this.router.navigate(['/activities']));
   }
 }
