@@ -3,11 +3,13 @@
   <div class="border rounded p-3">
     <div class="row">
       <div class="col-lg-4">
-        <strong>
-          <dn-icon class="me-1" [icon]="icons.date"></dn-icon>
-          <span class="visually-hidden">Date de l'activité</span>
-          <span>{{ activity | activityDate: 'time' }}</span>
-        </strong>
+        <div>
+          <strong>
+            <dn-icon class="me-1" [icon]="icons.date"></dn-icon>
+            <span class="visually-hidden">Date de l'activité</span>
+            <span>{{ activity | activityDate: 'time' }}</span>
+          </strong>
+        </div>
         <div class="badge bg-dark">{{ activity.type | activityType }}</div>
         <p class="text-muted mt-1" style="white-space: pre-line">{{ activity.description }}</p>
       </div>

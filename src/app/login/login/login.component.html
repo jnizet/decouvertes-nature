@@ -1,6 +1,6 @@
 <div class="row justify-content-md-center">
   <div class="col col-md-6 col-lg-4">
-    <h1>Identification</h1>
+    <h1 class="fs-4">Identification</h1>
     <form [formGroup]="form" (ngSubmit)="login()">
       <div class="mb-3">
         <label for="email" class="form-label">Adresse email</label>
@@ -15,7 +15,9 @@
 
       <div class="d-flex align-items-center">
         <button class="btn btn-primary">S'identifier</button>
-        <div *ngIf="loginError" class="text-danger ms-3">L'adresse email ou le mot de passe est incorrect.</div>
+        <div *ngIf="loginError" class="text-danger ms-3">
+          L'adresse email ou le mot de passe est incorrect.
+        </div>
       </div>
 
       <div class="mt-4 text-center">
