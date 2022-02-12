@@ -17,7 +17,8 @@
       #addInput
       class="form-control"
       [id]="prefix + 'add'"
-      (keyup.enter)="addOption(addInput.value, addInput)"
+      (keyup.enter)="addOption(addInput.value, addInput); $event.preventDefault()"
+      (keydown.enter)="$event.preventDefault()"
       [placeholder]="addText"
     />
     <button
