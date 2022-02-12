@@ -45,3 +45,4 @@ Thumbs.db
 /ui-debug.log
 /src/app/bootstrap-icons/bootstrap-icons.d.ts
 /src/app/bootstrap-icons/bootstrap-icons.js
+/.firebase/

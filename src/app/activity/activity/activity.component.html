@@ -99,6 +99,14 @@
     <div *ngIf="activity.comment" class="mt-3 border p-3 comment" style="white-space: pre-line">
       {{ activity.comment }}
     </div>
+    <div class="text-muted small text-end mt-1">
+      <em>
+        Activité créée par {{ activity.author }}.
+        <ng-container *ngIf="activity.lastModifier">
+          Modifiée en dernier par {{ activity.lastModifier }}.
+        </ng-container>
+      </em>
+    </div>
   </div>
   <div class="text-end mt-3">
     <a class="btn btn-outline-primary me-2" [routerLink]="['/activities', activity.id, 'edit']">

@@ -14,6 +14,8 @@ import {
 } from '@angular/fire/firestore';
 import { EMPTY, first, from, map, mapTo, Observable, switchMap, tap } from 'rxjs';
 import { LocalDate, LocalTime } from '../shared/types';
+import { Auth } from '@angular/fire/auth';
+import { activity } from '../bootstrap-icons/bootstrap-icons';
 
 export interface Activity {
   id: string;
@@ -38,6 +40,8 @@ export interface Activity {
   labels: Array<string>;
   associatedOrganizations: Array<string>;
   comment: string;
+  author: string;
+  lastModifier: string | null;
 }
 
 export interface ActivityType {
@@ -99,7 +103,7 @@ export class ActivityService {
   private activityCollection: CollectionReference<Activity>;
   private animatorCollection: CollectionReference<Animator>;
 
-  constructor(private firestore: Firestore) {
+  constructor(private firestore: Firestore, private auth: Auth) {
     this.activityCollection = collection(firestore, 'activities') as CollectionReference<Activity>;
     this.animatorCollection = collection(firestore, 'animators') as CollectionReference<Animator>;
   }
@@ -120,7 +124,12 @@ export class ActivityService {
   }
 
   update(id: string, command: ActivityCommand): Observable<void> {
-    return from(setDoc(doc(this.activityCollection, id), { ...command, id }));
+    return from(
+      setDoc(doc(this.activityCollection, id), {
+        ...command,
+        id
+      })
+    );
   }
 
   suggestAnimators(text: string): Observable<Array<string>> {

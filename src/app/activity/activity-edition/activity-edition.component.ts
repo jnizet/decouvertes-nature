@@ -23,6 +23,7 @@ import {
 import { NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
 import { ActivatedRoute, Router } from '@angular/router';
 import { bookmarkPlus, fileArrowUp } from '../../bootstrap-icons/bootstrap-icons';
+import { Auth } from '@angular/fire/auth';
 
 interface Timing {
   startDate: LocalDate | null;
@@ -138,7 +139,8 @@ export class ActivityEditionComponent {
   constructor(
     route: ActivatedRoute,
     private activityService: ActivityService,
-    private router: Router
+    private router: Router,
+    private auth: Auth
   ) {
     const paymentRequiredCtrl = new FormControl(false);
     const priceCtrl = new FormControl(null, [Validators.required, Validators.min(0)]);
@@ -292,7 +294,9 @@ export class ActivityEditionComponent {
       accessible: formValue.accessible,
       labels: formValue.labels,
       associatedOrganizations: formValue.associatedOrganizations,
-      comment: formValue.comment
+      comment: formValue.comment,
+      author: this.mode === 'edit' ? this.editedActivity!.author : this.auth.currentUser!.email!,
+      lastModifier: this.mode === 'edit' ? this.auth.currentUser!.email! : null
     };
 
     const result$ =
