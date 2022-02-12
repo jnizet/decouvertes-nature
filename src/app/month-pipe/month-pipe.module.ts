@@ -4,7 +4,6 @@ import { MonthPipe } from './month.pipe';
 
 @NgModule({
   declarations: [MonthPipe],
-  exports: [MonthPipe],
-  imports: [CommonModule]
+  exports: [MonthPipe]
 })
 export class MonthPipeModule {}

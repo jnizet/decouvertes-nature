@@ -20,9 +20,18 @@ export const APP_ROUTES: Routes = [
       import('./reset-password/reset-password.module').then(m => m.ResetPasswordModule)
   },
   {
-    path: 'activities',
-    loadChildren: () => import('./activity/activity.module').then(m => m.ActivityModule),
+    path: '',
     canActivate: [AuthGuard],
-    data: { authGuardPipe: () => redirectUnauthorizedTo('/login') }
+    data: { authGuardPipe: () => redirectUnauthorizedTo('/login') },
+    children: [
+      {
+        path: 'activities',
+        loadChildren: () => import('./activity/activity.module').then(m => m.ActivityModule)
+      },
+      {
+        path: 'calendar',
+        loadChildren: () => import('./calendar/calendar.module').then(m => m.CalendarModule)
+      }
+    ]
   }
 ];

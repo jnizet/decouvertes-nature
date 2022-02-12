@@ -1,8 +1,8 @@
-<nav class="navbar navbar-expand-lg navbar-dark" *ngIf="vm$ | async as vm">
+<nav class="navbar navbar-expand-lg navbar-dark py-0" *ngIf="vm$ | async as vm">
   <div class="container-fluid">
     <a class="navbar-brand" routerLink="/">
       <span class="visually-hidden">Accueil</span>
-      <img src="/assets/logo.png" style="max-height: 40px" alt="" />
+      <img src="/assets/logo.png" style="max-height: 50px" alt="" />
     </a>
     <button
       class="navbar-toggler"
@@ -17,7 +17,10 @@
     <div class="collapse navbar-collapse" id="navbar" [ngbCollapse]="!expanded">
       <ul *ngIf="vm.user" class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item">
-          <a class="nav-link" routerLink="/activities">Activités</a>
+          <a class="nav-link" routerLink="/activities" (click)="expanded = false">Activités</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/calendar" (click)="expanded = false">Calendrier</a>
         </li>
       </ul>
       <ul *ngIf="vm.user" class="navbar-nav mb-2 mb-lg-0">
@@ -25,7 +28,7 @@
           <span>{{ vm.user | username }}</span>
         </li>
         <li class="nav-item">
-          <a class="nav-link" role="button" tabindex="0" (click)="logout()">
+          <a class="nav-link" role="button" tabindex="0" (click)="logout(); expanded = false">
             <span class="visually-hidden">Déconnexion</span>
             <dn-icon [icon]="icons.logout"></dn-icon>
           </a>

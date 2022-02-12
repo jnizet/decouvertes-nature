@@ -4,7 +4,6 @@ import { ActivityTypePipe } from './activity-type.pipe';
 
 @NgModule({
   declarations: [ActivityTypePipe],
-  exports: [ActivityTypePipe],
-  imports: [CommonModule]
+  exports: [ActivityTypePipe]
 })
 export class ActivityTypePipeModule {}

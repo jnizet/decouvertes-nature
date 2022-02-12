@@ -15,7 +15,7 @@ export class ActivityDatePipe implements PipeTransform {
     const d1 = parseISO(`${startDate}T${startTime}`);
     const d2 = parseISO(`${endDate}T${endTime}`);
     if (startDate === endDate) {
-      let result = format(d1, 'eeee dd MMMM yyyy', options);
+      let result = format(d1, 'eeee d MMMM yyyy', options);
       if (mode === 'time') {
         result += ' de ' + format(d1, 'HH:mm', options) + ' à ' + format(d2, 'HH:mm', options);
       }
@@ -26,24 +26,24 @@ export class ActivityDatePipe implements PipeTransform {
         if (d1.getMonth() === d2.getMonth()) {
           return (
             'du ' +
-            format(d1, 'eeee dd' + patternSuffix, options) +
+            format(d1, 'eeee d' + patternSuffix, options) +
             ' au ' +
-            format(d2, 'eeee dd MMMM yyyy' + patternSuffix, options)
+            format(d2, 'eeee d MMMM yyyy' + patternSuffix, options)
           );
         } else {
           return (
             'du ' +
-            format(d1, 'eeee dd MMMM' + patternSuffix, options) +
+            format(d1, 'eeee d MMMM' + patternSuffix, options) +
             ' au ' +
-            format(d2, 'eeee dd MMMM yyyy' + patternSuffix, options)
+            format(d2, 'eeee d MMMM yyyy' + patternSuffix, options)
           );
         }
       } else {
         return (
           'du ' +
-          format(d1, 'eeee dd MMMM yyyy + patternSuffix', options) +
+          format(d1, 'eeee d MMMM yyyy + patternSuffix', options) +
           ' au ' +
-          format(d2, 'eeee dd MMMM yyyy' + patternSuffix, options)
+          format(d2, 'eeee d MMMM yyyy' + patternSuffix, options)
         );
       }
     }

@@ -201,7 +201,7 @@ export class ActivityEditionComponent {
             timing: {
               startDate: this.mode === 'edit' ? activity.startDate : null,
               startTime: activity.startTime,
-              endDate: this.mode === 'edit' ? activity.startDate : null,
+              endDate: this.mode === 'edit' ? activity.endDate : null,
               endTime: activity.endTime
             },
             location: activity.location,

@@ -7,8 +7,10 @@ import { fr } from 'date-fns/locale';
   name: 'month'
 })
 export class MonthPipe implements PipeTransform {
-  transform(value: YearMonth) {
-    const formatted = format(parseISO(value), 'MMMM yyyy', { locale: fr });
+  transform(value: YearMonth, mode: 'with-year' | 'without-year' = 'with-year') {
+    const formatted = format(parseISO(value), mode === 'with-year' ? 'MMMM yyyy' : 'MMMM', {
+      locale: fr
+    });
     return formatted[0].toUpperCase() + formatted.substring(1);
   }
 }
