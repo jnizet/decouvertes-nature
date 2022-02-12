@@ -20,7 +20,6 @@ import {
   startWith,
   switchMap
 } from 'rxjs';
-import { NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
 import { ActivatedRoute, Router } from '@angular/router';
 import { bookmarkPlus, fileArrowUp } from '../../bootstrap-icons/bootstrap-icons';
 import { Auth } from '@angular/fire/auth';
@@ -83,7 +82,7 @@ export class ActivityEditionComponent {
 
   readonly form: FormGroup;
   readonly activityTypes = ALL_ACTIVITY_TYPES;
-  readonly minDate: NgbDateStruct = { year: 2022, month: 1, day: 1 };
+  readonly minDate: LocalDate = '2022-01-01';
 
   readonly locationTypeahead: OperatorFunction<string, ReadonlyArray<Municipality>> = (
     text$: Observable<string>

@@ -8,7 +8,6 @@ import { ActivityEditionComponent } from './activity-edition/activity-edition.co
 import { ReactiveFormsModule } from '@angular/forms';
 import { ValidationModule } from '../validation/validation.module';
 import { NgbTypeaheadModule } from '@ng-bootstrap/ng-bootstrap';
-import { DatepickerModule } from '../shared/datepicker/datepicker.module';
 import { MultiChoiceComponent } from './multi-choice/multi-choice.component';
 import { ActivityTypePipeModule } from '../activity-type-pipe/activity-type-pipe.module';
 import { ActivityCardComponent } from './activity-card/activity-card.component';
@@ -32,7 +31,6 @@ import { MonthPipeModule } from '../month-pipe/month-pipe.module';
     ReactiveFormsModule,
     ValidationModule,
     NgbTypeaheadModule,
-    DatepickerModule,
     ActivityTypePipeModule,
     IconModule,
     ConfirmModule,

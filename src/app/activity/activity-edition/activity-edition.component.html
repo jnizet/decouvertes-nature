@@ -114,18 +114,16 @@
           <div class="mb-3">
             <label for="start-date" class="form-label">Début de l'activité (rendez-vous)</label>
             <div class="row g-1">
-              <div class="col">
-                <dn-datepicker-container>
-                  <input
-                    formControlName="startDate"
-                    class="form-control"
-                    id="start-date"
-                    ngbDatepicker
-                    [minDate]="minDate"
-                  />
-                </dn-datepicker-container>
+              <div class="col-8">
+                <input
+                  type="date"
+                  formControlName="startDate"
+                  class="form-control"
+                  id="start-date"
+                  [min]="minDate"
+                />
               </div>
-              <div class="col-auto">
+              <div class="col">
                 <label for="start-date" class="visually-hidden">Heure de rendez-vous</label>
                 <input
                   type="time"
@@ -141,18 +139,16 @@
           <div class="mb-3">
             <label for="start-date" class="form-label">Fin de l'activité</label>
             <div class="row g-1">
-              <div class="col">
-                <dn-datepicker-container>
-                  <input
-                    formControlName="endDate"
-                    class="form-control"
-                    id="end-date"
-                    ngbDatepicker
-                    [minDate]="minDate"
-                  />
-                </dn-datepicker-container>
+              <div class="col-8">
+                <input
+                  type="date"
+                  formControlName="endDate"
+                  class="form-control"
+                  id="end-date"
+                  [min]="minDate"
+                />
               </div>
-              <div class="col-auto">
+              <div class="col">
                 <label for="end-date" class="visually-hidden">Heure de fin de l'activité</label>
                 <input type="time" formControlName="endTime" class="form-control" id="end-time" />
               </div>
