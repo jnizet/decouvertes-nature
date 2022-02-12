@@ -1,0 +1,107 @@
+<ng-container *ngIf="activity$ | async as activity">
+  <h1>{{ activity.title }}</h1>
+  <div class="border rounded p-3">
+    <div class="row">
+      <div class="col-lg-4">
+        <strong>
+          <dn-icon class="me-1" [icon]="icons.date"></dn-icon>
+          <span class="visually-hidden">Date de l'activité</span>
+          <span>{{ activity | activityDate: 'time' }}</span>
+        </strong>
+        <div class="badge bg-dark">{{ activity.type | activityType }}</div>
+        <p class="text-muted mt-1" style="white-space: pre-line">{{ activity.description }}</p>
+      </div>
+      <div class="col-lg-4 d-flex align-items-stretch">
+        <div class="info rounded p-2 flex-grow-1">
+          <div>
+            <dn-icon class="me-1" [icon]="icons.location"></dn-icon>
+            <span class="visually-hidden">Lieu</span>
+            <span>{{ activity.location }}</span>
+            <span *ngIf="activity.intercommunality"> &ndash; {{ activity.intercommunality }}</span>
+          </div>
+          <div>
+            <dn-icon class="me-1" [icon]="icons.appointmentLocation"></dn-icon>
+            <span class="visually-hidden">Lieu de rendez-vous</span>
+            <span>{{ activity.appointmentLocation }}</span>
+          </div>
+          <div>
+            <dn-icon class="me-1" [icon]="icons.animator"></dn-icon>
+            <span class="visually-hidden">Animateur / Organisateur</span>
+            <span>{{ activity.animator }}</span>
+          </div>
+          <div *ngIf="activity.roomToBook">
+            <dn-icon class="me-1" [icon]="icons.roomToBook"></dn-icon>
+            <span>Salle {{ activity.roomToBook }} à réserver</span>
+          </div>
+          <div>
+            <div *ngFor="let label of activity.labels" class="badge bg-secondary me-1 mb-1">
+              <dn-icon class="me-1" [icon]="icons.label"></dn-icon>
+              <span>{{ label }}</span>
+            </div>
+          </div>
+          <div>
+            <div
+              *ngFor="let org of activity.associatedOrganizations"
+              class="badge bg-success me-1 mb-1"
+            >
+              <dn-icon class="me-1" [icon]="icons.associatedOrganization"></dn-icon>
+              <span>{{ org }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-4 d-flex align-items-stretch">
+        <div class="info rounded p-2 flex-grow-1">
+          <div *ngIf="activity.bookingMandatory">
+            <dn-icon class="me-1" [icon]="icons.bookingMandatory"></dn-icon>
+            <span>Réservation obligatoire</span>
+          </div>
+          <div *ngIf="!activity.bookingMandatory">
+            <dn-icon class="me-1" [icon]="icons.bookingNotMandatory"></dn-icon>
+            <span>Sans réservation nécessaire</span>
+          </div>
+          <div *ngIf="activity.membersOnly">
+            <dn-icon class="me-1" [icon]="icons.membersOnly"></dn-icon>
+            <span>Réservée aux adhérents</span>
+          </div>
+          <div *ngIf="!activity.membersOnly">
+            <dn-icon class="me-1" [icon]="icons.notMembersOnly"></dn-icon>
+            <span>Ouverte aux non-adhérents</span>
+          </div>
+          <div *ngIf="activity.accessible">
+            <dn-icon class="me-1" [icon]="icons.accessible"></dn-icon>
+            <span>Accessible aux personnes à mobilité réduite</span>
+          </div>
+          <div *ngIf="!activity.accessible">
+            <dn-icon class="me-1" [icon]="icons.notAccessible"></dn-icon>
+            <span>Non-accessible aux personnes à mobilité réduite</span>
+          </div>
+          <div *ngIf="activity.paymentRequired">
+            <dn-icon class="me-1" [icon]="icons.paymentRequired"></dn-icon>
+            <span>{{ activity.price | currency: 'EUR':'symbol-narrow' }}</span>
+          </div>
+          <div *ngIf="!activity.paymentRequired">
+            <dn-icon class="me-1" [icon]="icons.paymentNotRequired"></dn-icon>
+            <span>Gratuit</span>
+          </div>
+          <div>
+            <dn-icon class="me-1" [icon]="icons.participants"></dn-icon>
+            <span *ngIf="activity.maxNumberOfParticipants"
+              >{{ activity.maxNumberOfParticipants | number }} participants maximum</span
+            >
+            <span *ngIf="!activity.maxNumberOfParticipants">Pas de limite de participants</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="activity.comment" class="mt-3 border p-3 comment" style="white-space: pre-line">
+      {{ activity.comment }}
+    </div>
+  </div>
+  <div class="text-end mt-3">
+    <a class="btn btn-outline-primary" [routerLink]="['/activities', activity.id, 'edit']">
+      <dn-icon class="me-1" [icon]="icons.edit"></dn-icon>
+      Modifier
+    </a>
+  </div>
+</ng-container>

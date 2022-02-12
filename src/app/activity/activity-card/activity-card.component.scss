@@ -1,5 +1,12 @@
 @import '../../../common';
 
+.card-title {
+  transition: all 0.3s ease;
+  &:hover {
+    color: darken($primary, 10%);
+  }
+}
+
 .info {
   background-color: $cyan-100;
 }

@@ -1,11 +1,17 @@
 import { Component } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
 import { LocalDate, LocalTime } from '../../shared/types';
-import { ActivityCommand, ActivityService, ALL_ACTIVITY_TYPES } from '../activity.service';
+import {
+  Activity,
+  ActivityCommand,
+  ActivityService,
+  ALL_ACTIVITY_TYPES
+} from '../activity.service';
 import { ALL_MUNICIPALITIES, Municipality } from '../../shared/municipalities';
 import {
   debounceTime,
   distinctUntilChanged,
+  first,
   map,
   Observable,
   of,
@@ -15,7 +21,8 @@ import {
   switchMap
 } from 'rxjs';
 import { NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { bookmarkPlus, fileArrowUp } from '../../bootstrap-icons/bootstrap-icons';
 
 interface Timing {
   startDate: LocalDate;
@@ -70,6 +77,9 @@ const KNOWN_ORGANIZATIONS = ['Ocivélo', 'Vélo en Forez', 'Lerpt-Environnement'
   styleUrls: ['./activity-edition.component.scss']
 })
 export class ActivityEditionComponent {
+  mode: 'create' | 'edit' | null = null;
+  editedActivity: Activity | null = null;
+
   readonly form: FormGroup;
   readonly activityTypes = ALL_ACTIVITY_TYPES;
   readonly minDate: NgbDateStruct = { year: 2022, month: 1, day: 1 };
@@ -120,8 +130,16 @@ export class ActivityEditionComponent {
 
   readonly knownLabels = KNOWN_LABELS;
   readonly knownOrganizations = KNOWN_ORGANIZATIONS;
+  icons = {
+    bookToRoom: bookmarkPlus,
+    save: fileArrowUp
+  };
 
-  constructor(private activityService: ActivityService, private router: Router) {
+  constructor(
+    route: ActivatedRoute,
+    private activityService: ActivityService,
+    private router: Router
+  ) {
     const paymentRequiredCtrl = new FormControl(false);
     const priceCtrl = new FormControl(null, [Validators.required, Validators.min(0)]);
 
@@ -164,44 +182,86 @@ export class ActivityEditionComponent {
     };
     this.form = new FormGroup(config);
 
-    priceCtrl.disable();
-    paymentRequiredCtrl.valueChanges.subscribe((required: boolean) => {
-      if (required) {
-        priceCtrl.enable();
-      } else {
-        priceCtrl.disable();
-      }
-    });
+    route.paramMap
+      .pipe(
+        map(paramMap => paramMap.get('id')),
+        switchMap(id => (id ? activityService.get(id) : of(null))),
+        first()
+      )
+      .subscribe(activity => {
+        this.mode = activity ? 'edit' : 'create';
+        this.editedActivity = activity;
 
-    startDateCtrl.valueChanges
-      .pipe(startWith(startDateCtrl.value), pairwise())
-      .subscribe(([oldStartDate, newStartDate]) => {
-        if ((newStartDate && !endDateCtrl.value) || endDateCtrl.value === oldStartDate) {
-          endDateCtrl.setValue(newStartDate);
+        if (activity) {
+          const formValue: FormValue = {
+            type: activity.type,
+            title: activity.title,
+            description: activity.description,
+            animator: activity.animator,
+            timing: {
+              startDate: activity.startDate,
+              startTime: activity.startTime,
+              endDate: activity.endDate,
+              endTime: activity.endTime
+            },
+            location: activity.location,
+            intercommunality: activity.intercommunality,
+            appointmentLocation: activity.appointmentLocation,
+            roomToBook: activity.roomToBook,
+            bookingMandatory: activity.bookingMandatory,
+            membersOnly: activity.membersOnly,
+            accessible: activity.accessible,
+            labels: activity.labels,
+            associatedOrganizations: activity.associatedOrganizations,
+            maxNumberOfParticipants: activity.maxNumberOfParticipants,
+            paymentRequired: activity.paymentRequired,
+            price: activity.price,
+            comment: activity.comment
+          };
+
+          this.form.setValue(formValue);
         }
-      });
 
-    locationCtrl.valueChanges
-      .pipe(startWith(locationCtrl.value), pairwise())
-      .subscribe(([oldLocation, newLocation]) => {
-        if (newLocation) {
-          const oldLocationString = this.locationInputFormatter(oldLocation ?? '');
-          const newLocationString = this.locationInputFormatter(newLocation);
-          if (
-            !appointmentLocationCtrl.value ||
-            appointmentLocationCtrl.value === oldLocationString
-          ) {
-            appointmentLocationCtrl.setValue(newLocationString);
-          }
+        paymentRequiredCtrl.valueChanges
+          .pipe(startWith(priceCtrl.value))
+          .subscribe((required: boolean) => {
+            if (required) {
+              priceCtrl.enable();
+            } else {
+              priceCtrl.disable();
+            }
+          });
 
-          const oldInterCommunality = (oldLocation as Municipality | null)?.intercommunality;
-          if (
-            ((newLocation as Municipality).intercommunality && !intercommunalityCtrl.value) ||
-            intercommunalityCtrl.value === oldInterCommunality
-          ) {
-            intercommunalityCtrl.setValue((newLocation as Municipality).intercommunality);
-          }
-        }
+        startDateCtrl.valueChanges
+          .pipe(startWith(startDateCtrl.value), pairwise())
+          .subscribe(([oldStartDate, newStartDate]) => {
+            if ((newStartDate && !endDateCtrl.value) || endDateCtrl.value === oldStartDate) {
+              endDateCtrl.setValue(newStartDate);
+            }
+          });
+
+        locationCtrl.valueChanges
+          .pipe(startWith(locationCtrl.value), pairwise())
+          .subscribe(([oldLocation, newLocation]) => {
+            if (newLocation) {
+              const oldLocationString = this.locationInputFormatter(oldLocation ?? '');
+              const newLocationString = this.locationInputFormatter(newLocation);
+              if (
+                !appointmentLocationCtrl.value ||
+                appointmentLocationCtrl.value === oldLocationString
+              ) {
+                appointmentLocationCtrl.setValue(newLocationString);
+              }
+
+              const oldInterCommunality = (oldLocation as Municipality | null)?.intercommunality;
+              if (
+                ((newLocation as Municipality).intercommunality && !intercommunalityCtrl.value) ||
+                intercommunalityCtrl.value === oldInterCommunality
+              ) {
+                intercommunalityCtrl.setValue((newLocation as Municipality).intercommunality);
+              }
+            }
+          });
       });
   }
 
@@ -216,6 +276,9 @@ export class ActivityEditionComponent {
       title: formValue.title,
       description: formValue.description,
       animator: formValue.animator,
+      maxNumberOfParticipants: formValue.maxNumberOfParticipants,
+      paymentRequired: formValue.paymentRequired,
+      price: formValue.price ?? null,
       startDate: formValue.timing.startDate,
       startTime: formValue.timing.startTime,
       endDate: formValue.timing.endDate,
@@ -231,8 +294,15 @@ export class ActivityEditionComponent {
       associatedOrganizations: formValue.associatedOrganizations,
       comment: formValue.comment
     };
-    this.activityService.create(command).subscribe(() => {
-      this.router.navigate(['/activities']);
+
+    const result$ =
+      this.mode === 'create'
+        ? this.activityService.create(command)
+        : this.activityService
+            .update(this.editedActivity!.id, command)
+            .pipe(map(() => this.editedActivity!));
+    result$.subscribe(activity => {
+      this.router.navigate(['/activities', activity.id]);
     });
   }
 }

@@ -1,8 +1,5 @@
 @import '../../../common';
 
-.card-title {
-  transition: all 0.3s ease;
-  &:hover {
-    color: darken($primary, 10%);
-  }
+.card {
+  border-left: 5px solid $primary;
 }

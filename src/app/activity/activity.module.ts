@@ -12,9 +12,17 @@ import { DatepickerModule } from '../shared/datepicker/datepicker.module';
 import { MultiChoiceComponent } from './multi-choice/multi-choice.component';
 import { ActivityTypePipeModule } from '../activity-type-pipe/activity-type-pipe.module';
 import { ActivityCardComponent } from './activity-card/activity-card.component';
+import { ActivityComponent } from './activity/activity.component';
+import { IconModule } from '../icon/icon.module';
 
 @NgModule({
-  declarations: [ActivitiesComponent, ActivityEditionComponent, MultiChoiceComponent, ActivityCardComponent],
+  declarations: [
+    ActivitiesComponent,
+    ActivityEditionComponent,
+    MultiChoiceComponent,
+    ActivityCardComponent,
+    ActivityComponent
+  ],
   imports: [
     CommonModule,
     RouterModule.forChild(ACTIVITY_ROUTES),
@@ -23,7 +31,8 @@ import { ActivityCardComponent } from './activity-card/activity-card.component';
     ValidationModule,
     NgbTypeaheadModule,
     DatepickerModule,
-    ActivityTypePipeModule
+    ActivityTypePipeModule,
+    IconModule
   ]
 })
 export class ActivityModule {}

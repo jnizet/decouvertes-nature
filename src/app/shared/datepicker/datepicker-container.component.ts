@@ -1,6 +1,7 @@
 /* eslint-disable @angular-eslint/no-host-metadata-property */
 import { Component, ContentChild } from '@angular/core';
 import { NgbInputDatepicker } from '@ng-bootstrap/ng-bootstrap';
+import { calendarCheckFill } from '../../bootstrap-icons/bootstrap-icons';
 
 /**
  * Component used to simplify the markup of a datepicker in a popup. It wraps the input which has the
@@ -19,6 +20,9 @@ import { NgbInputDatepicker } from '@ng-bootstrap/ng-bootstrap';
 export class DatepickerContainerComponent {
   @ContentChild(NgbInputDatepicker)
   datePicker!: NgbInputDatepicker;
+  icons = {
+    toggler: calendarCheckFill
+  };
 
   toggle() {
     this.datePicker.toggle();

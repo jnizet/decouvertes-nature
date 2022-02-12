@@ -9,6 +9,7 @@ import {
 import { FrenchDateParserFormatterService } from './french-date-parser-formatter.service';
 import { DateStringAdapterService } from './date-string-adapter.service';
 import { DatepickerContainerComponent } from './datepicker-container.component';
+import { IconModule } from '../../icon/icon.module';
 
 @Injectable()
 export class CustomNgbDatepickerConfig extends NgbDatepickerConfig {
@@ -21,7 +22,7 @@ export class CustomNgbDatepickerConfig extends NgbDatepickerConfig {
 
 @NgModule({
   declarations: [DatepickerContainerComponent],
-  imports: [CommonModule],
+  imports: [CommonModule, IconModule],
   exports: [NgbDatepickerModule, DatepickerContainerComponent],
   providers: [
     { provide: NgbDateParserFormatter, useClass: FrenchDateParserFormatterService },

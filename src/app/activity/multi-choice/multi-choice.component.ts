@@ -1,5 +1,6 @@
 import { Component, forwardRef, Input, OnInit } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { plus } from '../../bootstrap-icons/bootstrap-icons';
 
 let counter = 1;
 
@@ -24,6 +25,9 @@ export class MultiChoiceComponent implements OnInit, ControlValueAccessor {
   private onChange: (value: Array<string>) => void = () => {};
   onTouch: () => void = () => {};
   prefix = `multi-choice-${counter++}-`;
+  icons = {
+    plus: plus
+  };
 
   ngOnInit(): void {
     this.options = (this.knownOptions ?? []).map(value => ({ value, checked: false }));

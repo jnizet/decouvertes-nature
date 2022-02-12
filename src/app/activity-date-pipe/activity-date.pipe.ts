@@ -7,35 +7,43 @@ import { fr } from 'date-fns/locale';
   name: 'activityDate'
 })
 export class ActivityDatePipe implements PipeTransform {
-  transform({ startDate, endDate }: Activity): string {
+  transform(
+    { startDate, endDate, startTime, endTime }: Activity,
+    mode: 'date' | 'time' = 'date'
+  ): string {
     const options = { locale: fr };
+    const d1 = parseISO(`${startDate}T${startTime}`);
+    const d2 = parseISO(`${endDate}T${endTime}`);
     if (startDate === endDate) {
-      return format(parseISO(startDate), 'eeee dd MMMM yyyy', options);
+      let result = format(d1, 'eeee dd MMMM yyyy', options);
+      if (mode === 'time') {
+        result += ' de ' + format(d1, 'HH:mm', options) + ' à ' + format(d2, 'HH:mm', options);
+      }
+      return result;
     } else {
-      const d1 = parseISO(startDate);
-      const d2 = parseISO(endDate);
+      const patternSuffix = mode === 'date' ? '' : ' à HH:mm';
       if (d1.getFullYear() === d2.getFullYear()) {
         if (d1.getMonth() === d2.getMonth()) {
           return (
             'du ' +
-            format(d1, 'eeee dd', options) +
+            format(d1, 'eeee dd' + patternSuffix, options) +
             ' au ' +
-            format(d2, 'eeee dd MMMM yyyy', options)
+            format(d2, 'eeee dd MMMM yyyy' + patternSuffix, options)
           );
         } else {
           return (
             'du ' +
-            format(d1, 'eeee dd MMMM', options) +
+            format(d1, 'eeee dd MMMM' + patternSuffix, options) +
             ' au ' +
-            format(d2, 'eeee dd MMMM yyyy', options)
+            format(d2, 'eeee dd MMMM yyyy' + patternSuffix, options)
           );
         }
       } else {
         return (
           'du ' +
-          format(d1, 'eeee dd MMMM yyyy', options) +
+          format(d1, 'eeee dd MMMM yyyy + patternSuffix', options) +
           ' au ' +
-          format(d2, 'eeee dd MMMM yyyy', options)
+          format(d2, 'eeee dd MMMM yyyy' + patternSuffix, options)
         );
       }
     }

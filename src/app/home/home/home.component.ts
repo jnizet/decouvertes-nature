@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { map, Observable } from 'rxjs';
 import { Auth, authState, User } from '@angular/fire/auth';
+import { boxArrowInRight } from '../../bootstrap-icons/bootstrap-icons';
 
 @Component({
   selector: 'dn-home',
@@ -9,6 +10,9 @@ import { Auth, authState, User } from '@angular/fire/auth';
 })
 export class HomeComponent {
   vm$: Observable<{ user: User | null }>;
+  icons = {
+    login: boxArrowInRight
+  };
 
   constructor(auth: Auth) {
     this.vm$ = authState(auth).pipe(map(user => ({ user })));

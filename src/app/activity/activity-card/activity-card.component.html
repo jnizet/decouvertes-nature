@@ -1,106 +1,39 @@
 <div class="row">
-  <div class="col">
-    <a [routerLink]="[activity.id]">
-      <h2 class="card-title fs-4">{{ activity.title }}</h2>
-    </a>
+  <div class="col-lg-8">
+    <div class="row">
+      <div class="col">
+        <a [routerLink]="[activity.id]">
+          <h2 class="card-title fs-4">{{ activity.title }}</h2>
+        </a>
+      </div>
+      <div class="col-auto">
+        <div class="badge bg-dark">{{ activity.type | activityType }}</div>
+      </div>
+    </div>
+    <div class="row align-items-baseline">
+      <div class="col-sm">
+        <dn-icon class="me-1" [icon]="icons.date"></dn-icon>
+        <span class="visually-hidden">Date de l'activité</span>
+        <strong>{{ activity | activityDate }}</strong>
+      </div>
+    </div>
   </div>
-  <div class="col-auto">
-    <div class="badge bg-dark">{{ activity.type | activityType }}</div>
-  </div>
-</div>
-<div class="row">
-  <p class="col-lg-8 card-text text-muted">{{ activity.description }}</p>
   <div class="col-lg-4">
-    <div class="info rounded p-2">
+    <div class="info rounded p-2 mt-2 mt-md-0">
       <div>
-        <span class="me-1">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="16"
-            height="16"
-            fill="currentColor"
-            class="bi bi-calendar4-event"
-            viewBox="0 0 16 16"
-          >
-            <path
-              d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM2 2a1 1 0 0 0-1 1v1h14V3a1 1 0 0 0-1-1H2zm13 3H1v9a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V5z"
-            />
-            <path
-              d="M11 7.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1z"
-            />
-          </svg>
-        </span>
-        <span class="visually-hidden">Date de début</span>
-        {{ activity | activityDate }}
+        <dn-icon class="me-1" [icon]="icons.location"></dn-icon>
+        <span class="visually-hidden">Lieu</span>
+        {{ activity.location }}
+        <span *ngIf="activity.intercommunality"> &ndash; {{ activity.intercommunality }} </span>
       </div>
-      <div class="row">
-        <div class="col-sm-auto">
-          <span class="me-1">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="16"
-              height="16"
-              fill="currentColor"
-              class="bi bi-pin-map"
-              viewBox="0 0 16 16"
-            >
-              <path
-                fill-rule="evenodd"
-                d="M3.1 11.2a.5.5 0 0 1 .4-.2H6a.5.5 0 0 1 0 1H3.75L1.5 15h13l-2.25-3H10a.5.5 0 0 1 0-1h2.5a.5.5 0 0 1 .4.2l3 4a.5.5 0 0 1-.4.8H.5a.5.5 0 0 1-.4-.8l3-4z"
-              />
-              <path
-                fill-rule="evenodd"
-                d="M8 1a3 3 0 1 0 0 6 3 3 0 0 0 0-6zM4 4a4 4 0 1 1 4.5 3.969V13.5a.5.5 0 0 1-1 0V7.97A4 4 0 0 1 4 3.999z"
-              />
-            </svg>
-          </span>
-          <span class="visually-hidden">Lieu</span>
-          {{ activity.location }}
-        </div>
-        <div class="col-sm text-end" *ngIf="activity.intercommunality">
-          {{ activity.intercommunality }}
-        </div>
+      <div>
+        <dn-icon class="me-1" [icon]="icons.animator"></dn-icon>
+        <span class="visually-hidden">Animateur / Organisateur</span>
+        {{ activity.animator }}
       </div>
-      <div class="row">
-        <div class="col">
-          <span class="me-1">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="16"
-              height="16"
-              fill="currentColor"
-              class="bi bi-emoji-laughing"
-              viewBox="0 0 16 16"
-            >
-              <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
-              <path
-                d="M12.331 9.5a1 1 0 0 1 0 1A4.998 4.998 0 0 1 8 13a4.998 4.998 0 0 1-4.33-2.5A1 1 0 0 1 4.535 9h6.93a1 1 0 0 1 .866.5zM7 6.5c0 .828-.448 0-1 0s-1 .828-1 0S5.448 5 6 5s1 .672 1 1.5zm4 0c0 .828-.448 0-1 0s-1 .828-1 0S9.448 5 10 5s1 .672 1 1.5z"
-              />
-            </svg>
-          </span>
-          <span class="visually-hidden">Animateur / Organisateur</span>
-          {{ activity.animator }}
-        </div>
-        <div class="col-auto" *ngIf="activity.roomToBook">
-          <span class="visually-hidden">Salle à réserver</span>
-          <span title="Salle à réserver">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="16"
-              height="16"
-              fill="currentColor"
-              class="bi bi-bookmark-plus"
-              viewBox="0 0 16 16"
-            >
-              <path
-                d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.777.416L8 13.101l-5.223 2.815A.5.5 0 0 1 2 15.5V2zm2-1a1 1 0 0 0-1 1v12.566l4.723-2.482a.5.5 0 0 1 .554 0L13 14.566V2a1 1 0 0 0-1-1H4z"
-              />
-              <path
-                d="M8 4a.5.5 0 0 1 .5.5V6H10a.5.5 0 0 1 0 1H8.5v1.5a.5.5 0 0 1-1 0V7H6a.5.5 0 0 1 0-1h1.5V4.5A.5.5 0 0 1 8 4z"
-              />
-            </svg>
-          </span>
-        </div>
+      <div *ngIf="activity.roomToBook">
+        <dn-icon class="me-1" [icon]="icons.bookToRoom"></dn-icon>
+        <span>Salle {{ activity.roomToBook }} à réserver</span>
       </div>
     </div>
   </div>

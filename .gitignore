@@ -43,3 +43,5 @@ Thumbs.db
 /firebase-debug.log
 /firestore-debug.log
 /ui-debug.log
+/src/app/bootstrap-icons/bootstrap-icons.d.ts
+/src/app/bootstrap-icons/bootstrap-icons.js

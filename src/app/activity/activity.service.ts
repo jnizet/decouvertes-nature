@@ -4,6 +4,7 @@ import {
   collectionData,
   CollectionReference,
   doc,
+  docData,
   Firestore,
   orderBy,
   query,
@@ -19,6 +20,9 @@ export interface Activity {
   title: string;
   animator: string;
   description: string;
+  maxNumberOfParticipants: number | null;
+  paymentRequired: boolean;
+  price: number | null;
   startDate: LocalDate;
   startTime: LocalTime;
   endDate: LocalDate;
@@ -30,7 +34,7 @@ export interface Activity {
   bookingMandatory: boolean;
   membersOnly: boolean;
   accessible: boolean;
-  labels: Array<String>;
+  labels: Array<string>;
   associatedOrganizations: Array<string>;
   comment: string;
 }
@@ -94,7 +98,7 @@ export class ActivityService {
   private activityCollection: CollectionReference<Activity>;
   private animatorCollection: CollectionReference<Animator>;
 
-  constructor(firestore: Firestore) {
+  constructor(private firestore: Firestore) {
     this.activityCollection = collection(firestore, 'activities') as CollectionReference<Activity>;
     this.animatorCollection = collection(firestore, 'animators') as CollectionReference<Animator>;
   }
@@ -114,6 +118,10 @@ export class ActivityService {
       .pipe(tap(() => this.addAnimatorIfNecessary(command.animator)));
   }
 
+  update(id: string, command: ActivityCommand): Observable<void> {
+    return from(setDoc(doc(this.activityCollection, id), { ...command, id }));
+  }
+
   suggestAnimators(text: string): Observable<Array<string>> {
     const query = text.toLowerCase();
     return collectionData(this.animatorCollection).pipe(
@@ -126,6 +134,10 @@ export class ActivityService {
           .slice(0, 10)
       )
     );
+  }
+
+  get(id: string): Observable<Activity> {
+    return docData(doc(this.activityCollection, id));
   }
 
   private addAnimatorIfNecessary(name: string) {
