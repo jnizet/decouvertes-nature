@@ -2,7 +2,15 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { authState, Auth, User } from '@angular/fire/auth';
 import { map, Observable } from 'rxjs';
 import { Router } from '@angular/router';
-import { power } from '../../bootstrap-icons/bootstrap-icons';
+import {
+  boxArrowInRight,
+  calendar2Event,
+  cardList,
+  key,
+  personCircle,
+  personWorkspace,
+  power
+} from '../../bootstrap-icons/bootstrap-icons';
 import { CurrentUser, CurrentUserService } from '../../current-user.service';
 
 @Component({
@@ -17,7 +25,13 @@ export class NavbarComponent {
     user: CurrentUser | null;
   }>;
   icons = {
-    logout: power
+    logout: power,
+    login: boxArrowInRight,
+    activities: cardList,
+    calendar: calendar2Event,
+    users: personWorkspace,
+    user: personCircle,
+    changePassword: key
   };
 
   constructor(private currentUserService: CurrentUserService, private router: Router) {

@@ -18,36 +18,59 @@
     <div class="collapse navbar-collapse" id="navbar" [ngbCollapse]="!expanded">
       <ul *ngIf="vm.user" class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item">
-          <a class="nav-link" routerLink="/activities" (click)="expanded = false">Activités</a>
+          <a class="nav-link" routerLink="/activities" (click)="expanded = false">
+            <dn-icon [icon]="icons.activities"></dn-icon>
+            Activités
+          </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" routerLink="/calendar" (click)="expanded = false">Calendrier</a>
+          <a class="nav-link" routerLink="/calendar" (click)="expanded = false">
+            <dn-icon [icon]="icons.calendar"></dn-icon>
+            Calendrier
+          </a>
         </li>
         <li class="nav-item" *ngIf="vm.user.admin">
-          <a class="nav-link" routerLink="/users" (click)="expanded = false">Utilisateurs</a>
+          <a class="nav-link" routerLink="/users" (click)="expanded = false">
+            <dn-icon [icon]="icons.users"></dn-icon>
+            Utilisateurs
+          </a>
         </li>
       </ul>
-      <ul *ngIf="vm.user" class="navbar-nav mb-2 mb-lg-0">
-        <li class="nav-item me-2" ngbDropdown>
-          <a class="nav-link" tabindex="0" ngbDropdownToggle id="user-dropdown" role="button">
-            {{ vm.user.user | username }}
-          </a>
-          <div
-            ngbDropdownMenu
-            aria-labelledby="user-dropdown"
-            class="dropdown-menu-end dropdown-menu-dark"
-          >
-            <a class="dropdown-item" routerLink="/change-password" (click)="expanded = false">
-              Changer de mot de passe
+      <ul class="navbar-nav mb-2 mb-lg-0 ms-auto">
+        <ng-container *ngIf="vm.user">
+          <li class="nav-item me-2" ngbDropdown>
+            <a class="nav-link" tabindex="0" ngbDropdownToggle id="user-dropdown" role="button">
+              <dn-icon [icon]="icons.user"></dn-icon>
+              {{ vm.user.user | username }}
             </a>
-          </div>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" role="button" tabindex="0" (click)="logout(); expanded = false">
-            <span class="visually-hidden">Déconnexion</span>
-            <dn-icon [icon]="icons.logout"></dn-icon>
+            <div
+              ngbDropdownMenu
+              aria-labelledby="user-dropdown"
+              class="dropdown-menu-end dropdown-menu-dark"
+            >
+              <a class="dropdown-item" routerLink="/change-password" (click)="expanded = false">
+                <dn-icon [icon]="icons.changePassword"></dn-icon>
+                Changer de mot de passe
+              </a>
+              <a class="dropdown-item" role="button" (click)="logout(); expanded = false">
+                <dn-icon [icon]="icons.logout"></dn-icon>
+                Déconnexion
+              </a>
+            </div>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" role="button" tabindex="0" (click)="logout(); expanded = false">
+              <span class="visually-hidden">Déconnexion</span>
+              <dn-icon [icon]="icons.logout"></dn-icon>
+            </a>
+          </li>
+        </ng-container>
+        <ng-container *ngIf="!vm.user">
+          <a class="nav-link" routerLink="/login">
+            <dn-icon [icon]="icons.login"></dn-icon>
+            Identification
           </a>
-        </li>
+        </ng-container>
       </ul>
     </div>
   </div>
