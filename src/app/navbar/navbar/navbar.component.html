@@ -23,11 +23,14 @@
         <li class="nav-item">
           <a class="nav-link" routerLink="/calendar" (click)="expanded = false">Calendrier</a>
         </li>
+        <li class="nav-item" *ngIf="vm.user.admin">
+          <a class="nav-link" routerLink="/users" (click)="expanded = false">Utilisateurs</a>
+        </li>
       </ul>
       <ul *ngIf="vm.user" class="navbar-nav mb-2 mb-lg-0">
         <li class="nav-item me-2" ngbDropdown>
           <a class="nav-link" tabindex="0" ngbDropdownToggle id="user-dropdown" role="button">
-            {{ vm.user | username }}
+            {{ vm.user.user | username }}
           </a>
           <div
             ngbDropdownMenu

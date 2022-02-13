@@ -21,8 +21,8 @@ import {
   switchMap
 } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
-import { bookmarkPlus, fileArrowUp } from '../../bootstrap-icons/bootstrap-icons';
-import { Auth } from '@angular/fire/auth';
+import { fileArrowUp } from '../../bootstrap-icons/bootstrap-icons';
+import { CurrentUserService } from '../../current-user.service';
 
 interface Timing {
   startDate: LocalDate | null;
@@ -138,7 +138,7 @@ export class ActivityEditionComponent {
     route: ActivatedRoute,
     private activityService: ActivityService,
     private router: Router,
-    private auth: Auth
+    private currentUserService: CurrentUserService
   ) {
     const paymentRequiredCtrl = new FormControl(false);
     const priceCtrl = new FormControl(null, [Validators.required, Validators.min(0)]);
@@ -293,8 +293,11 @@ export class ActivityEditionComponent {
       labels: formValue.labels,
       associatedOrganizations: formValue.associatedOrganizations,
       comment: formValue.comment,
-      author: this.mode === 'edit' ? this.editedActivity!.author : this.auth.currentUser!.email!,
-      lastModifier: this.mode === 'edit' ? this.auth.currentUser!.email! : null
+      author:
+        this.mode === 'edit'
+          ? this.editedActivity!.author
+          : this.currentUserService.getCurrentAuditUser(),
+      lastModifier: this.mode === 'edit' ? this.currentUserService.getCurrentAuditUser() : null
     };
 
     const result$ =

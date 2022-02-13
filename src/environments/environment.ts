@@ -5,6 +5,7 @@
 import { connectFirestoreEmulator, getFirestore, provideFirestore } from '@angular/fire/firestore';
 import { connectAuthEmulator, getAuth, provideAuth } from '@angular/fire/auth';
 import { firebaseConfig } from './firebase-config';
+import { connectFunctionsEmulator, getFunctions, provideFunctions } from '@angular/fire/functions';
 
 export const environment = {
   production: false,
@@ -19,6 +20,11 @@ export const environment = {
       const auth = getAuth();
       connectAuthEmulator(auth, 'http://localhost:9099', { disableWarnings: true });
       return auth;
+    }),
+    provideFunctions(() => {
+      const functions = getFunctions();
+      connectFunctionsEmulator(functions, 'localhost', 5001);
+      return functions;
     })
   ]
 };

@@ -1,0 +1,62 @@
+<ng-container *ngIf="mode">
+  <div class="row justify-content-md-center">
+    <div class="col col-md-8 col-lg-6">
+      <h1 *ngIf="mode === 'create'">Création d'un nouvel utilisateur</h1>
+      <h1 *ngIf="mode === 'edit'">
+        Modification de l'utilisateur <em>{{ editedUser!.displayName }}</em>
+      </h1>
+
+      <form [formGroup]="form" (ngSubmit)="save()">
+        <div class="mb-3">
+          <label for="display-name" class="form-label">Nom</label>
+          <input formControlName="displayName" class="form-control" id="display-name" />
+          <div class="form-text">
+            Ce nom est celui affiché dans l'application pour cet utilisateur
+          </div>
+          <val-errors controlName="displayName" label="Le nom"></val-errors>
+        </div>
+        <div class="mb-3">
+          <label for="email" class="form-label">Adresse email</label>
+          <input formControlName="email" class="form-control" id="email" />
+          <div class="form-text">
+            L'utilisateur utilisera cette adresse pour se connecter, et recevra à cette adresse
+            l'email de choix de mot de passe
+          </div>
+          <val-errors controlName="email" label="L'adresse email'"></val-errors>
+        </div>
+        <div class="mb-3">
+          <div class="form-check form-switch">
+            <input
+              formControlName="admin"
+              class="form-check-input"
+              type="checkbox"
+              role="switch"
+              id="admin"
+            />
+            <label class="form-check-label" for="admin">Administrateur</label>
+            <div class="form-text">Seuls les administrateurs peuvent gérer les utilisateurs</div>
+          </div>
+          <div class="form-check form-switch">
+            <input
+              formControlName="disabled"
+              class="form-check-input"
+              type="checkbox"
+              role="switch"
+              id="disabled"
+            />
+            <label class="form-check-label" for="disabled">Désactivé</label>
+            <div class="form-text">
+              Les utilisateurs désactivés ne peuvent plus accéder à l'application
+            </div>
+          </div>
+        </div>
+        <div class="text-end">
+          <button class="btn btn-primary">
+            <dn-icon class="me-1" [icon]="icons.save"></dn-icon>
+            Enregistrer
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</ng-container>

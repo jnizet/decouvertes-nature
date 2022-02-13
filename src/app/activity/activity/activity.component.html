@@ -101,9 +101,9 @@
     </div>
     <div class="text-muted small text-end mt-1">
       <em>
-        Activité créée par {{ activity.author }}.
+        Activité créée par {{ activity.author.displayName }}.
         <ng-container *ngIf="activity.lastModifier">
-          Modifiée en dernier par {{ activity.lastModifier }}.
+          Modifiée en dernier par {{ activity.lastModifier.displayName }}.
         </ng-container>
       </em>
     </div>

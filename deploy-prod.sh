@@ -4,4 +4,4 @@ set -e
 
 yarn
 yarn build
-firebase deploy
+firebase deploy --except functions

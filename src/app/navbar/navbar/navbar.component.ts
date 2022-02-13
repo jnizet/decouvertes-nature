@@ -3,6 +3,7 @@ import { authState, Auth, User } from '@angular/fire/auth';
 import { map, Observable } from 'rxjs';
 import { Router } from '@angular/router';
 import { power } from '../../bootstrap-icons/bootstrap-icons';
+import { CurrentUser, CurrentUserService } from '../../current-user.service';
 
 @Component({
   selector: 'dn-navbar',
@@ -13,18 +14,18 @@ import { power } from '../../bootstrap-icons/bootstrap-icons';
 export class NavbarComponent {
   expanded = false;
   vm$: Observable<{
-    user: User | null;
+    user: CurrentUser | null;
   }>;
   icons = {
     logout: power
   };
 
-  constructor(private auth: Auth, private router: Router) {
-    this.vm$ = authState(auth).pipe(map(user => ({ user })));
+  constructor(private currentUserService: CurrentUserService, private router: Router) {
+    this.vm$ = currentUserService.getCurrentUser().pipe(map(user => ({ user })));
   }
 
   logout() {
-    this.auth.signOut();
+    this.currentUserService.signOut();
     this.router.navigate(['/']);
   }
 }

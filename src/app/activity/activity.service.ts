@@ -16,6 +16,7 @@ import { EMPTY, first, from, map, mapTo, Observable, switchMap, tap } from 'rxjs
 import { LocalDate, LocalTime } from '../shared/types';
 import { Auth } from '@angular/fire/auth';
 import { activity } from '../bootstrap-icons/bootstrap-icons';
+import { AuditUser } from '../current-user.service';
 
 export interface Activity {
   id: string;
@@ -40,8 +41,8 @@ export interface Activity {
   labels: Array<string>;
   associatedOrganizations: Array<string>;
   comment: string;
-  author: string;
-  lastModifier: string | null;
+  author: AuditUser;
+  lastModifier: AuditUser | null;
 }
 
 export interface ActivityType {

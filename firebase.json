@@ -30,5 +30,10 @@
     "hosting": {
       "port": 12000
     }
+  },
+  "functions": {
+    "predeploy": [
+      "cd functions && yarn build"
+    ]
   }
 }
