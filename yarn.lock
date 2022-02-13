@@ -6686,10 +6686,10 @@ run-parallel@^1.1.9:
   dependencies:
     queue-microtask "^1.2.2"
 
-rxfire@6.0.0:
-  version "6.0.0"
-  resolved "https://registry.yarnpkg.com/rxfire/-/rxfire-6.0.0.tgz#298d6bba7963d2338a51bac6930c88192e345a42"
-  integrity sha512-COpH7vtMrxc+iKqUS1A6CEZMJwIpMM/3H1jnKjYAhzhHQG1YaJYH4Q8EcMMNd0ZX7l8ag6hW1ppoB7j9ctJyfA==
+rxfire@6.0.3:
+  version "6.0.3"
+  resolved "https://registry.yarnpkg.com/rxfire/-/rxfire-6.0.3.tgz#556a08e5276563c867daeb8c670f59363d212365"
+  integrity sha512-77nkyffHh7jgfi1YA/N9RI+kWxYpgKk6GRML1lyersvaqbJt4hkvWwk1rWib9Rb5Lr5mT+Ha45lu7nM79sJCZA==
   dependencies:
     tslib "^1.9.0 || ~2.1.0"
 
