@@ -1,0 +1,40 @@
+<div class="row align-items-center mb-4">
+  <div class="col">
+    <h1>Activités</h1>
+  </div>
+  <div class="col-auto">
+    <a routerLink="new" class="btn btn-outline-secondary">
+      <dn-icon class="me-1" [icon]="icons.addActivity"></dn-icon>
+      Créer une activité
+    </a>
+  </div>
+</div>
+
+<ul class="nav nav-tabs mb-3">
+  <li class="nav-item">
+    <a
+      class="nav-link"
+      routerLinkActive="active"
+      [routerLinkActiveOptions]="routerLinkActiveOptions"
+      #allActive="routerLinkActive"
+      [attr.aria-current]="allActive.isActive"
+      routerLink="/activities"
+    >
+      Toutes
+    </a>
+  </li>
+  <li class="nav-item">
+    <a
+      class="nav-link"
+      routerLinkActive="active"
+      [routerLinkActiveOptions]="routerLinkActiveOptions"
+      #mineActive="routerLinkActive"
+      [attr.aria-current]="mineActive.isActive"
+      routerLink="/activities/mine"
+    >
+      Mes activités
+    </a>
+  </li>
+</ul>
+
+<router-outlet></router-outlet>

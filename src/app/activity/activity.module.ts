@@ -15,6 +15,7 @@ import { ActivityComponent } from './activity/activity.component';
 import { IconModule } from '../icon/icon.module';
 import { ConfirmModule } from '../confirm/confirm.module';
 import { MonthPipeModule } from '../month-pipe/month-pipe.module';
+import { ActivitiesTabsComponent } from './activities-tabs/activities-tabs.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { MonthPipeModule } from '../month-pipe/month-pipe.module';
     ActivityEditionComponent,
     MultiChoiceComponent,
     ActivityCardComponent,
-    ActivityComponent
+    ActivityComponent,
+    ActivitiesTabsComponent
   ],
   imports: [
     CommonModule,

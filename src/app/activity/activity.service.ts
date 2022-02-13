@@ -14,8 +14,7 @@ import {
 } from '@angular/fire/firestore';
 import { EMPTY, first, from, map, mapTo, Observable, switchMap, tap } from 'rxjs';
 import { LocalDate, LocalTime } from '../shared/types';
-import { Auth } from '@angular/fire/auth';
-import { AuditUser } from '../current-user.service';
+import { AuditUser, CurrentUserService } from '../current-user.service';
 
 export interface Activity {
   id: string;
@@ -103,13 +102,23 @@ export class ActivityService {
   private activityCollection: CollectionReference<Activity>;
   private animatorCollection: CollectionReference<Animator>;
 
-  constructor(private firestore: Firestore, private auth: Auth) {
+  constructor(private firestore: Firestore, private currentUserService: CurrentUserService) {
     this.activityCollection = collection(firestore, 'activities') as CollectionReference<Activity>;
     this.animatorCollection = collection(firestore, 'animators') as CollectionReference<Animator>;
   }
 
   findAll(): Observable<Array<Activity>> {
     return collectionData(query(this.activityCollection, orderBy('startDate', 'desc')));
+  }
+
+  findMine(): Observable<Array<Activity>> {
+    return collectionData(
+      query(
+        this.activityCollection,
+        where('author.uid', '==', this.currentUserService.getCurrentAuditUser().uid),
+        orderBy('startDate', 'desc')
+      )
+    );
   }
 
   create(command: ActivityCommand): Observable<Activity> {
