@@ -19,6 +19,12 @@
             <div class="col">
               <h2 class="fs-5" [class.disabled]="user.disabled">{{ user.displayName }}</h2>
               <div class="text-muted">{{ user.email }}</div>
+              <div>
+                <button type="button" class="btn btn-link btn-sm" (click)="copyEmail(user)">
+                  <dn-icon [icon]="icons.resetPasswordEmail" class="me-1"></dn-icon>
+                  Choix du mot de passe
+                </button>
+              </div>
             </div>
             <div class="col">
               <div *ngIf="user.admin">
@@ -40,5 +46,14 @@
         </div>
       </div>
     </ng-container>
+  </div>
+</div>
+
+<div role="alert" aria-live="polite" aria-atomic="true">
+  <div
+    class="email-copied-toast bg-dark text-light border rounded p-2 text-center"
+    [class.active]="copied | async"
+  >
+    <ng-container *ngIf="copied | async"> Email copié dans le presse-papier&nbsp;! </ng-container>
   </div>
 </div>

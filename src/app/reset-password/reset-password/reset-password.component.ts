@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Auth, sendPasswordResetEmail } from '@angular/fire/auth';
 import { from } from 'rxjs';
+import { ActivatedRoute } from '@angular/router';
 
 interface FormValue {
   email: string;
@@ -17,9 +18,12 @@ export class ResetPasswordComponent {
   error = false;
   emailSent = false;
 
-  constructor(private auth: Auth) {
+  constructor(private route: ActivatedRoute, private auth: Auth) {
     const config: Record<keyof FormValue, any> = {
-      email: new FormControl('', [Validators.required, Validators.email])
+      email: new FormControl(route.snapshot.queryParamMap.get('email') || '', [
+        Validators.required,
+        Validators.email
+      ])
     };
     this.form = new FormGroup(config);
   }
