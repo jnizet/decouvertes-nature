@@ -1,8 +1,6 @@
 import * as functions from 'firebase-functions';
-import * as admin from 'firebase-admin';
-import { auth } from 'firebase-admin';
 import * as crypto from 'crypto';
-import UserRecord = auth.UserRecord;
+import { getAuth, UserRecord } from 'firebase-admin/auth';
 import { CallableContext } from 'firebase-functions/lib/common/providers/https';
 
 interface User {
@@ -50,15 +48,14 @@ function checkAdmin(context: CallableContext) {
 
 export const listUsers = functions.https.onCall(async (_, context): Promise<Array<User>> => {
   checkAdmin(context);
-  const auth = admin.auth();
+  const auth = getAuth();
   const userRecords = await auth.listUsers();
-  const users: Array<User> = userRecords.users.map(userRecordToUser);
-  return users;
+  return userRecords.users.map(userRecordToUser);
 });
 
 export const getUser = functions.https.onCall(async (uid: string, context): Promise<User> => {
   checkAdmin(context);
-  const auth = admin.auth();
+  const auth = getAuth();
   const userRecord = await auth.getUser(uid);
   return userRecordToUser(userRecord);
 });
@@ -66,7 +63,7 @@ export const getUser = functions.https.onCall(async (uid: string, context): Prom
 export const createUser = functions.https.onCall(
   async (command: UserCommand, context): Promise<User> => {
     checkAdmin(context);
-    const auth = admin.auth();
+    const auth = getAuth();
     const createdUser = await auth.createUser({
       email: command.email,
       displayName: command.displayName,
@@ -81,7 +78,7 @@ export const createUser = functions.https.onCall(
 
 export const updateUser = functions.https.onCall(async (command: User, context): Promise<void> => {
   checkAdmin(context);
-  const auth = admin.auth();
+  const auth = getAuth();
   const updatedUser = await auth.updateUser(command.uid, {
     email: command.email,
     displayName: command.displayName,
