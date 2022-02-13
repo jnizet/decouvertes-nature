@@ -28,8 +28,8 @@ export default function svgToJS(config) {
     });
   }
 
-  const esm = icons.map(({ name, svg }) => `export const ${name} = \`${svg}\``).join('\n');
-  const dts = icons.map(({ name }) => `export declare const ${name}: string`).join('\n')
+  const esm = icons.map(({ name, svg }) => `export const ${name} = \`${svg}\`;`).join('\n') + '\n';
+  const dts = icons.map(({ name }) => `export declare const ${name}: string;`).join('\n') + '\n'
 
   fs.writeFileSync(config.esm, esm);
   fs.writeFileSync(config.dts, dts);
