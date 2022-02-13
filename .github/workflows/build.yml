@@ -24,7 +24,7 @@ jobs:
       - name: Lint functions
         working-directory: ./functions
         run: yarn lint
-      - name: Lint functions
+      - name: Build functions
         working-directory: ./functions
         run: yarn build
 
