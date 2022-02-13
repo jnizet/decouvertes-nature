@@ -1,4 +1,4 @@
-<ng-container *ngIf="mode">
+<ng-container *ngIf="mode; else wait">
   <div class="row justify-content-md-center">
     <div class="col col-md-8 col-lg-6">
       <h1 *ngIf="mode === 'create'">Création d'un nouvel utilisateur</h1>
@@ -51,8 +51,11 @@
           </div>
         </div>
         <div class="text-end">
-          <button class="btn btn-primary">
-            <dn-icon class="me-1" [icon]="icons.save"></dn-icon>
+          <button class="btn btn-primary" [disabled]="saving">
+            <dn-icon *ngIf="!saving" class="me-1" [icon]="icons.save"></dn-icon>
+            <div *ngIf="saving" class="spinner-border spinner-border-sm me-1" role="status">
+              <span class="visually-hidden">enregistrement en cours...</span>
+            </div>
             Enregistrer
           </button>
         </div>
@@ -60,3 +63,10 @@
     </div>
   </div>
 </ng-container>
+<ng-template #wait>
+  <div class="text-center m-5">
+    <div class="spinner-border text-primary" role="status" style="width: 4rem; height: 4rem">
+      <span class="visually-hidden">chargement en cours...</span>
+    </div>
+  </div>
+</ng-template>
