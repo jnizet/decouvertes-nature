@@ -1,8 +1,8 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { map, Observable } from 'rxjs';
 import { Activity, ActivityService } from '../activity.service';
-import { plusCircle } from '../../bootstrap-icons/bootstrap-icons';
 import { LocalDate, localDateToYearMonth, YearMonth } from '../../shared/types';
+import { ActivatedRoute } from '@angular/router';
 
 interface Month {
   month: YearMonth;
@@ -17,12 +17,13 @@ interface Month {
 })
 export class ActivitiesComponent {
   months$: Observable<Array<Month>>;
-  icons = {
-    addActivity: plusCircle
-  };
 
-  constructor(eventService: ActivityService) {
-    this.months$ = eventService.findAll().pipe(
+  constructor(route: ActivatedRoute, activityService: ActivityService) {
+    const activities$ =
+      route.snapshot.data['mode'] === 'all'
+        ? activityService.findAll()
+        : activityService.findMine();
+    this.months$ = activities$.pipe(
       map(activities => {
         const activitiesByMonth = new Map<LocalDate, Array<Activity>>();
         activities.forEach(activity => {
