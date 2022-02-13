@@ -2,7 +2,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 import { User } from '@angular/fire/auth';
 
 export function toUsername(user: User) {
-  const email: string = user.email!!;
+  const email: string = user.email!;
   return user.displayName || email.substring(0, email.indexOf('@'));
 }
 

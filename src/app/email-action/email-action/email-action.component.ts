@@ -32,7 +32,7 @@ export class EmailActionComponent {
     if (mode !== 'resetPassword') {
       throw new Error(`unhandled mode: ${mode}`);
     }
-    this.actionCode = params.get('oobCode')!!;
+    this.actionCode = params.get('oobCode')!;
 
     from(verifyPasswordResetCode(auth, this.actionCode)).subscribe({
       next: email => (this.email = email),
@@ -55,7 +55,7 @@ export class EmailActionComponent {
     from(confirmPasswordReset(this.auth, this.actionCode, formValue.password))
       .pipe(
         switchMap(() =>
-          from(signInWithEmailAndPassword(this.auth, this.email!!, formValue.password))
+          from(signInWithEmailAndPassword(this.auth, this.email!, formValue.password))
         )
       )
       .subscribe({

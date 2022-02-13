@@ -1,16 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Auth, authState, getIdToken, idToken, User } from '@angular/fire/auth';
-import {
-  distinctUntilChanged,
-  first,
-  from,
-  map,
-  Observable,
-  of,
-  switchMap,
-  throwError
-} from 'rxjs';
-import { combineLatest } from 'rxjs/operators';
+import { Auth, authState, User } from '@angular/fire/auth';
+import { from, map, Observable, of, switchMap } from 'rxjs';
 import { toUsername } from './username-pipe/username.pipe';
 
 export interface CurrentUser {

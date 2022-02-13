@@ -42,7 +42,7 @@ export class ChangePasswordComponent {
     from(
       reauthenticateWithCredential(
         user,
-        EmailAuthProvider.credential(user.email!!, formValue.currentPassword)
+        EmailAuthProvider.credential(user.email!, formValue.currentPassword)
       )
     )
       .pipe(switchMap(() => from(updatePassword(user, formValue.newPassword))))

@@ -15,7 +15,6 @@ import {
 import { EMPTY, first, from, map, mapTo, Observable, switchMap, tap } from 'rxjs';
 import { LocalDate, LocalTime } from '../shared/types';
 import { Auth } from '@angular/fire/auth';
-import { activity } from '../bootstrap-icons/bootstrap-icons';
 import { AuditUser } from '../current-user.service';
 
 export interface Activity {

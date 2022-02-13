@@ -22,8 +22,12 @@ export class MultiChoiceComponent implements OnInit, ControlValueAccessor {
   @Input() addText = 'Ajouter une option';
 
   options: Array<Option> = [];
-  private onChange: (value: Array<string>) => void = () => {};
-  onTouch: () => void = () => {};
+  private onChange: (value: Array<string>) => void = () => {
+    // do nothing by default
+  };
+  onTouch: () => void = () => {
+    // do nothing by default
+  };
   prefix = `multi-choice-${counter++}-`;
   icons = {
     plus: plus
@@ -41,6 +45,7 @@ export class MultiChoiceComponent implements OnInit, ControlValueAccessor {
     this.onTouch = fn;
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   setDisabledState(isDisabled: boolean): void {
     // not handled
   }
