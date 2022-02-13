@@ -1,5 +1,5 @@
 <ng-container *ngIf="mode">
-  <h1 *ngIf="mode === 'create'">Création d'une nouvelle activité</h1>
+  <h1 *ngIf="mode === 'create' || mode === 'duplicate'">Création d'une nouvelle activité</h1>
   <h1 *ngIf="mode === 'edit'">
     Modification de l'activité <em>{{ editedActivity!.title }}</em>
   </h1>
