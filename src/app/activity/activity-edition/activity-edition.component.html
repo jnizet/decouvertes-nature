@@ -98,7 +98,9 @@
           <val-errors controlName="location" label="La commune du lieu de l'activité"></val-errors>
         </div>
         <div class="mb-3">
-          <label for="location" class="form-label">Intercommunalité du lieu de l'activité</label>
+          <label for="intercommunality" class="form-label">
+            Intercommunalité du lieu de l'activité
+          </label>
           <input formControlName="intercommunality" class="form-control" id="intercommunality" />
         </div>
         <div class="mb-3">
@@ -124,7 +126,7 @@
                 />
               </div>
               <div class="col">
-                <label for="start-date" class="visually-hidden">Heure de rendez-vous</label>
+                <label for="start-time" class="visually-hidden">Heure de rendez-vous</label>
                 <input
                   type="time"
                   formControlName="startTime"
@@ -149,7 +151,7 @@
                 />
               </div>
               <div class="col">
-                <label for="end-date" class="visually-hidden">Heure de fin de l'activité</label>
+                <label for="end-time" class="visually-hidden">Heure de fin de l'activité</label>
                 <input type="time" formControlName="endTime" class="form-control" id="end-time" />
               </div>
             </div>
