@@ -53,7 +53,7 @@ export class UserEditionComponent {
             displayName: user.displayName,
             email: user.email,
             admin: user.admin,
-            export: user.export ?? false,
+            export: user.export,
             disabled: user.disabled
           };
 
