@@ -65,6 +65,9 @@
     class="email-copied-toast bg-dark text-light border rounded p-2 text-center"
     [class.active]="copied | async"
   >
-    <ng-container *ngIf="copied | async"> Email copié dans le presse-papier&nbsp;! </ng-container>
+    <ng-container *ngIf="copied | async">
+      <dn-icon [icon]="icons.copied" class="mr-1"></dn-icon>
+      Email copié dans le presse-papier&nbsp;!
+    </ng-container>
   </div>
 </div>

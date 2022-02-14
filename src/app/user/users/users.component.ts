@@ -3,6 +3,7 @@ import { AdministeredUser, UserService } from '../user.service';
 import { BehaviorSubject, from, Observable, switchMap, tap, timer } from 'rxjs';
 import {
   clipboard2Fill,
+  clipboardCheck,
   envelope,
   pencilSquare,
   plusCircle,
@@ -24,7 +25,8 @@ export class UsersComponent {
     disabled: xOctagonFill,
     edit: pencilSquare,
     addUser: plusCircle,
-    resetPasswordEmail: envelope
+    resetPasswordEmail: envelope,
+    copied: clipboardCheck
   };
 
   copied = new BehaviorSubject(false);
