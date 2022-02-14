@@ -13,9 +13,14 @@
           <input formControlName="password" type="password" class="form-control" id="password" />
           <val-errors controlName="password" label="Le mot de passe"></val-errors>
         </div>
-        <button class="btn btn-primary">Choisir ce mot de passe</button>
-        <div *ngIf="resetError" class="text-danger">
-          Une erreur s'est produite à la réinitialisation.
+
+        <div class="row align-items-center">
+          <div class="col-sm-auto">
+            <button class="btn btn-primary">Choisir ce mot de passe</button>
+          </div>
+          <div *ngIf="resetError" class="col-sm">
+            <div class="text-danger">Une erreur s'est produite à la réinitialisation.</div>
+          </div>
         </div>
       </form>
     </ng-container>

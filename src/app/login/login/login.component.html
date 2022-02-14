@@ -13,10 +13,14 @@
         <val-errors controlName="password" label="Le mot de passe"></val-errors>
       </div>
 
-      <div class="d-flex align-items-center">
-        <button class="btn btn-primary">S'identifier</button>
-        <div *ngIf="loginError" class="text-danger ms-3">
-          L'adresse email ou le mot de passe est incorrect.
+      <div class="row align-items-center">
+        <div class="col-sm-auto">
+          <button class="btn btn-primary">S'identifier</button>
+        </div>
+        <div class="col-sm">
+          <div *ngIf="loginError" class="text-danger">
+            L'adresse email ou le mot de passe est incorrect.
+          </div>
         </div>
       </div>
 
