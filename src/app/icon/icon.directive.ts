@@ -1,4 +1,4 @@
-import { AfterViewInit, Directive, ElementRef, Input } from '@angular/core';
+import { AfterViewInit, Directive, ElementRef, HostBinding, Input } from '@angular/core';
 
 @Directive({
   selector: 'dn-icon'
@@ -11,4 +11,7 @@ export class IconDirective implements AfterViewInit {
   ngAfterViewInit(): void {
     this.element.nativeElement.innerHTML = this.icon;
   }
+
+  @HostBinding('attr.aria-hidden')
+  ariaHidden = true;
 }
