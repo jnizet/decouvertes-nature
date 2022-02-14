@@ -6,6 +6,7 @@ import { toUsername } from './username-pipe/username.pipe';
 export interface CurrentUser {
   user: User;
   admin: boolean;
+  export: boolean;
 }
 
 export interface AuditUser {
@@ -26,7 +27,8 @@ export class CurrentUserService {
           return from(user.getIdTokenResult()).pipe(
             map(token => ({
               user,
-              admin: !!token.claims['admin']
+              admin: !!token.claims['admin'],
+              export: !!token.claims['export']
             }))
           );
         } else {

@@ -29,6 +29,12 @@
             Calendrier
           </a>
         </li>
+        <li class="nav-item" *ngIf="vm.user.export">
+          <a class="nav-link" routerLink="/activities/exportable" (click)="expanded = false">
+            <dn-icon [icon]="icons.exports"></dn-icon>
+            Exports
+          </a>
+        </li>
         <li class="nav-item" *ngIf="vm.user.admin">
           <a class="nav-link" routerLink="/users" (click)="expanded = false">
             <dn-icon [icon]="icons.users"></dn-icon>

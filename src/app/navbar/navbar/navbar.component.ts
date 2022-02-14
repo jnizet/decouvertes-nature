@@ -5,6 +5,7 @@ import {
   boxArrowInRight,
   calendar2Event,
   cardList,
+  clipboard2,
   key,
   personCircle,
   personWorkspace,
@@ -30,7 +31,8 @@ export class NavbarComponent {
     calendar: calendar2Event,
     users: personWorkspace,
     user: personCircle,
-    changePassword: key
+    changePassword: key,
+    exports: clipboard2
   };
 
   constructor(private currentUserService: CurrentUserService, private router: Router) {

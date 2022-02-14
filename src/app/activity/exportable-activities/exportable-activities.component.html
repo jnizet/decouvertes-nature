@@ -1,0 +1,30 @@
+<h1>Export des activités</h1>
+
+<div class="alert alert-info">
+  <dn-icon [icon]="icons.info" class="mr-1"></dn-icon>
+  Cette page vous permet de filtrer puis de copier-coller, avec un formatage minimal, les
+  informations sur les sorties.
+</div>
+
+<form [formGroup]="form" class="col-md-6 mb-4">
+  <label for="intercommunality" class="visually-hidden">Filtre sur l'intercommunalité</label>
+  <input
+    formControlName="intercommunality"
+    type="search"
+    placeholder="Filtrer par intercommunalité"
+    class="form-control"
+    id="intercommunality"
+    [ngbTypeahead]="intercommunalityTypeahead"
+  />
+</form>
+
+<div *ngIf="months$ | async as months">
+  <div *ngFor="let month of months" class="mb-4">
+    <h2 class="fs-5">{{ month.month | month }}</h2>
+    <dn-exportable-activity
+      *ngFor="let activity of month.activities"
+      [activity]="activity"
+      class="d-block mb-3"
+    ></dn-exportable-activity>
+  </div>
+</div>

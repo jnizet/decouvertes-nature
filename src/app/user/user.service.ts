@@ -8,6 +8,7 @@ export interface AdministeredUser {
   displayName: string;
   disabled: boolean;
   admin: boolean;
+  export: boolean;
 }
 
 export type AdministeredUserCommand = Omit<AdministeredUser, 'uid'>;

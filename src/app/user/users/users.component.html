@@ -31,6 +31,10 @@
                 <dn-icon [icon]="icons.admin" class="me-1"></dn-icon>
                 Administrateur
               </div>
+              <div *ngIf="user.export">
+                <dn-icon [icon]="icons.export" class="me-1"></dn-icon>
+                Exporteur
+              </div>
               <div *ngIf="user.disabled">
                 <dn-icon [icon]="icons.disabled" class="me-1"></dn-icon>
                 Utilisateur désactivé

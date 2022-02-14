@@ -1145,3 +1145,7 @@ export const ALL_MUNICIPALITIES: ReadonlyArray<Municipality> = [
     intercommunality: 'CC Charlieu-Belmont'
   }
 ];
+
+export const ALL_INTERCOMMUNALITIES = [
+  ...new Set<string>(ALL_MUNICIPALITIES.map(m => m.intercommunality))
+].sort();
