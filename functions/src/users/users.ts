@@ -9,6 +9,7 @@ interface User {
   displayName: string;
   disabled: boolean;
   admin: boolean;
+  export: boolean;
 }
 
 type UserCommand = Omit<User, 'uid'>;
@@ -19,7 +20,8 @@ function userRecordToUser(record: UserRecord): User {
     email: record.email!,
     displayName: record.displayName ?? '',
     disabled: record.disabled,
-    admin: !!record.customClaims?.admin
+    admin: !!record.customClaims?.admin,
+    export: !!record.customClaims?.export
   };
 }
 
@@ -71,7 +73,10 @@ export const createUser = functions.https.onCall(
       disabled: command.disabled,
       password: randomPassword()
     });
-    await auth.setCustomUserClaims(createdUser.uid, { admin: command.admin });
+    await auth.setCustomUserClaims(createdUser.uid, {
+      admin: command.admin,
+      export: command.export
+    });
     return { ...userRecordToUser(createdUser), admin: command.admin };
   }
 );
@@ -85,5 +90,5 @@ export const updateUser = functions.https.onCall(async (command: User, context):
     emailVerified: true,
     disabled: command.disabled
   });
-  await auth.setCustomUserClaims(updatedUser.uid, { admin: command.admin });
+  await auth.setCustomUserClaims(updatedUser.uid, { admin: command.admin, export: command.export });
 });

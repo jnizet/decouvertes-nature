@@ -2,6 +2,7 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { AdministeredUser, UserService } from '../user.service';
 import { BehaviorSubject, from, Observable, switchMap, tap, timer } from 'rxjs';
 import {
+  clipboard2Fill,
   envelope,
   pencilSquare,
   plusCircle,
@@ -19,6 +20,7 @@ export class UsersComponent {
   users$: Observable<Array<AdministeredUser>>;
   icons = {
     admin: shieldFill,
+    export: clipboard2Fill,
     disabled: xOctagonFill,
     edit: pencilSquare,
     addUser: plusCircle,

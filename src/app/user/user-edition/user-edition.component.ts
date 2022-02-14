@@ -10,6 +10,7 @@ interface FormValue {
   displayName: string;
   email: string;
   admin: boolean;
+  export: boolean;
   disabled: boolean;
 }
 
@@ -32,6 +33,7 @@ export class UserEditionComponent {
       displayName: new FormControl('', Validators.required),
       email: new FormControl('', [Validators.required, Validators.email]),
       admin: new FormControl(false),
+      export: new FormControl(false),
       disabled: new FormControl(false)
     };
     this.form = new FormGroup(config);
@@ -51,6 +53,7 @@ export class UserEditionComponent {
             displayName: user.displayName,
             email: user.email,
             admin: user.admin,
+            export: user.export ?? false,
             disabled: user.disabled
           };
 

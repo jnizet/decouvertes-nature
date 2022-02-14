@@ -1,0 +1,24 @@
+<h3 class="text-black fs-6">{{ activity.title }}</h3>
+<div>{{ activity | activityDate: 'time' }}</div>
+<div>{{ activity.type | activityType }}</div>
+<div>Animé par {{ activity.animator }}</div>
+<p style="white-space: pre-line">{{ activity.description }}</p>
+<div>
+  Lieu&nbsp;: {{ activity.location }}
+  <span *ngIf="activity.intercommunality">({{ activity.intercommunality }})</span>
+</div>
+<div>Rendez-vous&nbsp;: {{ activity.appointmentLocation }}</div>
+<div>
+  Prix&nbsp;:
+  {{ activity.paymentRequired ? (activity.price | currency: 'EUR':'symbol-narrow') : 'gratuit' }}
+</div>
+<div *ngIf="activity.maxNumberOfParticipants">
+  Nombre max de participants&nbsp;: {{ activity.maxNumberOfParticipants | number }}
+</div>
+<div *ngIf="activity.membersOnly">Réservé aux adhérents LPO</div>
+<div *ngIf="activity.accessible">Accessible aux personnes à mobilité réduite</div>
+<div *ngIf="activity.bookingMandatory">Réservation obligatoire</div>
+<div *ngIf="activity.labels.length">Labels&nbsp;: {{ activity.labels.join(', ') }}</div>
+<div *ngIf="activity.associatedOrganizations.length">
+  Association partenaires&nbsp;: {{ activity.associatedOrganizations.join(', ') }}
+</div>
