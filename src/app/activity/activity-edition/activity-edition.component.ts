@@ -23,6 +23,7 @@ import {
 import { ActivatedRoute, Router } from '@angular/router';
 import { fileArrowUp } from '../../bootstrap-icons/bootstrap-icons';
 import { CurrentUserService } from '../../current-user.service';
+import { Spinner } from '../../shared/spinner';
 
 interface Timing {
   startDate: LocalDate | null;
@@ -130,9 +131,10 @@ export class ActivityEditionComponent {
 
   readonly knownLabels = KNOWN_LABELS;
   readonly knownOrganizations = KNOWN_ORGANIZATIONS;
-  icons = {
+  readonly icons = {
     save: fileArrowUp
   };
+  readonly saving = new Spinner();
 
   constructor(
     route: ActivatedRoute,
@@ -306,7 +308,7 @@ export class ActivityEditionComponent {
         : this.activityService
             .update(this.editedActivity!.id, command)
             .pipe(map(() => this.editedActivity!));
-    result$.subscribe(activity => {
+    result$.pipe(this.saving.spinUntilFinalization()).subscribe(activity => {
       this.router.navigate(['/activities', activity.id]);
     });
   }

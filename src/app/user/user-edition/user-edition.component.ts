@@ -2,8 +2,9 @@ import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AdministeredUser, UserService } from '../user.service';
-import { finalize, first, map, Observable, of, switchMap } from 'rxjs';
+import { first, map, Observable, of, switchMap } from 'rxjs';
 import { fileArrowUp } from '../../bootstrap-icons/bootstrap-icons';
+import { Spinner } from '../../shared/spinner';
 
 interface FormValue {
   displayName: string;
@@ -24,7 +25,7 @@ export class UserEditionComponent {
   icons = {
     save: fileArrowUp
   };
-  saving = false;
+  saving = new Spinner();
 
   constructor(route: ActivatedRoute, private router: Router, private userService: UserService) {
     const config: Record<keyof FormValue, any> = {
@@ -63,13 +64,12 @@ export class UserEditionComponent {
       return;
     }
 
-    this.saving = true;
     const formValue: FormValue = this.form.value;
     const result$: Observable<unknown> =
       this.mode === 'create'
         ? this.userService.create(formValue)
         : this.userService.update(this.editedUser!.uid, formValue);
-    result$.pipe(finalize(() => (this.saving = false))).subscribe(() => {
+    result$.pipe(this.saving.spinUntilFinalization()).subscribe(() => {
       this.router.navigate(['/users']);
     });
   }
