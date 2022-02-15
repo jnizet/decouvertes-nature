@@ -9,7 +9,7 @@ test.describe('Users', () => {
   test('should display, create and modify users', async ({ page }) => {
     await page.click('text=Utilisateurs');
 
-    const firstCard = page.locator('.card').last();
+    const firstCard = page.locator('.card').first();
     await test.expect(firstCard.locator('h2')).toHaveText('Admin');
 
     await page.click('text=Créer un utilisateur');
@@ -19,7 +19,7 @@ test.describe('Users', () => {
     await page.check('text=Exporteur');
     await page.click('text=Enregistrer');
 
-    await test.expect(page.locator('.card').count()).toBe(2);
+    await test.expect(page.locator('.card')).toHaveCount(2);
     const lastCard = await page.locator('.card').last();
     await test.expect(lastCard.locator('h2')).toHaveText('Claire');
 
