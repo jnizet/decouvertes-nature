@@ -5,6 +5,7 @@ on: [push]
 jobs:
   Build:
     runs-on: ubuntu-latest
+    timeout-minutes: 60
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v2
@@ -31,3 +32,7 @@ jobs:
       - name: Check format
         run: yarn format:check
 
+      - name: Install Playwright
+        run: npx playwright install --with-deps
+      - name: Run Playwright tests
+        run: yarn e2e
