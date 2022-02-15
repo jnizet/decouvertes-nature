@@ -64,6 +64,9 @@
               "extractLicenses": false,
               "sourceMap": true,
               "namedChunks": true
+            },
+            "e2e": {
+              "outputHashing": "all"
             }
           },
           "defaultConfiguration": "production"
@@ -76,6 +79,9 @@
             },
             "development": {
               "browserTarget": "decouvertes-nature:build:development"
+            },
+            "e2e": {
+              "browserTarget": "decouvertes-nature:build:e2e"
             }
           },
           "defaultConfiguration": "development"

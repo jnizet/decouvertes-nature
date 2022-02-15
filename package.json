@@ -5,12 +5,15 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
+    "build:e2e": "ng build -c e2e",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "lint": "ng lint",
     "format": "prettier --write \"src/**/*.+(ts|js|json|html|scss)\"",
     "format:check": "prettier --check \"src/**/*.+(ts|js|json|html|scss)\"",
-    "postinstall": "node generate-bootstrap-icons.mjs"
+    "postinstall": "node generate-bootstrap-icons.mjs",
+    "serve:e2e": "serve dist/decouvertes-nature --single --listen 4200",
+    "e2e": "concurrently --names \"emulators,app,test\" --success first --kill-others \"firebase emulators:start --import=emulator-data\" \"yarn build:e2e && yarn serve:e2e\" \"wait-on --timeout 180000 http://localhost:4200 http://localhost:4000 && yarn playwright test\""
   },
   "private": true,
   "engines": {
@@ -48,12 +51,15 @@
     "@angular/cli": "13.2.3",
     "@angular/compiler-cli": "13.2.2",
     "@angular/localize": "13.2.2",
+    "@playwright/test": "1.19.0",
     "@types/jasmine": "3.10.3",
     "@typescript-eslint/eslint-plugin": "5.12.0",
     "@typescript-eslint/parser": "5.12.0",
+    "concurrently": "7.0.0",
     "eslint": "8.9.0",
     "eslint-config-prettier": "8.3.0",
     "eslint-plugin-prettier": "4.0.0",
+    "firebase-tools": "10.2.0",
     "jasmine-core": "4.0.0",
     "karma": "6.3.16",
     "karma-chrome-launcher": "3.1.0",
@@ -61,6 +67,8 @@
     "karma-jasmine": "4.0.1",
     "karma-jasmine-html-reporter": "1.7.0",
     "prettier": "2.5.1",
-    "typescript": "4.5.5"
+    "serve": "13.0.2",
+    "typescript": "4.5.5",
+    "wait-on": "6.0.1"
   }
 }
