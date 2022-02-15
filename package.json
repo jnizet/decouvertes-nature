@@ -12,8 +12,9 @@
     "format": "prettier --write \"src/**/*.+(ts|js|json|html|scss)\"",
     "format:check": "prettier --check \"src/**/*.+(ts|js|json|html|scss)\"",
     "postinstall": "node generate-bootstrap-icons.mjs",
-    "serve:e2e": "serve dist/decouvertes-nature --single --listen 4200",
-    "e2e": "concurrently --names \"emulators,app,test\" --success first --kill-others \"firebase emulators:start --import=emulator-data\" \"yarn build:e2e && yarn serve:e2e\" \"wait-on --timeout 180000 http://localhost:4200 http://localhost:4000 && yarn playwright test\""
+    "serve:e2e": "serve dist/decouvertes-nature --single --listen 4201",
+    "e2e": "concurrently --names \"app,test\" --success first --kill-others \"yarn serve:e2e\" \"wait-on --timeout 180000 http://localhost:4201 http://localhost:4000 && yarn playwright test\"",
+    "e2e:ci": "concurrently --names \"emulators,app,test\" --success first --kill-others \"firebase emulators:start --import=emulator-data\" \"yarn build:e2e && yarn serve:e2e\" \"wait-on --timeout 180000 http://localhost:4201 http://localhost:4000 && yarn playwright test\""
   },
   "private": true,
   "engines": {

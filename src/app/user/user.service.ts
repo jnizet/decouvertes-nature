@@ -24,7 +24,15 @@ export class UserService {
       this.functions,
       'listUsers'
     )(undefined);
-    return from(listUsers).pipe(map(r => r.data));
+    return from(listUsers).pipe(
+      map(r =>
+        r.data.sort((a, b) => {
+          const n1 = a.displayName.toLocaleLowerCase();
+          const n2 = b.displayName.toLocaleLowerCase();
+          return n1 < n2 ? -1 : n1 > n2 ? 1 : 0;
+        })
+      )
+    );
   }
 
   get(uid: string): Observable<AdministeredUser> {
