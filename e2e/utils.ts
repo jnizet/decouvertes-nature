@@ -1,13 +1,12 @@
-import { expect, Page } from '@playwright/test';
+import { Page } from '@playwright/test';
 import * as crypto from 'crypto';
 
-export async function login(page: Page) {
+export async function login(page: Page, email = 'jnizet@gmail.com') {
   await page.goto('http://localhost:4201');
   await page.locator('text=Identification').first().click();
-  await page.fill('text=Adresse email', 'jnizet@gmail.com');
+  await page.fill('text=Adresse email', email);
   await page.fill('text=Mot de passe', 'password');
   await page.click(`text=S'identifier`);
-  await expect(page.locator('#user-dropdown')).toHaveText('Admin');
 }
 
 const ALPHABET = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
