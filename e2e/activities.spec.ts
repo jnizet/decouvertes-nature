@@ -25,7 +25,7 @@ test.describe('Activities', () => {
     await page.fill('text=Description', 'Learn to write tests');
     await page.fill('text=Animateur / Organisateur', 'Adama Doumbouya');
     await page.fill(`text=Commune du lieu de l'activité`, 'Api');
-    await page.locator('button.dropdown-item', { hasText: 'Apinac' }).click();
+    await page.locator('button.dropdown-item:has-text("Apinac")').click();
     await page.fill(`text=Début de l'activité`, '2023-10-01');
     await page.fill(`text=Heure de rendez-vous`, '10:00');
     await page.fill(`text=Heure de fin de l'activité`, '15:00');
