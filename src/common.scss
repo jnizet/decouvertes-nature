@@ -5,16 +5,15 @@ $link-decoration: none;
 
 $enable-validation-icons: false;
 
+// LPO blue
 $primary: #0075bf;
 
 $form-label-margin-bottom: 0.2rem;
 $form-label-font-weight: 500;
 $enable-shadows: true;
 
-$dark: #003759;
-$dropdown-dark-bg: #001739;
-
-$info-card-bg: #a6dafb;
+$dark: darken($primary, 20%);
+$dropdown-dark-bg: darken($dark, 3%);
 
 @import '~bootstrap/scss/functions';
 @import '~bootstrap/scss/variables';

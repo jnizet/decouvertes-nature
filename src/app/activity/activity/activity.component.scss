@@ -1,6 +1,26 @@
 @import '../../../common';
 
 .comment {
+  position: relative;
   background-color: $teal-200;
   border-radius: 16px;
+  border: 1px solid $teal-500;
+  &::before,
+  &::after {
+    background-color: $teal-500;
+    position: absolute;
+    top: -8px;
+    left: 30px;
+    display: block;
+    width: 20px;
+    height: 8px;
+    pointer-events: none;
+    content: ' ';
+    clip-path: polygon(50% 0, 0 100%, 100% 100%);
+    border-top: 1px solid $teal-500;
+  }
+  &::after {
+    margin-top: 1px;
+    background-color: $teal-200;
+  }
 }
