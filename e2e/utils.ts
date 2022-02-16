@@ -2,7 +2,7 @@ import { Page } from '@playwright/test';
 import * as crypto from 'crypto';
 
 export async function login(page: Page, email = 'jnizet@gmail.com') {
-  await page.goto('http://localhost:4201');
+  await page.goto('/');
   await page.locator('text=Identification').first().click();
   await page.fill('text=Adresse email', email);
   await page.fill('text=Mot de passe', 'password');
