@@ -32,7 +32,7 @@ test.describe('Activities', () => {
     const newLabelInput = page.locator('input[placeholder="Ajouter un label"]');
     await newLabelInput.fill('Some new label');
     await newLabelInput.press('Enter');
-    page.check('text="Some new label"');
+    await page.check('text="Some new label"');
 
     await page.click('text=Enregistrer');
 
@@ -51,9 +51,9 @@ test.describe('Activities', () => {
 
     await page.click('text=Exports');
     await test.expect(page.locator('h3', { hasText: newTitle })).toHaveCount(1);
-    page.fill(`text="Filtre sur l'intercommunalité"`, 'oulala');
+    await page.fill(`text="Filtre sur l'intercommunalité"`, 'oulala');
     await test.expect(page.locator('h3', { hasText: newTitle })).toHaveCount(0);
-    page.fill(`text="Filtre sur l'intercommunalité"`, 'forez');
+    await page.fill(`text="Filtre sur l'intercommunalité"`, 'forez');
     await test.expect(page.locator('h3', { hasText: newTitle })).toHaveCount(1);
 
     await page.click('text=Activités');
