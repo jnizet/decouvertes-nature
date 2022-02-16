@@ -6,7 +6,7 @@ test.describe('Activities', () => {
     await login(page);
   });
 
-  test('should display, create and modify activities', async ({ page }) => {
+  test('should display, create, modify and delete activities', async ({ page }) => {
     await page.click('text=Activités');
 
     const romimineCard = page.locator('.card', { hasText: 'Romimine' });
@@ -29,6 +29,11 @@ test.describe('Activities', () => {
     await page.fill(`text=Début de l'activité`, '2023-10-01');
     await page.fill(`text=Heure de rendez-vous`, '10:00');
     await page.fill(`text=Heure de fin de l'activité`, '15:00');
+    const newLabelInput = page.locator('input[placeholder="Ajouter un label"]');
+    await newLabelInput.fill('Some new label');
+    await newLabelInput.press('Enter');
+    page.check('text="Some new label"');
+
     await page.click('text=Enregistrer');
 
     await test.expect(page.locator('h1')).toHaveText(title);
@@ -44,6 +49,15 @@ test.describe('Activities', () => {
     await page.click('text=Mes activités');
     await test.expect(page.locator('h3', { hasText: newTitle })).toHaveCount(1);
 
+    await page.click('text=Exports');
+    await test.expect(page.locator('h3', { hasText: newTitle })).toHaveCount(1);
+    page.fill(`text="Filtre sur l'intercommunalité"`, 'oulala');
+    await test.expect(page.locator('h3', { hasText: newTitle })).toHaveCount(0);
+    page.fill(`text="Filtre sur l'intercommunalité"`, 'forez');
+    await test.expect(page.locator('h3', { hasText: newTitle })).toHaveCount(1);
+
+    await page.click('text=Activités');
+    await page.click('text=Mes activités');
     await page.click(`text=${newTitle}`);
     await page.click('text=Supprimer');
     await page.click('text=Oui');
