@@ -1,5 +1,5 @@
 import { test } from '@playwright/test';
-import { login } from './login.spec';
+import { login, randomString } from './utils';
 
 test.describe('Users', () => {
   test.beforeEach(async ({ page }) => {
@@ -13,22 +13,24 @@ test.describe('Users', () => {
     await test.expect(firstCard.locator('h2')).toHaveText('Admin');
 
     await page.click('text=Créer un utilisateur');
-    await page.fill('text=Nom', 'Claire');
-    await page.fill('text=Adresse email', 'clairebrucy@gmail.com');
+    const name = randomString();
+    const email = randomString() + '@gmail.com';
+    await page.fill('text=Nom', name);
+    await page.fill('text=Adresse email', email);
     await page.check('text=Administrateur');
     await page.check('text=Exporteur');
     await page.click('text=Enregistrer');
 
-    await test.expect(page.locator('.card')).toHaveCount(2);
-    const lastCard = await page.locator('.card').last();
-    await test.expect(lastCard.locator('h2')).toHaveText('Claire');
+    await test.expect(page.locator('h2', { hasText: name })).toHaveCount(1);
 
-    await test.expect(lastCard).toContainText('Administrateur');
-    await test.expect(lastCard).toContainText('Exporteur');
-    await test.expect(lastCard).not.toContainText('désactivé');
+    const card = page.locator('.card', { hasText: name });
+    await test.expect(card).toContainText('Administrateur');
+    await test.expect(card).toContainText('Exporteur');
+    await test.expect(card).not.toContainText('désactivé');
 
-    await lastCard.locator('text=Modifier').click();
+    await card.locator('text=Modifier').click();
     await page.check('text=Désactivé');
-    await test.expect(lastCard).toContainText('désactivé');
+    await page.click('text=Enregistrer');
+    await test.expect(card).toContainText('désactivé');
   });
 });

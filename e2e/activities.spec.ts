@@ -1,5 +1,5 @@
 import { test } from '@playwright/test';
-import { login } from './login.spec';
+import { login, randomString } from './utils';
 
 test.describe('Activities', () => {
   test.beforeEach(async ({ page }) => {
@@ -9,8 +9,8 @@ test.describe('Activities', () => {
   test('should display, create and modify activities', async ({ page }) => {
     await page.click('text=Activités');
 
-    const firstCard = page.locator('.card').first();
-    await test.expect(firstCard.locator('h3')).toHaveText('Romimine');
+    const romimineCard = page.locator('.card', { hasText: 'Romimine' });
+    await test.expect(romimineCard.locator('h3')).toHaveText('Romimine');
 
     await page.click('text=Romimine');
 
@@ -19,7 +19,8 @@ test.describe('Activities', () => {
     await page.click('text=Activités');
     await page.click('text=Créer une activité');
 
-    await page.fill('text=Titre', 'Test activity');
+    const title = randomString();
+    await page.fill('text=Titre', title);
     await page.selectOption(`text=Type d'activité`, { label: 'Atelier' });
     await page.fill('text=Description', 'Learn to write tests');
     await page.fill('text=Animateur / Organisateur', 'Adama Doumbouya');
@@ -30,24 +31,24 @@ test.describe('Activities', () => {
     await page.fill(`text=Heure de fin de l'activité`, '15:00');
     await page.click('text=Enregistrer');
 
-    await test.expect(page.locator('h1')).toHaveText('Test activity');
+    await test.expect(page.locator('h1')).toHaveText(title);
     await page.click('text=Modifier');
 
-    await page.fill('text=Titre', 'Test activity 2');
+    const newTitle = randomString();
+    await page.fill('text=Titre', newTitle);
     await page.click('text=Enregistrer');
 
     await page.click('text=Activités');
-    await test.expect(page.locator('.card')).toHaveCount(2);
-    await test.expect(firstCard.locator('h3')).toHaveText('Test activity 2');
+    await test.expect(page.locator('h3', { hasText: newTitle })).toHaveCount(1);
 
     await page.click('text=Mes activités');
-    await test.expect(firstCard.locator('h3')).toHaveText('Test activity 2');
+    await test.expect(page.locator('h3', { hasText: newTitle })).toHaveCount(1);
 
-    await page.click('text=Test activity 2');
+    await page.click(`text=${newTitle}`);
     await page.click('text=Supprimer');
     await page.click('text=Oui');
 
-    await test.expect(page.locator('.card')).toHaveCount(1);
-    await test.expect(firstCard.locator('h3')).toHaveText('Romimine');
+    await test.expect(page.locator('h1')).toHaveText('Activités');
+    await test.expect(page.locator('h3', { hasText: newTitle })).toHaveCount(0);
   });
 });
