@@ -36,13 +36,18 @@ export class UsersComponent {
   }
 
   copyEmail(user: AdministeredUser) {
-    const path = window.location.origin + '/reset-password?email=' + encodeURIComponent(user.email);
+    const resetPasswordPath =
+      window.location.origin + '/reset-password?email=' + encodeURIComponent(user.email);
+    const homePath = window.location.origin;
     const email = `Bonjour ${user.displayName}.
 
 Pour pouvoir créer de nouvelles activités dans l'application "Découvertes Nature",
-il te faudra choisir un mot de passe en te rendant à l'adresse suivante:
-${path}.
-`;
+il te faudra choisir un mot de passe en te rendant à l'adresse suivante\u00a0:
+${resetPasswordPath}.
+
+Une fois le mot de passe choisi, vous pourrez accéder à l'application à l'adresse
+suivante\u00a0:
+${homePath}.`;
     from(navigator.clipboard.writeText(email))
       .pipe(
         tap(() => this.copied.next(true)),

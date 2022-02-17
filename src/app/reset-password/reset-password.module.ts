@@ -5,6 +5,7 @@ import { RouterModule } from '@angular/router';
 import { RESET_PASSWORD_ROUTES } from './reset-password.routes';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ValidationModule } from '../validation/validation.module';
+import { IconModule } from '../icon/icon.module';
 
 @NgModule({
   declarations: [ResetPasswordComponent],
@@ -12,7 +13,8 @@ import { ValidationModule } from '../validation/validation.module';
     CommonModule,
     RouterModule.forChild(RESET_PASSWORD_ROUTES),
     ReactiveFormsModule,
-    ValidationModule
+    ValidationModule,
+    IconModule
   ]
 })
 export class ResetPasswordModule {}

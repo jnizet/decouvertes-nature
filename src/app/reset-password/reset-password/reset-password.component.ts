@@ -3,6 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Auth, sendPasswordResetEmail } from '@angular/fire/auth';
 import { from } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
+import { exclamationTriangleFill } from '../../bootstrap-icons/bootstrap-icons';
 
 interface FormValue {
   email: string;
@@ -17,6 +18,9 @@ export class ResetPasswordComponent {
   form: FormGroup;
   error = false;
   emailSent = false;
+  icons = {
+    warning: exclamationTriangleFill
+  };
 
   constructor(private route: ActivatedRoute, private auth: Auth) {
     const config: Record<keyof FormValue, any> = {
