@@ -75,7 +75,10 @@ export const createUser = functions.https.onCall(
     });
     await auth.setCustomUserClaims(createdUser.uid, {
       admin: command.admin,
-      export: command.export
+      export: command.export,
+      // this is checked by firebase security rules in order to prevent access to any document if the user hasn't been
+      // created or updated by these functions, since there is no way to actually prevent signup on Firebase
+      user: true
     });
     return { ...userRecordToUser(createdUser), admin: command.admin };
   }
@@ -90,5 +93,11 @@ export const updateUser = functions.https.onCall(async (command: User, context):
     emailVerified: true,
     disabled: command.disabled
   });
-  await auth.setCustomUserClaims(updatedUser.uid, { admin: command.admin, export: command.export });
+  await auth.setCustomUserClaims(updatedUser.uid, {
+    admin: command.admin,
+    export: command.export,
+    // this is checked by firebase security rules in order to prevent access to any document if the user hasn't been
+    // created or updated by these functions, since there is no way to actually prevent signup on Firebase
+    user: true
+  });
 });

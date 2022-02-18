@@ -9,8 +9,7 @@ test.describe('Users', () => {
   test('should display, create and modify users', async ({ page }) => {
     await page.click('text=Utilisateurs');
 
-    const firstCard = page.locator('.card').first();
-    await test.expect(firstCard.locator('h2')).toHaveText('Admin');
+    await test.expect(page.locator('h2', { hasText: 'Admin' })).toHaveCount(1);
 
     await page.click('text=Créer un utilisateur');
     const name = randomString();
