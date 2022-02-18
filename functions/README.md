@@ -4,8 +4,12 @@ This contains 4 functions which allow managing users of the applications.
 There are two reasons these functions exist:
 
 1. Allow the users of the app to create and manage users from the app itself rather than through the Firebase console
-2. Allow specifying a display name, and a custom claim "admin", in users, so that the app can display names rather than
-   emails, and so that the app can display users administration pages only to the administrators.
+2. Allow specifying a display name, and custom claims in users, so that the app can display names rather than
+   emails, and so that the app can 
+   - display users administration pages only to the administrators;
+   - display export pages only to the exporters;
+   - prevent access to any user who hasn't been created by the application itself, but has signed up 
+     (since there is no way to prevent signup in Forebase)
 
 All these functions check that the current user invoking them is an administrator, which causes an issue for the very 
 first user, which can't be created with the CLI or the console with this admin custom claim.

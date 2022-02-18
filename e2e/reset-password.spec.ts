@@ -1,7 +1,7 @@
 import { test } from '@playwright/test';
 
 test.describe('Reset password', () => {
-  test('should display, create and modify users', async ({ page }) => {
+  test('should ask for a password reset', async ({ page }) => {
     await page.goto('/');
     await page.locator('text=Identification').first().click();
     await page.click(`text=j'ai oublié mon mot de passe`);
