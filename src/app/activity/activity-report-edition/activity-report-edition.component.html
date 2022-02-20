@@ -1,0 +1,47 @@
+<h2 class="fs-4">Rapport</h2>
+<form [formGroup]="form" (ngSubmit)="save()">
+  <div class="row">
+    <div class="col-sm-auto mb-3">
+      <label></label>
+      <div class="form-check form-switch mt-2">
+        <input
+          formControlName="cancelled"
+          class="form-check-input"
+          type="checkbox"
+          role="switch"
+          id="cancelled"
+        />
+        <label class="form-check-label" for="cancelled">Activité annulée</label>
+      </div>
+    </div>
+    <div class="col-sm-auto mb-3 d-flex flex-column" *ngIf="!form.value.cancelled">
+      <label for="number-of-participants" class="form-label">Nombre de participants</label>
+      <input
+        formControlName="numberOfParticipants"
+        type="number"
+        class="form-control"
+        id="number-of-participants"
+        min="0"
+      />
+      <val-errors
+        controlName="numberOfParticipants"
+        label="Le nombre de participants"
+        class="flex-shrink-1"
+      ></val-errors>
+    </div>
+  </div>
+  <div class="mb-3">
+    <label for="comment" class="form-label">Commentaire</label>
+    <textarea formControlName="comment" class="form-control" id="comment" rows="4"></textarea>
+  </div>
+  <div class="text-end">
+    <button class="btn btn-primary me-2">
+      <dn-icon [icon]="icons.save" class="me-1"></dn-icon>
+      Enregistrer
+    </button>
+    <button type="button" class="btn btn-danger" (click)="cancel()">
+      <dn-icon [icon]="icons.cancel" class="me-1"></dn-icon>
+      Annuler
+    </button>
+  </div>
+</form>

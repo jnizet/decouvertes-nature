@@ -6,9 +6,10 @@ import { CALENDAR_ROUTES } from './calendar.routes';
 import { MonthPipeModule } from '../month-pipe/month-pipe.module';
 import { IconModule } from '../icon/icon.module';
 import { ActivityDatePipeModule } from '../activity-date-pipe/activity-date-pipe.module';
+import { ReportComponent } from './report/report.component';
 
 @NgModule({
-  declarations: [CalendarComponent],
+  declarations: [CalendarComponent, ReportComponent],
   imports: [
     CommonModule,
     RouterModule.forChild(CALENDAR_ROUTES),

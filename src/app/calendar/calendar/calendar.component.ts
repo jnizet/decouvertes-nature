@@ -17,6 +17,7 @@ interface Month {
 interface ViewModel {
   year: number;
   months: Array<Month>;
+  reportActivities: Array<Activity>;
 }
 
 interface ActivityWithDayRange extends Activity {
@@ -41,9 +42,10 @@ export class CalendarComponent {
   constructor(activityService: ActivityService) {
     this.vm$ = combineLatest([this.yearSubject, activityService.findAll()]).pipe(
       map(([year, activities]) => {
-        const yearActivities = activities
-          .filter(activity => this.isInYear(activity, year))
-          .reverse();
+        const yearActivities = activities.filter(activity => this.isInYear(activity, year));
+        const reportActivities = yearActivities.filter(activity =>
+          this.isStartInYear(activity, year)
+        );
         const months: Array<Month> = [];
         for (let m = 1; m <= 12; m++) {
           const paddedMonth = `${m < 10 ? '0' : ''}${m}`;
@@ -57,6 +59,7 @@ export class CalendarComponent {
         }
         return {
           year,
+          reportActivities,
           months
         };
       })
@@ -67,6 +70,11 @@ export class CalendarComponent {
     const startYear = parseISO(activity.startDate).getFullYear();
     const endYear = parseISO(activity.startDate).getFullYear();
     return year >= startYear && year <= endYear;
+  }
+
+  private isStartInYear(activity: Activity, year: number) {
+    const startYear = parseISO(activity.startDate).getFullYear();
+    return year === startYear;
   }
 
   private isInMonth(activity: Activity, month: YearMonth) {

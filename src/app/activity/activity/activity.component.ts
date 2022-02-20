@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable, switchMap } from 'rxjs';
-import { Activity, ActivityService } from '../activity.service';
+import { Activity, ActivityReportCommand, ActivityService } from '../activity.service';
 import {
   bookmarkPlus,
   calendar4Event,
@@ -21,6 +21,7 @@ import {
 } from '../../bootstrap-icons/bootstrap-icons';
 import { barredIcon, barredWheelchair, wheelchair } from '../../icon/icons';
 import { ConfirmService } from '../../confirm/confirm.service';
+import { CurrentUser, CurrentUserService } from '../../current-user.service';
 
 @Component({
   selector: 'dn-activity',
@@ -30,6 +31,8 @@ import { ConfirmService } from '../../confirm/confirm.service';
 })
 export class ActivityComponent {
   activity$: Observable<Activity>;
+  currentUser$: Observable<CurrentUser | null>;
+  editingReport = false;
 
   icons = {
     date: calendar4Event,
@@ -57,11 +60,13 @@ export class ActivityComponent {
     route: ActivatedRoute,
     private activityService: ActivityService,
     private confirmService: ConfirmService,
-    private router: Router
+    private router: Router,
+    private currentUserService: CurrentUserService
   ) {
     this.activity$ = route.paramMap.pipe(
       switchMap(paramMap => activityService.get(paramMap.get('id')!))
     );
+    this.currentUser$ = this.currentUserService.getCurrentUser();
   }
 
   deleteActivity(activity: Activity) {
@@ -72,5 +77,21 @@ export class ActivityComponent {
       })
       .pipe(switchMap(() => this.activityService.deleteActivity(activity.id)))
       .subscribe(() => this.router.navigate(['/activities']));
+  }
+
+  updateReport(activity: Activity, command: ActivityReportCommand) {
+    this.activityService
+      .updateReport(activity.id, command)
+      .subscribe(() => (this.editingReport = false));
+  }
+
+  deleteReport(activity: Activity) {
+    this.confirmService
+      .confirm({
+        message:
+          'Voulez-vous vraiment supprimer ce rapport\u00a0?\nLa suppression est définitive et irréversible.'
+      })
+      .pipe(switchMap(() => this.activityService.deleteReport(activity.id)))
+      .subscribe();
   }
 }
