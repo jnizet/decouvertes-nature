@@ -1,0 +1,43 @@
+<div class="row g-2">
+  <div class="col-lg">
+    <div class="border bg-light rounded h-100 p-2">
+      <div class="number">{{ total | number }}</div>
+      <div class="legend">
+        {{ total > 1 ? 'activités prévues' : 'activité prévue' }}
+      </div>
+    </div>
+  </div>
+  <div class="col-lg">
+    <div class="border bg-light rounded h-100 p-2 text-success">
+      <div class="number">{{ done | number }}</div>
+      <div class="legend">
+        {{ done > 1 ? 'activités réalisées' : 'activité réalisée' }}
+        <div *ngIf="total" class="small">({{ done / total | percent: '.0' }})</div>
+      </div>
+    </div>
+  </div>
+  <div class="col-lg">
+    <div class="border bg-light rounded h-100 p-2 text-success">
+      <div class="number">{{ participants | number }}</div>
+      <div class="legend">{{ participants > 1 ? 'participants' : 'participant' }}</div>
+    </div>
+  </div>
+  <div class="col-lg">
+    <div class="border bg-light rounded h-100 p-2 text-danger">
+      <div class="number">{{ cancelled | number }}</div>
+      <div class="legend">
+        {{ cancelled > 1 ? 'activités annulées' : 'activité annulée' }}
+        <div *ngIf="total" class="small">({{ cancelled / total | percent: '.0' }})</div>
+      </div>
+    </div>
+  </div>
+  <div class="col-lg">
+    <div class="border bg-light rounded h-100 p-2 text-warning">
+      <div class="number">{{ withoutReport | number }}</div>
+      <div class="legend">
+        {{ withoutReport > 1 ? 'activités sans rapport' : 'activité sans rapport' }}
+        <div *ngIf="total" class="small">({{ withoutReport / total | percent: '.0' }})</div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,6 +1,6 @@
 @import '../../../common';
 
-.comment {
+::ng-deep .comment {
   position: relative;
   background-color: $teal-200;
   border-radius: 16px;

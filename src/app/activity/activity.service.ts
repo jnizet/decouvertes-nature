@@ -4,17 +4,25 @@ import {
   collectionData,
   CollectionReference,
   deleteDoc,
+  deleteField,
   doc,
   docData,
   Firestore,
   orderBy,
   query,
   setDoc,
+  updateDoc,
   where
 } from '@angular/fire/firestore';
 import { EMPTY, first, from, map, mapTo, Observable, switchMap, tap } from 'rxjs';
 import { LocalDate, LocalTime } from '../shared/types';
 import { AuditUser, CurrentUserService } from '../current-user.service';
+
+export interface ActivityReport {
+  cancelled: boolean;
+  numberOfParticipants: number;
+  comment: string;
+}
 
 export interface Activity {
   id: string;
@@ -41,6 +49,7 @@ export interface Activity {
   comment: string;
   author: AuditUser;
   lastModifier: AuditUser | null;
+  report?: ActivityReport;
 }
 
 export interface ActivityType {
@@ -50,6 +59,7 @@ export interface ActivityType {
 }
 
 export type ActivityCommand = Omit<Activity, 'id'>;
+export type ActivityReportCommand = ActivityReport;
 
 export interface Animator {
   name: string;
@@ -141,6 +151,15 @@ export class ActivityService {
     );
   }
 
+  updateReport(id: string, command: ActivityReportCommand): Observable<void> {
+    const report = command;
+    return from(
+      updateDoc(doc(this.activityCollection, id), {
+        report
+      })
+    );
+  }
+
   suggestAnimators(text: string): Observable<Array<string>> {
     const query = text.toLowerCase();
     return collectionData(this.animatorCollection).pipe(
@@ -180,5 +199,13 @@ export class ActivityService {
 
   deleteActivity(id: string): Observable<void> {
     return from(deleteDoc(doc(this.activityCollection, id)));
+  }
+
+  deleteReport(id: string) {
+    return from(
+      updateDoc(doc(this.activityCollection, id), {
+        report: deleteField()
+      })
+    );
   }
 }

@@ -1,0 +1,21 @@
+<div *ngIf="report.cancelled; else notCancelled" class="text-danger">
+  <dn-icon [icon]="icons.cancelled" class="me-1"></dn-icon>
+  L'activité a été annulée.
+</div>
+<ng-template #notCancelled>
+  <div class="text-success">
+    <dn-icon [icon]="icons.notCancelled" class="me-1"></dn-icon>
+    <ng-container *ngIf="report.numberOfParticipants === 0">
+      Aucune personne n'a participé à cette activité.
+    </ng-container>
+    <ng-container *ngIf="report.numberOfParticipants === 1">
+      Une seule personne a participé à cette activité.
+    </ng-container>
+    <ng-container *ngIf="report.numberOfParticipants > 1">
+      {{ report.numberOfParticipants | number }} personnes ont participé à cette activité.
+    </ng-container>
+  </div>
+</ng-template>
+<div *ngIf="report.comment" class="comment mt-3">
+  <div class="p-3" style="white-space: pre-line">{{ report.comment }}</div>
+</div>
