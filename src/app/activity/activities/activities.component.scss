@@ -2,4 +2,12 @@
 
 .card {
   border-left: 5px solid $primary;
+
+  &.card-done {
+    border-left-color: $success;
+  }
+
+  &.card-cancelled {
+    border-left-color: $danger;
+  }
 }
