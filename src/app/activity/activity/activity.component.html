@@ -107,13 +107,16 @@
         </ng-container>
       </em>
     </div>
-    <div class="text-end mt-3">
-      <a class="btn btn-outline-primary me-2" [routerLink]="['/activities', activity.id, 'edit']">
+    <div class="d-grid gap-2 d-sm-block text-sm-end mt-3">
+      <a
+        class="btn btn-outline-primary me-sm-2"
+        [routerLink]="['/activities', activity.id, 'edit']"
+      >
         <dn-icon class="me-1" [icon]="icons.edit"></dn-icon>
         Modifier
       </a>
       <a
-        class="btn btn-outline-primary me-2"
+        class="btn btn-outline-primary me-sm-2"
         [routerLink]="['/activities', activity.id, 'duplicate']"
       >
         <dn-icon class="me-1" [icon]="icons.duplicate"></dn-icon>
