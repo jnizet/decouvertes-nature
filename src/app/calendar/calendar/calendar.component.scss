@@ -1,0 +1,12 @@
+@import '../../../common';
+
+.day-range {
+  background-color: $primary;
+  font-size: 0.85rem;
+  &.day-range-done {
+    background-color: $success;
+  }
+  &.day-range-cancelled {
+    background-color: $danger;
+  }
+}

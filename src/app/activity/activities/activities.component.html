@@ -1,7 +1,12 @@
 <div *ngIf="months$ | async as months">
   <div *ngFor="let month of months" class="mb-4">
     <h2 class="fs-5">{{ month.month | month }}</h2>
-    <div *ngFor="let activity of month.activities" class="card mb-2">
+    <div
+      *ngFor="let activity of month.activities"
+      class="card mb-2"
+      [class.card-done]="activity.report && !activity.report.cancelled"
+      [class.card-cancelled]="activity.report?.cancelled"
+    >
       <div class="card-body">
         <dn-activity-card [activity]="activity"></dn-activity-card>
       </div>

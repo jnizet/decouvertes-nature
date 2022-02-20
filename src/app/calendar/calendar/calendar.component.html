@@ -36,9 +36,13 @@
           Aucune activité
         </div>
         <div *ngFor="let activity of month.activities">
-          <span class="text-light bg-primary px-1 rounded" aria-hidden="true">{{
-            activity.dayRange
-          }}</span>
+          <span
+            class="text-light px-1 rounded day-range"
+            aria-hidden="true"
+            [class.day-range-done]="activity.report && !activity.report.cancelled"
+            [class.day-range-cancelled]="activity.report?.cancelled"
+            >{{ activity.dayRange }}</span
+          >
           <span class="visually-hidden">{{ activity | activityDate }}</span>
           <a [routerLink]="['/activities', activity.id]">
             {{ activity.title }}
