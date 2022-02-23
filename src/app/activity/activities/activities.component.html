@@ -6,6 +6,7 @@
       class="card mb-2"
       [class.card-done]="activity.report && !activity.report.cancelled"
       [class.card-cancelled]="activity.report?.cancelled"
+      [class.card-draft]="activity.draft"
     >
       <div class="card-body">
         <dn-activity-card [activity]="activity"></dn-activity-card>

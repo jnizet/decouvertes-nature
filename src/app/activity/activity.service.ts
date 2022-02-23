@@ -14,9 +14,9 @@ import {
   updateDoc,
   where
 } from '@angular/fire/firestore';
-import { EMPTY, first, from, map, mapTo, Observable, switchMap, tap } from 'rxjs';
+import { combineLatest, EMPTY, first, from, map, mapTo, Observable, switchMap, tap } from 'rxjs';
 import { LocalDate, LocalTime } from '../shared/types';
-import { AuditUser, CurrentUserService } from '../current-user.service';
+import { AuditUser, CurrentUser, CurrentUserService } from '../current-user.service';
 
 export interface ActivityReport {
   cancelled: boolean;
@@ -29,17 +29,17 @@ export interface Activity {
   type: string;
   title: string;
   animator: string;
-  description: string;
+  description: string; // can be blank when draft
   maxNumberOfParticipants: number | null;
   paymentRequired: boolean;
   price: number | null;
   startDate: LocalDate;
-  startTime: LocalTime;
-  endDate: LocalDate;
-  endTime: LocalTime;
-  location: string;
+  startTime: LocalTime | null; // can be null when draft
+  endDate: LocalDate | null; // can be null when draft
+  endTime: LocalTime | null; // can be null when draft
+  location: string; // can be blank when draft
   intercommunality: string;
-  appointmentLocation: string;
+  appointmentLocation: string; // can be blank when draft
   roomToBook: string | null;
   bookingMandatory: boolean;
   membersOnly: boolean;
@@ -50,6 +50,7 @@ export interface Activity {
   author: AuditUser;
   lastModifier: AuditUser | null;
   report?: ActivityReport;
+  draft: boolean;
 }
 
 export interface ActivityType {
@@ -117,8 +118,19 @@ export class ActivityService {
     this.animatorCollection = collection(firestore, 'animators') as CollectionReference<Animator>;
   }
 
-  findAll(): Observable<Array<Activity>> {
-    return collectionData(query(this.activityCollection, orderBy('startDate', 'desc')));
+  findVisible(): Observable<Array<Activity>> {
+    return combineLatest([
+      this.currentUserService.getCurrentUser(),
+      collectionData(query(this.activityCollection, orderBy('startDate', 'desc')))
+    ]).pipe(
+      map(([currentUser, activities]) =>
+        activities.filter(a => this.isActivityVisibleBy(a, currentUser))
+      )
+    );
+  }
+
+  findNonDraft(): Observable<Array<Activity>> {
+    return this.findVisible().pipe(map(activities => activities.filter(a => !a.draft)));
   }
 
   findMine(): Observable<Array<Activity>> {
@@ -206,6 +218,13 @@ export class ActivityService {
       updateDoc(doc(this.activityCollection, id), {
         report: deleteField()
       })
+    );
+  }
+
+  private isActivityVisibleBy(activity: Activity, currentUser: CurrentUser | null): boolean {
+    return (
+      !!currentUser &&
+      (!activity.draft || currentUser.admin || currentUser.user.uid === activity.author.uid)
     );
   }
 }

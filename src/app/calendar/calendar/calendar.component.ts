@@ -40,14 +40,14 @@ export class CalendarComponent {
   };
 
   constructor(activityService: ActivityService) {
-    this.vm$ = combineLatest([this.yearSubject, activityService.findAll()]).pipe(
+    this.vm$ = combineLatest([this.yearSubject, activityService.findVisible()]).pipe(
       map(([year, activities]) => {
         // reverse to have them in chronological order, since the backend retturns them in anti-chronological order
         const yearActivities = activities
           .filter(activity => this.isInYear(activity, year))
           .reverse();
-        const reportActivities = yearActivities.filter(activity =>
-          this.isStartInYear(activity, year)
+        const reportActivities = yearActivities.filter(
+          activity => !activity.draft && this.isStartInYear(activity, year)
         );
         const months: Array<Month> = [];
         for (let m = 1; m <= 12; m++) {
@@ -82,7 +82,7 @@ export class CalendarComponent {
 
   private isInMonth(activity: Activity, month: YearMonth) {
     const startMonth = localDateToYearMonth(activity.startDate);
-    const endMonth = localDateToYearMonth(activity.endDate);
+    const endMonth = localDateToYearMonth(activity.endDate ?? activity.startDate);
     return month >= startMonth && month <= endMonth;
   }
 
@@ -99,11 +99,11 @@ export class CalendarComponent {
       return date.substring(8);
     }
 
-    if (startDate === endDate) {
+    if (startDate === endDate || !endDate) {
       return localDateToDay(startDate);
     } else {
       const startMonth = localDateToYearMonth(startDate);
-      const endMonth = localDateToYearMonth(endDate);
+      const endMonth = localDateToYearMonth(endDate ?? startDate);
       if (startMonth === endMonth) {
         return `${localDateToDay(startDate)}-${localDateToDay(endDate)}`;
       } else if (startMonth === month) {

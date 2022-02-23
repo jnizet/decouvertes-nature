@@ -1,5 +1,8 @@
 <ng-container *ngIf="activity$ | async as activity">
-  <h1>{{ activity.title }}</h1>
+  <h1>
+    {{ activity.title }}
+    <small *ngIf="activity.draft" class="text-warning"> &ndash; brouillon </small>
+  </h1>
   <div class="border rounded p-3">
     <div class="row gy-3">
       <div class="col-lg-4">
@@ -15,13 +18,13 @@
       </div>
       <div class="col-lg-4 d-flex align-items-stretch">
         <div class="info-card rounded p-2 flex-grow-1">
-          <div>
+          <div *ngIf="activity.location">
             <dn-icon class="me-1" [icon]="icons.location"></dn-icon>
             <span class="visually-hidden">Lieu</span>
             <span>{{ activity.location }}</span>
             <span *ngIf="activity.intercommunality"> &ndash; {{ activity.intercommunality }}</span>
           </div>
-          <div>
+          <div *ngIf="activity.appointmentLocation">
             <dn-icon class="me-1" [icon]="icons.appointmentLocation"></dn-icon>
             <span class="visually-hidden">Lieu de rendez-vous</span>
             <span>{{ activity.appointmentLocation }}</span>

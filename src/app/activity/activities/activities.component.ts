@@ -21,7 +21,7 @@ export class ActivitiesComponent {
   constructor(route: ActivatedRoute, activityService: ActivityService) {
     const activities$ =
       route.snapshot.data['mode'] === 'all'
-        ? activityService.findAll()
+        ? activityService.findVisible()
         : activityService.findMine();
     this.months$ = activities$.pipe(
       map(activities => {

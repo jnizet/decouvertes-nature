@@ -52,6 +52,6 @@ async function createActivity(page: Page) {
   await page.fill(`text=Début de l'activité`, '2023-10-01');
   await page.fill(`text=Heure de rendez-vous`, '10:00');
   await page.fill(`text=Heure de fin de l'activité`, '15:00');
-  await page.click('text=Enregistrer');
+  await page.click('#save-button');
   await test.expect(page.locator('h1')).toHaveText(title);
 }

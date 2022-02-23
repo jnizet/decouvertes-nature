@@ -10,4 +10,8 @@
   &.card-cancelled {
     border-left-color: $danger;
   }
+
+  &.card-draft {
+    border-left-color: $warning;
+  }
 }

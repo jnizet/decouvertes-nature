@@ -34,14 +34,14 @@ test.describe('Activities', () => {
     await newLabelInput.press('Enter');
     await page.check('text="Some new label"');
 
-    await page.click('text=Enregistrer');
+    await page.click('#save-button');
 
     await test.expect(page.locator('h1')).toHaveText(title);
     await page.click('text=Modifier');
 
     const newTitle = randomString();
     await page.fill('text=Titre', newTitle);
-    await page.click('text=Enregistrer');
+    await page.click('#save-button');
 
     await page.click('text=Activités');
     await test.expect(page.locator('h3', { hasText: newTitle })).toHaveCount(1);

@@ -3,10 +3,17 @@
 .day-range {
   background-color: $primary;
   font-size: 0.85rem;
+  color: $light;
   &.day-range-done {
     background-color: $success;
+    color: $light;
   }
   &.day-range-cancelled {
     background-color: $danger;
+    color: $light;
+  }
+  &.day-range-draft {
+    background-color: $warning;
+    color: $dark;
   }
 }

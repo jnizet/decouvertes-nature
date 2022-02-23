@@ -58,7 +58,7 @@ export class ExportableActivitiesComponent {
     };
     this.form = new FormGroup(formConfig);
 
-    const activities$ = activityService.findAll();
+    const activities$ = activityService.findNonDraft();
     const filter$ = this.form.valueChanges.pipe(startWith(this.form.value));
     const filteredActivities$ = combineLatest([activities$, filter$]).pipe(
       map(([activities, filter]) => this.filteredActivities(activities, filter))
