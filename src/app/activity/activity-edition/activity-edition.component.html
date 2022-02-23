@@ -255,14 +255,38 @@
             class="form-control"
             id="comment"
             rows="4"
-            placeholder="Saisissez ici tout commentaire qui vous semblerait utile concernant cette activité, en particulier ce qui peut être nécessaire à la LPO."
+            placeholder="Saisissez ici tout commentaire qui vous semblerait utile concernant cette activité, en particulier ce qui peut être nécessaire à la LPO. S'il s'agit d'un brouillon, indiquez ce qui est encore inconnu."
           ></textarea>
         </div>
       </div>
     </div>
 
-    <div class="text-end">
-      <button class="btn btn-primary" [disabled]="(saving.isSpinning | async) === true">
+    <div class="d-grid gap-2 d-sm-block text-sm-end">
+      <button
+        *ngIf="maySaveAsDraft"
+        class="btn btn-warning me-sm-2"
+        [disabled]="(savingWhateverTheMode$ | async) === true"
+        (click)="draftManager.switchTo('draft')"
+      >
+        <dn-icon
+          class="me-1"
+          [icon]="icons.saveAsDraft"
+          *ngIf="(savingAsDraft.isSpinning | async) === false"
+        ></dn-icon>
+        <div
+          *ngIf="(savingAsDraft.isSpinning | async) === true"
+          class="spinner-border spinner-border-sm me-1"
+          role="status"
+        ></div>
+        Enregistrer en brouillon
+      </button>
+
+      <button
+        class="btn btn-primary"
+        [disabled]="(savingWhateverTheMode$ | async) === true"
+        (click)="draftManager.switchTo('final')"
+        id="save-button"
+      >
         <dn-icon
           class="me-1"
           [icon]="icons.save"

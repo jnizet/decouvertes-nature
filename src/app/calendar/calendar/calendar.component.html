@@ -37,15 +37,17 @@
         </div>
         <div *ngFor="let activity of month.activities">
           <span
-            class="text-light px-1 rounded day-range"
+            class="px-1 rounded day-range"
             aria-hidden="true"
             [class.day-range-done]="activity.report && !activity.report.cancelled"
             [class.day-range-cancelled]="activity.report?.cancelled"
+            [class.day-range-draft]="activity.draft"
             >{{ activity.dayRange }}</span
           >
           <span class="visually-hidden">{{ activity | activityDate }}</span>
           <a [routerLink]="['/activities', activity.id]">
             {{ activity.title }}
+            <small *ngIf="activity.draft" class="text-warning">&ndash; brouillon</small>
           </a>
         </div>
       </div>

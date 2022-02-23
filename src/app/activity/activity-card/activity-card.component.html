@@ -3,7 +3,10 @@
     <div class="row">
       <div class="col">
         <a [routerLink]="['/activities', activity.id]">
-          <h3 class="card-title fs-4">{{ activity.title }}</h3>
+          <h3 class="card-title fs-4">
+            {{ activity.title }}
+            <small *ngIf="activity.draft" class="text-warning">&ndash; brouillon</small>
+          </h3>
         </a>
       </div>
       <div class="col-auto">
@@ -20,7 +23,7 @@
   </div>
   <div class="col-lg-4">
     <div class="info-card rounded p-2 mt-2 mt-md-0">
-      <div>
+      <div *ngIf="activity.location">
         <dn-icon class="me-1" [icon]="icons.location"></dn-icon>
         <span class="visually-hidden">Lieu</span>
         {{ activity.location }}

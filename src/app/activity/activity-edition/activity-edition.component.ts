@@ -9,6 +9,7 @@ import {
 } from '../activity.service';
 import { ALL_MUNICIPALITIES, Municipality } from '../../shared/municipalities';
 import {
+  combineLatest,
   debounceTime,
   distinctUntilChanged,
   first,
@@ -21,15 +22,15 @@ import {
   switchMap
 } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
-import { fileArrowUp } from '../../bootstrap-icons/bootstrap-icons';
+import { fileArrowUp, journalArrowUp } from '../../bootstrap-icons/bootstrap-icons';
 import { CurrentUserService } from '../../current-user.service';
 import { Spinner } from '../../shared/spinner';
 
 interface Timing {
   startDate: LocalDate | null;
   endDate: LocalDate | null;
-  startTime: LocalTime;
-  endTime: LocalTime;
+  startTime: LocalTime | null;
+  endTime: LocalTime | null;
 }
 
 interface FormValue {
@@ -72,6 +73,43 @@ const KNOWN_LABELS = [
 ];
 const KNOWN_ORGANIZATIONS = ['Ocivélo', 'Vélo en Forez', 'Lerpt-Environnement', 'Astrojupiter'];
 
+const requiredExceptWhenDraft: ValidatorFn = ctrl => {
+  return Validators.required(ctrl) ? { requiredExceptWhenDraft: true } : null;
+};
+
+class DraftManager {
+  private fieldsAndValidators: Array<[AbstractControl, ValidatorFn]> = [];
+  private _mode: 'draft' | 'final' = 'draft';
+
+  initialize(form: FormGroup, maySaveAsDraft: boolean) {
+    const requiredValidator = maySaveAsDraft ? requiredExceptWhenDraft : Validators.required;
+    this.fieldsAndValidators = [
+      [form.get('description')!, requiredValidator],
+      [form.get('timing.startTime')!, requiredValidator],
+      [form.get('timing.endDate')!, requiredValidator],
+      [form.get('timing.endTime')!, requiredValidator],
+      [form.get('location')!, requiredValidator],
+      [form.get('appointmentLocation')!, requiredValidator]
+    ];
+  }
+
+  switchTo(mode: 'draft' | 'final') {
+    if (this._mode !== mode) {
+      this._mode = mode;
+      if (mode === 'draft') {
+        this.fieldsAndValidators.forEach(([ctrl, validator]) => ctrl.removeValidators(validator));
+      } else {
+        this.fieldsAndValidators.forEach(([ctrl, validator]) => ctrl.addValidators(validator));
+      }
+      this.fieldsAndValidators.forEach(([ctrl]) => ctrl.updateValueAndValidity());
+    }
+  }
+
+  get mode() {
+    return this._mode;
+  }
+}
+
 @Component({
   selector: 'dn-activity-edition',
   templateUrl: './activity-edition.component.html',
@@ -100,7 +138,7 @@ export class ActivityEditionComponent {
       )
     );
   readonly locationInputFormatter: (m: string | Municipality) => string = m =>
-    typeof m === 'string' ? m : m.name;
+    m ? (typeof m === 'string' ? m : m.name) : '';
   readonly locationResultFormatter: (m: Municipality) => string = m =>
     `${m.name} - ${m.postalCode}`;
 
@@ -132,9 +170,17 @@ export class ActivityEditionComponent {
   readonly knownLabels = KNOWN_LABELS;
   readonly knownOrganizations = KNOWN_ORGANIZATIONS;
   readonly icons = {
-    save: fileArrowUp
+    save: fileArrowUp,
+    saveAsDraft: journalArrowUp
   };
   readonly saving = new Spinner();
+  readonly savingAsDraft = new Spinner();
+  readonly savingWhateverTheMode$ = combineLatest([
+    this.saving.isSpinning,
+    this.savingAsDraft.isSpinning
+  ]).pipe(map(([saving, savingAsDraft]) => saving || savingAsDraft));
+
+  readonly draftManager = new DraftManager();
 
   constructor(
     route: ActivatedRoute,
@@ -146,27 +192,27 @@ export class ActivityEditionComponent {
     const priceCtrl = new FormControl(null, [Validators.required, Validators.min(0)]);
 
     const startDateCtrl = new FormControl(null, Validators.required);
-    const endDateCtrl = new FormControl(null, Validators.required);
+    const endDateCtrl = new FormControl(null);
 
     const timingConfig: Record<keyof Timing, any> = {
       startDate: startDateCtrl,
-      startTime: new FormControl(null, Validators.required),
+      startTime: new FormControl(null),
       endDate: endDateCtrl,
-      endTime: new FormControl(null, Validators.required)
+      endTime: new FormControl(null)
     };
 
     const afterStartValidator: ValidatorFn = control => validateTiming(control);
     const timingFormGroup = new FormGroup(timingConfig, { validators: afterStartValidator });
 
-    const locationCtrl = new FormControl(null, Validators.required);
+    const locationCtrl = new FormControl(null);
     const intercommunalityCtrl = new FormControl('');
-    const appointmentLocationCtrl = new FormControl('', Validators.required);
+    const appointmentLocationCtrl = new FormControl('');
 
     const config: Record<keyof FormValue, any> = {
       type: new FormControl(null, Validators.required),
       title: new FormControl('', Validators.required),
       animator: new FormControl('', Validators.required),
-      description: new FormControl('', Validators.required),
+      description: new FormControl(''),
       timing: timingFormGroup,
       location: locationCtrl,
       intercommunality: intercommunalityCtrl,
@@ -193,6 +239,8 @@ export class ActivityEditionComponent {
       .subscribe(activity => {
         this.mode = activity ? (route.snapshot.data['duplicate'] ? 'duplicate' : 'edit') : 'create';
         this.editedActivity = activity;
+        this.draftManager.initialize(this.form, this.maySaveAsDraft);
+        this.draftManager.switchTo('final');
 
         if (activity) {
           const formValue: FormValue = {
@@ -267,6 +315,10 @@ export class ActivityEditionComponent {
       });
   }
 
+  get maySaveAsDraft() {
+    return !this.editedActivity || this.editedActivity.draft;
+  }
+
   save() {
     if (this.form.invalid) {
       return;
@@ -299,16 +351,18 @@ export class ActivityEditionComponent {
         this.mode === 'edit'
           ? this.editedActivity!.author
           : this.currentUserService.getCurrentAuditUser(),
-      lastModifier: this.mode === 'edit' ? this.currentUserService.getCurrentAuditUser() : null
+      lastModifier: this.mode === 'edit' ? this.currentUserService.getCurrentAuditUser() : null,
+      draft: this.draftManager.mode === 'draft'
     };
 
+    const spinner = this.draftManager.mode === 'draft' ? this.savingAsDraft : this.saving;
     const result$ =
       this.mode === 'create' || this.mode === 'duplicate'
         ? this.activityService.create(command)
         : this.activityService
             .update(this.editedActivity!.id, command)
             .pipe(map(() => this.editedActivity!));
-    result$.pipe(this.saving.spinUntilFinalization()).subscribe(activity => {
+    result$.pipe(spinner.spinUntilFinalization()).subscribe(activity => {
       this.router.navigate(['/activities', activity.id]);
     });
   }
