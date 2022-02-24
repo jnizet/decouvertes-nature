@@ -65,4 +65,35 @@ test.describe('Activities', () => {
     await test.expect(page.locator('h1')).toHaveText('Activités');
     await test.expect(page.locator('h3', { hasText: newTitle })).toHaveCount(0);
   });
+
+  test('should create and modify draft activities', async ({ page }) => {
+    await page.click('text=Activités');
+    await page.click('text=Créer une activité');
+
+    const title = randomString();
+    await page.fill('text=Titre', title);
+    await page.selectOption(`text=Type d'activité`, { label: 'Atelier' });
+    await page.fill('text=Animateur / Organisateur', 'Adama Doumbouya');
+    await page.fill(`text=Début de l'activité`, '2023-10-01');
+
+    await page.click('text="Enregistrer en brouillon"');
+
+    await test.expect(page.locator('h1')).toContainText(title);
+    await test.expect(page.locator('h1')).toContainText('brouillon');
+    await page.click('text=Modifier');
+
+    const newTitle = randomString();
+    await page.fill('text=Titre', newTitle);
+    await page.click('text="Enregistrer en brouillon"');
+
+    await page.click('text=Activités');
+    await test.expect(page.locator('h3', { hasText: newTitle })).toHaveCount(1);
+    await test.expect(page.locator('h3', { hasText: newTitle })).toContainText('brouillon');
+
+    await page.click('text=Mes activités');
+    await test.expect(page.locator('h3', { hasText: newTitle })).toHaveCount(1);
+
+    await page.click('text=Exports');
+    await test.expect(page.locator('h3', { hasText: newTitle })).toHaveCount(0);
+  });
 });
