@@ -81,7 +81,8 @@
               "browserTarget": "decouvertes-nature:build:development"
             },
             "e2e": {
-              "browserTarget": "decouvertes-nature:build:e2e"
+              "browserTarget": "decouvertes-nature:build:e2e",
+              "port": 4201
             }
           },
           "defaultConfiguration": "development"
