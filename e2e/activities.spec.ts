@@ -79,7 +79,7 @@ test.describe('Activities', () => {
     await page.click('text="Enregistrer en brouillon"');
 
     await test.expect(page.locator('h1')).toContainText(title);
-    await test.expect(page.locator('h1')).toContainText('brouillon');
+    await test.expect(page.locator('.badge:has-text("brouillon")')).toHaveCount(1);
     await page.click('text=Modifier');
 
     const newTitle = randomString();
@@ -88,7 +88,7 @@ test.describe('Activities', () => {
 
     await page.click('text=Activités');
     await test.expect(page.locator('h3', { hasText: newTitle })).toHaveCount(1);
-    await test.expect(page.locator('h3', { hasText: newTitle })).toContainText('brouillon');
+    await test.expect(page.locator('.card', { hasText: newTitle })).toContainText('brouillon');
 
     await page.click('text=Mes activités');
     await test.expect(page.locator('h3', { hasText: newTitle })).toHaveCount(1);
