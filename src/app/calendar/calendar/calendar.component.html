@@ -47,7 +47,7 @@
           <span class="visually-hidden">{{ activity | activityDate }}</span>
           <a [routerLink]="['/activities', activity.id]">
             {{ activity.title }}
-            <small *ngIf="activity.draft" class="text-warning">&ndash; brouillon</small>
+            <span *ngIf="activity.draft" class="badge bg-warning text-black">brouillon</span>
           </a>
         </div>
       </div>

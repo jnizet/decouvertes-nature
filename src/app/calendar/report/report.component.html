@@ -1,6 +1,6 @@
 <div class="row g-2">
   <div class="col-lg">
-    <div class="border bg-light rounded h-100 p-2">
+    <div class="border border-2 border-secondary rounded h-100 p-2 text-secondary">
       <div class="number">{{ total | number }}</div>
       <div class="legend">
         {{ total > 1 ? 'activités prévues' : 'activité prévue' }}
@@ -8,7 +8,7 @@
     </div>
   </div>
   <div class="col-lg">
-    <div class="border bg-light rounded h-100 p-2 text-success">
+    <div class="border border-2 border-success rounded h-100 p-2 text-success">
       <div class="number">{{ done | number }}</div>
       <div class="legend">
         {{ done > 1 ? 'activités réalisées' : 'activité réalisée' }}
@@ -17,13 +17,13 @@
     </div>
   </div>
   <div class="col-lg">
-    <div class="border bg-light rounded h-100 p-2 text-success">
+    <div class="border border-2 border-success rounded h-100 p-2 text-success">
       <div class="number">{{ participants | number }}</div>
       <div class="legend">{{ participants > 1 ? 'participants' : 'participant' }}</div>
     </div>
   </div>
   <div class="col-lg">
-    <div class="border bg-light rounded h-100 p-2 text-danger">
+    <div class="border border-2 border-danger rounded h-100 p-2 text-danger">
       <div class="number">{{ cancelled | number }}</div>
       <div class="legend">
         {{ cancelled > 1 ? 'activités annulées' : 'activité annulée' }}
@@ -32,7 +32,7 @@
     </div>
   </div>
   <div class="col-lg">
-    <div class="border bg-light rounded h-100 p-2 text-primary">
+    <div class="border border-2 border-primary rounded h-100 p-2 text-primary">
       <div class="number">{{ withoutReport | number }}</div>
       <div class="legend">
         {{ withoutReport > 1 ? 'activités sans rapport' : 'activité sans rapport' }}
