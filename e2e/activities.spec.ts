@@ -44,17 +44,17 @@ test.describe('Activities', () => {
     await page.click('#save-button');
 
     await page.click('text=Activités');
-    await test.expect(page.locator('h3', { hasText: newTitle })).toHaveCount(1);
+    await test.expect(page.locator('h3', { hasText: newTitle })).toBeVisible();
 
     await page.click('text=Mes activités');
-    await test.expect(page.locator('h3', { hasText: newTitle })).toHaveCount(1);
+    await test.expect(page.locator('h3', { hasText: newTitle })).toBeVisible();
 
     await page.click('text=Exports');
-    await test.expect(page.locator('h3', { hasText: newTitle })).toHaveCount(1);
+    await test.expect(page.locator('h3', { hasText: newTitle })).toBeVisible();
     await page.fill(`text="Filtre sur l'intercommunalité"`, 'oulala');
-    await test.expect(page.locator('h3', { hasText: newTitle })).toHaveCount(0);
+    await test.expect(page.locator('h3', { hasText: newTitle })).toBeHidden();
     await page.fill(`text="Filtre sur l'intercommunalité"`, 'forez');
-    await test.expect(page.locator('h3', { hasText: newTitle })).toHaveCount(1);
+    await test.expect(page.locator('h3', { hasText: newTitle })).toBeVisible();
 
     await page.click('text=Activités');
     await page.click('text=Mes activités');
@@ -63,7 +63,7 @@ test.describe('Activities', () => {
     await page.click('text=Oui');
 
     await test.expect(page.locator('h1')).toHaveText('Activités');
-    await test.expect(page.locator('h3', { hasText: newTitle })).toHaveCount(0);
+    await test.expect(page.locator('h3', { hasText: newTitle })).toBeHidden();
   });
 
   test('should create and modify draft activities', async ({ page }) => {
@@ -79,7 +79,7 @@ test.describe('Activities', () => {
     await page.click('text="Enregistrer en brouillon"');
 
     await test.expect(page.locator('h1')).toContainText(title);
-    await test.expect(page.locator('.badge:has-text("brouillon")')).toHaveCount(1);
+    await test.expect(page.locator('.badge:has-text("brouillon")')).toBeVisible();
     await page.click('text=Modifier');
 
     const newTitle = randomString();
@@ -87,13 +87,13 @@ test.describe('Activities', () => {
     await page.click('text="Enregistrer en brouillon"');
 
     await page.click('text=Activités');
-    await test.expect(page.locator('h3', { hasText: newTitle })).toHaveCount(1);
+    await test.expect(page.locator('h3', { hasText: newTitle })).toBeVisible();
     await test.expect(page.locator('.card', { hasText: newTitle })).toContainText('brouillon');
 
     await page.click('text=Mes activités');
-    await test.expect(page.locator('h3', { hasText: newTitle })).toHaveCount(1);
+    await test.expect(page.locator('h3', { hasText: newTitle })).toBeVisible();
 
     await page.click('text=Exports');
-    await test.expect(page.locator('h3', { hasText: newTitle })).toHaveCount(0);
+    await test.expect(page.locator('h3', { hasText: newTitle })).toBeHidden();
   });
 });

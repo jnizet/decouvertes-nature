@@ -13,11 +13,11 @@ test.describe('Activity report', () => {
 
     const reportForm = page.locator('dn-activity-report-edition');
     const participantsInput = reportForm.locator('text="Nombre de participants"');
-    await test.expect(participantsInput).toHaveCount(1);
+    await test.expect(participantsInput).toBeVisible();
     await reportForm.locator('text="Activité annulée"').check();
-    await test.expect(participantsInput).toHaveCount(0);
+    await test.expect(participantsInput).toBeHidden();
     await reportForm.locator('text="Activité annulée"').uncheck();
-    await test.expect(participantsInput).toHaveCount(1);
+    await test.expect(participantsInput).toBeVisible();
     await participantsInput.fill('5');
     await page.click('text=Enregistrer');
 
