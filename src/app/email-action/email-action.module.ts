@@ -5,6 +5,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { ValidationModule } from '../validation/validation.module';
 import { RouterModule } from '@angular/router';
 import { EMAIL_ACTION_ROUTES } from './email-action.routes';
+import { PageTitleModule } from '../page-title/page-title.module';
 
 @NgModule({
   declarations: [EmailActionComponent],
@@ -12,7 +13,8 @@ import { EMAIL_ACTION_ROUTES } from './email-action.routes';
     CommonModule,
     RouterModule.forChild(EMAIL_ACTION_ROUTES),
     ReactiveFormsModule,
-    ValidationModule
+    ValidationModule,
+    PageTitleModule
   ]
 })
 export class EmailActionModule {}

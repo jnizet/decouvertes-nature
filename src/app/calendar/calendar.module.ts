@@ -7,6 +7,7 @@ import { MonthPipeModule } from '../month-pipe/month-pipe.module';
 import { IconModule } from '../icon/icon.module';
 import { ActivityDatePipeModule } from '../activity-date-pipe/activity-date-pipe.module';
 import { ReportComponent } from './report/report.component';
+import { PageTitleModule } from '../page-title/page-title.module';
 
 @NgModule({
   declarations: [CalendarComponent, ReportComponent],
@@ -15,7 +16,8 @@ import { ReportComponent } from './report/report.component';
     RouterModule.forChild(CALENDAR_ROUTES),
     MonthPipeModule,
     IconModule,
-    ActivityDatePipeModule
+    ActivityDatePipeModule,
+    PageTitleModule
   ]
 })
 export class CalendarModule {}

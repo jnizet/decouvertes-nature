@@ -5,6 +5,7 @@ import { ValidationModule } from '../validation/validation.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { CHANGE_PASSWORD_ROUTES } from './change-password.routes';
+import { PageTitleModule } from '../page-title/page-title.module';
 
 @NgModule({
   declarations: [ChangePasswordComponent],
@@ -12,7 +13,8 @@ import { CHANGE_PASSWORD_ROUTES } from './change-password.routes';
     CommonModule,
     RouterModule.forChild(CHANGE_PASSWORD_ROUTES),
     ReactiveFormsModule,
-    ValidationModule
+    ValidationModule,
+    PageTitleModule
   ]
 })
 export class ChangePasswordModule {}

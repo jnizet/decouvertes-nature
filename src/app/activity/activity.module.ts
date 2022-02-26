@@ -20,6 +20,7 @@ import { ExportableActivitiesComponent } from './exportable-activities/exportabl
 import { ExportableActivityComponent } from './exportable-activity/exportable-activity.component';
 import { ActivityReportComponent } from './activity-report/activity-report.component';
 import { ActivityReportEditionComponent } from './activity-report-edition/activity-report-edition.component';
+import { PageTitleModule } from '../page-title/page-title.module';
 
 @NgModule({
   declarations: [
@@ -44,7 +45,8 @@ import { ActivityReportEditionComponent } from './activity-report-edition/activi
     ActivityTypePipeModule,
     IconModule,
     ConfirmModule,
-    MonthPipeModule
+    MonthPipeModule,
+    PageTitleModule
   ]
 })
 export class ActivityModule {}
