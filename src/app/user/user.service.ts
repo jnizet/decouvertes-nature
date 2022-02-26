@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { from, map, Observable } from 'rxjs';
+import { defer, map, Observable } from 'rxjs';
 import { Functions, httpsCallable } from '@angular/fire/functions';
 
 export interface AdministeredUser {
@@ -20,11 +20,8 @@ export class UserService {
   constructor(private functions: Functions) {}
 
   listUsers(): Observable<Array<AdministeredUser>> {
-    const listUsers = httpsCallable<void, Array<AdministeredUser>>(
-      this.functions,
-      'listUsers'
-    )(undefined);
-    return from(listUsers).pipe(
+    const listUsers = httpsCallable<void, Array<AdministeredUser>>(this.functions, 'listUsers');
+    return defer(() => listUsers()).pipe(
       map(r =>
         r.data.sort((a, b) => {
           const n1 = a.displayName.toLocaleLowerCase();
@@ -36,23 +33,20 @@ export class UserService {
   }
 
   get(uid: string): Observable<AdministeredUser> {
-    const getUser = httpsCallable<string, AdministeredUser>(this.functions, 'getUser')(uid);
-    return from(getUser).pipe(map(r => r.data));
+    const getUser = httpsCallable<string, AdministeredUser>(this.functions, 'getUser');
+    return defer(() => getUser(uid)).pipe(map(r => r.data));
   }
 
   create(command: AdministeredUserCommand): Observable<AdministeredUser> {
     const createUser = httpsCallable<AdministeredUserCommand, AdministeredUser>(
       this.functions,
       'createUser'
-    )(command);
-    return from(createUser).pipe(map(r => r.data));
+    );
+    return defer(() => createUser(command)).pipe(map(r => r.data));
   }
 
   update(uid: string, command: AdministeredUserCommand): Observable<void> {
-    const updateUser = httpsCallable<AdministeredUser, void>(
-      this.functions,
-      'updateUser'
-    )({ ...command, uid });
-    return from(updateUser).pipe(map(r => r.data));
+    const updateUser = httpsCallable<AdministeredUser, void>(this.functions, 'updateUser');
+    return defer(() => updateUser({ ...command, uid })).pipe(map(r => r.data));
   }
 }

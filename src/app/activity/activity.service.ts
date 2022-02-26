@@ -14,7 +14,18 @@ import {
   updateDoc,
   where
 } from '@angular/fire/firestore';
-import { combineLatest, EMPTY, first, from, map, mapTo, Observable, switchMap, tap } from 'rxjs';
+import {
+  combineLatest,
+  defer,
+  EMPTY,
+  first,
+  from,
+  map,
+  mapTo,
+  Observable,
+  switchMap,
+  tap
+} from 'rxjs';
 import { LocalDate, LocalTime } from '../shared/types';
 import { AuditUser, CurrentUser, CurrentUserService } from '../current-user.service';
 
@@ -149,13 +160,13 @@ export class ActivityService {
       ...command,
       id: document.id
     };
-    return from(setDoc(document, activity))
+    return defer(() => setDoc(document, activity))
       .pipe(mapTo(activity))
       .pipe(tap(() => this.addAnimatorIfNecessary(command.animator)));
   }
 
   update(id: string, command: ActivityCommand): Observable<void> {
-    return from(
+    return defer(() =>
       setDoc(doc(this.activityCollection, id), {
         ...command,
         id
@@ -165,7 +176,7 @@ export class ActivityService {
 
   updateReport(id: string, command: ActivityReportCommand): Observable<void> {
     const report = command;
-    return from(
+    return defer(() =>
       updateDoc(doc(this.activityCollection, id), {
         report
       })
@@ -210,11 +221,11 @@ export class ActivityService {
   }
 
   deleteActivity(id: string): Observable<void> {
-    return from(deleteDoc(doc(this.activityCollection, id)));
+    return defer(() => deleteDoc(doc(this.activityCollection, id)));
   }
 
   deleteReport(id: string) {
-    return from(
+    return defer(() =>
       updateDoc(doc(this.activityCollection, id), {
         report: deleteField()
       })
