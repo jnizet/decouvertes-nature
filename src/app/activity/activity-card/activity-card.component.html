@@ -3,21 +3,23 @@
     <div class="row">
       <div class="col">
         <a [routerLink]="['/activities', activity.id]">
-          <h3 class="card-title fs-4">
-            {{ activity.title }}
-            <small *ngIf="activity.draft" class="text-warning">&ndash; brouillon</small>
-          </h3>
+          <h3 class="card-title fs-4">{{ activity.title }}</h3>
         </a>
+        <div class="row align-items-baseline">
+          <div class="col-sm">
+            <dn-icon class="me-1" [icon]="icons.date"></dn-icon>
+            <span class="visually-hidden">Date de l'activité</span>
+            <strong>{{ activity | activityDate }}</strong>
+          </div>
+        </div>
       </div>
-      <div class="col-auto">
-        <div class="badge bg-dark">{{ activity.type | activityType }}</div>
-      </div>
-    </div>
-    <div class="row align-items-baseline">
-      <div class="col-sm">
-        <dn-icon class="me-1" [icon]="icons.date"></dn-icon>
-        <span class="visually-hidden">Date de l'activité</span>
-        <strong>{{ activity | activityDate }}</strong>
+      <div class="col-auto text-end">
+        <div>
+          <div class="badge bg-dark">{{ activity.type | activityType }}</div>
+        </div>
+        <div *ngIf="activity.draft">
+          <div class="badge bg-warning text-black mt-1">brouillon</div>
+        </div>
       </div>
     </div>
   </div>
