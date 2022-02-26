@@ -1,17 +1,19 @@
-import { AfterViewInit, Directive, ElementRef, HostBinding, Input } from '@angular/core';
+import { Directive, HostBinding, Input } from '@angular/core';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 
 @Directive({
   selector: 'dn-icon'
 })
-export class IconDirective implements AfterViewInit {
-  @Input() icon!: string;
+export class IconDirective {
+  @HostBinding('innerHTML')
+  safeIcon?: SafeHtml;
 
-  constructor(private element: ElementRef) {}
-
-  ngAfterViewInit(): void {
-    this.element.nativeElement.innerHTML = this.icon;
+  @Input() set icon(icon: string) {
+    this.safeIcon = this.sanitizer.bypassSecurityTrustHtml(icon);
   }
 
   @HostBinding('attr.aria-hidden')
   ariaHidden = true;
+
+  constructor(private sanitizer: DomSanitizer) {}
 }
