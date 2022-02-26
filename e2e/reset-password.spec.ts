@@ -8,8 +8,8 @@ test.describe('Reset password', () => {
     await page.fill('text=Adresse email', 'jnizet@gmail.com');
     await page.click('text=Réinitialiser');
 
-    await test.expect(page.locator('text=Adresse email')).toHaveCount(0);
-    await test.expect(page.locator('text=Réinitialiser')).toHaveCount(0);
+    await test.expect(page.locator('text=Adresse email')).toBeHidden();
+    await test.expect(page.locator('text=Réinitialiser')).toBeHidden();
     await test.expect(page.locator('text=Un email vous a été envoyé')).toBeVisible();
   });
 });
