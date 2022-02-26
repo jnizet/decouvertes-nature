@@ -7,6 +7,7 @@ import { IconModule } from '../icon/icon.module';
 import { UserEditionComponent } from './user-edition/user-edition.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ValidationModule } from '../validation/validation.module';
+import { PageTitleModule } from '../page-title/page-title.module';
 
 @NgModule({
   declarations: [UsersComponent, UserEditionComponent],
@@ -15,7 +16,8 @@ import { ValidationModule } from '../validation/validation.module';
     RouterModule.forChild(USER_ROUTES),
     IconModule,
     ReactiveFormsModule,
-    ValidationModule
+    ValidationModule,
+    PageTitleModule
   ]
 })
 export class UserModule {}

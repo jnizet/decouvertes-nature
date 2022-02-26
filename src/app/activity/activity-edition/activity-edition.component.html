@@ -1,4 +1,7 @@
 <ng-container *ngIf="mode">
+  <dn-page-title
+    [title]="mode === 'edit' ? editedActivity!.title : 'Nouvelle activité'"
+  ></dn-page-title>
   <h1 *ngIf="mode === 'create' || mode === 'duplicate'">Création d'une nouvelle activité</h1>
   <h1 *ngIf="mode === 'edit'">
     Modification de l'activité <em>{{ editedActivity!.title }}</em>

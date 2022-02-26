@@ -17,12 +17,11 @@ interface Month {
 })
 export class ActivitiesComponent {
   months$: Observable<Array<Month>>;
-
+  mode: 'all' | 'mine';
   constructor(route: ActivatedRoute, activityService: ActivityService) {
+    this.mode = route.snapshot.data['mode'];
     const activities$ =
-      route.snapshot.data['mode'] === 'all'
-        ? activityService.findVisible()
-        : activityService.findMine();
+      this.mode === 'all' ? activityService.findVisible() : activityService.findMine();
     this.months$ = activities$.pipe(
       map(activities => {
         const activitiesByMonth = new Map<LocalDate, Array<Activity>>();
