@@ -1,5 +1,14 @@
 @import '../../../common';
 
+.border-md {
+  border: 0;
+}
+@include media-breakpoint-up(md) {
+  .border-md {
+    border: 1px solid $border-color;
+  }
+}
+
 .day-range {
   background-color: $primary;
   font-size: 0.85rem;
