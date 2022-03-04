@@ -65,13 +65,14 @@ function validateTiming(timingFormGroup: AbstractControl) {
 
 const KNOWN_ROOMS_TO_BOOK = ['Maison de la Nature'];
 const KNOWN_LABELS = [
-  'Office du Tourisme de Saint-Etienne',
-  'Journée Mondiale des Zones Humides',
   'Fête de la Nature',
+  'Journée Mondiale des Zones Humides',
   'Nuit de la chouette',
-  'Nuit de la Chauve-souris'
+  'Nuit de la Chauve-souris',
+  'Office du Tourisme de Saint-Etienne',
+  'Refuge LPO'
 ];
-const KNOWN_ORGANIZATIONS = ['Ocivélo', 'Vélo en Forez', 'Lerpt-Environnement', 'Astrojupiter'];
+const KNOWN_ORGANIZATIONS = ['Astrojupiter', 'Lerpt-Environnement', 'Ocivélo', 'Vélo en Forez'];
 
 const requiredExceptWhenDraft: ValidatorFn = ctrl => {
   return Validators.required(ctrl) ? { requiredExceptWhenDraft: true } : null;
