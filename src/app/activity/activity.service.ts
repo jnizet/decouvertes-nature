@@ -117,8 +117,7 @@ export const ALL_ACTIVITY_TYPES: ReadonlyArray<ActivityType> = [
   },
   {
     key: 'AUTRE',
-    label: 'Autre',
-    example: 'Préciser en commentaire'
+    label: 'Autre'
   }
 ];
 
