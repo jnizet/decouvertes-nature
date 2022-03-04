@@ -114,6 +114,11 @@ export const ALL_ACTIVITY_TYPES: ReadonlyArray<ActivityType> = [
     key: 'GRAND_RENDEZ_VOUS',
     label: 'Grand rendez-vous',
     example: 'Assemblée territoriale de la délégation Loire'
+  },
+  {
+    key: 'AUTRE',
+    label: 'Autre',
+    example: 'Préciser en commentaire'
   }
 ];
 
