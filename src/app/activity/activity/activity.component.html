@@ -52,6 +52,12 @@
               <span>{{ org }}</span>
             </div>
           </div>
+          <div>
+            <div *ngFor="let equipment of activity.equipments" class="badge bg-pink me-1 mb-1">
+              <dn-icon class="me-1" [icon]="icons.equipment"></dn-icon>
+              <span>{{ equipment }}</span>
+            </div>
+          </div>
         </div>
       </div>
       <div class="col-lg-4 d-flex align-items-stretch">

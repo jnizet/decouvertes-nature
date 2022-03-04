@@ -4,6 +4,7 @@ import { Observable, switchMap } from 'rxjs';
 import { Activity, ActivityReportCommand, ActivityService } from '../activity.service';
 import {
   bookmarkPlus,
+  bucket,
   calendar4Event,
   emojiLaughing,
   geoFill,
@@ -53,7 +54,8 @@ export class ActivityComponent {
     accessible: wheelchair,
     notAccessible: barredWheelchair,
     delete: trash3,
-    duplicate: subtract
+    duplicate: subtract,
+    equipment: bucket
   };
 
   constructor(

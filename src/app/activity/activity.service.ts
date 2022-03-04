@@ -57,6 +57,7 @@ export interface Activity {
   accessible: boolean;
   labels: Array<string>;
   associatedOrganizations: Array<string>;
+  equipments: Array<string>;
   comment: string;
   author: AuditUser;
   lastModifier: AuditUser | null;

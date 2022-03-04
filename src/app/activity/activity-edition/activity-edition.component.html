@@ -252,6 +252,14 @@
           ></dn-multi-choice>
         </div>
         <div class="mb-3">
+          <label class="form-label">Matériel spécifique nécessaire</label>
+          <dn-multi-choice
+            formControlName="equipments"
+            [knownOptions]="knownEquipments"
+            addText="Ajouter un matériel"
+          ></dn-multi-choice>
+        </div>
+        <div class="mb-3">
           <label class="form-label" for="comment">Commentaire</label>
           <textarea
             formControlName="comment"
