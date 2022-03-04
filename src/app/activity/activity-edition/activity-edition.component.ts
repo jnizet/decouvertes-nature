@@ -51,6 +51,7 @@ interface FormValue {
   accessible: boolean;
   labels: Array<string>;
   associatedOrganizations: Array<string>;
+  equipments: Array<string>;
   comment: string;
 }
 
@@ -73,6 +74,13 @@ const KNOWN_LABELS = [
   'Refuge LPO'
 ];
 const KNOWN_ORGANIZATIONS = ['Astrojupiter', 'Lerpt-Environnement', 'Ocivélo', 'Vélo en Forez'];
+const KNOWN_EQUIPMENTS = [
+  "Boîte d'observation",
+  'Bottes',
+  'Pique-nique',
+  'Vélo',
+  'Vidéo-projecteur'
+];
 
 const requiredExceptWhenDraft: ValidatorFn = ctrl => {
   return Validators.required(ctrl) ? { requiredExceptWhenDraft: true } : null;
@@ -170,6 +178,7 @@ export class ActivityEditionComponent {
 
   readonly knownLabels = KNOWN_LABELS;
   readonly knownOrganizations = KNOWN_ORGANIZATIONS;
+  readonly knownEquipments = KNOWN_EQUIPMENTS;
   readonly icons = {
     save: fileArrowUp,
     saveAsDraft: journalArrowUp
@@ -227,6 +236,7 @@ export class ActivityEditionComponent {
       accessible: new FormControl(false),
       labels: new FormControl([]),
       associatedOrganizations: new FormControl([]),
+      equipments: new FormControl([]),
       comment: new FormControl('')
     };
     this.form = new FormGroup(config);
@@ -264,6 +274,7 @@ export class ActivityEditionComponent {
             accessible: activity.accessible,
             labels: activity.labels,
             associatedOrganizations: activity.associatedOrganizations,
+            equipments: activity.equipments ?? [],
             maxNumberOfParticipants: activity.maxNumberOfParticipants,
             paymentRequired: activity.paymentRequired,
             price: activity.price,
@@ -351,6 +362,7 @@ export class ActivityEditionComponent {
       accessible: formValue.accessible,
       labels: formValue.labels,
       associatedOrganizations: formValue.associatedOrganizations,
+      equipments: formValue.equipments,
       comment: formValue.comment,
       author:
         this.mode === 'edit'
