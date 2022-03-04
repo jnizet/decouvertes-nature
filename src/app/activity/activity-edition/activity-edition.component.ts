@@ -316,7 +316,11 @@ export class ActivityEditionComponent {
   }
 
   get maySaveAsDraft() {
-    return !this.editedActivity || this.editedActivity.draft;
+    return (
+      this.mode === 'create' ||
+      this.mode === 'duplicate' ||
+      (!!this.editedActivity && this.editedActivity.draft)
+    );
   }
 
   save() {
