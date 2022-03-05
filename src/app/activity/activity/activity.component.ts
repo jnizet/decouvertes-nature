@@ -12,6 +12,7 @@ import {
   pencilSquare,
   people,
   peopleFill,
+  personHearts,
   piggyBank,
   pinMap,
   subtract,
@@ -55,7 +56,9 @@ export class ActivityComponent {
     notAccessible: barredWheelchair,
     delete: trash3,
     duplicate: subtract,
-    equipment: bucket
+    equipment: bucket,
+    accessibleToChildren: personHearts,
+    notAccessibleToChildren: barredIcon(personHearts)
   };
 
   constructor(

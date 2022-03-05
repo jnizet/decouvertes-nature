@@ -7,7 +7,7 @@ import { ActivityDatePipeModule } from '../activity-date-pipe/activity-date-pipe
 import { ActivityEditionComponent } from './activity-edition/activity-edition.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ValidationModule } from '../validation/validation.module';
-import { NgbTypeaheadModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbCollapseModule, NgbTypeaheadModule } from '@ng-bootstrap/ng-bootstrap';
 import { MultiChoiceComponent } from './multi-choice/multi-choice.component';
 import { ActivityTypePipeModule } from '../activity-type-pipe/activity-type-pipe.module';
 import { ActivityCardComponent } from './activity-card/activity-card.component';
@@ -46,7 +46,8 @@ import { PageTitleModule } from '../page-title/page-title.module';
     IconModule,
     ConfirmModule,
     MonthPipeModule,
-    PageTitleModule
+    PageTitleModule,
+    NgbCollapseModule
   ]
 })
 export class ActivityModule {}
