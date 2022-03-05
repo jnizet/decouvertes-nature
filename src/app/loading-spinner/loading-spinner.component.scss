@@ -1,0 +1,14 @@
+.spinner-wrapper-fade-in {
+  opacity: 0;
+  animation: fade-in 1000ms ease-out;
+  animation-delay: 100ms;
+}
+
+@keyframes fade-in {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}

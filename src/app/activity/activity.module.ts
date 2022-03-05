@@ -21,6 +21,7 @@ import { ExportableActivityComponent } from './exportable-activity/exportable-ac
 import { ActivityReportComponent } from './activity-report/activity-report.component';
 import { ActivityReportEditionComponent } from './activity-report-edition/activity-report-edition.component';
 import { PageTitleModule } from '../page-title/page-title.module';
+import { LoadingSpinnerModule } from '../loading-spinner/loading-spinner.module';
 
 @NgModule({
   declarations: [
@@ -47,7 +48,8 @@ import { PageTitleModule } from '../page-title/page-title.module';
     ConfirmModule,
     MonthPipeModule,
     PageTitleModule,
-    NgbCollapseModule
+    NgbCollapseModule,
+    LoadingSpinnerModule
   ]
 })
 export class ActivityModule {}

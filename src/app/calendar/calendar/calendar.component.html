@@ -1,5 +1,5 @@
 <dn-page-title title="Calendrier"></dn-page-title>
-<ng-container *ngIf="vm$ | async as vm">
+<ng-container *ngIf="vm$ | async as vm; else loading">
   <div class="row">
     <div class="col">
       <h1>Calendrier</h1>
@@ -59,3 +59,6 @@
     <dn-report [activities]="vm.reportActivities"></dn-report>
   </div>
 </ng-container>
+<ng-template #loading>
+  <dn-loading-spinner></dn-loading-spinner>
+</ng-template>

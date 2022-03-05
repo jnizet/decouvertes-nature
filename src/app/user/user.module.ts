@@ -8,6 +8,7 @@ import { UserEditionComponent } from './user-edition/user-edition.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ValidationModule } from '../validation/validation.module';
 import { PageTitleModule } from '../page-title/page-title.module';
+import { LoadingSpinnerModule } from '../loading-spinner/loading-spinner.module';
 
 @NgModule({
   declarations: [UsersComponent, UserEditionComponent],
@@ -17,7 +18,8 @@ import { PageTitleModule } from '../page-title/page-title.module';
     IconModule,
     ReactiveFormsModule,
     ValidationModule,
-    PageTitleModule
+    PageTitleModule,
+    LoadingSpinnerModule
   ]
 })
 export class UserModule {}

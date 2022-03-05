@@ -19,7 +19,7 @@
   />
 </form>
 
-<div *ngIf="months$ | async as months">
+<div *ngIf="months$ | async as months; else loading">
   <div *ngFor="let month of months" class="mb-4">
     <h2 class="fs-5">{{ month.month | month }}</h2>
     <dn-exportable-activity
@@ -29,3 +29,6 @@
     ></dn-exportable-activity>
   </div>
 </div>
+<ng-template #loading>
+  <dn-loading-spinner></dn-loading-spinner>
+</ng-template>
