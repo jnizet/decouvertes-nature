@@ -41,6 +41,7 @@ export interface Activity {
   title: string;
   animator: string;
   description: string; // can be blank when draft
+  minNumberOfParticipants: number | null;
   maxNumberOfParticipants: number | null;
   paymentRequired: boolean;
   price: number | null;

@@ -169,11 +169,29 @@
         </ng-container>
       </div>
       <div class="col-lg">
-        <div class="row mb-3">
-          <div class="col-sm mb-3 mb-lg-0">
-            <label for="max-number-of-participants" class="form-label"
-              >Nb. max de participants</label
-            >
+        <div class="row gx-2">
+          <div class="col-sm mb-3">
+            <label for="min-number-of-participants" class="form-label">
+              Nb. min. de participants
+            </label>
+            <input
+              formControlName="minNumberOfParticipants"
+              type="number"
+              class="form-control"
+              id="min-number-of-participants"
+              step="1"
+              min="1"
+              placeholder="Laisser vide s'il n'y a pas de limite"
+            />
+            <val-errors
+              controlName="minNumberOfParticipants"
+              label="Le nombre min. de participants"
+            ></val-errors>
+          </div>
+          <div class="col-sm mb-3">
+            <label for="max-number-of-participants" class="form-label">
+              Nb. max. de participants
+            </label>
             <input
               formControlName="maxNumberOfParticipants"
               type="number"
@@ -185,21 +203,20 @@
             />
             <val-errors
               controlName="maxNumberOfParticipants"
-              label="Le nombre max de participants"
+              label="Le nombre max. de participants"
             ></val-errors>
-            <span class="form-text"></span>
           </div>
-          <div class="col-sm">
-            <label for="room-to-book" class="form-label"> Salle à réserver </label>
-            <input
-              formControlName="roomToBook"
-              class="form-control"
-              id="room-to-book"
-              [ngbTypeahead]="roomTypeahead"
-              [focusFirst]="false"
-              placeholder="Laisser vide s'il n'y a pas de salle à réserver"
-            />
-          </div>
+        </div>
+        <div class="mb-3">
+          <label for="room-to-book" class="form-label"> Salle à réserver </label>
+          <input
+            formControlName="roomToBook"
+            class="form-control"
+            id="room-to-book"
+            [ngbTypeahead]="roomTypeahead"
+            [focusFirst]="false"
+            placeholder="Laisser vide s'il n'y a pas de salle à réserver"
+          />
         </div>
         <div class="mb-3">
           <div class="form-check form-switch">
@@ -230,9 +247,9 @@
               role="switch"
               id="accessible"
             />
-            <label class="form-check-label" for="accessible"
-              >Accessible aux personnes à mobilité réduite</label
-            >
+            <label class="form-check-label" for="accessible">
+              Accessible aux personnes à mobilité réduite
+            </label>
           </div>
         </div>
         <div class="mb-3">
