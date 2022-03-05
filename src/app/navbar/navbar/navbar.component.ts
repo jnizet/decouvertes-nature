@@ -43,4 +43,12 @@ export class NavbarComponent {
     this.currentUserService.signOut();
     this.router.navigate(['/']);
   }
+
+  collapse() {
+    this.expanded = false;
+  }
+
+  toggle() {
+    this.expanded = !this.expanded;
+  }
 }

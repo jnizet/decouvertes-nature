@@ -11,32 +11,32 @@
       aria-controls="navbar"
       [attr.aria-expanded]="expanded"
       aria-label="Afficher ou masquer la navigation"
-      (click)="expanded = !expanded"
+      (click)="toggle()"
     >
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbar" [ngbCollapse]="!expanded">
       <ul *ngIf="vm.user" class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item">
-          <a class="nav-link" routerLink="/activities" (click)="expanded = false">
+          <a class="nav-link" routerLink="/activities" (click)="collapse()">
             <dn-icon [icon]="icons.activities"></dn-icon>
             Activités
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" routerLink="/calendar" (click)="expanded = false">
+          <a class="nav-link" routerLink="/calendar" (click)="collapse()">
             <dn-icon [icon]="icons.calendar"></dn-icon>
             Calendrier
           </a>
         </li>
         <li class="nav-item" *ngIf="vm.user.export">
-          <a class="nav-link" routerLink="/activities/exportable" (click)="expanded = false">
+          <a class="nav-link" routerLink="/activities/exportable" (click)="collapse()">
             <dn-icon [icon]="icons.exports"></dn-icon>
             Exports
           </a>
         </li>
         <li class="nav-item" *ngIf="vm.user.admin">
-          <a class="nav-link" routerLink="/users" (click)="expanded = false">
+          <a class="nav-link" routerLink="/users" (click)="collapse()">
             <dn-icon [icon]="icons.users"></dn-icon>
             Utilisateurs
           </a>
@@ -54,18 +54,18 @@
               aria-labelledby="user-dropdown"
               class="dropdown-menu-end dropdown-menu-dark"
             >
-              <a class="dropdown-item" routerLink="/change-password" (click)="expanded = false">
+              <a class="dropdown-item" routerLink="/change-password" (click)="collapse()">
                 <dn-icon [icon]="icons.changePassword"></dn-icon>
                 Changer de mot de passe
               </a>
-              <a class="dropdown-item" role="button" (click)="logout(); expanded = false">
+              <a class="dropdown-item" role="button" (click)="logout(); collapse()">
                 <dn-icon [icon]="icons.logout"></dn-icon>
                 Déconnexion
               </a>
             </div>
           </li>
           <li class="nav-item">
-            <a class="nav-link" role="button" tabindex="0" (click)="logout(); expanded = false">
+            <a class="nav-link" role="button" tabindex="0" (click)="logout(); collapse()">
               <span class="visually-hidden">Déconnexion</span>
               <dn-icon [icon]="icons.logout"></dn-icon>
             </a>
