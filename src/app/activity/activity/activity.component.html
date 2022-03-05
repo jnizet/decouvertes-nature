@@ -86,6 +86,20 @@
             <dn-icon class="me-1" [icon]="icons.notAccessible"></dn-icon>
             <span>Non-accessible aux personnes à mobilité réduite</span>
           </div>
+          <div *ngIf="activity.accessibleToChildren">
+            <dn-icon class="me-1" [icon]="icons.accessibleToChildren"></dn-icon>
+            <span
+              >Accessible aux enfants
+              <ng-container *ngIf="activity.minChildrenAge">
+                à partir de {{ activity.minChildrenAge | number }}
+                {{ activity.minChildrenAge > 0 ? 'ans' : 'an' }}
+              </ng-container>
+            </span>
+          </div>
+          <div *ngIf="!activity.accessibleToChildren">
+            <dn-icon class="me-1" [icon]="icons.notAccessibleToChildren"></dn-icon>
+            <span>Non-accessible aux enfants</span>
+          </div>
           <div *ngIf="activity.paymentRequired">
             <dn-icon class="me-1" [icon]="icons.paymentRequired"></dn-icon>
             <span>{{ activity.price | currency: 'EUR':'symbol-narrow' }}</span>

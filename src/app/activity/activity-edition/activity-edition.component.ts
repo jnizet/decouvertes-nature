@@ -50,6 +50,8 @@ interface FormValue {
   bookingMandatory: boolean;
   membersOnly: boolean;
   accessible: boolean;
+  accessibleToChildren: boolean;
+  minChildrenAge: number | null;
   labels: Array<string>;
   associatedOrganizations: Array<string>;
   equipments: Array<string>;
@@ -219,6 +221,9 @@ export class ActivityEditionComponent {
     const intercommunalityCtrl = new FormControl('');
     const appointmentLocationCtrl = new FormControl('');
 
+    const accessibleToChildrenCtrl = new FormControl(false);
+    const minChildrenAgeCtrl = new FormControl(null, Validators.min(1));
+
     const config: Record<keyof FormValue, any> = {
       type: new FormControl(null, Validators.required),
       title: new FormControl('', Validators.required),
@@ -236,6 +241,8 @@ export class ActivityEditionComponent {
       bookingMandatory: new FormControl(false),
       membersOnly: new FormControl(false),
       accessible: new FormControl(false),
+      accessibleToChildren: accessibleToChildrenCtrl,
+      minChildrenAge: minChildrenAgeCtrl,
       labels: new FormControl([]),
       associatedOrganizations: new FormControl([]),
       equipments: new FormControl([]),
@@ -274,6 +281,8 @@ export class ActivityEditionComponent {
             bookingMandatory: activity.bookingMandatory,
             membersOnly: activity.membersOnly,
             accessible: activity.accessible,
+            accessibleToChildren: activity.accessibleToChildren ?? false,
+            minChildrenAge: activity.minChildrenAge ?? null,
             labels: activity.labels,
             associatedOrganizations: activity.associatedOrganizations,
             equipments: activity.equipments,
@@ -294,6 +303,16 @@ export class ActivityEditionComponent {
               priceCtrl.enable();
             } else {
               priceCtrl.disable();
+            }
+          });
+
+        accessibleToChildrenCtrl.valueChanges
+          .pipe(startWith(accessibleToChildrenCtrl.value))
+          .subscribe((required: boolean) => {
+            if (required) {
+              minChildrenAgeCtrl.enable();
+            } else {
+              minChildrenAgeCtrl.disable();
             }
           });
 
@@ -364,6 +383,8 @@ export class ActivityEditionComponent {
       bookingMandatory: formValue.bookingMandatory,
       membersOnly: formValue.membersOnly,
       accessible: formValue.accessible,
+      accessibleToChildren: formValue.accessibleToChildren,
+      minChildrenAge: formValue.minChildrenAge ?? null,
       labels: formValue.labels,
       associatedOrganizations: formValue.associatedOrganizations,
       equipments: formValue.equipments,

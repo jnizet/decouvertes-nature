@@ -50,39 +50,33 @@
           <val-errors controlName="animator" label="L'animateur"></val-errors>
         </div>
         <div class="mb-3">
-          <div class="row align-items-baseline">
-            <div class="col-sm">
-              <div class="form-check form-switch">
-                <input
-                  formControlName="paymentRequired"
-                  class="form-check-input"
-                  type="checkbox"
-                  role="switch"
-                  id="payment-required"
-                />
-                <label class="form-check-label" for="payment-required"> Activité payante </label>
-              </div>
-            </div>
-            <div class="col-sm">
-              <ng-container *ngIf="form.value.paymentRequired">
-                <div class="row">
-                  <label for="price" class="col-sm-4 col-form-label">Prix</label>
-                  <div class="col-sm">
-                    <div class="input-group">
-                      <input
-                        formControlName="price"
-                        type="number"
-                        class="form-control"
-                        id="price"
-                        min="0.01"
-                        step="0.01"
-                      />
-                      <span class="input-group-text">€</span>
-                    </div>
+          <div class="form-check form-switch">
+            <input
+              formControlName="paymentRequired"
+              class="form-check-input"
+              type="checkbox"
+              role="switch"
+              id="payment-required"
+            />
+            <label class="form-check-label" for="payment-required">Activité payante</label>
+            <div [ngbCollapse]="!form.value.paymentRequired">
+              <div class="row mt-1 gx-2">
+                <label for="price" class="col-auto col-form-label fw-normal">Prix</label>
+                <div class="col">
+                  <div class="input-group">
+                    <input
+                      formControlName="price"
+                      type="number"
+                      class="form-control"
+                      id="price"
+                      min="0.01"
+                      step="0.01"
+                    />
+                    <span class="input-group-text">€</span>
                   </div>
                 </div>
-                <val-errors controlName="price" label="Le prix"></val-errors>
-              </ng-container>
+              </div>
+              <val-errors controlName="price" label="Le prix"></val-errors>
             </div>
           </div>
         </div>
@@ -250,6 +244,38 @@
             <label class="form-check-label" for="accessible">
               Accessible aux personnes à mobilité réduite
             </label>
+          </div>
+          <div class="form-check form-switch">
+            <input
+              formControlName="accessibleToChildren"
+              class="form-check-input"
+              type="checkbox"
+              role="switch"
+              id="accessible-to-children"
+            />
+            <label class="form-check-label" for="accessible-to-children">
+              Accessible aux enfants
+            </label>
+            <div [ngbCollapse]="!form.value.accessibleToChildren">
+              <div class="row gx-2 mt-1">
+                <label class="col-auto col-form-label fw-normal" for="min-children-age">
+                  à partir de
+                </label>
+                <div class="col">
+                  <div class="input-group">
+                    <input
+                      formControlName="minChildrenAge"
+                      type="number"
+                      class="form-control"
+                      id="min-children-age"
+                      min="1"
+                      placeholder="Laisser vide si pas d'age minimum"
+                    />
+                    <span class="input-group-text">ans</span>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
         <div class="mb-3">

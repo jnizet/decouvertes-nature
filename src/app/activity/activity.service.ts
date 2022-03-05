@@ -56,6 +56,8 @@ export interface Activity {
   bookingMandatory: boolean;
   membersOnly: boolean;
   accessible: boolean;
+  accessibleToChildren: boolean;
+  minChildrenAge: number | null;
   labels: Array<string>;
   associatedOrganizations: Array<string>;
   equipments: Array<string>;

@@ -20,6 +20,13 @@
 </div>
 <div *ngIf="activity.membersOnly">Réservé aux adhérents LPO</div>
 <div *ngIf="activity.accessible">Accessible aux personnes à mobilité réduite</div>
+<div *ngIf="activity.accessibleToChildren">
+  Accessible aux enfants
+  <ng-container *ngIf="activity.minChildrenAge">
+    à partir de {{ activity.minChildrenAge | number }}
+    {{ activity.minChildrenAge > 0 ? 'ans' : 'an' }}
+  </ng-container>
+</div>
 <div *ngIf="activity.bookingMandatory">Réservation obligatoire</div>
 <div *ngIf="activity.labels.length">Labels&nbsp;: {{ activity.labels.join(', ') }}</div>
 <div *ngIf="activity.associatedOrganizations.length">
