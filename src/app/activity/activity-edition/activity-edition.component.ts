@@ -42,6 +42,7 @@ interface FormValue {
   location: string | Municipality | null;
   intercommunality: string;
   appointmentLocation: string;
+  minNumberOfParticipants: number | null;
   maxNumberOfParticipants: number | null;
   paymentRequired: boolean;
   price: number | null;
@@ -227,7 +228,8 @@ export class ActivityEditionComponent {
       location: locationCtrl,
       intercommunality: intercommunalityCtrl,
       appointmentLocation: appointmentLocationCtrl,
-      maxNumberOfParticipants: new FormControl(null),
+      minNumberOfParticipants: new FormControl(null, Validators.min(1)),
+      maxNumberOfParticipants: new FormControl(null, Validators.min(1)),
       paymentRequired: paymentRequiredCtrl,
       price: priceCtrl,
       roomToBook: new FormControl(null),
@@ -274,7 +276,8 @@ export class ActivityEditionComponent {
             accessible: activity.accessible,
             labels: activity.labels,
             associatedOrganizations: activity.associatedOrganizations,
-            equipments: activity.equipments ?? [],
+            equipments: activity.equipments,
+            minNumberOfParticipants: activity.minNumberOfParticipants,
             maxNumberOfParticipants: activity.maxNumberOfParticipants,
             paymentRequired: activity.paymentRequired,
             price: activity.price,
@@ -346,6 +349,7 @@ export class ActivityEditionComponent {
       title: formValue.title,
       description: formValue.description,
       animator: formValue.animator,
+      minNumberOfParticipants: formValue.minNumberOfParticipants,
       maxNumberOfParticipants: formValue.maxNumberOfParticipants,
       paymentRequired: formValue.paymentRequired,
       price: formValue.price ?? null,

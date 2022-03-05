@@ -96,10 +96,24 @@
           </div>
           <div>
             <dn-icon class="me-1" [icon]="icons.participants"></dn-icon>
-            <span *ngIf="activity.maxNumberOfParticipants"
-              >{{ activity.maxNumberOfParticipants | number }} participants maximum</span
-            >
-            <span *ngIf="!activity.maxNumberOfParticipants">Pas de limite de participants</span>
+            <span *ngIf="activity.minNumberOfParticipants && activity.maxNumberOfParticipants">
+              {{ activity.minNumberOfParticipants | number }}
+              {{ activity.minNumberOfParticipants > 1 ? 'participants' : 'participant' }} minimum,
+              {{ activity.maxNumberOfParticipants | number }} maximum
+            </span>
+            <span *ngIf="activity.minNumberOfParticipants && !activity.maxNumberOfParticipants">
+              {{ activity.minNumberOfParticipants | number }}
+              {{ activity.minNumberOfParticipants > 1 ? 'participants' : 'participant' }}
+              minimum
+            </span>
+            <span *ngIf="activity.maxNumberOfParticipants && !activity.minNumberOfParticipants">
+              {{ activity.maxNumberOfParticipants | number }}
+              {{ activity.maxNumberOfParticipants > 1 ? 'participants' : 'participant' }}
+              maximum
+            </span>
+            <span *ngIf="!activity.minNumberOfParticipants && !activity.maxNumberOfParticipants">
+              Pas de limite de participants
+            </span>
           </div>
         </div>
       </div>
