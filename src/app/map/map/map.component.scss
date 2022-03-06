@@ -10,3 +10,8 @@
   background-color: $dark !important;
   color: $white;
 }
+
+.contour {
+  stroke: $dark;
+  stroke-width: 2;
+}

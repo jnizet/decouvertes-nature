@@ -2071,7 +2071,7 @@ export class MapComponent implements AfterViewInit, OnChanges {
 
     tiles.addTo(this.map);
 
-    const polyline = L.polyline(LOIRE, { color: 'rgb(0, 55, 89)', weight: 2 }).addTo(this.map);
+    const polyline = L.polyline(LOIRE, { className: 'contour' }).addTo(this.map);
 
     // zoom the map to the polyline
     this.map.fitBounds(polyline.getBounds());
