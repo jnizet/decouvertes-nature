@@ -29,6 +29,12 @@
             Calendrier
           </a>
         </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/map" (click)="collapse()">
+            <dn-icon [icon]="icons.map"></dn-icon>
+            Carte
+          </a>
+        </li>
         <li class="nav-item" *ngIf="vm.user.export">
           <a class="nav-link" routerLink="/activities/exportable" (click)="collapse()">
             <dn-icon [icon]="icons.exports"></dn-icon>

@@ -1,0 +1,91 @@
+<dn-page-title title="Carte des activités"></dn-page-title>
+<ng-container *ngIf="vm$ | async as vm; else loading">
+  <div class="row">
+    <div class="col">
+      <h1>Carte <span class="d-none d-sm-inline">des activités</span></h1>
+    </div>
+    <div class="col-auto">
+      <a routerLink="/activities/new" class="btn btn-outline-secondary">
+        <dn-icon class="me-1" [icon]="icons.addActivity"></dn-icon>
+        Créer une activité
+      </a>
+    </div>
+  </div>
+
+  <div class="d-flex justify-content-center align-items-center">
+    <button type="button" class="btn btn-link" (click)="changeYear(vm.year - 1)">
+      <span class="visually-hidden">Année précédente ({{ vm.year - 1 | number }})</span>
+      <dn-icon [icon]="icons.left" class="fs-3"></dn-icon>
+    </button>
+    <h2 class="mx-2">{{ vm.year }}</h2>
+    <button type="button" class="btn btn-link" (click)="changeYear(vm.year + 1)">
+      <span class="visually-hidden">Année suivante ({{ vm.year + 1 | number }})</span>
+      <dn-icon [icon]="icons.right" class="fs-3"></dn-icon>
+    </button>
+  </div>
+  <div class="row">
+    <div class="col-md-8 order-md-1 mb-4 mb-md-0">
+      <div class="map border rounded">
+        <dn-map
+          [locations]="vm.mappedLocations"
+          [focusedLocation]="vm.focusedLocation"
+          class="d-block w-100 h-100"
+        ></dn-map>
+      </div>
+    </div>
+    <div class="col-md-4 order-md-0">
+      <div
+        *ngIf="vm.mappedLocations.length + vm.unmappedLocations.length === 0"
+        class="text-muted mt-md-4"
+      >
+        Aucune activité en {{ vm.year }}
+      </div>
+      <ng-container *ngIf="vm.mappedLocations.length">
+        <h2 class="fs-5" [class.visually-hidden]="vm.unmappedLocations.length === 0">
+          Sur la carte
+        </h2>
+        <div
+          *ngFor="let location of vm.mappedLocations"
+          class="card mb-2"
+          (mouseenter)="setFocusedLocation(location)"
+          (mouseleave)="setFocusedLocation(null)"
+        >
+          <div class="card-body">
+            <h3 class="fs-6">{{ location.municipality.name }}</h3>
+            <div class="text-muted">
+              {{ location.activities.length | number }}
+              {{ location.activities.length > 1 ? 'activités' : 'activité' }}
+              <div *ngIf="location.draftCount" class="badge bg-warning text-black ms-1">
+                {{ location.draftCount | number }}
+                {{ location.draftCount > 1 ? 'brouillons' : 'brouillon' }}
+              </div>
+            </div>
+          </div>
+        </div>
+      </ng-container>
+      <ng-container *ngIf="vm.unmappedLocations.length">
+        <h2 class="fs-5">Hors carte</h2>
+        <p class="text-muted small">
+          Les lieux ci-dessous ne sont pas sur la carte parce qu'ils ne sont pas une commune de la
+          Loire connue par l'application.
+        </p>
+        <div *ngFor="let location of vm.unmappedLocations" class="card unmapped mb-2">
+          <div class="card-body">
+            <h3 class="fs-6">{{ location.location }}</h3>
+            <div class="text-muted">
+              {{ location.activities.length | number }}
+              {{ location.activities.length > 1 ? 'activités' : 'activité' }}
+              <div *ngIf="location.draftCount" class="badge bg-warning text-black ms-1">
+                {{ location.draftCount | number }}
+                {{ location.draftCount > 1 ? 'brouillons' : 'brouillon' }}
+              </div>
+            </div>
+          </div>
+        </div>
+      </ng-container>
+    </div>
+  </div>
+</ng-container>
+<ng-template #loading>
+  <dn-loading-spinner></dn-loading-spinner>
+</ng-template>

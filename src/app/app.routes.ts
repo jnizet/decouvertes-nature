@@ -33,6 +33,10 @@ export const APP_ROUTES: Routes = [
         loadChildren: () => import('./calendar/calendar.module').then(m => m.CalendarModule)
       },
       {
+        path: 'map',
+        loadChildren: () => import('./map/map.module').then(m => m.MapModule)
+      },
+      {
         path: 'change-password',
         loadChildren: () =>
           import('./change-password/change-password.module').then(m => m.ChangePasswordModule)

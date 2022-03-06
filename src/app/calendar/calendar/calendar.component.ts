@@ -42,7 +42,7 @@ export class CalendarComponent {
   constructor(activityService: ActivityService) {
     this.vm$ = combineLatest([this.yearSubject, activityService.findVisible()]).pipe(
       map(([year, activities]) => {
-        // reverse to have them in chronological order, since the backend retturns them in anti-chronological order
+        // reverse to have them in chronological order, since the backend returns them in anti-chronological order
         const yearActivities = activities
           .filter(activity => this.isInYear(activity, year))
           .reverse();
@@ -71,7 +71,7 @@ export class CalendarComponent {
 
   private isInYear(activity: Activity, year: number) {
     const startYear = parseISO(activity.startDate).getFullYear();
-    const endYear = parseISO(activity.startDate).getFullYear();
+    const endYear = parseISO(activity.endDate ?? activity.startDate).getFullYear();
     return year >= startYear && year <= endYear;
   }
 

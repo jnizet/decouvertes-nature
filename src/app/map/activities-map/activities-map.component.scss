@@ -1,0 +1,14 @@
+@import '../../../common';
+
+.map {
+  height: 80vh;
+  position: sticky;
+  top: 0;
+}
+
+.card {
+  border-left: 5px solid $primary;
+  &.unmapped {
+    border-left-color: $danger;
+  }
+}

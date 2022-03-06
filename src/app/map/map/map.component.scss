@@ -1,0 +1,12 @@
+@import '~leaflet/dist/leaflet.css';
+@import '../../../common';
+
+.activity-marker {
+  width: auto !important;
+  height: auto !important;
+  min-width: 1.2rem;
+  text-align: center;
+  border-color: $dark !important;
+  background-color: $dark !important;
+  color: $white;
+}
