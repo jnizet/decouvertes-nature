@@ -1,5 +1,9 @@
 @import 'custom-bootstrap';
 
+body {
+  padding-top: $navbar-height;
+}
+
 .invalid-feedback {
   display: block;
 }
