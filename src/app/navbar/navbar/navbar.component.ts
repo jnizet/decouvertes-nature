@@ -6,6 +6,7 @@ import {
   calendar2Event,
   cardList,
   clipboard2,
+  geoAlt,
   key,
   personCircle,
   personWorkspace,
@@ -32,7 +33,8 @@ export class NavbarComponent {
     users: personWorkspace,
     user: personCircle,
     changePassword: key,
-    exports: clipboard2
+    exports: clipboard2,
+    map: geoAlt
   };
 
   constructor(private currentUserService: CurrentUserService, private router: Router) {
