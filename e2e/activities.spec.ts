@@ -12,7 +12,7 @@ test.describe('Activities', () => {
     const romimineCard = page.locator('.card', { hasText: 'Romimine' });
     await test.expect(romimineCard.locator('h3')).toHaveText('Romimine');
 
-    await page.click('text=Romimine');
+    await page.click('a:has-text("Romimine")');
 
     await test.expect(page.locator('h1')).toHaveText('Romimine');
 
@@ -58,7 +58,7 @@ test.describe('Activities', () => {
 
     await page.click('text=Activités');
     await page.click('text=Mes activités');
-    await page.click(`text=${newTitle}`);
+    await page.click(`a:has-text("${newTitle}")`);
     await page.click('text=Supprimer');
     await page.click('text=Oui');
 
