@@ -337,11 +337,7 @@ export class ActivityEditionComponent {
                 appointmentLocationCtrl.setValue(newLocationString);
               }
 
-              const oldInterCommunality = (oldLocation as Municipality | null)?.intercommunality;
-              if (
-                ((newLocation as Municipality).intercommunality && !intercommunalityCtrl.value) ||
-                intercommunalityCtrl.value === oldInterCommunality
-              ) {
+              if ((newLocation as Municipality).intercommunality) {
                 intercommunalityCtrl.setValue((newLocation as Municipality).intercommunality);
               }
             }
