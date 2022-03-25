@@ -14,18 +14,7 @@ import {
   updateDoc,
   where
 } from '@angular/fire/firestore';
-import {
-  combineLatest,
-  defer,
-  EMPTY,
-  first,
-  from,
-  map,
-  mapTo,
-  Observable,
-  switchMap,
-  tap
-} from 'rxjs';
+import { combineLatest, defer, EMPTY, first, from, map, Observable, switchMap, tap } from 'rxjs';
 import { LocalDate, LocalTime } from '../shared/types';
 import { AuditUser, CurrentUser, CurrentUserService } from '../current-user.service';
 
@@ -169,7 +158,7 @@ export class ActivityService {
       id: document.id
     };
     return defer(() => setDoc(document, activity))
-      .pipe(mapTo(activity))
+      .pipe(map(() => activity))
       .pipe(tap(() => this.addAnimatorIfNecessary(command.animator)));
   }
 
