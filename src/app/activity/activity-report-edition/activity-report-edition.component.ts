@@ -1,13 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ActivityReport, ActivityReportCommand, ActivityService } from '../activity.service';
-import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { fileArrowUp, xSquare } from '../../bootstrap-icons/bootstrap-icons';
-
-interface FormValue {
-  cancelled: boolean;
-  numberOfParticipants?: number;
-  comment: string;
-}
 
 @Component({
   selector: 'dn-activity-report-edition',
@@ -29,20 +23,23 @@ export class ActivityReportEditionComponent implements OnInit {
     cancel: xSquare
   };
 
-  readonly form: UntypedFormGroup;
+  readonly form: FormGroup<{
+    cancelled: FormControl<boolean | null>;
+    numberOfParticipants: FormControl<number | null>;
+    comment: FormControl<string | null>;
+  }>;
 
   constructor(private activityService: ActivityService) {
-    const numberOfParticipantsCtrl = new UntypedFormControl(null, [
+    const numberOfParticipantsCtrl = new FormControl<number | null>(null, [
       Validators.required,
       Validators.min(0)
     ]);
-    const cancelledCtrl = new UntypedFormControl(false);
-    const config: Record<keyof FormValue, any> = {
+    const cancelledCtrl = new FormControl(false);
+    this.form = new FormGroup({
       cancelled: cancelledCtrl,
       numberOfParticipants: numberOfParticipantsCtrl,
-      comment: new UntypedFormControl('')
-    };
-    this.form = new UntypedFormGroup(config);
+      comment: new FormControl('')
+    });
 
     cancelledCtrl.valueChanges.subscribe(cancelled => {
       if (cancelled) {
@@ -55,8 +52,7 @@ export class ActivityReportEditionComponent implements OnInit {
 
   ngOnInit(): void {
     if (this.report) {
-      const formValue: FormValue = this.report;
-      this.form.setValue(formValue);
+      this.form.setValue(this.report);
     }
   }
 
@@ -65,11 +61,11 @@ export class ActivityReportEditionComponent implements OnInit {
       return;
     }
 
-    const formValue: FormValue = this.form.value;
+    const formValue = this.form.value;
     const command: ActivityReportCommand = {
-      cancelled: formValue.cancelled,
+      cancelled: formValue.cancelled!,
       numberOfParticipants: formValue.numberOfParticipants ?? 0,
-      comment: formValue.comment
+      comment: formValue.comment!
     };
 
     this.saved.emit(command);
