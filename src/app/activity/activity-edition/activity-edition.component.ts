@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { AbstractControl, UntypedFormControl, UntypedFormGroup, ValidatorFn, Validators } from '@angular/forms';
+import { AbstractControl, FormControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
 import { LocalDate, LocalTime } from '../../shared/types';
 import {
   Activity,
@@ -33,32 +33,7 @@ interface Timing {
   endTime: LocalTime | null;
 }
 
-interface FormValue {
-  type: string;
-  title: string;
-  animator: string;
-  description: string;
-  timing: Timing;
-  location: string | Municipality | null;
-  intercommunality: string;
-  appointmentLocation: string;
-  minNumberOfParticipants: number | null;
-  maxNumberOfParticipants: number | null;
-  paymentRequired: boolean;
-  price: number | null;
-  roomToBook: string | null;
-  bookingMandatory: boolean;
-  membersOnly: boolean;
-  accessible: boolean;
-  accessibleToChildren: boolean;
-  minChildrenAge: number | null;
-  labels: Array<string>;
-  associatedOrganizations: Array<string>;
-  equipments: Array<string>;
-  comment: string;
-}
-
-function validateTiming(timingFormGroup: AbstractControl) {
+function validateTiming(timingFormGroup: AbstractControl<Timing>) {
   const { startDate, startTime, endDate, endTime }: Timing = timingFormGroup.value;
   if (startDate && startTime && endDate && endTime) {
     return `${startDate}T${startTime}` > `${endDate}T${endTime}` ? { timing: true } : null;
@@ -93,7 +68,7 @@ class DraftManager {
   private fieldsAndValidators: Array<[AbstractControl, ValidatorFn]> = [];
   private _mode: 'draft' | 'final' = 'draft';
 
-  initialize(form: UntypedFormGroup, maySaveAsDraft: boolean) {
+  initialize(form: ActivityFormGroup, maySaveAsDraft: boolean) {
     const requiredValidator = maySaveAsDraft ? requiredExceptWhenDraft : Validators.required;
     this.fieldsAndValidators = [
       [form.get('description')!, requiredValidator],
@@ -122,6 +97,36 @@ class DraftManager {
   }
 }
 
+type ActivityFormGroup = FormGroup<{
+  type: FormControl<string | null>;
+  title: FormControl<string | null>;
+  animator: FormControl<string | null>;
+  description: FormControl<string | null>;
+  timing: FormGroup<{
+    startDate: FormControl<LocalDate | null>;
+    endDate: FormControl<LocalDate | null>;
+    startTime: FormControl<LocalTime | null>;
+    endTime: FormControl<LocalTime | null>;
+  }>;
+  location: FormControl<string | Municipality | null>; // can really be null
+  intercommunality: FormControl<string | null>;
+  appointmentLocation: FormControl<string | null>;
+  minNumberOfParticipants: FormControl<number | null>; // can really be null
+  maxNumberOfParticipants: FormControl<number | null>; // can really be null
+  paymentRequired: FormControl<boolean | null>;
+  price: FormControl<number | null>; // can really be null
+  roomToBook: FormControl<string | null>; // can really be null
+  bookingMandatory: FormControl<boolean | null>;
+  membersOnly: FormControl<boolean | null>;
+  accessible: FormControl<boolean | null>;
+  accessibleToChildren: FormControl<boolean | null>;
+  minChildrenAge: FormControl<number | null>; // can really be null
+  labels: FormControl<Array<string> | null>;
+  associatedOrganizations: FormControl<Array<string> | null>;
+  equipments: FormControl<Array<string> | null>;
+  comment: FormControl<string | null>;
+}>;
+
 @Component({
   selector: 'dn-activity-edition',
   templateUrl: './activity-edition.component.html',
@@ -131,7 +136,7 @@ export class ActivityEditionComponent {
   mode: 'create' | 'edit' | 'duplicate' | null = null;
   editedActivity: Activity | null = null;
 
-  readonly form: UntypedFormGroup;
+  readonly form: ActivityFormGroup;
   readonly activityTypes = ALL_ACTIVITY_TYPES;
   readonly minDate: LocalDate = '2022-01-01';
 
@@ -201,54 +206,56 @@ export class ActivityEditionComponent {
     private router: Router,
     private currentUserService: CurrentUserService
   ) {
-    const paymentRequiredCtrl = new UntypedFormControl(false);
-    const priceCtrl = new UntypedFormControl(null, [Validators.required, Validators.min(0)]);
+    const paymentRequiredCtrl = new FormControl(false);
+    const priceCtrl = new FormControl<number | null>(null, [
+      Validators.required,
+      Validators.min(0)
+    ]);
 
-    const startDateCtrl = new UntypedFormControl(null, Validators.required);
-    const endDateCtrl = new UntypedFormControl(null);
+    const startDateCtrl = new FormControl<LocalDate | null>(null, Validators.required);
+    const endDateCtrl = new FormControl<LocalDate | null>(null);
 
     const timingConfig: Record<keyof Timing, any> = {
       startDate: startDateCtrl,
-      startTime: new UntypedFormControl(null),
+      startTime: new FormControl<LocalTime | null>(null),
       endDate: endDateCtrl,
-      endTime: new UntypedFormControl(null)
+      endTime: new FormControl<LocalTime | null>(null)
     };
 
     const afterStartValidator: ValidatorFn = control => validateTiming(control);
-    const timingFormGroup = new UntypedFormGroup(timingConfig, { validators: afterStartValidator });
+    const timingFormGroup = new FormGroup(timingConfig, { validators: afterStartValidator });
 
-    const locationCtrl = new UntypedFormControl(null);
-    const intercommunalityCtrl = new UntypedFormControl('');
-    const appointmentLocationCtrl = new UntypedFormControl('');
+    const locationCtrl = new FormControl<string | Municipality | null>(null);
+    const intercommunalityCtrl = new FormControl('');
+    const appointmentLocationCtrl = new FormControl('');
 
-    const accessibleToChildrenCtrl = new UntypedFormControl(false);
-    const minChildrenAgeCtrl = new UntypedFormControl(null, Validators.min(1));
+    const accessibleToChildrenCtrl = new FormControl<boolean | null>(false);
+    const minChildrenAgeCtrl = new FormControl<number | null>(null, Validators.min(1));
 
-    const config: Record<keyof FormValue, any> = {
-      type: new UntypedFormControl(null, Validators.required),
-      title: new UntypedFormControl('', Validators.required),
-      animator: new UntypedFormControl('', Validators.required),
-      description: new UntypedFormControl(''),
+    this.form = new FormGroup({
+      type: new FormControl<string | null>(null, Validators.required),
+      title: new FormControl('', Validators.required),
+      animator: new FormControl('', Validators.required),
+      description: new FormControl(''),
       timing: timingFormGroup,
       location: locationCtrl,
       intercommunality: intercommunalityCtrl,
       appointmentLocation: appointmentLocationCtrl,
-      minNumberOfParticipants: new UntypedFormControl(null, Validators.min(1)),
-      maxNumberOfParticipants: new UntypedFormControl(null, Validators.min(1)),
+      minNumberOfParticipants: new FormControl<number | null>(null, Validators.min(1)),
+      maxNumberOfParticipants: new FormControl<number | null>(null, Validators.min(1)),
       paymentRequired: paymentRequiredCtrl,
       price: priceCtrl,
-      roomToBook: new UntypedFormControl(null),
-      bookingMandatory: new UntypedFormControl(false),
-      membersOnly: new UntypedFormControl(false),
-      accessible: new UntypedFormControl(false),
+      roomToBook: new FormControl<string | null>(null),
+      bookingMandatory: new FormControl<boolean | null>(false),
+      membersOnly: new FormControl<boolean | null>(false),
+      accessible: new FormControl<boolean | null>(false),
       accessibleToChildren: accessibleToChildrenCtrl,
       minChildrenAge: minChildrenAgeCtrl,
-      labels: new UntypedFormControl([]),
-      associatedOrganizations: new UntypedFormControl([]),
-      equipments: new UntypedFormControl([]),
-      comment: new UntypedFormControl('')
-    };
-    this.form = new UntypedFormGroup(config);
+      labels: new FormControl<Array<string>>([]),
+      associatedOrganizations: new FormControl<Array<string>>([]),
+      equipments: new FormControl<Array<string>>([]),
+      comment: new FormControl('')
+    });
 
     route.paramMap
       .pipe(
@@ -263,7 +270,7 @@ export class ActivityEditionComponent {
         this.draftManager.switchTo('final');
 
         if (activity) {
-          const formValue: FormValue = {
+          const formValue = {
             type: activity.type,
             title: activity.title,
             description: activity.description,
@@ -298,7 +305,7 @@ export class ActivityEditionComponent {
 
         paymentRequiredCtrl.valueChanges
           .pipe(startWith(paymentRequiredCtrl.value))
-          .subscribe((required: boolean) => {
+          .subscribe((required: boolean | null) => {
             if (required) {
               priceCtrl.enable();
             } else {
@@ -308,7 +315,7 @@ export class ActivityEditionComponent {
 
         accessibleToChildrenCtrl.valueChanges
           .pipe(startWith(accessibleToChildrenCtrl.value))
-          .subscribe((required: boolean) => {
+          .subscribe((required: boolean | null) => {
             if (required) {
               minChildrenAgeCtrl.enable();
             } else {
@@ -358,33 +365,33 @@ export class ActivityEditionComponent {
       return;
     }
 
-    const formValue: FormValue = this.form.value;
+    const formValue = this.form.value;
     const command: ActivityCommand = {
-      type: formValue.type,
-      title: formValue.title,
-      description: formValue.description,
-      animator: formValue.animator,
-      minNumberOfParticipants: formValue.minNumberOfParticipants,
-      maxNumberOfParticipants: formValue.maxNumberOfParticipants,
-      paymentRequired: formValue.paymentRequired,
+      type: formValue.type!,
+      title: formValue.title!,
+      description: formValue.description!,
+      animator: formValue.animator!,
+      minNumberOfParticipants: formValue.minNumberOfParticipants!,
+      maxNumberOfParticipants: formValue.maxNumberOfParticipants!,
+      paymentRequired: formValue.paymentRequired!,
       price: formValue.price ?? null,
-      startDate: formValue.timing.startDate!,
-      startTime: formValue.timing.startTime,
-      endDate: formValue.timing.endDate!,
-      endTime: formValue.timing.endTime,
+      startDate: formValue.timing!.startDate!,
+      startTime: formValue.timing!.startTime!,
+      endDate: formValue.timing!.endDate!,
+      endTime: formValue.timing!.endTime!,
       location: this.locationInputFormatter(formValue.location!),
-      intercommunality: formValue.intercommunality,
-      appointmentLocation: formValue.appointmentLocation,
-      roomToBook: formValue.roomToBook,
-      bookingMandatory: formValue.bookingMandatory,
-      membersOnly: formValue.membersOnly,
-      accessible: formValue.accessible,
-      accessibleToChildren: formValue.accessibleToChildren,
+      intercommunality: formValue.intercommunality!,
+      appointmentLocation: formValue.appointmentLocation!,
+      roomToBook: formValue.roomToBook!,
+      bookingMandatory: formValue.bookingMandatory!,
+      membersOnly: formValue.membersOnly!,
+      accessible: formValue.accessible!,
+      accessibleToChildren: formValue.accessibleToChildren!,
       minChildrenAge: formValue.minChildrenAge ?? null,
-      labels: formValue.labels,
-      associatedOrganizations: formValue.associatedOrganizations,
-      equipments: formValue.equipments,
-      comment: formValue.comment,
+      labels: formValue.labels!,
+      associatedOrganizations: formValue.associatedOrganizations!,
+      equipments: formValue.equipments!,
+      comment: formValue.comment!,
       author:
         this.mode === 'edit'
           ? this.editedActivity!.author
