@@ -11,7 +11,7 @@ import {
   startWith
 } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
-import { FormControl, FormGroup } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup } from '@angular/forms';
 import { ALL_INTERCOMMUNALITIES } from '../../shared/municipalities';
 import { infoCircleFill } from '../../bootstrap-icons/bootstrap-icons';
 
@@ -32,7 +32,7 @@ interface FormValue {
 })
 export class ExportableActivitiesComponent {
   readonly months$: Observable<Array<Month>>;
-  readonly form: FormGroup;
+  readonly form: UntypedFormGroup;
   readonly intercommunalityTypeahead: OperatorFunction<string, Array<string>> = (
     text$: Observable<string>
   ) =>
@@ -54,9 +54,9 @@ export class ExportableActivitiesComponent {
 
   constructor(route: ActivatedRoute, activityService: ActivityService) {
     const formConfig: Record<keyof FormValue, any> = {
-      intercommunality: new FormControl('')
+      intercommunality: new UntypedFormControl('')
     };
-    this.form = new FormGroup(formConfig);
+    this.form = new UntypedFormGroup(formConfig);
 
     const activities$ = activityService.findNonDraft();
     const filter$ = this.form.valueChanges.pipe(startWith(this.form.value));

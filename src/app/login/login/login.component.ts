@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { Auth, signInWithEmailAndPassword } from '@angular/fire/auth';
 import { from } from 'rxjs';
 import { Router } from '@angular/router';
@@ -15,15 +15,15 @@ interface FormValue {
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent {
-  form: FormGroup;
+  form: UntypedFormGroup;
   loginError = false;
 
   constructor(private auth: Auth, private router: Router) {
     const config: Record<keyof FormValue, any> = {
-      email: new FormControl('', [Validators.required, Validators.email]),
-      password: new FormControl('', Validators.required)
+      email: new UntypedFormControl('', [Validators.required, Validators.email]),
+      password: new UntypedFormControl('', Validators.required)
     };
-    this.form = new FormGroup(config);
+    this.form = new UntypedFormGroup(config);
   }
 
   login() {

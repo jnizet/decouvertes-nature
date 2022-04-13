@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { AbstractControl, FormControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
+import { AbstractControl, UntypedFormControl, UntypedFormGroup, ValidatorFn, Validators } from '@angular/forms';
 import { LocalDate, LocalTime } from '../../shared/types';
 import {
   Activity,
@@ -93,7 +93,7 @@ class DraftManager {
   private fieldsAndValidators: Array<[AbstractControl, ValidatorFn]> = [];
   private _mode: 'draft' | 'final' = 'draft';
 
-  initialize(form: FormGroup, maySaveAsDraft: boolean) {
+  initialize(form: UntypedFormGroup, maySaveAsDraft: boolean) {
     const requiredValidator = maySaveAsDraft ? requiredExceptWhenDraft : Validators.required;
     this.fieldsAndValidators = [
       [form.get('description')!, requiredValidator],
@@ -131,7 +131,7 @@ export class ActivityEditionComponent {
   mode: 'create' | 'edit' | 'duplicate' | null = null;
   editedActivity: Activity | null = null;
 
-  readonly form: FormGroup;
+  readonly form: UntypedFormGroup;
   readonly activityTypes = ALL_ACTIVITY_TYPES;
   readonly minDate: LocalDate = '2022-01-01';
 
@@ -201,54 +201,54 @@ export class ActivityEditionComponent {
     private router: Router,
     private currentUserService: CurrentUserService
   ) {
-    const paymentRequiredCtrl = new FormControl(false);
-    const priceCtrl = new FormControl(null, [Validators.required, Validators.min(0)]);
+    const paymentRequiredCtrl = new UntypedFormControl(false);
+    const priceCtrl = new UntypedFormControl(null, [Validators.required, Validators.min(0)]);
 
-    const startDateCtrl = new FormControl(null, Validators.required);
-    const endDateCtrl = new FormControl(null);
+    const startDateCtrl = new UntypedFormControl(null, Validators.required);
+    const endDateCtrl = new UntypedFormControl(null);
 
     const timingConfig: Record<keyof Timing, any> = {
       startDate: startDateCtrl,
-      startTime: new FormControl(null),
+      startTime: new UntypedFormControl(null),
       endDate: endDateCtrl,
-      endTime: new FormControl(null)
+      endTime: new UntypedFormControl(null)
     };
 
     const afterStartValidator: ValidatorFn = control => validateTiming(control);
-    const timingFormGroup = new FormGroup(timingConfig, { validators: afterStartValidator });
+    const timingFormGroup = new UntypedFormGroup(timingConfig, { validators: afterStartValidator });
 
-    const locationCtrl = new FormControl(null);
-    const intercommunalityCtrl = new FormControl('');
-    const appointmentLocationCtrl = new FormControl('');
+    const locationCtrl = new UntypedFormControl(null);
+    const intercommunalityCtrl = new UntypedFormControl('');
+    const appointmentLocationCtrl = new UntypedFormControl('');
 
-    const accessibleToChildrenCtrl = new FormControl(false);
-    const minChildrenAgeCtrl = new FormControl(null, Validators.min(1));
+    const accessibleToChildrenCtrl = new UntypedFormControl(false);
+    const minChildrenAgeCtrl = new UntypedFormControl(null, Validators.min(1));
 
     const config: Record<keyof FormValue, any> = {
-      type: new FormControl(null, Validators.required),
-      title: new FormControl('', Validators.required),
-      animator: new FormControl('', Validators.required),
-      description: new FormControl(''),
+      type: new UntypedFormControl(null, Validators.required),
+      title: new UntypedFormControl('', Validators.required),
+      animator: new UntypedFormControl('', Validators.required),
+      description: new UntypedFormControl(''),
       timing: timingFormGroup,
       location: locationCtrl,
       intercommunality: intercommunalityCtrl,
       appointmentLocation: appointmentLocationCtrl,
-      minNumberOfParticipants: new FormControl(null, Validators.min(1)),
-      maxNumberOfParticipants: new FormControl(null, Validators.min(1)),
+      minNumberOfParticipants: new UntypedFormControl(null, Validators.min(1)),
+      maxNumberOfParticipants: new UntypedFormControl(null, Validators.min(1)),
       paymentRequired: paymentRequiredCtrl,
       price: priceCtrl,
-      roomToBook: new FormControl(null),
-      bookingMandatory: new FormControl(false),
-      membersOnly: new FormControl(false),
-      accessible: new FormControl(false),
+      roomToBook: new UntypedFormControl(null),
+      bookingMandatory: new UntypedFormControl(false),
+      membersOnly: new UntypedFormControl(false),
+      accessible: new UntypedFormControl(false),
       accessibleToChildren: accessibleToChildrenCtrl,
       minChildrenAge: minChildrenAgeCtrl,
-      labels: new FormControl([]),
-      associatedOrganizations: new FormControl([]),
-      equipments: new FormControl([]),
-      comment: new FormControl('')
+      labels: new UntypedFormControl([]),
+      associatedOrganizations: new UntypedFormControl([]),
+      equipments: new UntypedFormControl([]),
+      comment: new UntypedFormControl('')
     };
-    this.form = new FormGroup(config);
+    this.form = new UntypedFormGroup(config);
 
     route.paramMap
       .pipe(
