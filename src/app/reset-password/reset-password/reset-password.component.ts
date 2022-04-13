@@ -1,13 +1,9 @@
 import { Component } from '@angular/core';
-import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Auth, sendPasswordResetEmail } from '@angular/fire/auth';
 import { from } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
 import { exclamationTriangleFill } from '../../bootstrap-icons/bootstrap-icons';
-
-interface FormValue {
-  email: string;
-}
 
 @Component({
   selector: 'dn-reset-password',
@@ -15,7 +11,9 @@ interface FormValue {
   styleUrls: ['./reset-password.component.scss']
 })
 export class ResetPasswordComponent {
-  form: UntypedFormGroup;
+  form = new FormGroup({
+    email: new FormControl('', [Validators.required, Validators.email])
+  });
   error = false;
   emailSent = false;
   icons = {
@@ -23,13 +21,7 @@ export class ResetPasswordComponent {
   };
 
   constructor(private route: ActivatedRoute, private auth: Auth) {
-    const config: Record<keyof FormValue, any> = {
-      email: new UntypedFormControl(route.snapshot.queryParamMap.get('email') || '', [
-        Validators.required,
-        Validators.email
-      ])
-    };
-    this.form = new UntypedFormGroup(config);
+    this.form.setValue({ email: route.snapshot.queryParamMap.get('email') || '' });
   }
 
   sendEmail() {
@@ -37,8 +29,7 @@ export class ResetPasswordComponent {
       return;
     }
 
-    const formValue: FormValue = this.form.value;
-    from(sendPasswordResetEmail(this.auth, formValue.email)).subscribe({
+    from(sendPasswordResetEmail(this.auth, this.form.value.email!)).subscribe({
       next: () => (this.emailSent = true),
       error: () => (this.error = true)
     });
