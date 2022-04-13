@@ -11,17 +11,13 @@ import {
   startWith
 } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
-import { UntypedFormControl, UntypedFormGroup } from '@angular/forms';
+import { FormControl, FormGroup } from '@angular/forms';
 import { ALL_INTERCOMMUNALITIES } from '../../shared/municipalities';
 import { infoCircleFill } from '../../bootstrap-icons/bootstrap-icons';
 
 interface Month {
   month: YearMonth;
   activities: Array<Activity>;
-}
-
-interface FormValue {
-  intercommunality: string;
 }
 
 @Component({
@@ -32,7 +28,9 @@ interface FormValue {
 })
 export class ExportableActivitiesComponent {
   readonly months$: Observable<Array<Month>>;
-  readonly form: UntypedFormGroup;
+  readonly form = new FormGroup({
+    intercommunality: new FormControl('')
+  });
   readonly intercommunalityTypeahead: OperatorFunction<string, Array<string>> = (
     text$: Observable<string>
   ) =>
@@ -53,15 +51,12 @@ export class ExportableActivitiesComponent {
   };
 
   constructor(route: ActivatedRoute, activityService: ActivityService) {
-    const formConfig: Record<keyof FormValue, any> = {
-      intercommunality: new UntypedFormControl('')
-    };
-    this.form = new UntypedFormGroup(formConfig);
-
     const activities$ = activityService.findNonDraft();
     const filter$ = this.form.valueChanges.pipe(startWith(this.form.value));
     const filteredActivities$ = combineLatest([activities$, filter$]).pipe(
-      map(([activities, filter]) => this.filteredActivities(activities, filter))
+      map(([activities, filter]) =>
+        this.filteredActivities(activities, { intercommunality: filter.intercommunality! })
+      )
     );
 
     this.months$ = filteredActivities$.pipe(
@@ -82,11 +77,14 @@ export class ExportableActivitiesComponent {
     );
   }
 
-  private filteredActivities(activities: Array<Activity>, filter: FormValue): Array<Activity> {
+  private filteredActivities(
+    activities: Array<Activity>,
+    filter: { intercommunality: string }
+  ): Array<Activity> {
     return activities.filter(a => this.isAcceptedByFilter(a, filter));
   }
 
-  private isAcceptedByFilter(activity: Activity, filter: FormValue): boolean {
+  private isAcceptedByFilter(activity: Activity, filter: { intercommunality: string }): boolean {
     const intercommunalityFilter = filter.intercommunality.trim().toLowerCase();
     if (intercommunalityFilter) {
       return activity.intercommunality.toLowerCase().includes(intercommunalityFilter);
