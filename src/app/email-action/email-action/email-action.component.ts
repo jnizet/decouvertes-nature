@@ -6,12 +6,8 @@ import {
   signInWithEmailAndPassword,
   verifyPasswordResetCode
 } from '@angular/fire/auth';
-import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { from, switchMap } from 'rxjs';
-
-interface FormValue {
-  password: string;
-}
 
 @Component({
   selector: 'dn-email-action',
@@ -20,7 +16,9 @@ interface FormValue {
 })
 export class EmailActionComponent {
   private actionCode: string;
-  form: UntypedFormGroup;
+  form = new FormGroup({
+    password: new FormControl('', [Validators.required, Validators.minLength(8)])
+  });
 
   email: string | null = null;
   verificationError = false;
@@ -38,11 +36,6 @@ export class EmailActionComponent {
       next: email => (this.email = email),
       error: () => (this.verificationError = true)
     });
-
-    const config: Record<keyof FormValue, any> = {
-      password: new UntypedFormControl('', [Validators.required, Validators.minLength(8)])
-    };
-    this.form = new UntypedFormGroup(config);
   }
 
   resetPassword() {
@@ -50,14 +43,10 @@ export class EmailActionComponent {
       return;
     }
 
-    const formValue: FormValue = this.form.value;
     // Save the new password.
-    from(confirmPasswordReset(this.auth, this.actionCode, formValue.password))
-      .pipe(
-        switchMap(() =>
-          from(signInWithEmailAndPassword(this.auth, this.email!, formValue.password))
-        )
-      )
+    const password = this.form.value.password!;
+    from(confirmPasswordReset(this.auth, this.actionCode, password))
+      .pipe(switchMap(() => from(signInWithEmailAndPassword(this.auth, this.email!, password))))
       .subscribe({
         next: () => this.router.navigate(['/']),
         error: () => (this.resetError = true)
