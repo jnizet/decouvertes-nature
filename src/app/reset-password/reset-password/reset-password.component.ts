@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { Auth, sendPasswordResetEmail } from '@angular/fire/auth';
 import { from } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
@@ -15,7 +15,7 @@ interface FormValue {
   styleUrls: ['./reset-password.component.scss']
 })
 export class ResetPasswordComponent {
-  form: FormGroup;
+  form: UntypedFormGroup;
   error = false;
   emailSent = false;
   icons = {
@@ -24,12 +24,12 @@ export class ResetPasswordComponent {
 
   constructor(private route: ActivatedRoute, private auth: Auth) {
     const config: Record<keyof FormValue, any> = {
-      email: new FormControl(route.snapshot.queryParamMap.get('email') || '', [
+      email: new UntypedFormControl(route.snapshot.queryParamMap.get('email') || '', [
         Validators.required,
         Validators.email
       ])
     };
-    this.form = new FormGroup(config);
+    this.form = new UntypedFormGroup(config);
   }
 
   sendEmail() {

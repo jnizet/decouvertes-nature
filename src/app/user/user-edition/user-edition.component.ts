@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AdministeredUser, UserService } from '../user.service';
 import { first, map, Observable, of, switchMap } from 'rxjs';
@@ -20,7 +20,7 @@ interface FormValue {
   styleUrls: ['./user-edition.component.scss']
 })
 export class UserEditionComponent {
-  form: FormGroup;
+  form: UntypedFormGroup;
   mode: 'create' | 'edit' | null = null;
   editedUser: AdministeredUser | null = null;
   icons = {
@@ -30,13 +30,13 @@ export class UserEditionComponent {
 
   constructor(route: ActivatedRoute, private router: Router, private userService: UserService) {
     const config: Record<keyof FormValue, any> = {
-      displayName: new FormControl('', Validators.required),
-      email: new FormControl('', [Validators.required, Validators.email]),
-      admin: new FormControl(false),
-      export: new FormControl(false),
-      disabled: new FormControl(false)
+      displayName: new UntypedFormControl('', Validators.required),
+      email: new UntypedFormControl('', [Validators.required, Validators.email]),
+      admin: new UntypedFormControl(false),
+      export: new UntypedFormControl(false),
+      disabled: new UntypedFormControl(false)
     };
-    this.form = new FormGroup(config);
+    this.form = new UntypedFormGroup(config);
 
     route.paramMap
       .pipe(

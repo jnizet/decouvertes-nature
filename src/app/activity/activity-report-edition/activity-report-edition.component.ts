@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ActivityReport, ActivityReportCommand, ActivityService } from '../activity.service';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { fileArrowUp, xSquare } from '../../bootstrap-icons/bootstrap-icons';
 
 interface FormValue {
@@ -29,20 +29,20 @@ export class ActivityReportEditionComponent implements OnInit {
     cancel: xSquare
   };
 
-  readonly form: FormGroup;
+  readonly form: UntypedFormGroup;
 
   constructor(private activityService: ActivityService) {
-    const numberOfParticipantsCtrl = new FormControl(null, [
+    const numberOfParticipantsCtrl = new UntypedFormControl(null, [
       Validators.required,
       Validators.min(0)
     ]);
-    const cancelledCtrl = new FormControl(false);
+    const cancelledCtrl = new UntypedFormControl(false);
     const config: Record<keyof FormValue, any> = {
       cancelled: cancelledCtrl,
       numberOfParticipants: numberOfParticipantsCtrl,
-      comment: new FormControl('')
+      comment: new UntypedFormControl('')
     };
-    this.form = new FormGroup(config);
+    this.form = new UntypedFormGroup(config);
 
     cancelledCtrl.valueChanges.subscribe(cancelled => {
       if (cancelled) {

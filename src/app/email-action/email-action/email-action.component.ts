@@ -6,7 +6,7 @@ import {
   signInWithEmailAndPassword,
   verifyPasswordResetCode
 } from '@angular/fire/auth';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { from, switchMap } from 'rxjs';
 
 interface FormValue {
@@ -20,7 +20,7 @@ interface FormValue {
 })
 export class EmailActionComponent {
   private actionCode: string;
-  form: FormGroup;
+  form: UntypedFormGroup;
 
   email: string | null = null;
   verificationError = false;
@@ -40,9 +40,9 @@ export class EmailActionComponent {
     });
 
     const config: Record<keyof FormValue, any> = {
-      password: new FormControl('', [Validators.required, Validators.minLength(8)])
+      password: new UntypedFormControl('', [Validators.required, Validators.minLength(8)])
     };
-    this.form = new FormGroup(config);
+    this.form = new UntypedFormGroup(config);
   }
 
   resetPassword() {

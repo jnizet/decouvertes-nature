@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import {
   Auth,
   EmailAuthProvider,
@@ -21,15 +21,15 @@ interface FormValue {
   styleUrls: ['./change-password.component.scss']
 })
 export class ChangePasswordComponent {
-  form: FormGroup;
+  form: UntypedFormGroup;
   error = false;
 
   constructor(private auth: Auth, private router: Router) {
     const config: Record<keyof FormValue, any> = {
-      currentPassword: new FormControl('', [Validators.required]),
-      newPassword: new FormControl('', [Validators.required, Validators.minLength(8)])
+      currentPassword: new UntypedFormControl('', [Validators.required]),
+      newPassword: new UntypedFormControl('', [Validators.required, Validators.minLength(8)])
     };
-    this.form = new FormGroup(config);
+    this.form = new UntypedFormGroup(config);
   }
 
   changePassword() {
