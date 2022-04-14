@@ -55,7 +55,7 @@
     "@angular/compiler-cli": "13.3.3",
     "@angular/localize": "13.3.3",
     "@playwright/test": "1.21.0",
-    "@types/jasmine": "4.0.2",
+    "@types/jasmine": "4.0.3",
     "@types/leaflet": "1.7.9",
     "@typescript-eslint/eslint-plugin": "5.19.0",
     "@typescript-eslint/parser": "5.19.0",
