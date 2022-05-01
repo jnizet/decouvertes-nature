@@ -297,7 +297,7 @@ export class ActivityEditionComponent {
         }
 
         paymentRequiredCtrl.valueChanges
-          .pipe(startWith(priceCtrl.value))
+          .pipe(startWith(paymentRequiredCtrl.value))
           .subscribe((required: boolean) => {
             if (required) {
               priceCtrl.enable();
