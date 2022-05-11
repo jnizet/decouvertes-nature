@@ -4,6 +4,7 @@ import {
   Component,
   ElementRef,
   Input,
+  NgZone,
   OnChanges,
   ViewEncapsulation
 } from '@angular/core';
@@ -2048,7 +2049,7 @@ export class MapComponent implements AfterViewInit, OnChanges {
   private map!: L.Map;
   private markers: Array<L.Marker<any>> = [];
 
-  constructor(private elementRef: ElementRef) {}
+  constructor(private elementRef: ElementRef, private ngZone: NgZone) {}
 
   ngOnChanges(): void {
     this.setMarkers();
@@ -2060,42 +2061,46 @@ export class MapComponent implements AfterViewInit, OnChanges {
   }
 
   private initMap(): void {
-    this.map = L.map(this.elementRef.nativeElement, {
-      center: [45.75624, 4.2246],
-      zoom: 9
+    this.ngZone.runOutsideAngular(() => {
+      this.map = L.map(this.elementRef.nativeElement, {
+        center: [45.75624, 4.2246],
+        zoom: 9
+      });
+
+      const tiles = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+      });
+
+      tiles.addTo(this.map);
+
+      const polyline = L.polyline(LOIRE, { className: 'contour' }).addTo(this.map);
+
+      // zoom the map to the polyline
+      this.map.fitBounds(polyline.getBounds());
     });
-
-    const tiles = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-    });
-
-    tiles.addTo(this.map);
-
-    const polyline = L.polyline(LOIRE, { className: 'contour' }).addTo(this.map);
-
-    // zoom the map to the polyline
-    this.map.fitBounds(polyline.getBounds());
   }
 
   private setMarkers(): void {
-    if (this.map) {
-      this.markers.forEach(marker => this.map.removeLayer(marker));
+    this.ngZone.runOutsideAngular(() => {
+      if (this.map) {
+        this.markers.forEach(marker => this.map.removeLayer(marker));
 
-      const locationsToMark = this.focusedLocation ? [this.focusedLocation] : this.locations;
+        const locationsToMark = this.focusedLocation ? [this.focusedLocation] : this.locations;
 
-      this.markers = locationsToMark.map(location => {
-        const divIcon = L.divIcon({
-          className: 'border rounded bg-white activity-marker',
-          html: `${location.activities.length}`
+        this.markers = locationsToMark.map(location => {
+          const divIcon = L.divIcon({
+            className: 'border rounded bg-white activity-marker',
+            html: `${location.activities.length}`
+          });
+          const marker = L.marker(location.municipality.center, { icon: divIcon });
+          marker.bindTooltip(location.municipality.name, {
+            offset: [12, 3],
+            direction: 'right'
+          });
+          marker.addTo(this.map);
+          return marker;
         });
-        const marker = L.marker(location.municipality.center, { icon: divIcon });
-        marker.bindTooltip(location.municipality.name, {
-          offset: [12, 3],
-          direction: 'right'
-        });
-        marker.addTo(this.map);
-        return marker;
-      });
-    }
+      }
+    });
   }
 }
