@@ -46,5 +46,7 @@ Thumbs.db
 /src/app/bootstrap-icons/bootstrap-icons.d.ts
 /src/app/bootstrap-icons/bootstrap-icons.js
 /.firebase/
+
 /e2e/test-results/
 playwright-report/
+.sdkmanrc
