@@ -28,7 +28,7 @@ interface Month {
 }
 
 @Component({
-  selector: 'dn-events',
+  selector: 'dn-exportable-activities',
   templateUrl: './exportable-activities.component.html',
   styleUrls: ['./exportable-activities.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
