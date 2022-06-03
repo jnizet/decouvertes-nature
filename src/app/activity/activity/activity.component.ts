@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { Observable, switchMap } from 'rxjs';
 import { Activity, ActivityReportCommand, ActivityService } from '../activity.service';
 import {
@@ -24,12 +24,30 @@ import {
 import { barredIcon, barredWheelchair, wheelchair } from '../../icon/icons';
 import { ConfirmService } from '../../confirm/confirm.service';
 import { CurrentUser, CurrentUserService } from '../../current-user.service';
+import { CommonModule } from '@angular/common';
+import { IconDirective } from '../../icon/icon.directive';
+import { PageTitleDirective } from '../../page-title/page-title.directive';
+import { ActivityDatePipe } from '../../activity-date-pipe/activity-date.pipe';
+import { ActivityTypePipe } from '../../activity-type-pipe/activity-type.pipe';
+import { ActivityReportComponent } from '../activity-report/activity-report.component';
+import { ActivityReportEditionComponent } from '../activity-report-edition/activity-report-edition.component';
 
 @Component({
   selector: 'dn-activity',
   templateUrl: './activity.component.html',
   styleUrls: ['./activity.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [
+    CommonModule,
+    RouterModule,
+    PageTitleDirective,
+    IconDirective,
+    ActivityDatePipe,
+    ActivityTypePipe,
+    ActivityReportComponent,
+    ActivityReportEditionComponent
+  ]
 })
 export class ActivityComponent {
   activity$: Observable<Activity>;
