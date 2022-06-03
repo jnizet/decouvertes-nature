@@ -5,7 +5,6 @@ import { ActivitiesComponent } from './activities/activities.component';
 import { ACTIVITY_ROUTES } from './activity.routes';
 import { ActivityEditionComponent } from './activity-edition/activity-edition.component';
 import { ReactiveFormsModule } from '@angular/forms';
-import { ValidationModule } from '../validation/validation.module';
 import { NgbCollapseModule, NgbTypeaheadModule } from '@ng-bootstrap/ng-bootstrap';
 import { MultiChoiceComponent } from './multi-choice/multi-choice.component';
 import { ActivityCardComponent } from './activity-card/activity-card.component';
@@ -22,6 +21,8 @@ import { PageTitleDirective } from '../page-title/page-title.directive';
 import { ActivityTypePipe } from '../activity-type-pipe/activity-type.pipe';
 import { ActivityDatePipe } from '../activity-date-pipe/activity-date.pipe';
 import { MonthPipe } from '../month-pipe/month.pipe';
+import { ValdemortModule } from 'ngx-valdemort';
+import { FormControlValidationDirective } from '../validation/form-control-validation.directive';
 
 @NgModule({
   declarations: [
@@ -40,10 +41,11 @@ import { MonthPipe } from '../month-pipe/month.pipe';
     CommonModule,
     RouterModule.forChild(ACTIVITY_ROUTES),
     ReactiveFormsModule,
-    ValidationModule,
     NgbTypeaheadModule,
     ConfirmModule,
     NgbCollapseModule,
+    ValdemortModule,
+    FormControlValidationDirective,
     MonthPipe,
     ActivityDatePipe,
     ActivityTypePipe,
