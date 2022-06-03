@@ -1,12 +1,24 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ActivityReport, ActivityReportCommand, ActivityService } from '../activity.service';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { fileArrowUp, xSquare } from '../../bootstrap-icons/bootstrap-icons';
+import { CommonModule } from '@angular/common';
+import { ValdemortModule } from 'ngx-valdemort';
+import { FormControlValidationDirective } from '../../validation/form-control-validation.directive';
+import { IconDirective } from '../../icon/icon.directive';
 
 @Component({
   selector: 'dn-activity-report-edition',
   templateUrl: './activity-report-edition.component.html',
-  styleUrls: ['./activity-report-edition.component.scss']
+  styleUrls: ['./activity-report-edition.component.scss'],
+  standalone: true,
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    ValdemortModule,
+    FormControlValidationDirective,
+    IconDirective
+  ]
 })
 export class ActivityReportEditionComponent implements OnInit {
   @Input()

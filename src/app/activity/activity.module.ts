@@ -10,8 +10,6 @@ import { MultiChoiceComponent } from './multi-choice/multi-choice.component';
 import { ActivityCardComponent } from './activity-card/activity-card.component';
 import { ActivityComponent } from './activity/activity.component';
 import { ActivitiesTabsComponent } from './activities-tabs/activities-tabs.component';
-import { ActivityReportComponent } from './activity-report/activity-report.component';
-import { ActivityReportEditionComponent } from './activity-report-edition/activity-report-edition.component';
 import { IconDirective } from '../icon/icon.directive';
 import { LoadingSpinnerComponent } from '../loading-spinner/loading-spinner.component';
 import { PageTitleDirective } from '../page-title/page-title.directive';
@@ -23,14 +21,7 @@ import { FormControlValidationDirective } from '../validation/form-control-valid
 import { ConfirmModalContentComponent } from '../confirm/confirm-modal-content/confirm-modal-content.component';
 
 @NgModule({
-  declarations: [
-    ActivitiesComponent,
-    ActivityEditionComponent,
-    ActivityComponent,
-    ActivitiesTabsComponent,
-    ActivityReportComponent,
-    ActivityReportEditionComponent
-  ],
+  declarations: [ActivitiesComponent, ActivityEditionComponent, ActivitiesTabsComponent],
   imports: [
     CommonModule,
     RouterModule.forChild(ACTIVITY_ROUTES),
@@ -47,7 +38,8 @@ import { ConfirmModalContentComponent } from '../confirm/confirm-modal-content/c
     LoadingSpinnerComponent,
     IconDirective,
     ActivityCardComponent,
-    MultiChoiceComponent
+    MultiChoiceComponent,
+    ActivityComponent
   ]
 })
 export class ActivityModule {}
