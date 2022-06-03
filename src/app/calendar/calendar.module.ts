@@ -3,23 +3,23 @@ import { CommonModule } from '@angular/common';
 import { CalendarComponent } from './calendar/calendar.component';
 import { RouterModule } from '@angular/router';
 import { CALENDAR_ROUTES } from './calendar.routes';
-import { MonthPipeModule } from '../month-pipe/month-pipe.module';
-import { IconModule } from '../icon/icon.module';
-import { ActivityDatePipeModule } from '../activity-date-pipe/activity-date-pipe.module';
 import { ReportComponent } from './report/report.component';
-import { PageTitleModule } from '../page-title/page-title.module';
-import { LoadingSpinnerModule } from '../loading-spinner/loading-spinner.module';
+import { IconDirective } from '../icon/icon.directive';
+import { LoadingSpinnerComponent } from '../loading-spinner/loading-spinner.component';
+import { PageTitleDirective } from '../page-title/page-title.directive';
+import { ActivityDatePipe } from '../activity-date-pipe/activity-date.pipe';
+import { MonthPipe } from '../month-pipe/month.pipe';
 
 @NgModule({
   declarations: [CalendarComponent, ReportComponent],
   imports: [
     CommonModule,
     RouterModule.forChild(CALENDAR_ROUTES),
-    MonthPipeModule,
-    IconModule,
-    ActivityDatePipeModule,
-    PageTitleModule,
-    LoadingSpinnerModule
+    MonthPipe,
+    ActivityDatePipe,
+    PageTitleDirective,
+    LoadingSpinnerComponent,
+    IconDirective
   ]
 })
 export class CalendarModule {}

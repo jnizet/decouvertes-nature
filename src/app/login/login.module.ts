@@ -5,7 +5,7 @@ import { RouterModule } from '@angular/router';
 import { LOGIN_ROUTES } from './login.routes';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ValidationModule } from '../validation/validation.module';
-import { PageTitleModule } from '../page-title/page-title.module';
+import { PageTitleDirective } from '../page-title/page-title.directive';
 
 @NgModule({
   declarations: [LoginComponent],
@@ -14,7 +14,7 @@ import { PageTitleModule } from '../page-title/page-title.module';
     RouterModule.forChild(LOGIN_ROUTES),
     ReactiveFormsModule,
     ValidationModule,
-    PageTitleModule
+    PageTitleDirective
   ]
 })
 export class LoginModule {}

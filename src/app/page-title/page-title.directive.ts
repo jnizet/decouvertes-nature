@@ -4,7 +4,8 @@ import { Title } from '@angular/platform-browser';
 const DEFAULT_TITLE = 'Découvertes Nature';
 
 @Directive({
-  selector: 'dn-page-title'
+  selector: 'dn-page-title',
+  standalone: true
 })
 export class PageTitleDirective implements OnDestroy {
   @Input()

@@ -4,7 +4,8 @@ import { format, parseISO } from 'date-fns';
 import { fr } from 'date-fns/locale';
 
 @Pipe({
-  name: 'activityDate'
+  name: 'activityDate',
+  standalone: true
 })
 export class ActivityDatePipe implements PipeTransform {
   transform(

@@ -4,18 +4,18 @@ import { MapComponent } from './map/map.component';
 import { ActivitiesMapComponent } from './activities-map/activities-map.component';
 import { RouterModule } from '@angular/router';
 import { MAP_ROUTES } from './map.routes';
-import { IconModule } from '../icon/icon.module';
-import { PageTitleModule } from '../page-title/page-title.module';
-import { LoadingSpinnerModule } from '../loading-spinner/loading-spinner.module';
+import { IconDirective } from '../icon/icon.directive';
+import { LoadingSpinnerComponent } from '../loading-spinner/loading-spinner.component';
+import { PageTitleDirective } from '../page-title/page-title.directive';
 
 @NgModule({
   declarations: [MapComponent, ActivitiesMapComponent],
   imports: [
     CommonModule,
     RouterModule.forChild(MAP_ROUTES),
-    IconModule,
-    PageTitleModule,
-    LoadingSpinnerModule
+    PageTitleDirective,
+    LoadingSpinnerComponent,
+    IconDirective
   ]
 })
 export class MapModule {}

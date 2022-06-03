@@ -5,7 +5,7 @@ import { ValidationModule } from '../validation/validation.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { CHANGE_PASSWORD_ROUTES } from './change-password.routes';
-import { PageTitleModule } from '../page-title/page-title.module';
+import { PageTitleDirective } from '../page-title/page-title.directive';
 
 @NgModule({
   declarations: [ChangePasswordComponent],
@@ -14,7 +14,7 @@ import { PageTitleModule } from '../page-title/page-title.module';
     RouterModule.forChild(CHANGE_PASSWORD_ROUTES),
     ReactiveFormsModule,
     ValidationModule,
-    PageTitleModule
+    PageTitleDirective
   ]
 })
 export class ChangePasswordModule {}
