@@ -12,12 +12,13 @@ export const APP_ROUTES: Routes = [
   },
   {
     path: 'email-action',
-    loadChildren: () => import('./email-action/email-action.module').then(m => m.EmailActionModule)
+    loadComponent: () =>
+      import('./email-action/email-action.component').then(m => m.EmailActionComponent)
   },
   {
     path: 'reset-password',
-    loadChildren: () =>
-      import('./reset-password/reset-password.module').then(m => m.ResetPasswordModule)
+    loadComponent: () =>
+      import('./reset-password/reset-password.component').then(m => m.ResetPasswordComponent)
   },
   {
     path: '',

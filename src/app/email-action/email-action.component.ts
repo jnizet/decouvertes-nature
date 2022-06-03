@@ -6,13 +6,25 @@ import {
   signInWithEmailAndPassword,
   verifyPasswordResetCode
 } from '@angular/fire/auth';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { from, switchMap } from 'rxjs';
+import { ValdemortModule } from 'ngx-valdemort';
+import { FormControlValidationDirective } from '../validation/form-control-validation.directive';
+import { PageTitleDirective } from '../page-title/page-title.directive';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'dn-email-action',
   templateUrl: './email-action.component.html',
-  styleUrls: ['./email-action.component.scss']
+  styleUrls: ['./email-action.component.scss'],
+  standalone: true,
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    ValdemortModule,
+    FormControlValidationDirective,
+    PageTitleDirective
+  ]
 })
 export class EmailActionComponent {
   private actionCode: string;
