@@ -39,8 +39,8 @@ export const APP_ROUTES: Routes = [
       },
       {
         path: 'change-password',
-        loadChildren: () =>
-          import('./change-password/change-password.module').then(m => m.ChangePasswordModule)
+        loadComponent: () =>
+          import('./change-password/change-password.component').then(m => m.ChangePasswordComponent)
       },
       {
         path: 'users',
