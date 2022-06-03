@@ -1,15 +1,31 @@
 import { Component } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AdministeredUser, AdministeredUserCommand, UserService } from '../user.service';
 import { first, map, Observable, of, switchMap } from 'rxjs';
 import { fileArrowUp } from '../../bootstrap-icons/bootstrap-icons';
 import { Spinner } from '../../shared/spinner';
+import { CommonModule } from '@angular/common';
+import { ValdemortModule } from 'ngx-valdemort';
+import { FormControlValidationDirective } from '../../validation/form-control-validation.directive';
+import { PageTitleDirective } from '../../page-title/page-title.directive';
+import { LoadingSpinnerComponent } from '../../loading-spinner/loading-spinner.component';
+import { IconDirective } from '../../icon/icon.directive';
 
 @Component({
   selector: 'dn-user-edition',
   templateUrl: './user-edition.component.html',
-  styleUrls: ['./user-edition.component.scss']
+  styleUrls: ['./user-edition.component.scss'],
+  standalone: true,
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    ValdemortModule,
+    FormControlValidationDirective,
+    PageTitleDirective,
+    LoadingSpinnerComponent,
+    IconDirective
+  ]
 })
 export class UserEditionComponent {
   form = new FormGroup({

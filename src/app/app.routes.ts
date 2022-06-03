@@ -44,7 +44,7 @@ export const APP_ROUTES: Routes = [
       },
       {
         path: 'users',
-        loadChildren: () => import('./user/user.module').then(m => m.UserModule),
+        loadChildren: () => import('./user/user.routes').then(m => m.USER_ROUTES),
         data: {}
       }
     ]

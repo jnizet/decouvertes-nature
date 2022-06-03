@@ -10,12 +10,19 @@ import {
   shieldFill,
   xOctagonFill
 } from '../../bootstrap-icons/bootstrap-icons';
+import { CommonModule } from '@angular/common';
+import { PageTitleDirective } from '../../page-title/page-title.directive';
+import { LoadingSpinnerComponent } from '../../loading-spinner/loading-spinner.component';
+import { IconDirective } from '../../icon/icon.directive';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'dn-users',
   templateUrl: './users.component.html',
   styleUrls: ['./users.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [CommonModule, RouterModule, PageTitleDirective, LoadingSpinnerComponent, IconDirective]
 })
 export class UsersComponent {
   users$: Observable<Array<AdministeredUser>>;
