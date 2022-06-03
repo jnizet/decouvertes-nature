@@ -1,6 +1,8 @@
 import { Component, forwardRef, Input, OnInit } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { plus } from '../../bootstrap-icons/bootstrap-icons';
+import { CommonModule } from '@angular/common';
+import { IconDirective } from '../../icon/icon.directive';
 
 let counter = 1;
 
@@ -15,7 +17,9 @@ interface Option {
   styleUrls: ['./multi-choice.component.scss'],
   providers: [
     { provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => MultiChoiceComponent), multi: true }
-  ]
+  ],
+  standalone: true,
+  imports: [CommonModule, IconDirective]
 })
 export class MultiChoiceComponent implements OnInit, ControlValueAccessor {
   @Input() knownOptions!: Array<string>;
