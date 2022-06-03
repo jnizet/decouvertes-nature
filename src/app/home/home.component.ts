@@ -1,13 +1,19 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { interval, map, Observable } from 'rxjs';
+import { map, Observable } from 'rxjs';
 import { Auth, authState, User } from '@angular/fire/auth';
-import { boxArrowInRight, calendar2Event, cardList } from '../../bootstrap-icons/bootstrap-icons';
+import { boxArrowInRight, calendar2Event, cardList } from '../bootstrap-icons/bootstrap-icons';
+import { CommonModule } from '@angular/common';
+import { IconDirective } from '../icon/icon.directive';
+import { RouterModule } from '@angular/router';
+import { UsernamePipe } from '../username-pipe/username.pipe';
 
 @Component({
   selector: 'dn-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [CommonModule, RouterModule, IconDirective, UsernamePipe]
 })
 export class HomeComponent {
   vm$: Observable<{ user: User | null }>;
@@ -16,10 +22,6 @@ export class HomeComponent {
     activities: cardList,
     calendar: calendar2Event
   };
-
-  rollingIcon$ = interval(1000).pipe(
-    map(i => (i % 2 === 0 ? this.icons.login : this.icons.calendar))
-  );
 
   constructor(auth: Auth) {
     this.vm$ = authState(auth).pipe(map(user => ({ user })));
