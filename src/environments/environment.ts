@@ -6,26 +6,34 @@ import { connectFirestoreEmulator, getFirestore, provideFirestore } from '@angul
 import { connectAuthEmulator, getAuth, provideAuth } from '@angular/fire/auth';
 import { firebaseConfig } from './firebase-config';
 import { connectFunctionsEmulator, getFunctions, provideFunctions } from '@angular/fire/functions';
+import { importProvidersFrom } from '@angular/core';
+import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
 
 export const environment = {
   production: false,
-  firebase: firebaseConfig,
-  firebaseImports: [
-    provideFirestore(() => {
-      const firestore = getFirestore();
-      connectFirestoreEmulator(firestore, 'localhost', 7070);
-      return firestore;
-    }),
-    provideAuth(() => {
-      const auth = getAuth();
-      connectAuthEmulator(auth, 'http://localhost:9099', { disableWarnings: true });
-      return auth;
-    }),
-    provideFunctions(() => {
-      const functions = getFunctions();
-      connectFunctionsEmulator(functions, 'localhost', 5001);
-      return functions;
-    })
+  firebaseProviders: [
+    importProvidersFrom(provideFirebaseApp(() => initializeApp(firebaseConfig))),
+    importProvidersFrom(
+      provideFirestore(() => {
+        const firestore = getFirestore();
+        connectFirestoreEmulator(firestore, 'localhost', 7070);
+        return firestore;
+      })
+    ),
+    importProvidersFrom(
+      provideAuth(() => {
+        const auth = getAuth();
+        connectAuthEmulator(auth, 'http://localhost:9099', { disableWarnings: true });
+        return auth;
+      })
+    ),
+    importProvidersFrom(
+      provideFunctions(() => {
+        const functions = getFunctions();
+        connectFunctionsEmulator(functions, 'localhost', 5001);
+        return functions;
+      })
+    )
   ]
 };
 
