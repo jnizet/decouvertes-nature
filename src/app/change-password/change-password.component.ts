@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import {
   Auth,
   EmailAuthProvider,
@@ -9,11 +9,23 @@ import {
 } from '@angular/fire/auth';
 import { from, switchMap } from 'rxjs';
 import { Router } from '@angular/router';
+import { CommonModule } from '@angular/common';
+import { ValdemortModule } from 'ngx-valdemort';
+import { FormControlValidationDirective } from '../validation/form-control-validation.directive';
+import { PageTitleDirective } from '../page-title/page-title.directive';
 
 @Component({
   selector: 'dn-change-password',
   templateUrl: './change-password.component.html',
-  styleUrls: ['./change-password.component.scss']
+  styleUrls: ['./change-password.component.scss'],
+  standalone: true,
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    ValdemortModule,
+    FormControlValidationDirective,
+    PageTitleDirective
+  ]
 })
 export class ChangePasswordComponent {
   form = new FormGroup({
