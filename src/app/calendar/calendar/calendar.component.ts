@@ -8,6 +8,14 @@ import {
   arrowRightCircle,
   plusCircle
 } from '../../bootstrap-icons/bootstrap-icons';
+import { CommonModule } from '@angular/common';
+import { PageTitleDirective } from '../../page-title/page-title.directive';
+import { LoadingSpinnerComponent } from '../../loading-spinner/loading-spinner.component';
+import { IconDirective } from '../../icon/icon.directive';
+import { ReportComponent } from '../report/report.component';
+import { MonthPipe } from '../../month-pipe/month.pipe';
+import { RouterModule } from '@angular/router';
+import { ActivityDatePipe } from '../../activity-date-pipe/activity-date.pipe';
 
 interface Month {
   month: YearMonth;
@@ -28,7 +36,18 @@ interface ActivityWithDayRange extends Activity {
   selector: 'dn-calendar',
   templateUrl: './calendar.component.html',
   styleUrls: ['./calendar.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [
+    CommonModule,
+    RouterModule,
+    PageTitleDirective,
+    LoadingSpinnerComponent,
+    IconDirective,
+    MonthPipe,
+    ActivityDatePipe,
+    ReportComponent
+  ]
 })
 export class CalendarComponent {
   private yearSubject = new BehaviorSubject<number>(new Date().getFullYear());

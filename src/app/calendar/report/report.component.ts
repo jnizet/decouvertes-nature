@@ -1,11 +1,14 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { Activity } from '../../activity/activity.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'dn-report',
   templateUrl: './report.component.html',
   styleUrls: ['./report.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [CommonModule]
 })
 export class ReportComponent {
   total = 0;
