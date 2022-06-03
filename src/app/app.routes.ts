@@ -34,7 +34,7 @@ export const APP_ROUTES: Routes = [
       },
       {
         path: 'activities',
-        loadChildren: () => import('./activity/activity.module').then(m => m.ActivityModule)
+        loadChildren: () => import('./activity/activity.routes').then(m => m.ACTIVITY_ROUTES)
       },
       {
         path: 'calendar',
