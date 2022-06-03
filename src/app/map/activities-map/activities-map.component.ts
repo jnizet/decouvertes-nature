@@ -17,6 +17,11 @@ import {
 import { Activity, ActivityService } from '../../activity/activity.service';
 import { parseISO } from 'date-fns';
 import { ALL_MUNICIPALITIES, Municipality } from '../../shared/municipalities';
+import { CommonModule } from '@angular/common';
+import { PageTitleDirective } from '../../page-title/page-title.directive';
+import { LoadingSpinnerComponent } from '../../loading-spinner/loading-spinner.component';
+import { IconDirective } from '../../icon/icon.directive';
+import { MapComponent } from '../map/map.component';
 
 export interface ActivityLocation {
   municipality: Municipality;
@@ -41,7 +46,9 @@ interface ViewModel {
   selector: 'dn-activities-map',
   templateUrl: './activities-map.component.html',
   styleUrls: ['./activities-map.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [CommonModule, PageTitleDirective, LoadingSpinnerComponent, IconDirective, MapComponent]
 })
 export class ActivitiesMapComponent {
   private yearSubject = new BehaviorSubject<number>(new Date().getFullYear());

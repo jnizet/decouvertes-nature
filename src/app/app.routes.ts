@@ -35,7 +35,7 @@ export const APP_ROUTES: Routes = [
       },
       {
         path: 'map',
-        loadChildren: () => import('./map/map.module').then(m => m.MapModule)
+        loadChildren: () => import('./map/map.routes').then(m => m.MAP_ROUTES)
       },
       {
         path: 'change-password',
