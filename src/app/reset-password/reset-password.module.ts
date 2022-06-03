@@ -5,8 +5,8 @@ import { RouterModule } from '@angular/router';
 import { RESET_PASSWORD_ROUTES } from './reset-password.routes';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ValidationModule } from '../validation/validation.module';
-import { IconModule } from '../icon/icon.module';
-import { PageTitleModule } from '../page-title/page-title.module';
+import { IconDirective } from '../icon/icon.directive';
+import { PageTitleDirective } from '../page-title/page-title.directive';
 
 @NgModule({
   declarations: [ResetPasswordComponent],
@@ -15,8 +15,8 @@ import { PageTitleModule } from '../page-title/page-title.module';
     RouterModule.forChild(RESET_PASSWORD_ROUTES),
     ReactiveFormsModule,
     ValidationModule,
-    IconModule,
-    PageTitleModule
+    PageTitleDirective,
+    IconDirective
   ]
 })
 export class ResetPasswordModule {}

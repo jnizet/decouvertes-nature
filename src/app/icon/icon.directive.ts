@@ -2,7 +2,8 @@ import { Directive, HostBinding, Input } from '@angular/core';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 
 @Directive({
-  selector: 'dn-icon'
+  selector: 'dn-icon',
+  standalone: true
 })
 export class IconDirective {
   @HostBinding('innerHTML')

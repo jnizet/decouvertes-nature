@@ -7,7 +7,8 @@ export function toUsername(user: User) {
 }
 
 @Pipe({
-  name: 'username'
+  name: 'username',
+  standalone: true
 })
 export class UsernamePipe implements PipeTransform {
   transform(value: User): string {

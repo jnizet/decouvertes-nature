@@ -3,8 +3,8 @@ import { CommonModule } from '@angular/common';
 import { NavbarComponent } from './navbar/navbar.component';
 import { RouterModule } from '@angular/router';
 import { NgbCollapseModule, NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
-import { UsernamePipeModule } from '../username-pipe/username-pipe.module';
-import { IconModule } from '../icon/icon.module';
+import { IconDirective } from '../icon/icon.directive';
+import { UsernamePipe } from '../username-pipe/username.pipe';
 
 @NgModule({
   declarations: [NavbarComponent],
@@ -14,8 +14,8 @@ import { IconModule } from '../icon/icon.module';
     RouterModule,
     NgbCollapseModule,
     NgbDropdownModule,
-    UsernamePipeModule,
-    IconModule
+    UsernamePipe,
+    IconDirective
   ]
 })
 export class NavbarModule {}

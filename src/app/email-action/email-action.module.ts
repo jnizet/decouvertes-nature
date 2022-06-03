@@ -5,7 +5,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { ValidationModule } from '../validation/validation.module';
 import { RouterModule } from '@angular/router';
 import { EMAIL_ACTION_ROUTES } from './email-action.routes';
-import { PageTitleModule } from '../page-title/page-title.module';
+import { PageTitleDirective } from '../page-title/page-title.directive';
 
 @NgModule({
   declarations: [EmailActionComponent],
@@ -14,7 +14,7 @@ import { PageTitleModule } from '../page-title/page-title.module';
     RouterModule.forChild(EMAIL_ACTION_ROUTES),
     ReactiveFormsModule,
     ValidationModule,
-    PageTitleModule
+    PageTitleDirective
   ]
 })
 export class EmailActionModule {}
