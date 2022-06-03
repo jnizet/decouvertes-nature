@@ -1,13 +1,25 @@
 import { Component } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Auth, signInWithEmailAndPassword } from '@angular/fire/auth';
 import { from } from 'rxjs';
 import { Router } from '@angular/router';
+import { CommonModule } from '@angular/common';
+import { ValdemortModule } from 'ngx-valdemort';
+import { FormControlValidationDirective } from '../validation/form-control-validation.directive';
+import { PageTitleDirective } from '../page-title/page-title.directive';
 
 @Component({
   selector: 'dn-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss']
+  styleUrls: ['./login.component.scss'],
+  standalone: true,
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    ValdemortModule,
+    FormControlValidationDirective,
+    PageTitleDirective
+  ]
 })
 export class LoginComponent {
   form = new FormGroup({
