@@ -27,7 +27,6 @@ import { ConfirmModalContentComponent } from '../confirm/confirm-modal-content/c
     ActivitiesComponent,
     ActivityEditionComponent,
     MultiChoiceComponent,
-    ActivityCardComponent,
     ActivityComponent,
     ActivitiesTabsComponent,
     ActivityReportComponent,
@@ -47,7 +46,8 @@ import { ConfirmModalContentComponent } from '../confirm/confirm-modal-content/c
     ActivityTypePipe,
     PageTitleDirective,
     LoadingSpinnerComponent,
-    IconDirective
+    IconDirective,
+    ActivityCardComponent
   ]
 })
 export class ActivityModule {}
