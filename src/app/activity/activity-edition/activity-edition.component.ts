@@ -1,5 +1,12 @@
 import { Component } from '@angular/core';
-import { AbstractControl, FormControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
+import {
+  AbstractControl,
+  FormControl,
+  FormGroup,
+  ReactiveFormsModule,
+  ValidatorFn,
+  Validators
+} from '@angular/forms';
 import { LocalDate, LocalTime } from '../../shared/types';
 import {
   Activity,
@@ -25,6 +32,13 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { fileArrowUp, journalArrowUp } from '../../bootstrap-icons/bootstrap-icons';
 import { CurrentUserService } from '../../current-user.service';
 import { Spinner } from '../../shared/spinner';
+import { CommonModule } from '@angular/common';
+import { ValdemortModule } from 'ngx-valdemort';
+import { FormControlValidationDirective } from '../../validation/form-control-validation.directive';
+import { NgbCollapseModule, NgbTypeaheadModule } from '@ng-bootstrap/ng-bootstrap';
+import { IconDirective } from '../../icon/icon.directive';
+import { MultiChoiceComponent } from '../multi-choice/multi-choice.component';
+import { PageTitleDirective } from '../../page-title/page-title.directive';
 
 interface Timing {
   startDate: LocalDate | null;
@@ -130,7 +144,19 @@ type ActivityFormGroup = FormGroup<{
 @Component({
   selector: 'dn-activity-edition',
   templateUrl: './activity-edition.component.html',
-  styleUrls: ['./activity-edition.component.scss']
+  styleUrls: ['./activity-edition.component.scss'],
+  standalone: true,
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    NgbTypeaheadModule,
+    NgbCollapseModule,
+    ValdemortModule,
+    FormControlValidationDirective,
+    PageTitleDirective,
+    IconDirective,
+    MultiChoiceComponent
+  ]
 })
 export class ActivityEditionComponent {
   mode: 'create' | 'edit' | 'duplicate' | null = null;
