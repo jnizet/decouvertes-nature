@@ -9,7 +9,6 @@ import { NgbCollapseModule, NgbTypeaheadModule } from '@ng-bootstrap/ng-bootstra
 import { MultiChoiceComponent } from './multi-choice/multi-choice.component';
 import { ActivityCardComponent } from './activity-card/activity-card.component';
 import { ActivityComponent } from './activity/activity.component';
-import { ConfirmModule } from '../confirm/confirm.module';
 import { ActivitiesTabsComponent } from './activities-tabs/activities-tabs.component';
 import { ExportableActivitiesComponent } from './exportable-activities/exportable-activities.component';
 import { ExportableActivityComponent } from './exportable-activity/exportable-activity.component';
@@ -23,6 +22,7 @@ import { ActivityDatePipe } from '../activity-date-pipe/activity-date.pipe';
 import { MonthPipe } from '../month-pipe/month.pipe';
 import { ValdemortModule } from 'ngx-valdemort';
 import { FormControlValidationDirective } from '../validation/form-control-validation.directive';
+import { ConfirmModalContentComponent } from '../confirm/confirm-modal-content/confirm-modal-content.component';
 
 @NgModule({
   declarations: [
@@ -42,9 +42,9 @@ import { FormControlValidationDirective } from '../validation/form-control-valid
     RouterModule.forChild(ACTIVITY_ROUTES),
     ReactiveFormsModule,
     NgbTypeaheadModule,
-    ConfirmModule,
     NgbCollapseModule,
     ValdemortModule,
+    ConfirmModalContentComponent,
     FormControlValidationDirective,
     MonthPipe,
     ActivityDatePipe,
