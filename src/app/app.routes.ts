@@ -31,11 +31,15 @@ export const APP_ROUTES: Routes = [
       },
       {
         path: 'calendar',
-        loadChildren: () => import('./calendar/calendar.module').then(m => m.CalendarModule)
+        loadComponent: () =>
+          import('./calendar/calendar/calendar.component').then(m => m.CalendarComponent)
       },
       {
         path: 'map',
-        loadChildren: () => import('./map/map.routes').then(m => m.MAP_ROUTES)
+        loadComponent: () =>
+          import('./map/activities-map/activities-map.component').then(
+            m => m.ActivitiesMapComponent
+          )
       },
       {
         path: 'change-password',
