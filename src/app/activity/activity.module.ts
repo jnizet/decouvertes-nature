@@ -21,7 +21,7 @@ import { FormControlValidationDirective } from '../validation/form-control-valid
 import { ConfirmModalContentComponent } from '../confirm/confirm-modal-content/confirm-modal-content.component';
 
 @NgModule({
-  declarations: [ActivityEditionComponent, ActivitiesTabsComponent],
+  declarations: [ActivityEditionComponent],
   imports: [
     CommonModule,
     RouterModule.forChild(ACTIVITY_ROUTES),
@@ -40,7 +40,8 @@ import { ConfirmModalContentComponent } from '../confirm/confirm-modal-content/c
     ActivityCardComponent,
     MultiChoiceComponent,
     ActivityComponent,
-    ActivitiesComponent
+    ActivitiesComponent,
+    ActivitiesTabsComponent
   ]
 })
 export class ActivityModule {}
