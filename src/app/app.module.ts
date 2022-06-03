@@ -8,9 +8,9 @@ import { environment } from '../environments/environment';
 import { getAuth, provideAuth } from '@angular/fire/auth';
 import { RouterModule } from '@angular/router';
 import { APP_ROUTES } from './app.routes';
-import { NavbarModule } from './navbar/navbar.module';
 import { ValidationModule } from './validation/validation.module';
 import '@angular/common/locales/global/fr';
+import { NavbarComponent } from './navbar/navbar.component';
 
 @NgModule({
   declarations: [AppComponent],
@@ -21,8 +21,8 @@ import '@angular/common/locales/global/fr';
     provideFirestore(() => getFirestore()),
     provideAuth(() => getAuth()),
     ...environment.firebaseImports,
-    NavbarModule,
-    ValidationModule
+    ValidationModule,
+    NavbarComponent
   ],
   providers: [
     {

@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { map, Observable } from 'rxjs';
-import { Router } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import {
   boxArrowInRight,
   calendar2Event,
@@ -11,14 +11,27 @@ import {
   personCircle,
   personWorkspace,
   power
-} from '../../bootstrap-icons/bootstrap-icons';
-import { CurrentUser, CurrentUserService } from '../../current-user.service';
+} from '../bootstrap-icons/bootstrap-icons';
+import { CurrentUser, CurrentUserService } from '../current-user.service';
+import { CommonModule } from '@angular/common';
+import { NgbCollapseModule, NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
+import { UsernamePipe } from '../username-pipe/username.pipe';
+import { IconDirective } from '../icon/icon.directive';
 
 @Component({
   selector: 'dn-navbar',
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [
+    CommonModule,
+    RouterModule,
+    NgbCollapseModule,
+    NgbDropdownModule,
+    UsernamePipe,
+    IconDirective
+  ]
 })
 export class NavbarComponent {
   expanded = false;
