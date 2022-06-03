@@ -3,7 +3,6 @@ import { ActivitiesComponent } from './activities/activities.component';
 import { ActivityEditionComponent } from './activity-edition/activity-edition.component';
 import { ActivityComponent } from './activity/activity.component';
 import { ActivitiesTabsComponent } from './activities-tabs/activities-tabs.component';
-import { ExportableActivitiesComponent } from './exportable-activities/exportable-activities.component';
 
 export const ACTIVITY_ROUTES: Routes = [
   {
@@ -25,10 +24,6 @@ export const ACTIVITY_ROUTES: Routes = [
         }
       }
     ]
-  },
-  {
-    path: 'exportable',
-    component: ExportableActivitiesComponent
   },
   {
     path: 'new',

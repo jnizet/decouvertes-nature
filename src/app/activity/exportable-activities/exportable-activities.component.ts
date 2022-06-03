@@ -11,9 +11,16 @@ import {
   startWith
 } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { ALL_INTERCOMMUNALITIES } from '../../shared/municipalities';
 import { infoCircleFill } from '../../bootstrap-icons/bootstrap-icons';
+import { CommonModule } from '@angular/common';
+import { ExportableActivityComponent } from '../exportable-activity/exportable-activity.component';
+import { PageTitleDirective } from '../../page-title/page-title.directive';
+import { IconDirective } from '../../icon/icon.directive';
+import { NgbTypeaheadModule } from '@ng-bootstrap/ng-bootstrap';
+import { LoadingSpinnerComponent } from '../../loading-spinner/loading-spinner.component';
+import { MonthPipe } from '../../month-pipe/month.pipe';
 
 interface Month {
   month: YearMonth;
@@ -24,7 +31,18 @@ interface Month {
   selector: 'dn-events',
   templateUrl: './exportable-activities.component.html',
   styleUrls: ['./exportable-activities.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    NgbTypeaheadModule,
+    PageTitleDirective,
+    LoadingSpinnerComponent,
+    IconDirective,
+    MonthPipe,
+    ExportableActivityComponent
+  ]
 })
 export class ExportableActivitiesComponent {
   readonly months$: Observable<Array<Month>>;

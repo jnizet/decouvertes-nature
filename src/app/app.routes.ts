@@ -26,6 +26,13 @@ export const APP_ROUTES: Routes = [
     data: { authGuardPipe: () => redirectUnauthorizedTo('/login') },
     children: [
       {
+        path: 'activities/exportable',
+        loadComponent: () =>
+          import('./activity/exportable-activities/exportable-activities.component').then(
+            m => m.ExportableActivitiesComponent
+          )
+      },
+      {
         path: 'activities',
         loadChildren: () => import('./activity/activity.module').then(m => m.ActivityModule)
       },
