@@ -4,7 +4,8 @@ import { NgControl } from '@angular/forms';
 import { ValdemortConfig } from 'ngx-valdemort';
 
 @Directive({
-  selector: '[formControlName]'
+  selector: '[formControlName]',
+  standalone: true
 })
 export class FormControlValidationDirective {
   constructor(@Optional() private ngControl: NgControl, private config: ValdemortConfig) {}

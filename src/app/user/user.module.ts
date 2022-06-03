@@ -5,10 +5,11 @@ import { USER_ROUTES } from './user.routes';
 import { RouterModule } from '@angular/router';
 import { UserEditionComponent } from './user-edition/user-edition.component';
 import { ReactiveFormsModule } from '@angular/forms';
-import { ValidationModule } from '../validation/validation.module';
 import { IconDirective } from '../icon/icon.directive';
 import { LoadingSpinnerComponent } from '../loading-spinner/loading-spinner.component';
 import { PageTitleDirective } from '../page-title/page-title.directive';
+import { ValdemortModule } from 'ngx-valdemort';
+import { FormControlValidationDirective } from '../validation/form-control-validation.directive';
 
 @NgModule({
   declarations: [UsersComponent, UserEditionComponent],
@@ -16,7 +17,8 @@ import { PageTitleDirective } from '../page-title/page-title.directive';
     CommonModule,
     RouterModule.forChild(USER_ROUTES),
     ReactiveFormsModule,
-    ValidationModule,
+    ValdemortModule,
+    FormControlValidationDirective,
     PageTitleDirective,
     LoadingSpinnerComponent,
     IconDirective

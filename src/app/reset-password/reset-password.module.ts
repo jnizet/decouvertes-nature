@@ -4,9 +4,10 @@ import { ResetPasswordComponent } from './reset-password/reset-password.componen
 import { RouterModule } from '@angular/router';
 import { RESET_PASSWORD_ROUTES } from './reset-password.routes';
 import { ReactiveFormsModule } from '@angular/forms';
-import { ValidationModule } from '../validation/validation.module';
 import { IconDirective } from '../icon/icon.directive';
 import { PageTitleDirective } from '../page-title/page-title.directive';
+import { ValdemortModule } from 'ngx-valdemort';
+import { FormControlValidationDirective } from '../validation/form-control-validation.directive';
 
 @NgModule({
   declarations: [ResetPasswordComponent],
@@ -14,7 +15,8 @@ import { PageTitleDirective } from '../page-title/page-title.directive';
     CommonModule,
     RouterModule.forChild(RESET_PASSWORD_ROUTES),
     ReactiveFormsModule,
-    ValidationModule,
+    ValdemortModule,
+    FormControlValidationDirective,
     PageTitleDirective,
     IconDirective
   ]
