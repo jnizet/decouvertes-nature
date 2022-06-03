@@ -2040,7 +2040,8 @@ const LOIRE: Array<LatLngExpression> = [
   templateUrl: './map.component.html',
   styleUrls: ['./map.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  encapsulation: ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.None,
+  standalone: true
 })
 export class MapComponent implements AfterViewInit, OnChanges {
   @Input() locations: Array<ActivityLocation> = [];
