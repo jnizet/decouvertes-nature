@@ -10,8 +10,6 @@ import { MultiChoiceComponent } from './multi-choice/multi-choice.component';
 import { ActivityCardComponent } from './activity-card/activity-card.component';
 import { ActivityComponent } from './activity/activity.component';
 import { ActivitiesTabsComponent } from './activities-tabs/activities-tabs.component';
-import { ExportableActivitiesComponent } from './exportable-activities/exportable-activities.component';
-import { ExportableActivityComponent } from './exportable-activity/exportable-activity.component';
 import { ActivityReportComponent } from './activity-report/activity-report.component';
 import { ActivityReportEditionComponent } from './activity-report-edition/activity-report-edition.component';
 import { IconDirective } from '../icon/icon.directive';
@@ -32,8 +30,6 @@ import { ConfirmModalContentComponent } from '../confirm/confirm-modal-content/c
     ActivityCardComponent,
     ActivityComponent,
     ActivitiesTabsComponent,
-    ExportableActivitiesComponent,
-    ExportableActivityComponent,
     ActivityReportComponent,
     ActivityReportEditionComponent
   ],
