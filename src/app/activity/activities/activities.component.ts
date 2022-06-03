@@ -3,6 +3,11 @@ import { map, Observable } from 'rxjs';
 import { Activity, ActivityService } from '../activity.service';
 import { LocalDate, localDateToYearMonth, YearMonth } from '../../shared/types';
 import { ActivatedRoute } from '@angular/router';
+import { CommonModule } from '@angular/common';
+import { PageTitleDirective } from '../../page-title/page-title.directive';
+import { LoadingSpinnerComponent } from '../../loading-spinner/loading-spinner.component';
+import { ActivityCardComponent } from '../activity-card/activity-card.component';
+import { MonthPipe } from '../../month-pipe/month.pipe';
 
 interface Month {
   month: YearMonth;
@@ -10,10 +15,18 @@ interface Month {
 }
 
 @Component({
-  selector: 'dn-events',
+  selector: 'dn-activities',
   templateUrl: './activities.component.html',
   styleUrls: ['./activities.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [
+    CommonModule,
+    PageTitleDirective,
+    LoadingSpinnerComponent,
+    ActivityCardComponent,
+    MonthPipe
+  ]
 })
 export class ActivitiesComponent {
   months$: Observable<Array<Month>>;
