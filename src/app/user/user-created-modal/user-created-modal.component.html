@@ -1,0 +1,29 @@
+<div class="modal-header">
+  <h4 class="modal-title">Utilisateur créé</h4>
+  <button
+    type="button"
+    class="btn-close"
+    aria-label="Fermer"
+    (click)="activeModal.dismiss()"
+  ></button>
+</div>
+<div class="modal-body">
+  <p>L'utilisateur {{ userName }} a bien été créé.</p>
+  <p>
+    Pour qu'il ou elle sache comment accéder à l'application, <br />
+    <strong class="text-danger">envoie-lui un email</strong>&nbsp;!
+  </p>
+  <div>
+    Tu peux copier-coller un exemple d'email via le lien
+    <div class="ms-3 text-secondary">
+      <dn-icon [icon]="icons.resetPasswordEmail" class="me-1"></dn-icon>
+      Choix du mot de passe
+    </div>
+    de sa fiche utilisateur.
+  </div>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-secondary" (click)="activeModal.dismiss()">
+    OK, j'ai compris
+  </button>
+</div>
