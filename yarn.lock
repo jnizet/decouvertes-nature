@@ -234,10 +234,10 @@
   dependencies:
     tslib "^2.3.0"
 
-"@angular/fire@7.4.0":
-  version "7.4.0"
-  resolved "https://registry.yarnpkg.com/@angular/fire/-/fire-7.4.0.tgz#4c9fd7aa3bf02cd723f38f14e8cce80cc23d651a"
-  integrity sha512-8GDfK55wKuc0PNKErHALOSmuJ3WgxW/CanMq3rpGctStlRPgVaG2GX33Gl8ailiutD9KpI7mO6xhCSc4Q3MPzA==
+"@angular/fire@7.4.1":
+  version "7.4.1"
+  resolved "https://registry.yarnpkg.com/@angular/fire/-/fire-7.4.1.tgz#a6de4b311c1abf4d3b47dc0f7744edc7b9b12873"
+  integrity sha512-wKSiK1g9cJRi1EVvs5a0vtCHPQQNKFIZS4F/smXUA123lDFrvn09PcETt3rVzfVWb3Hcu5Jf4DDlFIVJHUZjNg==
   dependencies:
     "@angular-devkit/schematics" "^12.0.0 || ^13.0.0 || ^14.0.0"
     "@schematics/angular" "^12.0.0 || ^13.0.0 || ^14.0.0"
