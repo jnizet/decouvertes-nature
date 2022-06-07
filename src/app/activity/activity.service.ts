@@ -229,10 +229,9 @@ export class ActivityService {
     );
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   private isActivityVisibleBy(activity: Activity, currentUser: CurrentUser | null): boolean {
-    return (
-      !!currentUser &&
-      (!activity.draft || currentUser.admin || currentUser.user.uid === activity.author.uid)
-    );
+    return true;
+    // if we go back to hiding drafts not created by the current user unless the user is an admin, change the code here
   }
 }
