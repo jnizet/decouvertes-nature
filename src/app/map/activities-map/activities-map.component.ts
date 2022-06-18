@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import {
-  BehaviorSubject,
   combineLatest,
   debounceTime,
   map,
@@ -11,11 +10,7 @@ import {
   switchMap,
   switchScan
 } from 'rxjs';
-import {
-  arrowLeftCircle,
-  arrowRightCircle,
-  plusCircle
-} from '../../bootstrap-icons/bootstrap-icons';
+import { plusCircle } from '../../bootstrap-icons/bootstrap-icons';
 import { Activity, ActivityService } from '../../activity/activity.service';
 import { parseISO } from 'date-fns';
 import { ALL_MUNICIPALITIES, Municipality } from '../../shared/municipalities';
@@ -25,6 +20,8 @@ import { LoadingSpinnerComponent } from '../../loading-spinner/loading-spinner.c
 import { IconDirective } from '../../icon/icon.directive';
 import { MapComponent } from '../map/map.component';
 import { LocationComponent } from '../location/location.component';
+import { YearService } from '../../year.service';
+import { YearSelectorComponent } from '../../year-selector/year-selector.component';
 
 export interface ActivityLocation {
   municipality: Municipality;
@@ -76,22 +73,20 @@ type Action = FocusAction | ToggleCollapseAction | ToggleCollapseUnmappedAction;
     LoadingSpinnerComponent,
     IconDirective,
     MapComponent,
-    LocationComponent
+    LocationComponent,
+    YearSelectorComponent
   ]
 })
 export class ActivitiesMapComponent {
-  private yearSubject = new BehaviorSubject<number>(new Date().getFullYear());
   private actionSubject = new Subject<Action>();
 
   vm$: Observable<ViewModel>;
   icons = {
-    left: arrowLeftCircle,
-    right: arrowRightCircle,
     addActivity: plusCircle
   };
 
-  constructor(activityService: ActivityService) {
-    this.vm$ = combineLatest([this.yearSubject, activityService.findVisible()]).pipe(
+  constructor(activityService: ActivityService, private yearService: YearService) {
+    this.vm$ = combineLatest([yearService.year$, activityService.findVisible()]).pipe(
       map(([year, activities]) => {
         // reverse to have them in chronological order, since the backend returns them in anti-chronological order
         const yearActivities = activities
@@ -151,10 +146,6 @@ export class ActivitiesMapComponent {
         )
       )
     );
-  }
-
-  changeYear(number: number) {
-    this.yearSubject.next(number);
   }
 
   setFocusedLocation(location: ActivityLocation | null) {

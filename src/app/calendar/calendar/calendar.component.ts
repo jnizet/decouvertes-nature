@@ -1,13 +1,9 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { Activity, ActivityService } from '../../activity/activity.service';
 import { LocalDate, localDateToYearMonth, YearMonth } from '../../shared/types';
-import { BehaviorSubject, combineLatest, map, Observable } from 'rxjs';
+import { combineLatest, map, Observable } from 'rxjs';
 import { parseISO } from 'date-fns';
-import {
-  arrowLeftCircle,
-  arrowRightCircle,
-  plusCircle
-} from '../../bootstrap-icons/bootstrap-icons';
+import { plusCircle } from '../../bootstrap-icons/bootstrap-icons';
 import { CommonModule } from '@angular/common';
 import { PageTitleDirective } from '../../page-title/page-title.directive';
 import { LoadingSpinnerComponent } from '../../loading-spinner/loading-spinner.component';
@@ -16,6 +12,8 @@ import { ReportComponent } from '../report/report.component';
 import { MonthPipe } from '../../month-pipe/month.pipe';
 import { RouterModule } from '@angular/router';
 import { ActivityDatePipe } from '../../activity-date-pipe/activity-date.pipe';
+import { YearService } from '../../year.service';
+import { YearSelectorComponent } from '../../year-selector/year-selector.component';
 
 interface Month {
   month: YearMonth;
@@ -46,20 +44,18 @@ interface ActivityWithDayRange extends Activity {
     IconDirective,
     MonthPipe,
     ActivityDatePipe,
-    ReportComponent
+    ReportComponent,
+    YearSelectorComponent
   ]
 })
 export class CalendarComponent {
-  private yearSubject = new BehaviorSubject<number>(new Date().getFullYear());
   vm$: Observable<ViewModel>;
   icons = {
-    left: arrowLeftCircle,
-    right: arrowRightCircle,
     addActivity: plusCircle
   };
 
-  constructor(activityService: ActivityService) {
-    this.vm$ = combineLatest([this.yearSubject, activityService.findVisible()]).pipe(
+  constructor(activityService: ActivityService, private yearService: YearService) {
+    this.vm$ = combineLatest([yearService.year$, activityService.findVisible()]).pipe(
       map(([year, activities]) => {
         // reverse to have them in chronological order, since the backend returns them in anti-chronological order
         const yearActivities = activities
@@ -103,10 +99,6 @@ export class CalendarComponent {
     const startMonth = localDateToYearMonth(activity.startDate);
     const endMonth = localDateToYearMonth(activity.endDate ?? activity.startDate);
     return month >= startMonth && month <= endMonth;
-  }
-
-  changeYear(number: number) {
-    this.yearSubject.next(number);
   }
 
   private withDayRange(activity: Activity, month: YearMonth): ActivityWithDayRange {
