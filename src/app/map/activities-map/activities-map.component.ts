@@ -1,13 +1,15 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { Component } from '@angular/core';
 import {
   BehaviorSubject,
   combineLatest,
   debounceTime,
   map,
   Observable,
+  of,
   startWith,
   Subject,
-  switchMap
+  switchMap,
+  switchScan
 } from 'rxjs';
 import {
   arrowLeftCircle,
@@ -22,17 +24,20 @@ import { PageTitleDirective } from '../../page-title/page-title.directive';
 import { LoadingSpinnerComponent } from '../../loading-spinner/loading-spinner.component';
 import { IconDirective } from '../../icon/icon.directive';
 import { MapComponent } from '../map/map.component';
+import { LocationComponent } from '../location/location.component';
 
 export interface ActivityLocation {
   municipality: Municipality;
   activities: Array<Activity>;
   draftCount: number;
+  collapsed: boolean;
 }
 
 export interface UnmappedActivityLocation {
   location: string;
   activities: Array<Activity>;
   draftCount: number;
+  collapsed: boolean;
 }
 
 interface ViewModel {
@@ -42,17 +47,42 @@ interface ViewModel {
   focusedLocation: ActivityLocation | null;
 }
 
+interface FocusAction {
+  type: 'focus';
+  location: ActivityLocation | null;
+}
+
+interface ToggleCollapseAction {
+  type: 'toggleCollapse';
+  location: ActivityLocation;
+}
+
+interface ToggleCollapseUnmappedAction {
+  type: 'toggleCollapseUnmapped';
+  location: UnmappedActivityLocation;
+}
+
+type Action = FocusAction | ToggleCollapseAction | ToggleCollapseUnmappedAction;
+
 @Component({
   selector: 'dn-activities-map',
   templateUrl: './activities-map.component.html',
   styleUrls: ['./activities-map.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  // changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [CommonModule, PageTitleDirective, LoadingSpinnerComponent, IconDirective, MapComponent]
+  imports: [
+    CommonModule,
+    PageTitleDirective,
+    LoadingSpinnerComponent,
+    IconDirective,
+    MapComponent,
+    LocationComponent
+  ]
 })
 export class ActivitiesMapComponent {
   private yearSubject = new BehaviorSubject<number>(new Date().getFullYear());
-  private focusedLocationSubject = new Subject<ActivityLocation | null>();
+  private actionSubject = new Subject<Action>();
+
   vm$: Observable<ViewModel>;
   icons = {
     left: arrowLeftCircle,
@@ -77,7 +107,8 @@ export class ActivitiesMapComponent {
               location = {
                 municipality,
                 activities: [],
-                draftCount: 0
+                draftCount: 0,
+                collapsed: true
               };
               mappedLocations.set(municipality, location);
             }
@@ -91,7 +122,8 @@ export class ActivitiesMapComponent {
               location = {
                 location: activity.location,
                 activities: [],
-                draftCount: 0
+                draftCount: 0,
+                collapsed: true
               };
               unmappedLocations.set(activity.location, location);
             }
@@ -111,11 +143,11 @@ export class ActivitiesMapComponent {
           )
         };
       }),
-      switchMap(partialVm =>
-        this.focusedLocationSubject.pipe(
-          startWith(null),
-          map(focusedLocation => ({ ...partialVm, focusedLocation })),
-          debounceTime(100)
+      map(partialVm => ({ ...partialVm, focusedLocation: null })),
+      switchMap(vm =>
+        this.actionSubject.pipe(
+          switchScan((vm, action) => this.applyAction(vm, action), vm),
+          startWith(vm)
         )
       )
     );
@@ -126,12 +158,72 @@ export class ActivitiesMapComponent {
   }
 
   setFocusedLocation(location: ActivityLocation | null) {
-    this.focusedLocationSubject.next(location);
+    this.actionSubject.next({ type: 'focus', location });
+  }
+
+  toggle(location: ActivityLocation) {
+    this.actionSubject.next({ type: 'toggleCollapse', location });
+  }
+
+  toggleUnmapped(location: UnmappedActivityLocation) {
+    this.actionSubject.next({ type: 'toggleCollapseUnmapped', location });
+  }
+
+  byMunicipality(index: number, location: ActivityLocation) {
+    return location.municipality;
+  }
+
+  byUnmappedLocation(index: number, location: UnmappedActivityLocation) {
+    return location.location;
   }
 
   private isInYear(activity: Activity, year: number) {
     const startYear = parseISO(activity.startDate).getFullYear();
     const endYear = parseISO(activity.endDate ?? activity.startDate).getFullYear();
     return year >= startYear && year <= endYear;
+  }
+
+  private applyAction(vm: ViewModel, action: Action): Observable<ViewModel> {
+    switch (action.type) {
+      case 'focus':
+        return this.switchFocus(vm, action);
+      case 'toggleCollapse':
+        return this.toggleCollapse(vm, action);
+      case 'toggleCollapseUnmapped':
+        return this.toggleCollapseUnmapped(vm, action);
+    }
+  }
+
+  private switchFocus(vm: ViewModel, action: FocusAction): Observable<ViewModel> {
+    return of({ ...vm, focusedLocation: action.location }).pipe(debounceTime(100));
+  }
+
+  private toggleCollapse(vm: ViewModel, action: ToggleCollapseAction): Observable<ViewModel> {
+    return of({
+      ...vm,
+      mappedLocations: vm.mappedLocations.map(location => {
+        if (location === action.location) {
+          return { ...location, collapsed: !location.collapsed };
+        } else {
+          return location;
+        }
+      })
+    });
+  }
+
+  private toggleCollapseUnmapped(
+    vm: ViewModel,
+    action: ToggleCollapseUnmappedAction
+  ): Observable<ViewModel> {
+    return of({
+      ...vm,
+      unmappedLocations: vm.unmappedLocations.map(location => {
+        if (location === action.location) {
+          return { ...location, collapsed: !location.collapsed };
+        } else {
+          return location;
+        }
+      })
+    });
   }
 }

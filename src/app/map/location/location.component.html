@@ -1,0 +1,31 @@
+<div class="d-flex gap-2">
+  <h3 class="fs-6 flex-grow-1">{{ title }}</h3>
+  <div>
+    <div class="chevron" [class.expanded]="!location.collapsed">
+      <dn-icon [icon]="icons.collapsed"></dn-icon>
+    </div>
+  </div>
+</div>
+<div class="text-muted">
+  {{ location.activities.length | number }}
+  {{ location.activities.length > 1 ? 'activités' : 'activité' }}
+  <div *ngIf="location.draftCount" class="badge bg-warning text-black ms-1">
+    {{ location.draftCount | number }}
+    {{ location.draftCount > 1 ? 'brouillons' : 'brouillon' }}
+  </div>
+</div>
+<div [ngbCollapse]="location.collapsed" [id]="collapsedId">
+  <div>
+    <ul class="list-unstyled mt-3 mb-0 ms-2">
+      <li *ngFor="let activity of location.activities; last as last" [class.mb-2]="!last">
+        <div>{{ activity | activityDate }}</div>
+        <div>
+          <a [routerLink]="['/activities', activity.id]">
+            {{ activity.title }}
+            <span *ngIf="activity.draft" class="badge bg-warning text-black">brouillon</span>
+          </a>
+        </div>
+      </li>
+    </ul>
+  </div>
+</div>
