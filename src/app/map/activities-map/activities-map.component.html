@@ -45,22 +45,25 @@
           Sur la carte
         </h2>
         <div
-          *ngFor="let location of vm.mappedLocations"
+          *ngFor="
+            let location of vm.mappedLocations;
+            index as locationIndex;
+            trackBy: byMunicipality
+          "
           class="card mb-2"
           (mouseenter)="setFocusedLocation(location)"
           (mouseleave)="setFocusedLocation(null)"
         >
-          <div class="card-body">
-            <h3 class="fs-6">{{ location.municipality.name }}</h3>
-            <div class="text-muted">
-              {{ location.activities.length | number }}
-              {{ location.activities.length > 1 ? 'activités' : 'activité' }}
-              <div *ngIf="location.draftCount" class="badge bg-warning text-black ms-1">
-                {{ location.draftCount | number }}
-                {{ location.draftCount > 1 ? 'brouillons' : 'brouillon' }}
-              </div>
-            </div>
-          </div>
+          <dn-location
+            class="card-body"
+            role="button"
+            (click)="toggle(location)"
+            [attr.aria-expanded]="!location.collapsed"
+            [attr.aria-controls]="'location-' + locationIndex"
+            [location]="location"
+            [title]="location.municipality.name"
+            [collapsedId]="'location-' + locationIndex"
+          ></dn-location>
         </div>
       </ng-container>
       <ng-container *ngIf="vm.unmappedLocations.length">
@@ -69,18 +72,24 @@
           Les lieux ci-dessous ne sont pas sur la carte parce qu'ils ne sont pas une commune de la
           Loire connue par l'application.
         </p>
-        <div *ngFor="let location of vm.unmappedLocations" class="card unmapped mb-2">
-          <div class="card-body">
-            <h3 class="fs-6">{{ location.location }}</h3>
-            <div class="text-muted">
-              {{ location.activities.length | number }}
-              {{ location.activities.length > 1 ? 'activités' : 'activité' }}
-              <div *ngIf="location.draftCount" class="badge bg-warning text-black ms-1">
-                {{ location.draftCount | number }}
-                {{ location.draftCount > 1 ? 'brouillons' : 'brouillon' }}
-              </div>
-            </div>
-          </div>
+        <div
+          *ngFor="
+            let location of vm.unmappedLocations;
+            trackBy: byUnmappedLocation;
+            index as unmappedLocationIndex
+          "
+          class="card unmapped mb-2"
+        >
+          <dn-location
+            class="card-body"
+            role="button"
+            (click)="toggleUnmapped(location)"
+            [attr.aria-expanded]="!location.collapsed"
+            [attr.aria-controls]="'unmapped-location-' + unmappedLocationIndex"
+            [location]="location"
+            [title]="location.location"
+            [collapsedId]="'unmapped-location-' + unmappedLocationIndex"
+          ></dn-location>
         </div>
       </ng-container>
     </div>
