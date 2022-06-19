@@ -43,13 +43,15 @@
           class="card mb-2"
           (mouseenter)="setFocusedLocation(location)"
           (mouseleave)="setFocusedLocation(null)"
+          role="button"
+          tabindex="0"
+          (keyup.enter)="toggle(location)"
+          (click)="toggle(location)"
+          [attr.aria-expanded]="!location.collapsed"
+          [attr.aria-controls]="'location-' + locationIndex"
         >
           <dn-location
             class="card-body"
-            role="button"
-            (click)="toggle(location)"
-            [attr.aria-expanded]="!location.collapsed"
-            [attr.aria-controls]="'location-' + locationIndex"
             [location]="location"
             [title]="location.municipality.name"
             [collapsedId]="'location-' + locationIndex"
@@ -69,15 +71,17 @@
             index as unmappedLocationIndex
           "
           class="card unmapped mb-2"
+          role="button"
+          (click)="toggleUnmapped(location)"
+          tabindex="0"
+          (keyup.enter)="toggleUnmapped(location)"
+          [attr.aria-expanded]="!location.collapsed"
+          [attr.aria-controls]="'unmapped-location-' + unmappedLocationIndex"
         >
           <dn-location
             class="card-body"
-            role="button"
-            (click)="toggleUnmapped(location)"
-            [attr.aria-expanded]="!location.collapsed"
-            [attr.aria-controls]="'unmapped-location-' + unmappedLocationIndex"
             [location]="location"
-            [title]="location.location"
+            [title]="location.location || 'Non renseigné'"
             [collapsedId]="'unmapped-location-' + unmappedLocationIndex"
           ></dn-location>
         </div>

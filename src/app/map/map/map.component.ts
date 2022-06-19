@@ -2093,7 +2093,10 @@ export class MapComponent implements AfterViewInit, OnChanges {
             className: 'border rounded bg-white activity-marker',
             html: `${location.activities.length}`
           });
-          const marker = L.marker(location.municipality.center, { icon: divIcon });
+          const marker = L.marker(location.municipality.center, {
+            icon: divIcon,
+            keyboard: false
+          });
           marker.bindTooltip(location.municipality.name, {
             offset: [12, 3],
             direction: 'right'
