@@ -17,7 +17,8 @@ export default function svgToJS(config) {
     if (file.slice(-4) !== '.svg') continue;
     const code = fs.readFileSync(path.join(config.input, file), 'utf-8');
     let name = file.slice(0, -4);
-    if (/^\d+$/.test(name)) {
+    let firstLetter = name.slice(0, 1);
+    if (firstLetter >= '0' && firstLetter <= '9') {
       name = `_${name}`;
     }
     name = name.replace(/-+./g, m => m.slice(-1).toUpperCase());
