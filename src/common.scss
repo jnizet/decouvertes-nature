@@ -1,3 +1,5 @@
+@import '~bootstrap/scss/functions';
+
 // make the placeholders lighter
 $input-placeholder-color: #dcdedf;
 // remove decoration of links
@@ -19,7 +21,7 @@ $headings-color: $primary;
 
 $navbar-height: 60px;
 
-@import '~bootstrap/scss/functions';
 @import '~bootstrap/scss/variables';
+@import '~bootstrap/scss/maps';
 @import '~bootstrap/scss/mixins';
 @import '~bootstrap/scss/utilities';
