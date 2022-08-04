@@ -9,7 +9,7 @@
 <div class="text-muted">
   {{ location.activities.length | number }}
   {{ location.activities.length > 1 ? 'activités' : 'activité' }}
-  <div *ngIf="location.draftCount" class="badge bg-warning text-black ms-1">
+  <div *ngIf="location.draftCount" class="badge text-bg-warning ms-1">
     {{ location.draftCount | number }}
     {{ location.draftCount > 1 ? 'brouillons' : 'brouillon' }}
   </div>
@@ -22,7 +22,7 @@
         <div>
           <a [routerLink]="['/activities', activity.id]">
             {{ activity.title }}
-            <span *ngIf="activity.draft" class="badge bg-warning text-black">brouillon</span>
+            <span *ngIf="activity.draft" class="badge text-bg-warning">brouillon</span>
           </a>
         </div>
       </li>

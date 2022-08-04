@@ -2090,7 +2090,7 @@ export class MapComponent implements AfterViewInit, OnChanges {
 
         this.markers = locationsToMark.map(location => {
           const divIcon = L.divIcon({
-            className: 'border rounded bg-white activity-marker',
+            className: 'border rounded activity-marker',
             html: `${location.activities.length}`
           });
           const marker = L.marker(location.municipality.center, {
