@@ -14,7 +14,7 @@ import { CommonModule } from '@angular/common';
 import { PageTitleDirective } from '../../page-title/page-title.directive';
 import { LoadingSpinnerComponent } from '../../loading-spinner/loading-spinner.component';
 import { IconDirective } from '../../icon/icon.directive';
-import { RouterModule } from '@angular/router';
+import { RouterLinkWithHref } from '@angular/router';
 
 @Component({
   selector: 'dn-users',
@@ -22,7 +22,13 @@ import { RouterModule } from '@angular/router';
   styleUrls: ['./users.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [CommonModule, RouterModule, PageTitleDirective, LoadingSpinnerComponent, IconDirective]
+  imports: [
+    CommonModule,
+    RouterLinkWithHref,
+    PageTitleDirective,
+    LoadingSpinnerComponent,
+    IconDirective
+  ]
 })
 export class UsersComponent {
   users$: Observable<Array<AdministeredUser>>;

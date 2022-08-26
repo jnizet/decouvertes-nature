@@ -5,7 +5,7 @@ import {
   UnmappedActivityLocation
 } from '../activities-map/activities-map.component';
 import { chevronCompactUp } from '../../bootstrap-icons/bootstrap-icons';
-import { RouterModule } from '@angular/router';
+import { RouterLinkWithHref } from '@angular/router';
 import { NgbCollapseModule } from '@ng-bootstrap/ng-bootstrap';
 import { IconDirective } from '../../icon/icon.directive';
 import { ActivityDatePipe } from '../../activity-date-pipe/activity-date.pipe';
@@ -13,7 +13,7 @@ import { ActivityDatePipe } from '../../activity-date-pipe/activity-date.pipe';
 @Component({
   selector: 'dn-location',
   standalone: true,
-  imports: [CommonModule, RouterModule, NgbCollapseModule, IconDirective, ActivityDatePipe],
+  imports: [CommonModule, RouterLinkWithHref, NgbCollapseModule, IconDirective, ActivityDatePipe],
   templateUrl: './location.component.html',
   styleUrls: ['./location.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
