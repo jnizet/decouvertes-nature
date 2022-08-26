@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { map, Observable } from 'rxjs';
-import { Router, RouterModule } from '@angular/router';
+import { Router, RouterLinkWithHref } from '@angular/router';
 import {
   boxArrowInRight,
   calendar2Event,
@@ -26,7 +26,7 @@ import { IconDirective } from '../icon/icon.directive';
   standalone: true,
   imports: [
     CommonModule,
-    RouterModule,
+    RouterLinkWithHref,
     NgbCollapseModule,
     NgbDropdownModule,
     UsernamePipe,

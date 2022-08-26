@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
+import { RouterOutlet } from '@angular/router';
 import { NavbarComponent } from './navbar/navbar.component';
 import { ValidationDefaultsComponent } from './validation/validation-defaults/validation-defaults.component';
 
@@ -9,6 +9,6 @@ import { ValidationDefaultsComponent } from './validation/validation-defaults/va
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
   standalone: true,
-  imports: [CommonModule, RouterModule, NavbarComponent, ValidationDefaultsComponent]
+  imports: [CommonModule, RouterOutlet, NavbarComponent, ValidationDefaultsComponent]
 })
 export class AppComponent {}

@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Auth, signInWithEmailAndPassword } from '@angular/fire/auth';
 import { from } from 'rxjs';
-import { Router, RouterModule } from '@angular/router';
+import { Router, RouterLinkWithHref } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { ValdemortModule } from 'ngx-valdemort';
 import { FormControlValidationDirective } from '../validation/form-control-validation.directive';
@@ -16,7 +16,7 @@ import { PageTitleDirective } from '../page-title/page-title.directive';
   imports: [
     CommonModule,
     ReactiveFormsModule,
-    RouterModule,
+    RouterLinkWithHref,
     ValdemortModule,
     FormControlValidationDirective,
     PageTitleDirective
