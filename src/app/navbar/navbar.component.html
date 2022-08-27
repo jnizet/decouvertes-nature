@@ -78,10 +78,12 @@
           </li>
         </ng-container>
         <ng-container *ngIf="!vm.user">
-          <a class="nav-link" routerLink="/login">
-            <dn-icon [icon]="icons.login"></dn-icon>
-            Identification
-          </a>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/login">
+              <dn-icon [icon]="icons.login"></dn-icon>
+              Identification
+            </a>
+          </li>
         </ng-container>
       </ul>
     </div>
