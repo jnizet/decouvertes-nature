@@ -4,13 +4,17 @@
   <div class="row justify-content-center">
     <div class="mb-4 col col-lg-8">
       <div class="position-relative">
-        <img
-          src="/assets/birds.jpg"
-          width="800"
-          height="438"
-          class="img-fluid w-100"
-          alt="deux jolis guêpiers sur une branche, dans un ciel bleu d'été"
-        />
+        <picture>
+          <source type="image/webp" srcset="/assets/birds.webp" />
+          <source type="image/jpeg" srcset="/assets/birds.jpg" />
+          <img
+            src="/assets/birds.jpg"
+            width="800"
+            height="438"
+            class="img-fluid w-100"
+            alt="deux jolis guêpiers sur une branche, dans un ciel bleu d'été"
+          />
+        </picture>
         <p
           *ngIf="vm.user"
           class="m-3 p-2 rounded lead text-white fs-4 darken"

@@ -70,6 +70,9 @@
               ],
               "outputHashing": "all"
             },
+            "perf": {
+              "outputHashing": "all"
+            },
             "development": {
               "buildOptimizer": false,
               "optimization": false,
@@ -89,6 +92,9 @@
           "configurations": {
             "production": {
               "browserTarget": "decouvertes-nature:build:production"
+            },
+            "perf": {
+              "browserTarget": "decouvertes-nature:build:perf"
             },
             "development": {
               "browserTarget": "decouvertes-nature:build:development"
