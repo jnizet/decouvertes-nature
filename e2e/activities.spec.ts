@@ -61,6 +61,7 @@ test.describe('Activities', () => {
     await page.click(`text=${newTitle}`);
     await page.click('text=Supprimer');
     await page.click('text=Oui');
+    await test.expect(page.locator('h1', { hasText: 'Confirmation' })).not.toBeVisible();
 
     await test.expect(page.locator('h1')).toHaveText('Activités');
     await test.expect(page.locator('h3', { hasText: newTitle })).toBeHidden();
