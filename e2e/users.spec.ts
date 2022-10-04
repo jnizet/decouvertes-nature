@@ -20,7 +20,7 @@ test.describe('Users', () => {
     await page.check('text=Exporteur');
     await page.click('text=Enregistrer');
 
-    await test.expect(page.locator('h4', { hasText: 'Utilisateur créé' })).toBeVisible();
+    await test.expect(page.locator('h1', { hasText: 'Utilisateur créé' })).toBeVisible();
     await page.click(`text=OK, j'ai compris`);
 
     await test.expect(page.locator('h2', { hasText: name })).toBeVisible();
