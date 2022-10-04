@@ -2065,7 +2065,9 @@ export class MapComponent implements AfterViewInit, OnChanges {
     this.ngZone.runOutsideAngular(() => {
       this.map = L.map(this.elementRef.nativeElement, {
         center: [45.75624, 4.2246],
-        zoom: 9
+        zoom: 9,
+        dragging: !L.Browser.mobile,
+        tap: !L.Browser.mobile
       });
 
       const tiles = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
