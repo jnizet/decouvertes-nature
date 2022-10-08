@@ -1,5 +1,5 @@
 import { test } from '@playwright/test';
-import { login, randomString } from './utils';
+import { checkAccessibility, login, randomString } from './utils';
 
 test.describe('Users', () => {
   test.beforeEach(async ({ page }) => {
@@ -9,6 +9,7 @@ test.describe('Users', () => {
   test('should display, create and modify users', async ({ page }) => {
     await page.click('text=Utilisateurs');
 
+    await checkAccessibility(page, 'Users page should be accessible');
     await test.expect(page.locator('h2', { hasText: 'Admin' })).toBeVisible();
 
     await page.click('text=Créer un utilisateur');
@@ -18,6 +19,7 @@ test.describe('Users', () => {
     await page.fill('text=Adresse email', email);
     await page.check('text=Administrateur');
     await page.check('text=Exporteur');
+    await checkAccessibility(page, 'Create user page should be accessible');
     await page.click('text=Enregistrer');
 
     await test.expect(page.locator('h1', { hasText: 'Utilisateur créé' })).toBeVisible();

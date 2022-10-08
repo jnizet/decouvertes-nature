@@ -14,7 +14,9 @@ export class ConfirmService {
   constructor(private modalService: NgbModal) {}
 
   confirm(options: ConfirmOptions): Observable<void> {
-    const modalRef = this.modalService.open(ConfirmModalContentComponent);
+    const modalRef = this.modalService.open(ConfirmModalContentComponent, {
+      ariaLabelledBy: 'confirmation-modal-title'
+    });
     modalRef.componentInstance.title = options.title ?? 'Confirmation';
     modalRef.componentInstance.message = options.message;
     return from(modalRef.result).pipe(

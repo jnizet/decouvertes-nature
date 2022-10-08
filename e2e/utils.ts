@@ -1,5 +1,6 @@
-import { Page } from '@playwright/test';
+import { expect, Page } from '@playwright/test';
 import * as crypto from 'crypto';
+import AxeBuilder from '@axe-core/playwright';
 
 export async function login(page: Page, email = 'jnizet@gmail.com') {
   await page.goto('/');
@@ -19,4 +20,11 @@ export function randomString(length = 10) {
   }
 
   return result;
+}
+
+export async function checkAccessibility(page: Page, message?: string) {
+  const accessibilityScanResults = await new AxeBuilder({ page })
+    .disableRules('aria-allowed-attr')
+    .analyze();
+  expect(accessibilityScanResults.violations, message).toEqual([]);
 }

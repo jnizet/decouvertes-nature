@@ -1,5 +1,5 @@
 import { Page, test } from '@playwright/test';
-import { login, randomString } from './utils';
+import { checkAccessibility, login, randomString } from './utils';
 
 test.describe('Activity report', () => {
   test.beforeEach(async ({ page }) => {
@@ -10,6 +10,7 @@ test.describe('Activity report', () => {
     await createActivity(page);
 
     await page.click('text=Remplir le rapport');
+    await checkAccessibility(page, 'Fill report page should be accessible');
 
     const reportForm = page.locator('dn-activity-report-edition');
     const participantsInput = reportForm.locator('text="Nombre de participants"');
@@ -24,6 +25,7 @@ test.describe('Activity report', () => {
     await test.expect(page.locator('h2')).toHaveText('Rapport');
     const report = page.locator('dn-activity-report');
     await test.expect(report).toContainText('5 personnes ont participé à cette activité');
+    await checkAccessibility(page, 'Report page should be accessible');
 
     await page.click('text="Modifier le rapport"');
     await participantsInput.fill('5');
@@ -31,6 +33,7 @@ test.describe('Activity report', () => {
     await page.click('text=Enregistrer');
     await test.expect(report).toContainText('5 personnes ont participé à cette activité');
     await test.expect(report.locator('.comment')).toContainText('Très bonne ambiance');
+    await checkAccessibility(page, 'Modify report page should be accessible');
 
     await page.click('text="Supprimer le rapport"');
     await page.click('text=Oui');
