@@ -313,7 +313,7 @@
   resolved "https://registry.yarnpkg.com/@assemblyscript/loader/-/loader-0.10.1.tgz#70e45678f06c72fa2e350e8553ec4a4d72b92e06"
   integrity sha512-H71nDOOL8Y7kWRLqf6Sums+01Q5msqBW2KhDUTemh1tvY04eSkSXrK0uj/4mmY0Xr16/3zyZmsrxN7CKuRbNRg==
 
-"@axe-core/playwright@^4.4.5":
+"@axe-core/playwright@4.4.5":
   version "4.4.5"
   resolved "https://registry.yarnpkg.com/@axe-core/playwright/-/playwright-4.4.5.tgz#196513ceb78ae42fa047de6bc757bec670eb13a0"
   integrity sha512-oyh8TuAjPc6GIut3E+BiJU19jAEuzhf1ZMB7nrJqfGWsU6kWP0ymRwuj6TX3JJTT5mL3m+yFhph5RhCr/MkQ1g==
