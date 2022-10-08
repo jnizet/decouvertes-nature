@@ -39,7 +39,7 @@
     "date-fns": "2.29.3",
     "firebase": "9.11.0",
     "leaflet": "1.9.2",
-    "ngx-valdemort": "8.0.0",
+    "ngx-valdemort": "8.1.0",
     "rxfire": "6.0.3",
     "rxjs": "7.5.7",
     "tslib": "2.4.0",
