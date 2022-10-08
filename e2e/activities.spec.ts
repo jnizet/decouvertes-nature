@@ -1,5 +1,5 @@
 import { test } from '@playwright/test';
-import { login, randomString } from './utils';
+import { checkAccessibility, login, randomString } from './utils';
 
 test.describe('Activities', () => {
   test.beforeEach(async ({ page }) => {
@@ -11,10 +11,12 @@ test.describe('Activities', () => {
 
     const romimineCard = page.locator('.card', { hasText: 'Romimine' });
     await test.expect(romimineCard.locator('h3')).toHaveText('Romimine');
+    await checkAccessibility(page, 'Activities page should be accessible');
 
     await page.click('text=Romimine');
 
     await test.expect(page.locator('h1')).toHaveText('Romimine');
+    await checkAccessibility(page, 'Romimine activity page should be accessible');
 
     await page.click('text=Activités');
     await page.click('text=Créer une activité');
@@ -33,6 +35,7 @@ test.describe('Activities', () => {
     await newLabelInput.fill('Some new label');
     await newLabelInput.press('Enter');
     await page.check('text="Some new label"');
+    await checkAccessibility(page, 'Activity creation page should be accessible');
 
     await page.click('#save-button');
 
@@ -48,6 +51,7 @@ test.describe('Activities', () => {
 
     await page.click('text=Mes activités');
     await test.expect(page.locator('h3', { hasText: newTitle })).toBeVisible();
+    await checkAccessibility(page, 'My activities page should be accessible');
 
     await page.click('text=Exports');
     await test.expect(page.locator('h3', { hasText: newTitle })).toBeVisible();
@@ -55,6 +59,7 @@ test.describe('Activities', () => {
     await test.expect(page.locator('h3', { hasText: newTitle })).toBeHidden();
     await page.fill(`text="Filtre sur l'intercommunalité"`, 'forez');
     await test.expect(page.locator('h3', { hasText: newTitle })).toBeVisible();
+    await checkAccessibility(page, 'Activities exports page should be accessible');
 
     await page.click('text=Activités');
     await page.click('text=Mes activités');
