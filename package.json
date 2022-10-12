@@ -15,7 +15,7 @@
     "e2e": "yarn playwright test",
     "build:e2e:ci": "ng build -c e2e",
     "serve:e2e:ci": "serve dist/decouvertes-nature --single --listen 4201",
-    "e2e:ci": "concurrently --names \"emulators,app,test\" --success first --kill-others \"firebase emulators:start --import=emulator-data\" \"yarn build:e2e:ci && yarn serve:e2e:ci\" \"wait-on --timeout 180000 http://localhost:4201 http://localhost:4000 && yarn playwright test\""
+    "e2e:ci": "concurrently --names \"emulators,app,test\" --success first --kill-others \"firebase emulators:start --debug --import=emulator-data\" \"yarn build:e2e:ci && yarn serve:e2e:ci\" \"wait-on --timeout 180000 http://localhost:4201 http://localhost:4000 && yarn playwright test\""
   },
   "private": true,
   "engines": {
