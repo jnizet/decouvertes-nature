@@ -37,7 +37,7 @@
     "bootstrap": "5.2.2",
     "bootstrap-icons": "1.9.1",
     "date-fns": "2.29.3",
-    "firebase": "9.12.1",
+    "firebase": "9.13.0",
     "leaflet": "1.9.2",
     "ngx-valdemort": "8.1.0",
     "rxjs": "7.5.7",
