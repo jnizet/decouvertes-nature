@@ -129,7 +129,7 @@ export class ActivityService {
   findVisible(): Observable<Array<Activity>> {
     return combineLatest([
       this.currentUserService.getCurrentUser(),
-      collectionData(query(this.activityCollection, orderBy('startDate', 'desc')))
+      collectionData<Activity>(query(this.activityCollection, orderBy('startDate', 'desc')))
     ]).pipe(
       map(([currentUser, activities]) =>
         activities.filter(a => this.isActivityVisibleBy(a, currentUser))
@@ -142,7 +142,7 @@ export class ActivityService {
   }
 
   findMine(): Observable<Array<Activity>> {
-    return collectionData(
+    return collectionData<Activity>(
       query(
         this.activityCollection,
         where('author.uid', '==', this.currentUserService.getCurrentAuditUser().uid),
@@ -182,7 +182,7 @@ export class ActivityService {
 
   suggestAnimators(text: string): Observable<Array<string>> {
     const query = text.toLowerCase();
-    return collectionData(this.animatorCollection).pipe(
+    return collectionData<Animator>(this.animatorCollection).pipe(
       first(),
       map(animators =>
         animators
@@ -195,7 +195,7 @@ export class ActivityService {
   }
 
   get(id: string): Observable<Activity> {
-    return docData(doc(this.activityCollection, id));
+    return docData<Activity>(doc(this.activityCollection, id));
   }
 
   private addAnimatorIfNecessary(name: string) {
