@@ -19,7 +19,7 @@
   },
   "private": true,
   "engines": {
-    "node": ">=14.17",
+    "node": ">=16.15.0",
     "yarn": ">=1.22.10 <2.0.0"
   },
   "dependencies": {
