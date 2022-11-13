@@ -1,0 +1,22 @@
+name: Deploy functions to Firebase
+'on':
+  workflow_dispatch
+
+jobs:
+  deploy-functions:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '16'
+      - name: Setup functions
+        working-directory: ./functions
+        run: yarn
+      - name: Build functions
+        working-directory: ./functions
+        run: yarn build
+      - name: Deploy functions
+        env:
+          GOOGLE_APPLICATION_CREDENTIALS: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_DECOUVERTES_NATURE }}
+        run: yarn firebase deploy --only functions
