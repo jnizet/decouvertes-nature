@@ -22,7 +22,7 @@ import { MapComponent } from '../map/map.component';
 import { LocationComponent } from '../location/location.component';
 import { YearService } from '../../year.service';
 import { YearSelectorComponent } from '../../year-selector/year-selector.component';
-import { RouterLinkWithHref } from '@angular/router';
+import { RouterLink } from '@angular/router';
 
 export interface ActivityLocation {
   municipality: Municipality;
@@ -70,7 +70,7 @@ type Action = FocusAction | ToggleCollapseAction | ToggleCollapseUnmappedAction;
   standalone: true,
   imports: [
     CommonModule,
-    RouterLinkWithHref,
+    RouterLink,
     PageTitleDirective,
     LoadingSpinnerComponent,
     IconDirective,

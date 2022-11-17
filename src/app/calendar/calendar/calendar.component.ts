@@ -10,7 +10,7 @@ import { LoadingSpinnerComponent } from '../../loading-spinner/loading-spinner.c
 import { IconDirective } from '../../icon/icon.directive';
 import { ReportComponent } from '../report/report.component';
 import { MonthPipe } from '../../month-pipe/month.pipe';
-import { RouterLinkWithHref } from '@angular/router';
+import { RouterLink } from '@angular/router';
 import { ActivityDatePipe } from '../../activity-date-pipe/activity-date.pipe';
 import { YearService } from '../../year.service';
 import { YearSelectorComponent } from '../../year-selector/year-selector.component';
@@ -38,7 +38,7 @@ interface ActivityWithDayRange extends Activity {
   standalone: true,
   imports: [
     CommonModule,
-    RouterLinkWithHref,
+    RouterLink,
     PageTitleDirective,
     LoadingSpinnerComponent,
     IconDirective,
