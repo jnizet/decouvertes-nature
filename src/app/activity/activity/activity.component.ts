@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { ActivatedRoute, Router, RouterLinkWithHref } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { Observable, switchMap } from 'rxjs';
 import { Activity, ActivityReportCommand, ActivityService } from '../activity.service';
 import {
@@ -40,7 +40,7 @@ import { ActivityReportEditionComponent } from '../activity-report-edition/activ
   standalone: true,
   imports: [
     CommonModule,
-    RouterLinkWithHref,
+    RouterLink,
     PageTitleDirective,
     IconDirective,
     ActivityDatePipe,

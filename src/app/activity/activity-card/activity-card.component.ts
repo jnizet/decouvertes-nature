@@ -10,7 +10,7 @@ import { CommonModule } from '@angular/common';
 import { IconDirective } from '../../icon/icon.directive';
 import { ActivityDatePipe } from '../../activity-date-pipe/activity-date.pipe';
 import { ActivityTypePipe } from '../../activity-type-pipe/activity-type.pipe';
-import { RouterLinkWithHref } from '@angular/router';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'dn-activity-card',
@@ -18,7 +18,7 @@ import { RouterLinkWithHref } from '@angular/router';
   styleUrls: ['./activity-card.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [CommonModule, RouterLinkWithHref, IconDirective, ActivityTypePipe, ActivityDatePipe]
+  imports: [CommonModule, RouterLink, IconDirective, ActivityTypePipe, ActivityDatePipe]
 })
 export class ActivityCardComponent {
   @Input() activity!: Activity;
