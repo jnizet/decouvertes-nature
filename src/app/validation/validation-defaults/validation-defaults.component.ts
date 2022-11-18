@@ -1,5 +1,9 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { ValdemortConfig, ValdemortModule } from 'ngx-valdemort';
+import {
+  DefaultValidationErrorsDirective,
+  ValdemortConfig,
+  ValidationErrorDirective
+} from 'ngx-valdemort';
 import { environment } from '../../../environments/environment';
 import { CommonModule } from '@angular/common';
 
@@ -9,7 +13,7 @@ import { CommonModule } from '@angular/common';
   styleUrls: ['./validation-defaults.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [CommonModule, ValdemortModule]
+  imports: [CommonModule, DefaultValidationErrorsDirective, ValidationErrorDirective]
 })
 export class ValidationDefaultsComponent {
   constructor(config: ValdemortConfig) {

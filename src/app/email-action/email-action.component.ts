@@ -8,7 +8,7 @@ import {
 } from '@angular/fire/auth';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { from, switchMap } from 'rxjs';
-import { ValdemortModule } from 'ngx-valdemort';
+import { ValidationErrorsComponent } from 'ngx-valdemort';
 import { FormControlValidationDirective } from '../validation/form-control-validation.directive';
 import { PageTitleDirective } from '../page-title/page-title.directive';
 import { CommonModule } from '@angular/common';
@@ -21,7 +21,7 @@ import { CommonModule } from '@angular/common';
   imports: [
     CommonModule,
     ReactiveFormsModule,
-    ValdemortModule,
+    ValidationErrorsComponent,
     FormControlValidationDirective,
     PageTitleDirective
   ]

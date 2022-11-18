@@ -6,7 +6,7 @@ import { first, map, Observable, of, switchMap } from 'rxjs';
 import { fileArrowUp } from '../../bootstrap-icons/bootstrap-icons';
 import { Spinner } from '../../shared/spinner';
 import { CommonModule } from '@angular/common';
-import { ValdemortModule } from 'ngx-valdemort';
+import { ValidationErrorsComponent } from 'ngx-valdemort';
 import { FormControlValidationDirective } from '../../validation/form-control-validation.directive';
 import { PageTitleDirective } from '../../page-title/page-title.directive';
 import { LoadingSpinnerComponent } from '../../loading-spinner/loading-spinner.component';
@@ -22,7 +22,7 @@ import { UserCreatedModalComponent } from '../user-created-modal/user-created-mo
   imports: [
     CommonModule,
     ReactiveFormsModule,
-    ValdemortModule,
+    ValidationErrorsComponent,
     FormControlValidationDirective,
     PageTitleDirective,
     LoadingSpinnerComponent,

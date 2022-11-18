@@ -5,7 +5,7 @@ import { from } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
 import { exclamationTriangleFill } from '../bootstrap-icons/bootstrap-icons';
 import { CommonModule } from '@angular/common';
-import { ValdemortModule } from 'ngx-valdemort';
+import { ValidationErrorsComponent } from 'ngx-valdemort';
 import { FormControlValidationDirective } from '../validation/form-control-validation.directive';
 import { PageTitleDirective } from '../page-title/page-title.directive';
 import { IconDirective } from '../icon/icon.directive';
@@ -18,7 +18,7 @@ import { IconDirective } from '../icon/icon.directive';
   imports: [
     CommonModule,
     ReactiveFormsModule,
-    ValdemortModule,
+    ValidationErrorsComponent,
     FormControlValidationDirective,
     PageTitleDirective,
     IconDirective
