@@ -10,7 +10,7 @@ import {
 import { from, switchMap } from 'rxjs';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { ValdemortModule } from 'ngx-valdemort';
+import { ValidationErrorsComponent } from 'ngx-valdemort';
 import { FormControlValidationDirective } from '../validation/form-control-validation.directive';
 import { PageTitleDirective } from '../page-title/page-title.directive';
 
@@ -22,7 +22,7 @@ import { PageTitleDirective } from '../page-title/page-title.directive';
   imports: [
     CommonModule,
     ReactiveFormsModule,
-    ValdemortModule,
+    ValidationErrorsComponent,
     FormControlValidationDirective,
     PageTitleDirective
   ]

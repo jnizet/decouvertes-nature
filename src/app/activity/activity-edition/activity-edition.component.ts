@@ -33,7 +33,7 @@ import { fileArrowUp, journalArrowUp } from '../../bootstrap-icons/bootstrap-ico
 import { CurrentUserService } from '../../current-user.service';
 import { Spinner } from '../../shared/spinner';
 import { CommonModule } from '@angular/common';
-import { ValdemortModule } from 'ngx-valdemort';
+import { ValidationErrorDirective, ValidationErrorsComponent } from 'ngx-valdemort';
 import { FormControlValidationDirective } from '../../validation/form-control-validation.directive';
 import { NgbCollapseModule, NgbTypeaheadModule } from '@ng-bootstrap/ng-bootstrap';
 import { IconDirective } from '../../icon/icon.directive';
@@ -151,7 +151,8 @@ type ActivityFormGroup = FormGroup<{
     ReactiveFormsModule,
     NgbTypeaheadModule,
     NgbCollapseModule,
-    ValdemortModule,
+    ValidationErrorsComponent,
+    ValidationErrorDirective,
     FormControlValidationDirective,
     PageTitleDirective,
     IconDirective,
