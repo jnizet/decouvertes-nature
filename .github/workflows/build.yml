@@ -54,3 +54,9 @@ jobs:
         run: npx playwright install --with-deps
       - name: Run Playwright tests
         run: yarn e2e:ci
+      - name: Archive generated test screenshots
+        uses: actions/upload-artifact@v3
+        if: failure()
+        with:
+          name: test-screenshots
+          path: e2e/**/*linux.png
