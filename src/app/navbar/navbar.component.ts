@@ -14,7 +14,12 @@ import {
 } from '../bootstrap-icons/bootstrap-icons';
 import { CurrentUser, CurrentUserService } from '../current-user.service';
 import { CommonModule } from '@angular/common';
-import { NgbCollapseModule, NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
+import {
+  NgbCollapse,
+  NgbDropdown,
+  NgbDropdownMenu,
+  NgbDropdownToggle
+} from '@ng-bootstrap/ng-bootstrap';
 import { UsernamePipe } from '../username-pipe/username.pipe';
 import { IconDirective } from '../icon/icon.directive';
 
@@ -27,8 +32,10 @@ import { IconDirective } from '../icon/icon.directive';
   imports: [
     CommonModule,
     RouterLink,
-    NgbCollapseModule,
-    NgbDropdownModule,
+    NgbCollapse,
+    NgbDropdown,
+    NgbDropdownToggle,
+    NgbDropdownMenu,
     UsernamePipe,
     IconDirective
   ]

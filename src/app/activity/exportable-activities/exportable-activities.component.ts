@@ -18,7 +18,7 @@ import { CommonModule } from '@angular/common';
 import { ExportableActivityComponent } from '../exportable-activity/exportable-activity.component';
 import { PageTitleDirective } from '../../page-title/page-title.directive';
 import { IconDirective } from '../../icon/icon.directive';
-import { NgbTypeaheadModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbTypeahead } from '@ng-bootstrap/ng-bootstrap';
 import { LoadingSpinnerComponent } from '../../loading-spinner/loading-spinner.component';
 import { MonthPipe } from '../../month-pipe/month.pipe';
 
@@ -36,7 +36,7 @@ interface Month {
   imports: [
     CommonModule,
     ReactiveFormsModule,
-    NgbTypeaheadModule,
+    NgbTypeahead,
     PageTitleDirective,
     LoadingSpinnerComponent,
     IconDirective,
