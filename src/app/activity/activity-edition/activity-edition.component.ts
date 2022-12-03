@@ -35,7 +35,7 @@ import { Spinner } from '../../shared/spinner';
 import { CommonModule } from '@angular/common';
 import { ValidationErrorDirective, ValidationErrorsComponent } from 'ngx-valdemort';
 import { FormControlValidationDirective } from '../../validation/form-control-validation.directive';
-import { NgbCollapseModule, NgbTypeaheadModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbCollapse, NgbTypeahead } from '@ng-bootstrap/ng-bootstrap';
 import { IconDirective } from '../../icon/icon.directive';
 import { MultiChoiceComponent } from '../multi-choice/multi-choice.component';
 import { PageTitleDirective } from '../../page-title/page-title.directive';
@@ -149,8 +149,8 @@ type ActivityFormGroup = FormGroup<{
   imports: [
     CommonModule,
     ReactiveFormsModule,
-    NgbTypeaheadModule,
-    NgbCollapseModule,
+    NgbTypeahead,
+    NgbCollapse,
     ValidationErrorsComponent,
     ValidationErrorDirective,
     FormControlValidationDirective,
