@@ -6,7 +6,7 @@ import {
   emojiLaughing,
   pinMap
 } from '../../bootstrap-icons/bootstrap-icons';
-import { CommonModule } from '@angular/common';
+import { NgIf } from '@angular/common';
 import { IconDirective } from '../../icon/icon.directive';
 import { ActivityDatePipe } from '../../activity-date-pipe/activity-date.pipe';
 import { ActivityTypePipe } from '../../activity-type-pipe/activity-type.pipe';
@@ -18,7 +18,7 @@ import { RouterLink } from '@angular/router';
   styleUrls: ['./activity-card.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [CommonModule, RouterLink, IconDirective, ActivityTypePipe, ActivityDatePipe]
+  imports: [NgIf, RouterLink, IconDirective, ActivityTypePipe, ActivityDatePipe]
 })
 export class ActivityCardComponent {
   @Input() activity!: Activity;

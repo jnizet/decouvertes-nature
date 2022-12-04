@@ -14,7 +14,7 @@ import { ActivatedRoute } from '@angular/router';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { ALL_INTERCOMMUNALITIES } from '../../shared/municipalities';
 import { infoCircleFill } from '../../bootstrap-icons/bootstrap-icons';
-import { CommonModule } from '@angular/common';
+import { AsyncPipe, NgFor, NgIf } from '@angular/common';
 import { ExportableActivityComponent } from '../exportable-activity/exportable-activity.component';
 import { PageTitleDirective } from '../../page-title/page-title.directive';
 import { IconDirective } from '../../icon/icon.directive';
@@ -34,7 +34,9 @@ interface Month {
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
   imports: [
-    CommonModule,
+    NgIf,
+    NgFor,
+    AsyncPipe,
     ReactiveFormsModule,
     NgbTypeahead,
     PageTitleDirective,

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import {
   combineLatest,
   debounceTime,
@@ -14,7 +14,6 @@ import { plusCircle } from '../../bootstrap-icons/bootstrap-icons';
 import { Activity, ActivityService } from '../../activity/activity.service';
 import { parseISO } from 'date-fns';
 import { ALL_MUNICIPALITIES, Municipality } from '../../shared/municipalities';
-import { CommonModule } from '@angular/common';
 import { PageTitleDirective } from '../../page-title/page-title.directive';
 import { LoadingSpinnerComponent } from '../../loading-spinner/loading-spinner.component';
 import { IconDirective } from '../../icon/icon.directive';
@@ -23,6 +22,7 @@ import { LocationComponent } from '../location/location.component';
 import { YearService } from '../../year.service';
 import { YearSelectorComponent } from '../../year-selector/year-selector.component';
 import { RouterLink } from '@angular/router';
+import { AsyncPipe, NgFor, NgIf } from '@angular/common';
 
 export interface ActivityLocation {
   municipality: Municipality;
@@ -66,10 +66,12 @@ type Action = FocusAction | ToggleCollapseAction | ToggleCollapseUnmappedAction;
   selector: 'dn-activities-map',
   templateUrl: './activities-map.component.html',
   styleUrls: ['./activities-map.component.scss'],
-  // changeDetection: ChangeDetectionStrategy.OnPush,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
   imports: [
-    CommonModule,
+    NgIf,
+    NgFor,
+    AsyncPipe,
     RouterLink,
     PageTitleDirective,
     LoadingSpinnerComponent,

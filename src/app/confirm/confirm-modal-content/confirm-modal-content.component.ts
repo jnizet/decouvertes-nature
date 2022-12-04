@@ -1,6 +1,5 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'dn-confirm-modal-content',
@@ -8,7 +7,7 @@ import { CommonModule } from '@angular/common';
   styleUrls: ['./confirm-modal-content.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [CommonModule]
+  imports: []
 })
 export class ConfirmModalContentComponent {
   @Input() message?: string;

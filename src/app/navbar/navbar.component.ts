@@ -13,7 +13,7 @@ import {
   power
 } from '../bootstrap-icons/bootstrap-icons';
 import { CurrentUser, CurrentUserService } from '../current-user.service';
-import { CommonModule } from '@angular/common';
+import { AsyncPipe, NgIf } from '@angular/common';
 import {
   NgbCollapse,
   NgbDropdown,
@@ -30,7 +30,8 @@ import { IconDirective } from '../icon/icon.directive';
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
   imports: [
-    CommonModule,
+    NgIf,
+    AsyncPipe,
     RouterLink,
     NgbCollapse,
     NgbDropdown,

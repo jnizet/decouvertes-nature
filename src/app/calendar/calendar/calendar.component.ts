@@ -4,7 +4,7 @@ import { LocalDate, localDateToYearMonth, YearMonth } from '../../shared/types';
 import { combineLatest, map, Observable } from 'rxjs';
 import { parseISO } from 'date-fns';
 import { plusCircle } from '../../bootstrap-icons/bootstrap-icons';
-import { CommonModule } from '@angular/common';
+import { AsyncPipe, NgFor, NgIf } from '@angular/common';
 import { PageTitleDirective } from '../../page-title/page-title.directive';
 import { LoadingSpinnerComponent } from '../../loading-spinner/loading-spinner.component';
 import { IconDirective } from '../../icon/icon.directive';
@@ -37,7 +37,9 @@ interface ActivityWithDayRange extends Activity {
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
   imports: [
-    CommonModule,
+    NgIf,
+    NgFor,
+    AsyncPipe,
     RouterLink,
     PageTitleDirective,
     LoadingSpinnerComponent,

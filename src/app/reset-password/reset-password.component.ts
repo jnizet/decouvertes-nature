@@ -4,11 +4,11 @@ import { Auth, sendPasswordResetEmail } from '@angular/fire/auth';
 import { from } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
 import { exclamationTriangleFill } from '../bootstrap-icons/bootstrap-icons';
-import { CommonModule } from '@angular/common';
 import { ValidationErrorsComponent } from 'ngx-valdemort';
 import { FormControlValidationDirective } from '../validation/form-control-validation.directive';
 import { PageTitleDirective } from '../page-title/page-title.directive';
 import { IconDirective } from '../icon/icon.directive';
+import { NgIf } from '@angular/common';
 
 @Component({
   selector: 'dn-reset-password',
@@ -16,7 +16,7 @@ import { IconDirective } from '../icon/icon.directive';
   styleUrls: ['./reset-password.component.scss'],
   standalone: true,
   imports: [
-    CommonModule,
+    NgIf,
     ReactiveFormsModule,
     ValidationErrorsComponent,
     FormControlValidationDirective,

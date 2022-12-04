@@ -1,7 +1,6 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { plusCircle } from '../../bootstrap-icons/bootstrap-icons';
-import { IsActiveMatchOptions, RouterLinkActive, RouterLink, RouterOutlet } from '@angular/router';
-import { CommonModule } from '@angular/common';
+import { IsActiveMatchOptions, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { IconDirective } from '../../icon/icon.directive';
 
 @Component({
@@ -10,7 +9,7 @@ import { IconDirective } from '../../icon/icon.directive';
   styleUrls: ['./activities-tabs.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [CommonModule, RouterOutlet, RouterLink, RouterLinkActive, IconDirective]
+  imports: [RouterOutlet, RouterLink, RouterLinkActive, IconDirective]
 })
 export class ActivitiesTabsComponent {
   icons = {

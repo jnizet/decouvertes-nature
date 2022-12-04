@@ -3,7 +3,7 @@ import { map, Observable } from 'rxjs';
 import { Activity, ActivityService } from '../activity.service';
 import { LocalDate, localDateToYearMonth, YearMonth } from '../../shared/types';
 import { ActivatedRoute } from '@angular/router';
-import { CommonModule } from '@angular/common';
+import { AsyncPipe, NgFor, NgIf } from '@angular/common';
 import { PageTitleDirective } from '../../page-title/page-title.directive';
 import { LoadingSpinnerComponent } from '../../loading-spinner/loading-spinner.component';
 import { ActivityCardComponent } from '../activity-card/activity-card.component';
@@ -21,7 +21,9 @@ interface Month {
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
   imports: [
-    CommonModule,
+    NgIf,
+    NgFor,
+    AsyncPipe,
     PageTitleDirective,
     LoadingSpinnerComponent,
     ActivityCardComponent,
