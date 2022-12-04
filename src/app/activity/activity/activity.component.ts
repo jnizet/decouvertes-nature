@@ -24,7 +24,7 @@ import {
 import { barredIcon, barredWheelchair, wheelchair } from '../../icon/icons';
 import { ConfirmService } from '../../confirm/confirm.service';
 import { CurrentUser, CurrentUserService } from '../../current-user.service';
-import { CommonModule } from '@angular/common';
+import { AsyncPipe, CurrencyPipe, DecimalPipe, NgFor, NgIf } from '@angular/common';
 import { IconDirective } from '../../icon/icon.directive';
 import { PageTitleDirective } from '../../page-title/page-title.directive';
 import { ActivityDatePipe } from '../../activity-date-pipe/activity-date.pipe';
@@ -39,7 +39,11 @@ import { ActivityReportEditionComponent } from '../activity-report-edition/activ
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
   imports: [
-    CommonModule,
+    NgIf,
+    NgFor,
+    AsyncPipe,
+    DecimalPipe,
+    CurrencyPipe,
     RouterLink,
     PageTitleDirective,
     IconDirective,

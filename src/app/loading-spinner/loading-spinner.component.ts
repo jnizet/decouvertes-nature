@@ -1,5 +1,4 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'dn-loading-spinner',
@@ -7,6 +6,6 @@ import { CommonModule } from '@angular/common';
   styleUrls: ['./loading-spinner.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [CommonModule]
+  imports: []
 })
 export class LoadingSpinnerComponent {}

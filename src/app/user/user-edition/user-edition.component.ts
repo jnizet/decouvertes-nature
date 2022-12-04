@@ -5,7 +5,6 @@ import { AdministeredUser, AdministeredUserCommand, UserService } from '../user.
 import { first, map, Observable, of, switchMap } from 'rxjs';
 import { fileArrowUp } from '../../bootstrap-icons/bootstrap-icons';
 import { Spinner } from '../../shared/spinner';
-import { CommonModule } from '@angular/common';
 import { ValidationErrorsComponent } from 'ngx-valdemort';
 import { FormControlValidationDirective } from '../../validation/form-control-validation.directive';
 import { PageTitleDirective } from '../../page-title/page-title.directive';
@@ -13,6 +12,7 @@ import { LoadingSpinnerComponent } from '../../loading-spinner/loading-spinner.c
 import { IconDirective } from '../../icon/icon.directive';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { UserCreatedModalComponent } from '../user-created-modal/user-created-modal.component';
+import { AsyncPipe, NgIf } from '@angular/common';
 
 @Component({
   selector: 'dn-user-edition',
@@ -20,7 +20,8 @@ import { UserCreatedModalComponent } from '../user-created-modal/user-created-mo
   styleUrls: ['./user-edition.component.scss'],
   standalone: true,
   imports: [
-    CommonModule,
+    NgIf,
+    AsyncPipe,
     ReactiveFormsModule,
     ValidationErrorsComponent,
     FormControlValidationDirective,

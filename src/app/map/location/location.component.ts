@@ -1,5 +1,4 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import {
   ActivityLocation,
   UnmappedActivityLocation
@@ -9,11 +8,12 @@ import { RouterLink } from '@angular/router';
 import { NgbCollapse } from '@ng-bootstrap/ng-bootstrap';
 import { IconDirective } from '../../icon/icon.directive';
 import { ActivityDatePipe } from '../../activity-date-pipe/activity-date.pipe';
+import { DecimalPipe, NgFor, NgIf } from '@angular/common';
 
 @Component({
   selector: 'dn-location',
   standalone: true,
-  imports: [CommonModule, RouterLink, NgbCollapse, IconDirective, ActivityDatePipe],
+  imports: [NgIf, NgFor, DecimalPipe, RouterLink, NgbCollapse, IconDirective, ActivityDatePipe],
   templateUrl: './location.component.html',
   styleUrls: ['./location.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush

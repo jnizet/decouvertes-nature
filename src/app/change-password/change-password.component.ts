@@ -9,7 +9,7 @@ import {
 } from '@angular/fire/auth';
 import { from, switchMap } from 'rxjs';
 import { Router } from '@angular/router';
-import { CommonModule } from '@angular/common';
+import { NgIf } from '@angular/common';
 import { ValidationErrorsComponent } from 'ngx-valdemort';
 import { FormControlValidationDirective } from '../validation/form-control-validation.directive';
 import { PageTitleDirective } from '../page-title/page-title.directive';
@@ -20,7 +20,7 @@ import { PageTitleDirective } from '../page-title/page-title.directive';
   styleUrls: ['./change-password.component.scss'],
   standalone: true,
   imports: [
-    CommonModule,
+    NgIf,
     ReactiveFormsModule,
     ValidationErrorsComponent,
     FormControlValidationDirective,

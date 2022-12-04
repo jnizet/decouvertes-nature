@@ -11,7 +11,7 @@ import { from, switchMap } from 'rxjs';
 import { ValidationErrorsComponent } from 'ngx-valdemort';
 import { FormControlValidationDirective } from '../validation/form-control-validation.directive';
 import { PageTitleDirective } from '../page-title/page-title.directive';
-import { CommonModule } from '@angular/common';
+import { NgIf } from '@angular/common';
 
 @Component({
   selector: 'dn-email-action',
@@ -19,7 +19,7 @@ import { CommonModule } from '@angular/common';
   styleUrls: ['./email-action.component.scss'],
   standalone: true,
   imports: [
-    CommonModule,
+    NgIf,
     ReactiveFormsModule,
     ValidationErrorsComponent,
     FormControlValidationDirective,

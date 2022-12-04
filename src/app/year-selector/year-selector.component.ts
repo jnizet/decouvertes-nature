@@ -1,13 +1,13 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { YearService } from '../year.service';
 import { arrowLeftCircle, arrowRightCircle } from '../bootstrap-icons/bootstrap-icons';
 import { IconDirective } from '../icon/icon.directive';
+import { AsyncPipe, DecimalPipe, NgIf } from '@angular/common';
 
 @Component({
   selector: 'dn-year-selector',
   standalone: true,
-  imports: [CommonModule, IconDirective],
+  imports: [NgIf, AsyncPipe, DecimalPipe, IconDirective],
   templateUrl: './year-selector.component.html',
   styleUrls: ['./year-selector.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush

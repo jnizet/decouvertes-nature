@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { Activity } from '../../activity/activity.service';
-import { CommonModule } from '@angular/common';
+import { DecimalPipe, NgIf, PercentPipe } from '@angular/common';
 
 @Component({
   selector: 'dn-report',
@@ -8,7 +8,7 @@ import { CommonModule } from '@angular/common';
   styleUrls: ['./report.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [CommonModule]
+  imports: [NgIf, DecimalPipe, PercentPipe]
 })
 export class ReportComponent {
   total = 0;

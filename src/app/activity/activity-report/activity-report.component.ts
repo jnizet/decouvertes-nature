@@ -1,8 +1,8 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { ActivityReport } from '../activity.service';
 import { checkCircleFill, xCircleFill } from '../../bootstrap-icons/bootstrap-icons';
-import { CommonModule } from '@angular/common';
 import { IconDirective } from '../../icon/icon.directive';
+import { DecimalPipe, NgIf } from '@angular/common';
 
 @Component({
   selector: 'dn-activity-report',
@@ -10,7 +10,7 @@ import { IconDirective } from '../../icon/icon.directive';
   styleUrls: ['./activity-report.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [CommonModule, IconDirective]
+  imports: [NgIf, DecimalPipe, IconDirective]
 })
 export class ActivityReportComponent {
   @Input() report!: ActivityReport;

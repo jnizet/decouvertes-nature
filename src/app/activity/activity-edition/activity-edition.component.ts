@@ -32,7 +32,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { fileArrowUp, journalArrowUp } from '../../bootstrap-icons/bootstrap-icons';
 import { CurrentUserService } from '../../current-user.service';
 import { Spinner } from '../../shared/spinner';
-import { CommonModule } from '@angular/common';
+import { AsyncPipe, NgFor, NgIf } from '@angular/common';
 import { ValidationErrorDirective, ValidationErrorsComponent } from 'ngx-valdemort';
 import { FormControlValidationDirective } from '../../validation/form-control-validation.directive';
 import { NgbCollapse, NgbTypeahead } from '@ng-bootstrap/ng-bootstrap';
@@ -147,7 +147,9 @@ type ActivityFormGroup = FormGroup<{
   styleUrls: ['./activity-edition.component.scss'],
   standalone: true,
   imports: [
-    CommonModule,
+    NgIf,
+    NgFor,
+    AsyncPipe,
     ReactiveFormsModule,
     NgbTypeahead,
     NgbCollapse,

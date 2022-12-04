@@ -5,7 +5,7 @@ import {
   ValidationErrorDirective
 } from 'ngx-valdemort';
 import { environment } from '../../../environments/environment';
-import { CommonModule } from '@angular/common';
+import { DecimalPipe } from '@angular/common';
 
 @Component({
   selector: 'dn-validation-defaults',
@@ -13,7 +13,7 @@ import { CommonModule } from '@angular/common';
   styleUrls: ['./validation-defaults.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [CommonModule, DefaultValidationErrorsDirective, ValidationErrorDirective]
+  imports: [DecimalPipe, DefaultValidationErrorsDirective, ValidationErrorDirective]
 })
 export class ValidationDefaultsComponent {
   constructor(config: ValdemortConfig) {

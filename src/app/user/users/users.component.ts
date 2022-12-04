@@ -10,11 +10,11 @@ import {
   shieldFill,
   xOctagonFill
 } from '../../bootstrap-icons/bootstrap-icons';
-import { CommonModule } from '@angular/common';
 import { PageTitleDirective } from '../../page-title/page-title.directive';
 import { LoadingSpinnerComponent } from '../../loading-spinner/loading-spinner.component';
 import { IconDirective } from '../../icon/icon.directive';
 import { RouterLink } from '@angular/router';
+import { AsyncPipe, NgFor, NgIf } from '@angular/common';
 
 @Component({
   selector: 'dn-users',
@@ -22,7 +22,15 @@ import { RouterLink } from '@angular/router';
   styleUrls: ['./users.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [CommonModule, RouterLink, PageTitleDirective, LoadingSpinnerComponent, IconDirective]
+  imports: [
+    NgIf,
+    NgFor,
+    AsyncPipe,
+    RouterLink,
+    PageTitleDirective,
+    LoadingSpinnerComponent,
+    IconDirective
+  ]
 })
 export class UsersComponent {
   users$: Observable<Array<AdministeredUser>>;
