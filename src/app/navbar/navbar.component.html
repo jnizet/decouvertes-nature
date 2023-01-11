@@ -60,11 +60,11 @@
               aria-labelledby="user-dropdown"
               class="dropdown-menu-end dropdown-menu-dark"
             >
-              <a class="dropdown-item" routerLink="/change-password" (click)="collapse()">
+              <a ngbDropdownItem routerLink="/change-password" (click)="collapse()">
                 <dn-icon [icon]="icons.changePassword"></dn-icon>
                 Changer de mot de passe
               </a>
-              <a class="dropdown-item" role="button" (click)="logout(); collapse()">
+              <a ngbDropdownItem role="button" (click)="logout(); collapse()">
                 <dn-icon [icon]="icons.logout"></dn-icon>
                 Déconnexion
               </a>

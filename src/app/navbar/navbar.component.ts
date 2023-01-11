@@ -17,8 +17,10 @@ import { AsyncPipe, NgIf } from '@angular/common';
 import {
   NgbCollapse,
   NgbDropdown,
+  NgbDropdownItem,
   NgbDropdownMenu,
-  NgbDropdownToggle
+  NgbDropdownToggle,
+  NgbNavbar
 } from '@ng-bootstrap/ng-bootstrap';
 import { UsernamePipe } from '../username-pipe/username.pipe';
 import { IconDirective } from '../icon/icon.directive';
@@ -37,8 +39,10 @@ import { IconDirective } from '../icon/icon.directive';
     NgbDropdown,
     NgbDropdownToggle,
     NgbDropdownMenu,
+    NgbNavbar,
     UsernamePipe,
-    IconDirective
+    IconDirective,
+    NgbDropdownItem
   ]
 })
 export class NavbarComponent {
