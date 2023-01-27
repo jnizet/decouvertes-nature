@@ -59,4 +59,10 @@ jobs:
         if: failure()
         with:
           name: test-screenshots
-          path: e2e/**/*linux.png
+          path: 'e2e/**/*.png'
+      - name: Archive generated test traces
+        uses: actions/upload-artifact@v3
+        if: failure()
+        with:
+          name: test-traces
+          path: 'e2e/**/*.zip'
