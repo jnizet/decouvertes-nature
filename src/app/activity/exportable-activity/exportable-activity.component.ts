@@ -13,5 +13,5 @@ import { ActivityDatePipe } from '../../activity-date-pipe/activity-date.pipe';
   imports: [NgIf, CurrencyPipe, DecimalPipe, ActivityTypePipe, ActivityDatePipe]
 })
 export class ExportableActivityComponent {
-  @Input() activity!: Activity;
+  @Input({ required: true }) activity!: Activity;
 }

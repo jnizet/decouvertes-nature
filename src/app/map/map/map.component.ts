@@ -2044,7 +2044,7 @@ const LOIRE: Array<LatLngExpression> = [
   standalone: true
 })
 export class MapComponent implements AfterViewInit, OnChanges {
-  @Input() locations: Array<ActivityLocation> = [];
+  @Input({ required: true }) locations: Array<ActivityLocation> = [];
   @Input() focusedLocation: ActivityLocation | null = null;
 
   private map!: L.Map;

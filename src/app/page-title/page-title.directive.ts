@@ -8,7 +8,7 @@ const DEFAULT_TITLE = 'Découvertes Nature';
   standalone: true
 })
 export class PageTitleDirective implements OnDestroy {
-  @Input()
+  @Input({ required: true })
   set title(title: string) {
     this.titleService.setTitle(`${title} - ${DEFAULT_TITLE}`);
   }

@@ -21,7 +21,7 @@ import { RouterLink } from '@angular/router';
   imports: [NgIf, RouterLink, IconDirective, ActivityTypePipe, ActivityDatePipe]
 })
 export class ActivityCardComponent {
-  @Input() activity!: Activity;
+  @Input({ required: true }) activity!: Activity;
   icons = {
     date: calendar4Event,
     location: pinMap,

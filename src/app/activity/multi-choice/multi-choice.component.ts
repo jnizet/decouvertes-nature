@@ -22,7 +22,7 @@ interface Option {
   imports: [NgFor, IconDirective]
 })
 export class MultiChoiceComponent implements OnInit, ControlValueAccessor {
-  @Input() knownOptions!: Array<string>;
+  @Input({ required: true }) knownOptions!: Array<string>;
   @Input() addText = 'Ajouter une option';
 
   options: Array<Option> = [];

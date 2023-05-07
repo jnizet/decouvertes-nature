@@ -17,7 +17,7 @@ export class ReportComponent {
   withoutReport = 0;
   participants = 0;
 
-  @Input()
+  @Input({ required: true })
   set activities(activities: Array<Activity>) {
     this.total = 0;
     this.cancelled = 0;
