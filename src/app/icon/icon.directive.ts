@@ -9,7 +9,7 @@ export class IconDirective {
   @HostBinding('innerHTML')
   safeIcon?: SafeHtml;
 
-  @Input() set icon(icon: string) {
+  @Input({ required: true }) set icon(icon: string) {
     this.safeIcon = this.sanitizer.bypassSecurityTrustHtml(icon);
   }
 

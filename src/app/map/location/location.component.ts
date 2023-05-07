@@ -19,9 +19,9 @@ import { DecimalPipe, NgFor, NgIf } from '@angular/common';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class LocationComponent {
-  @Input() location!: ActivityLocation | UnmappedActivityLocation;
-  @Input() title!: string;
-  @Input() collapsedId!: string;
+  @Input({ required: true }) location!: ActivityLocation | UnmappedActivityLocation;
+  @Input({ required: true }) title!: string;
+  @Input({ required: true }) collapsedId!: string;
 
   icons = {
     collapsed: chevronCompactUp

@@ -13,7 +13,7 @@ import { DecimalPipe, NgIf } from '@angular/common';
   imports: [NgIf, DecimalPipe, IconDirective]
 })
 export class ActivityReportComponent {
-  @Input() report!: ActivityReport;
+  @Input({ required: true }) report!: ActivityReport;
   icons = {
     cancelled: xCircleFill,
     notCancelled: checkCircleFill
