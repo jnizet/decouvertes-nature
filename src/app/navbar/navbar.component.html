@@ -19,31 +19,31 @@
       <ul *ngIf="vm.user" class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item">
           <a class="nav-link" routerLink="/activities" (click)="collapse()">
-            <dn-icon [icon]="icons.activities"></dn-icon>
+            <dn-icon [icon]="icons.activities" />
             Activités
           </a>
         </li>
         <li class="nav-item">
           <a class="nav-link" routerLink="/calendar" (click)="collapse()">
-            <dn-icon [icon]="icons.calendar"></dn-icon>
+            <dn-icon [icon]="icons.calendar" />
             Calendrier
           </a>
         </li>
         <li class="nav-item">
           <a class="nav-link" routerLink="/map" (click)="collapse()">
-            <dn-icon [icon]="icons.map"></dn-icon>
+            <dn-icon [icon]="icons.map" />
             Carte
           </a>
         </li>
         <li class="nav-item" *ngIf="vm.user.export">
           <a class="nav-link" routerLink="/activities/exportable" (click)="collapse()">
-            <dn-icon [icon]="icons.exports"></dn-icon>
+            <dn-icon [icon]="icons.exports" />
             Exports
           </a>
         </li>
         <li class="nav-item" *ngIf="vm.user.admin">
           <a class="nav-link" routerLink="/users" (click)="collapse()">
-            <dn-icon [icon]="icons.users"></dn-icon>
+            <dn-icon [icon]="icons.users" />
             Utilisateurs
           </a>
         </li>
@@ -52,7 +52,7 @@
         <ng-container *ngIf="vm.user">
           <li class="nav-item me-2" ngbDropdown>
             <a class="nav-link" tabindex="0" ngbDropdownToggle id="user-dropdown" role="button">
-              <dn-icon [icon]="icons.user"></dn-icon>
+              <dn-icon [icon]="icons.user" />
               {{ vm.user.user | username }}
             </a>
             <div
@@ -61,11 +61,11 @@
               class="dropdown-menu-end dropdown-menu-dark"
             >
               <a ngbDropdownItem routerLink="/change-password" (click)="collapse()">
-                <dn-icon [icon]="icons.changePassword"></dn-icon>
+                <dn-icon [icon]="icons.changePassword" />
                 Changer de mot de passe
               </a>
               <a ngbDropdownItem role="button" (click)="logout(); collapse()">
-                <dn-icon [icon]="icons.logout"></dn-icon>
+                <dn-icon [icon]="icons.logout" />
                 Déconnexion
               </a>
             </div>
@@ -73,14 +73,14 @@
           <li class="nav-item">
             <a class="nav-link" role="button" tabindex="0" (click)="logout(); collapse()">
               <span class="visually-hidden">Déconnexion</span>
-              <dn-icon [icon]="icons.logout"></dn-icon>
+              <dn-icon [icon]="icons.logout" />
             </a>
           </li>
         </ng-container>
         <ng-container *ngIf="!vm.user">
           <li class="nav-item">
             <a class="nav-link" routerLink="/login">
-              <dn-icon [icon]="icons.login"></dn-icon>
+              <dn-icon [icon]="icons.login" />
               Identification
             </a>
           </li>

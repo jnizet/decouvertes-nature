@@ -1,7 +1,5 @@
 <ng-container *ngIf="mode">
-  <dn-page-title
-    [title]="mode === 'edit' ? editedActivity!.title : 'Nouvelle activité'"
-  ></dn-page-title>
+  <dn-page-title [title]="mode === 'edit' ? editedActivity!.title : 'Nouvelle activité'" />
   <h1 *ngIf="mode === 'create' || mode === 'duplicate'">Création d'une nouvelle activité</h1>
   <h1 *ngIf="mode === 'edit'">
     Modification de l'activité <em>{{ editedActivity!.title }}</em>
@@ -13,7 +11,7 @@
         <div class="mb-3">
           <label for="title" class="form-label">Titre</label>
           <input formControlName="title" class="form-control" id="title" />
-          <val-errors controlName="title" label="Le titre"></val-errors>
+          <val-errors controlName="title" label="Le titre" />
         </div>
         <div class="mb-3">
           <label for="type" class="form-label">Type d'activité</label>
@@ -26,7 +24,7 @@
               </ng-container>
             </option>
           </select>
-          <val-errors controlName="type" label="Le type d'activité"></val-errors>
+          <val-errors controlName="type" label="Le type d'activité" />
         </div>
         <div class="mb-3">
           <label for="description" class="form-label">Description</label>
@@ -36,7 +34,7 @@
             id="description"
             rows="4"
           ></textarea>
-          <val-errors controlName="description" label="La description"></val-errors>
+          <val-errors controlName="description" label="La description" />
         </div>
         <div class="mb-3">
           <label for="animator" class="form-label">Animateur / Organisateur</label>
@@ -47,7 +45,7 @@
             [ngbTypeahead]="animatorTypeahead"
             [focusFirst]="false"
           />
-          <val-errors controlName="animator" label="L'animateur"></val-errors>
+          <val-errors controlName="animator" label="L'animateur" />
         </div>
         <div class="mb-3">
           <div class="form-check form-switch">
@@ -76,7 +74,7 @@
                   </div>
                 </div>
               </div>
-              <val-errors controlName="price" label="Le prix"></val-errors>
+              <val-errors controlName="price" label="Le prix" />
             </div>
           </div>
         </div>
@@ -92,7 +90,7 @@
             [inputFormatter]="locationInputFormatter"
             [focusFirst]="false"
           />
-          <val-errors controlName="location" label="La commune du lieu de l'activité"></val-errors>
+          <val-errors controlName="location" label="La commune du lieu de l'activité" />
         </div>
         <div class="mb-3">
           <label for="intercommunality" class="form-label">
@@ -107,7 +105,7 @@
             class="form-control"
             id="appointment-location"
           />
-          <val-errors controlName="appointmentLocation" label="Le lieu de rendez-vous"></val-errors>
+          <val-errors controlName="appointmentLocation" label="Le lieu de rendez-vous" />
         </div>
         <ng-container formGroupName="timing">
           <div class="mb-3">
@@ -132,8 +130,8 @@
                 />
               </div>
             </div>
-            <val-errors controlName="startDate" label="La date de début de l'activité"></val-errors>
-            <val-errors controlName="startTime" label="L'heure de début de l'activité"></val-errors>
+            <val-errors controlName="startDate" label="La date de début de l'activité" />
+            <val-errors controlName="startTime" label="L'heure de début de l'activité" />
           </div>
           <div class="mb-3">
             <label for="end-date" class="form-label">Fin de l'activité</label>
@@ -152,8 +150,8 @@
                 <input type="time" formControlName="endTime" class="form-control" id="end-time" />
               </div>
             </div>
-            <val-errors controlName="endDate" label="La date de fin de l'activité"></val-errors>
-            <val-errors controlName="endTime" label="L'heure de fin de l'activité"></val-errors>
+            <val-errors controlName="endDate" label="La date de fin de l'activité" />
+            <val-errors controlName="endTime" label="L'heure de fin de l'activité" />
             <val-errors [control]="form.get('timing')">
               <ng-template valError="timing">
                 La fin de l'activité doit être ultérieure à son début
@@ -180,7 +178,7 @@
             <val-errors
               controlName="minNumberOfParticipants"
               label="Le nombre min. de participants"
-            ></val-errors>
+            />
           </div>
           <div class="col-sm mb-3">
             <label for="max-number-of-participants" class="form-label">
@@ -198,7 +196,7 @@
             <val-errors
               controlName="maxNumberOfParticipants"
               label="Le nombre max. de participants"
-            ></val-errors>
+            />
           </div>
         </div>
         <div class="mb-3">
@@ -284,7 +282,7 @@
             formControlName="labels"
             [knownOptions]="knownLabels"
             addText="Ajouter un label"
-          ></dn-multi-choice>
+          />
         </div>
         <div class="mb-3">
           <label class="form-label">Activité organisée en partenariat avec</label>
@@ -292,7 +290,7 @@
             formControlName="associatedOrganizations"
             [knownOptions]="knownOrganizations"
             addText="Ajouter une association / organisation"
-          ></dn-multi-choice>
+          />
         </div>
         <div class="mb-3">
           <label class="form-label">Matériel spécifique nécessaire</label>
@@ -300,7 +298,7 @@
             formControlName="equipments"
             [knownOptions]="knownEquipments"
             addText="Ajouter un matériel"
-          ></dn-multi-choice>
+          />
         </div>
         <div class="mb-3">
           <label class="form-label" for="comment">Commentaire</label>
@@ -326,7 +324,7 @@
           class="me-1"
           [icon]="icons.saveAsDraft"
           *ngIf="(savingAsDraft.isSpinning | async) === false"
-        ></dn-icon>
+        />
         <div
           *ngIf="(savingAsDraft.isSpinning | async) === true"
           class="spinner-border spinner-border-sm me-1"
@@ -341,11 +339,7 @@
         (click)="draftManager.switchTo('final')"
         id="save-button"
       >
-        <dn-icon
-          class="me-1"
-          [icon]="icons.save"
-          *ngIf="(saving.isSpinning | async) === false"
-        ></dn-icon>
+        <dn-icon class="me-1" [icon]="icons.save" *ngIf="(saving.isSpinning | async) === false" />
         <div
           *ngIf="(saving.isSpinning | async) === true"
           class="spinner-border spinner-border-sm me-1"

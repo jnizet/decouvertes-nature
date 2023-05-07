@@ -1,4 +1,4 @@
-<dn-page-title [title]="mode === 'mine' ? 'Mes activités' : 'Activité'"></dn-page-title>
+<dn-page-title [title]="mode === 'mine' ? 'Mes activités' : 'Activité'" />
 <div *ngIf="months$ | async as months; else loading">
   <div *ngFor="let month of months" class="mb-4">
     <h2 class="fs-5">{{ month.month | month }}</h2>
@@ -10,11 +10,11 @@
       [class.card-draft]="activity.draft"
     >
       <div class="card-body">
-        <dn-activity-card [activity]="activity"></dn-activity-card>
+        <dn-activity-card [activity]="activity" />
       </div>
     </div>
   </div>
 </div>
 <ng-template #loading>
-  <dn-loading-spinner></dn-loading-spinner>
+  <dn-loading-spinner />
 </ng-template>

@@ -1,8 +1,8 @@
-<dn-page-title title="Export des activités"></dn-page-title>
+<dn-page-title title="Export des activités" />
 <h1>Export des activités</h1>
 
 <div class="alert alert-info">
-  <dn-icon [icon]="icons.info" class="mr-1"></dn-icon>
+  <dn-icon [icon]="icons.info" class="mr-1" />
   Cette page vous permet de filtrer puis de copier-coller, avec un formatage minimal, les
   informations sur les sorties.
 </div>
@@ -26,9 +26,9 @@
       *ngFor="let activity of month.activities"
       [activity]="activity"
       class="d-block mb-3"
-    ></dn-exportable-activity>
+    />
   </div>
 </div>
 <ng-template #loading>
-  <dn-loading-spinner></dn-loading-spinner>
+  <dn-loading-spinner />
 </ng-template>

@@ -1,9 +1,7 @@
 <ng-container *ngIf="mode; else loading">
   <div class="row justify-content-md-center">
     <div class="col col-md-8 col-lg-6">
-      <dn-page-title
-        [title]="mode === 'edit' ? editedUser!.displayName : 'Nouvel utilisateur'"
-      ></dn-page-title>
+      <dn-page-title [title]="mode === 'edit' ? editedUser!.displayName : 'Nouvel utilisateur'" />
       <h1 *ngIf="mode === 'create'">Création d'un nouvel utilisateur</h1>
       <h1 *ngIf="mode === 'edit'">
         Modification de l'utilisateur <em>{{ editedUser!.displayName }}</em>
@@ -16,7 +14,7 @@
           <div class="form-text">
             Ce nom est celui affiché dans l'application pour cet utilisateur
           </div>
-          <val-errors controlName="displayName" label="Le nom"></val-errors>
+          <val-errors controlName="displayName" label="Le nom" />
         </div>
         <div class="mb-3">
           <label for="email" class="form-label">Adresse email</label>
@@ -25,7 +23,7 @@
             L'utilisateur utilisera cette adresse pour se connecter, et recevra à cette adresse
             l'email de choix de mot de passe
           </div>
-          <val-errors controlName="email" label="L'adresse email"></val-errors>
+          <val-errors controlName="email" label="L'adresse email" />
         </div>
         <div class="mb-3">
           <div class="form-check form-switch">
@@ -73,7 +71,7 @@
               *ngIf="(saving.isSpinning | async) === false"
               class="me-1"
               [icon]="icons.save"
-            ></dn-icon>
+            />
             <div
               *ngIf="(saving.isSpinning | async) === true"
               class="spinner-border spinner-border-sm me-1"
@@ -90,6 +88,6 @@
 </ng-container>
 <ng-template #loading>
   <ng-template #loading>
-    <dn-loading-spinner></dn-loading-spinner>
+    <dn-loading-spinner />
   </ng-template>
 </ng-template>

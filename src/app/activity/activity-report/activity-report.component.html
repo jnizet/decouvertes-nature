@@ -1,10 +1,10 @@
 <div *ngIf="report.cancelled; else notCancelled" class="text-danger">
-  <dn-icon [icon]="icons.cancelled" class="me-1"></dn-icon>
+  <dn-icon [icon]="icons.cancelled" class="me-1" />
   L'activité a été annulée.
 </div>
 <ng-template #notCancelled>
   <div class="text-success">
-    <dn-icon [icon]="icons.notCancelled" class="me-1"></dn-icon>
+    <dn-icon [icon]="icons.notCancelled" class="me-1" />
     <ng-container *ngIf="report.numberOfParticipants === 0">
       Aucune personne n'a participé à cette activité.
     </ng-container>
