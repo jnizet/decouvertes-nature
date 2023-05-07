@@ -1,4 +1,4 @@
-<dn-page-title title="Calendrier"></dn-page-title>
+<dn-page-title title="Calendrier" />
 <ng-container *ngIf="vm$ | async as vm; else loading">
   <div class="row">
     <div class="col">
@@ -6,13 +6,13 @@
     </div>
     <div class="col-auto">
       <a routerLink="/activities/new" class="btn btn-outline-secondary">
-        <dn-icon class="me-1" [icon]="icons.addActivity"></dn-icon>
+        <dn-icon class="me-1" [icon]="icons.addActivity" />
         Créer une activité
       </a>
     </div>
   </div>
 
-  <dn-year-selector></dn-year-selector>
+  <dn-year-selector />
   <div class="row g-0 border-md">
     <div
       *ngFor="let month of vm.months"
@@ -46,9 +46,9 @@
   </div>
 
   <div class="mt-3">
-    <dn-report [activities]="vm.reportActivities"></dn-report>
+    <dn-report [activities]="vm.reportActivities" />
   </div>
 </ng-container>
 <ng-template #loading>
-  <dn-loading-spinner></dn-loading-spinner>
+  <dn-loading-spinner />
 </ng-template>

@@ -1,4 +1,4 @@
-<dn-page-title title="Utilisateurs"></dn-page-title>
+<dn-page-title title="Utilisateurs" />
 <div class="row justify-content-md-center">
   <div class="col col-md-8 col-lg-6">
     <div class="row align-items-center mb-4">
@@ -7,7 +7,7 @@
       </div>
       <div class="col-auto">
         <a routerLink="new" class="btn btn-outline-secondary">
-          <dn-icon class="me-1" [icon]="icons.addUser"></dn-icon>
+          <dn-icon class="me-1" [icon]="icons.addUser" />
           Créer un utilisateur
         </a>
       </div>
@@ -22,29 +22,29 @@
               <div class="text-muted">{{ user.email }}</div>
               <div>
                 <button type="button" class="btn btn-link btn-sm" (click)="copyEmail(user)">
-                  <dn-icon [icon]="icons.resetPasswordEmail" class="me-1"></dn-icon>
+                  <dn-icon [icon]="icons.resetPasswordEmail" class="me-1" />
                   Choix du mot de passe
                 </button>
               </div>
             </div>
             <div class="col">
               <div *ngIf="user.admin">
-                <dn-icon [icon]="icons.admin" class="me-1"></dn-icon>
+                <dn-icon [icon]="icons.admin" class="me-1" />
                 Administrateur
               </div>
               <div *ngIf="user.export">
-                <dn-icon [icon]="icons.export" class="me-1"></dn-icon>
+                <dn-icon [icon]="icons.export" class="me-1" />
                 Exporteur
               </div>
               <div *ngIf="user.disabled">
-                <dn-icon [icon]="icons.disabled" class="me-1"></dn-icon>
+                <dn-icon [icon]="icons.disabled" class="me-1" />
                 Utilisateur désactivé
               </div>
             </div>
           </div>
           <div class="text-end">
             <a class="btn btn-outline-secondary btn-sm" [routerLink]="['/users', user.uid, 'edit']">
-              <dn-icon [icon]="icons.edit" class="me-1"></dn-icon>
+              <dn-icon [icon]="icons.edit" class="me-1" />
               Modifier
             </a>
           </div>
@@ -52,7 +52,7 @@
       </div>
     </ng-container>
     <ng-template #loading>
-      <dn-loading-spinner></dn-loading-spinner>
+      <dn-loading-spinner />
     </ng-template>
   </div>
 </div>
@@ -63,7 +63,7 @@
     [class.active]="copied | async"
   >
     <ng-container *ngIf="copied | async">
-      <dn-icon [icon]="icons.copied" class="me-1"></dn-icon>
+      <dn-icon [icon]="icons.copied" class="me-1" />
       Email copié dans le presse-papier&nbsp;!
     </ng-container>
   </div>

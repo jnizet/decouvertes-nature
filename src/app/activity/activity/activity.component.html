@@ -1,12 +1,12 @@
 <ng-container *ngIf="activity$ | async as activity">
-  <dn-page-title [title]="activity.title"></dn-page-title>
+  <dn-page-title [title]="activity.title" />
   <h1>{{ activity.title }}</h1>
   <div class="border rounded p-3">
     <div class="row gy-3">
       <div class="col-lg-4">
         <div>
           <strong>
-            <dn-icon class="me-1" [icon]="icons.date"></dn-icon>
+            <dn-icon class="me-1" [icon]="icons.date" />
             <span class="visually-hidden">Date de l'activité</span>
             <span>{{ activity | activityDate : 'time' }}</span>
           </strong>
@@ -18,28 +18,28 @@
       <div class="col-lg-4 d-flex align-items-stretch">
         <div class="info-card rounded p-2 flex-grow-1">
           <div *ngIf="activity.location">
-            <dn-icon class="me-1" [icon]="icons.location"></dn-icon>
+            <dn-icon class="me-1" [icon]="icons.location" />
             <span class="visually-hidden">Lieu</span>
             <span>{{ activity.location }}</span>
             <span *ngIf="activity.intercommunality"> &ndash; {{ activity.intercommunality }}</span>
           </div>
           <div *ngIf="activity.appointmentLocation">
-            <dn-icon class="me-1" [icon]="icons.appointmentLocation"></dn-icon>
+            <dn-icon class="me-1" [icon]="icons.appointmentLocation" />
             <span class="visually-hidden">Lieu de rendez-vous</span>
             <span>{{ activity.appointmentLocation }}</span>
           </div>
           <div>
-            <dn-icon class="me-1" [icon]="icons.animator"></dn-icon>
+            <dn-icon class="me-1" [icon]="icons.animator" />
             <span class="visually-hidden">Animateur / Organisateur</span>
             <span>{{ activity.animator }}</span>
           </div>
           <div *ngIf="activity.roomToBook">
-            <dn-icon class="me-1" [icon]="icons.roomToBook"></dn-icon>
+            <dn-icon class="me-1" [icon]="icons.roomToBook" />
             <span>Salle {{ activity.roomToBook }} à réserver</span>
           </div>
           <div>
             <div *ngFor="let label of activity.labels" class="badge text-bg-secondary me-1 mb-1">
-              <dn-icon class="me-1" [icon]="icons.label"></dn-icon>
+              <dn-icon class="me-1" [icon]="icons.label" />
               <span>{{ label }}</span>
             </div>
           </div>
@@ -48,13 +48,13 @@
               *ngFor="let org of activity.associatedOrganizations"
               class="badge text-bg-success me-1 mb-1"
             >
-              <dn-icon class="me-1" [icon]="icons.associatedOrganization"></dn-icon>
+              <dn-icon class="me-1" [icon]="icons.associatedOrganization" />
               <span>{{ org }}</span>
             </div>
           </div>
           <div>
             <div *ngFor="let equipment of activity.equipments" class="badge text-bg-pink me-1 mb-1">
-              <dn-icon class="me-1" [icon]="icons.equipment"></dn-icon>
+              <dn-icon class="me-1" [icon]="icons.equipment" />
               <span>{{ equipment }}</span>
             </div>
           </div>
@@ -63,31 +63,31 @@
       <div class="col-lg-4 d-flex align-items-stretch">
         <div class="info-card rounded p-2 flex-grow-1">
           <div *ngIf="activity.bookingMandatory">
-            <dn-icon class="me-1" [icon]="icons.bookingMandatory"></dn-icon>
+            <dn-icon class="me-1" [icon]="icons.bookingMandatory" />
             <span>Réservation obligatoire</span>
           </div>
           <div *ngIf="!activity.bookingMandatory">
-            <dn-icon class="me-1" [icon]="icons.bookingNotMandatory"></dn-icon>
+            <dn-icon class="me-1" [icon]="icons.bookingNotMandatory" />
             <span>Sans réservation nécessaire</span>
           </div>
           <div *ngIf="activity.membersOnly">
-            <dn-icon class="me-1" [icon]="icons.membersOnly"></dn-icon>
+            <dn-icon class="me-1" [icon]="icons.membersOnly" />
             <span>Réservée aux adhérents</span>
           </div>
           <div *ngIf="!activity.membersOnly">
-            <dn-icon class="me-1" [icon]="icons.notMembersOnly"></dn-icon>
+            <dn-icon class="me-1" [icon]="icons.notMembersOnly" />
             <span>Ouverte aux non-adhérents</span>
           </div>
           <div *ngIf="activity.accessible">
-            <dn-icon class="me-1" [icon]="icons.accessible"></dn-icon>
+            <dn-icon class="me-1" [icon]="icons.accessible" />
             <span>Accessible aux personnes à mobilité réduite</span>
           </div>
           <div *ngIf="!activity.accessible">
-            <dn-icon class="me-1" [icon]="icons.notAccessible"></dn-icon>
+            <dn-icon class="me-1" [icon]="icons.notAccessible" />
             <span>Non-accessible aux personnes à mobilité réduite</span>
           </div>
           <div *ngIf="activity.accessibleToChildren">
-            <dn-icon class="me-1" [icon]="icons.accessibleToChildren"></dn-icon>
+            <dn-icon class="me-1" [icon]="icons.accessibleToChildren" />
             <span
               >Accessible aux enfants
               <ng-container *ngIf="activity.minChildrenAge">
@@ -97,19 +97,19 @@
             </span>
           </div>
           <div *ngIf="!activity.accessibleToChildren">
-            <dn-icon class="me-1" [icon]="icons.notAccessibleToChildren"></dn-icon>
+            <dn-icon class="me-1" [icon]="icons.notAccessibleToChildren" />
             <span>Non-accessible aux enfants</span>
           </div>
           <div *ngIf="activity.paymentRequired">
-            <dn-icon class="me-1" [icon]="icons.paymentRequired"></dn-icon>
+            <dn-icon class="me-1" [icon]="icons.paymentRequired" />
             <span>{{ activity.price | currency : 'EUR' : 'symbol-narrow' }}</span>
           </div>
           <div *ngIf="!activity.paymentRequired">
-            <dn-icon class="me-1" [icon]="icons.paymentNotRequired"></dn-icon>
+            <dn-icon class="me-1" [icon]="icons.paymentNotRequired" />
             <span>Gratuit</span>
           </div>
           <div>
-            <dn-icon class="me-1" [icon]="icons.participants"></dn-icon>
+            <dn-icon class="me-1" [icon]="icons.participants" />
             <span *ngIf="activity.minNumberOfParticipants && activity.maxNumberOfParticipants">
               {{ activity.minNumberOfParticipants | number }}
               {{ activity.minNumberOfParticipants > 1 ? 'participants' : 'participant' }} minimum,
@@ -148,18 +148,18 @@
         class="btn btn-outline-primary me-sm-2"
         [routerLink]="['/activities', activity.id, 'edit']"
       >
-        <dn-icon class="me-1" [icon]="icons.edit"></dn-icon>
+        <dn-icon class="me-1" [icon]="icons.edit" />
         Modifier
       </a>
       <a
         class="btn btn-outline-primary me-sm-2"
         [routerLink]="['/activities', activity.id, 'duplicate']"
       >
-        <dn-icon class="me-1" [icon]="icons.duplicate"></dn-icon>
+        <dn-icon class="me-1" [icon]="icons.duplicate" />
         Dupliquer
       </a>
       <button type="button" class="btn btn-outline-danger" (click)="deleteActivity(activity)">
-        <dn-icon class="me-1" [icon]="icons.delete"></dn-icon>
+        <dn-icon class="me-1" [icon]="icons.delete" />
         Supprimer
       </button>
     </div>
@@ -168,10 +168,10 @@
   <ng-container *ngIf="currentUser$ | async as currentUser">
     <div *ngIf="activity.report && !editingReport" class="mt-3 border rounded p-3">
       <h2 class="fs-4">Rapport</h2>
-      <dn-activity-report [report]="activity.report"></dn-activity-report>
+      <dn-activity-report [report]="activity.report" />
       <div *ngIf="currentUser.admin" class="mt-3">
         <button type="button" class="btn btn-outline-secondary" (click)="editingReport = true">
-          <dn-icon [icon]="icons.edit" class="me-1"></dn-icon>
+          <dn-icon [icon]="icons.edit" class="me-1" />
           Modifier le rapport
         </button>
         <button
@@ -180,14 +180,14 @@
           class="btn btn-outline-danger ms-2"
           (click)="deleteReport(activity)"
         >
-          <dn-icon [icon]="icons.delete" class="me-1"></dn-icon>
+          <dn-icon [icon]="icons.delete" class="me-1" />
           Supprimer le rapport
         </button>
       </div>
     </div>
     <div *ngIf="!activity.report && !editingReport && currentUser.admin" class="mt-3">
       <button type="button" class="btn btn-outline-secondary" (click)="editingReport = true">
-        <dn-icon [icon]="icons.edit" class="me-1"></dn-icon>
+        <dn-icon [icon]="icons.edit" class="me-1" />
         Remplir le rapport
       </button>
     </div>
@@ -197,7 +197,7 @@
         [report]="activity.report"
         (saved)="updateReport(activity, $event)"
         (cancelled)="editingReport = false"
-      ></dn-activity-report-edition>
+      />
     </div>
   </ng-container>
 </ng-container>

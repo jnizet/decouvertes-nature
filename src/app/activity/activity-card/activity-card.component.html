@@ -7,7 +7,7 @@
         </a>
         <div class="row align-items-baseline">
           <div class="col-sm">
-            <dn-icon class="me-1" [icon]="icons.date"></dn-icon>
+            <dn-icon class="me-1" [icon]="icons.date" />
             <span class="visually-hidden">Date de l'activité</span>
             <strong>{{ activity | activityDate }}</strong>
           </div>
@@ -26,18 +26,18 @@
   <div class="col-lg-4">
     <div class="info-card rounded p-2 mt-2 mt-md-0">
       <div *ngIf="activity.location">
-        <dn-icon class="me-1" [icon]="icons.location"></dn-icon>
+        <dn-icon class="me-1" [icon]="icons.location" />
         <span class="visually-hidden">Lieu</span>
         {{ activity.location }}
         <span *ngIf="activity.intercommunality"> &ndash; {{ activity.intercommunality }} </span>
       </div>
       <div>
-        <dn-icon class="me-1" [icon]="icons.animator"></dn-icon>
+        <dn-icon class="me-1" [icon]="icons.animator" />
         <span class="visually-hidden">Animateur / Organisateur</span>
         {{ activity.animator }}
       </div>
       <div *ngIf="activity.roomToBook">
-        <dn-icon class="me-1" [icon]="icons.bookToRoom"></dn-icon>
+        <dn-icon class="me-1" [icon]="icons.bookToRoom" />
         <span>Salle {{ activity.roomToBook }} à réserver</span>
       </div>
     </div>
