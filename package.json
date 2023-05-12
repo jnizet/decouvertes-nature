@@ -37,7 +37,7 @@
     "bootstrap": "5.2.3",
     "bootstrap-icons": "1.10.5",
     "date-fns": "2.30.0",
-    "firebase": "9.21.0",
+    "firebase": "9.22.0",
     "leaflet": "1.9.3",
     "ngx-valdemort": "10.0.1",
     "rxjs": "7.8.1",
@@ -77,6 +77,6 @@
     "wait-on": "7.0.1"
   },
   "resolutions": {
-    "firebase": "9.21.0"
+    "firebase": "9.22.0"
   }
 }
