@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark py-0" *ngIf="vm$ | async as vm">
+<nav class="navbar navbar-expand-lg bg-dark py-0" *ngIf="vm$ | async as vm" data-bs-theme="dark">
   <div class="container-fluid">
     <a class="navbar-brand" routerLink="/">
       <span class="visually-hidden">Accueil</span>
@@ -50,16 +50,12 @@
       </ul>
       <ul class="navbar-nav mb-2 mb-lg-0 ms-auto">
         <ng-container *ngIf="vm.user">
-          <li class="nav-item me-2" ngbDropdown>
+          <li class="nav-item me-2" ngbDropdown display="static">
             <a class="nav-link" tabindex="0" ngbDropdownToggle id="user-dropdown" role="button">
               <dn-icon [icon]="icons.user" />
               {{ vm.user.user | username }}
             </a>
-            <div
-              ngbDropdownMenu
-              aria-labelledby="user-dropdown"
-              class="dropdown-menu-end dropdown-menu-dark"
-            >
+            <div ngbDropdownMenu aria-labelledby="user-dropdown" class="dropdown-menu-end">
               <a ngbDropdownItem routerLink="/change-password" (click)="collapse()">
                 <dn-icon [icon]="icons.changePassword" />
                 Changer de mot de passe

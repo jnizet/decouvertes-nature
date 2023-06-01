@@ -19,8 +19,7 @@ import {
   NgbDropdown,
   NgbDropdownItem,
   NgbDropdownMenu,
-  NgbDropdownToggle,
-  NgbNavbar
+  NgbDropdownToggle
 } from '@ng-bootstrap/ng-bootstrap';
 import { UsernamePipe } from '../username-pipe/username.pipe';
 import { IconDirective } from '../icon/icon.directive';
@@ -39,7 +38,6 @@ import { IconDirective } from '../icon/icon.directive';
     NgbDropdown,
     NgbDropdownToggle,
     NgbDropdownMenu,
-    NgbNavbar,
     UsernamePipe,
     IconDirective,
     NgbDropdownItem
