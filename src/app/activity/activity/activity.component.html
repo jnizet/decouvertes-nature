@@ -13,7 +13,9 @@
         </div>
         <div class="badge text-bg-dark">{{ activity.type | activityType }}</div>
         <div *ngIf="activity.draft" class="badge text-bg-warning ms-1">brouillon</div>
-        <p class="text-muted mt-1" style="white-space: pre-line">{{ activity.description }}</p>
+        <p class="text-body-secondary mt-1" style="white-space: pre-line">
+          {{ activity.description }}
+        </p>
       </div>
       <div class="col-lg-4 d-flex align-items-stretch">
         <div class="info-card rounded p-2 flex-grow-1">
@@ -135,7 +137,7 @@
     <div *ngIf="activity.comment" class="comment mt-3">
       <div class="p-3" style="white-space: pre-line">{{ activity.comment }}</div>
     </div>
-    <div class="text-muted small text-end mt-1">
+    <div class="text-body-secondary small text-end mt-1">
       <em>
         Activité créée par {{ activity.author.displayName }}.
         <ng-container *ngIf="activity.lastModifier">

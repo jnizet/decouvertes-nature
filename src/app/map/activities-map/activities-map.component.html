@@ -26,7 +26,7 @@
     <div class="col-md-4 order-md-0">
       <div
         *ngIf="vm.mappedLocations.length + vm.unmappedLocations.length === 0"
-        class="text-muted mt-md-4"
+        class="text-body-secondary mt-md-4"
       >
         Aucune activité en {{ vm.year }}
       </div>
@@ -60,7 +60,7 @@
       </ng-container>
       <ng-container *ngIf="vm.unmappedLocations.length">
         <h2 class="fs-5">Hors carte</h2>
-        <p class="text-muted small">
+        <p class="text-body-secondary small">
           Les lieux ci-dessous ne sont pas sur la carte parce qu'ils ne sont pas une commune de la
           Loire connue par l'application.
         </p>
