@@ -36,7 +36,11 @@ export class EmailActionComponent {
   verificationError = false;
   resetError = false;
 
-  constructor(route: ActivatedRoute, private auth: Auth, private router: Router) {
+  constructor(
+    route: ActivatedRoute,
+    private auth: Auth,
+    private router: Router
+  ) {
     const params = route.snapshot.queryParamMap;
     const mode = params.get('mode');
     if (mode !== 'resetPassword') {

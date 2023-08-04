@@ -89,7 +89,10 @@ export class ActivitiesMapComponent {
     addActivity: plusCircle
   };
 
-  constructor(activityService: ActivityService, private yearService: YearService) {
+  constructor(
+    activityService: ActivityService,
+    private yearService: YearService
+  ) {
     this.vm$ = combineLatest([yearService.year$, activityService.findVisible()]).pipe(
       map(([year, activities]) => {
         // reverse to have them in chronological order, since the backend returns them in anti-chronological order

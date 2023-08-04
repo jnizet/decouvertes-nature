@@ -2050,7 +2050,10 @@ export class MapComponent implements AfterViewInit, OnChanges {
   private map!: L.Map;
   private markers: Array<L.Marker<any>> = [];
 
-  constructor(private elementRef: ElementRef, private ngZone: NgZone) {}
+  constructor(
+    private elementRef: ElementRef,
+    private ngZone: NgZone
+  ) {}
 
   ngOnChanges(): void {
     this.setMarkers();

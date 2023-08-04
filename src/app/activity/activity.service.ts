@@ -121,7 +121,10 @@ export class ActivityService {
   private activityCollection: CollectionReference<Activity>;
   private animatorCollection: CollectionReference<Animator>;
 
-  constructor(private firestore: Firestore, private currentUserService: CurrentUserService) {
+  constructor(
+    private firestore: Firestore,
+    private currentUserService: CurrentUserService
+  ) {
     this.activityCollection = collection(firestore, 'activities') as CollectionReference<Activity>;
     this.animatorCollection = collection(firestore, 'animators') as CollectionReference<Animator>;
   }

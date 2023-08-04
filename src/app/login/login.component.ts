@@ -30,7 +30,10 @@ export class LoginComponent {
 
   loginError = false;
 
-  constructor(private auth: Auth, private router: Router) {}
+  constructor(
+    private auth: Auth,
+    private router: Router
+  ) {}
 
   login() {
     if (this.form.invalid) {

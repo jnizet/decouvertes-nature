@@ -34,7 +34,10 @@ export class ResetPasswordComponent {
     warning: exclamationTriangleFill
   };
 
-  constructor(private route: ActivatedRoute, private auth: Auth) {
+  constructor(
+    private route: ActivatedRoute,
+    private auth: Auth
+  ) {
     this.form.setValue({ email: route.snapshot.queryParamMap.get('email') || '' });
   }
 
