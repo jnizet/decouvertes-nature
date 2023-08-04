@@ -34,7 +34,10 @@ export class ChangePasswordComponent {
   });
   error = false;
 
-  constructor(private auth: Auth, private router: Router) {}
+  constructor(
+    private auth: Auth,
+    private router: Router
+  ) {}
 
   changePassword() {
     if (this.form.invalid) {

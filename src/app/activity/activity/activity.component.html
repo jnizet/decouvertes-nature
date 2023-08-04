@@ -8,7 +8,7 @@
           <strong>
             <dn-icon class="me-1" [icon]="icons.date" />
             <span class="visually-hidden">Date de l'activité</span>
-            <span>{{ activity | activityDate : 'time' }}</span>
+            <span>{{ activity | activityDate: 'time' }}</span>
           </strong>
         </div>
         <div class="badge text-bg-dark">{{ activity.type | activityType }}</div>
@@ -104,7 +104,7 @@
           </div>
           <div *ngIf="activity.paymentRequired">
             <dn-icon class="me-1" [icon]="icons.paymentRequired" />
-            <span>{{ activity.price | currency : 'EUR' : 'symbol-narrow' }}</span>
+            <span>{{ activity.price | currency: 'EUR' : 'symbol-narrow' }}</span>
           </div>
           <div *ngIf="!activity.paymentRequired">
             <dn-icon class="me-1" [icon]="icons.paymentNotRequired" />

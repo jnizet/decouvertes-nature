@@ -1,5 +1,5 @@
 <h3 class="text-black fs-6">{{ activity.title }}</h3>
-<div>{{ activity | activityDate : 'time' }}</div>
+<div>{{ activity | activityDate: 'time' }}</div>
 <div>{{ activity.type | activityType }}</div>
 <div>Animé par {{ activity.animator }}</div>
 <p style="white-space: pre-line">{{ activity.description }}</p>
@@ -10,7 +10,7 @@
 <div>Rendez-vous&nbsp;: {{ activity.appointmentLocation }}</div>
 <div>
   Prix&nbsp;:
-  {{ activity.paymentRequired ? (activity.price | currency : 'EUR' : 'symbol-narrow') : 'gratuit' }}
+  {{ activity.paymentRequired ? (activity.price | currency: 'EUR' : 'symbol-narrow') : 'gratuit' }}
 </div>
 <div *ngIf="activity.minNumberOfParticipants">
   Nombre minimum de participants&nbsp;: {{ activity.minNumberOfParticipants | number }}

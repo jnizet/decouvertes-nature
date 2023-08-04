@@ -60,7 +60,10 @@ export class NavbarComponent {
     map: geoAlt
   };
 
-  constructor(private currentUserService: CurrentUserService, private router: Router) {
+  constructor(
+    private currentUserService: CurrentUserService,
+    private router: Router
+  ) {
     this.vm$ = currentUserService.getCurrentUser().pipe(map(user => ({ user })));
   }
 
