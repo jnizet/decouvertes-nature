@@ -61,7 +61,7 @@
     "@typescript-eslint/parser": "5.62.0",
     "concurrently": "8.2.0",
     "eslint": "8.46.0",
-    "eslint-config-prettier": "8.8.0",
+    "eslint-config-prettier": "8.10.0",
     "eslint-plugin-prettier": "4.2.1",
     "firebase-tools": "12.4.7",
     "firebase-admin": "11.10.1",
