@@ -63,7 +63,7 @@
     "eslint": "8.47.0",
     "eslint-config-prettier": "9.0.0",
     "eslint-plugin-prettier": "5.0.0",
-    "firebase-tools": "12.4.8",
+    "firebase-tools": "12.5.2",
     "firebase-admin": "11.10.1",
     "jasmine-core": "5.1.0",
     "karma": "6.4.2",
