@@ -17,7 +17,7 @@
       <div *ngFor="let user of users" class="card mb-2">
         <div class="card-body">
           <div class="row">
-            <div class="col">
+            <div class="col-8">
               <h2 class="fs-5" [class.disabled]="user.disabled">{{ user.displayName }}</h2>
               <div class="text-body-secondary">{{ user.email }}</div>
               <div>
@@ -26,8 +26,18 @@
                   Choix du mot de passe
                 </button>
               </div>
+              <div>
+                <button
+                  type="button"
+                  class="btn btn-link btn-sm text-start"
+                  (click)="generateResetPasswordLink(user)"
+                >
+                  <dn-icon [icon]="icons.resetPasswordLink" class="me-1" />
+                  Demander un lien de réinitialisation de mot de passe
+                </button>
+              </div>
             </div>
-            <div class="col">
+            <div class="col-4">
               <div *ngIf="user.admin">
                 <dn-icon [icon]="icons.admin" class="me-1" />
                 Administrateur
@@ -54,17 +64,5 @@
     <ng-template #loading>
       <dn-loading-spinner />
     </ng-template>
-  </div>
-</div>
-
-<div role="alert" aria-live="polite" aria-atomic="true">
-  <div
-    class="email-copied-toast bg-dark text-light border rounded p-2 text-center"
-    [class.active]="copied | async"
-  >
-    <ng-container *ngIf="copied | async">
-      <dn-icon [icon]="icons.copied" class="me-1" />
-      Email copié dans le presse-papier&nbsp;!
-    </ng-container>
   </div>
 </div>

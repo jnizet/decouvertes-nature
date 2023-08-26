@@ -13,6 +13,10 @@ export interface AdministeredUser {
 
 export type AdministeredUserCommand = Omit<AdministeredUser, 'uid'>;
 
+export interface ResetPasswordLinkInfo {
+  resetPasswordLink: string;
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -48,5 +52,13 @@ export class UserService {
   update(uid: string, command: AdministeredUserCommand): Observable<void> {
     const updateUser = httpsCallable<AdministeredUser, void>(this.functions, 'updateUser');
     return defer(() => updateUser({ ...command, uid })).pipe(map(r => r.data));
+  }
+
+  generateResetPasswordLink(uid: string): Observable<ResetPasswordLinkInfo> {
+    const generateResetPasswordLink = httpsCallable<string, ResetPasswordLinkInfo>(
+      this.functions,
+      'generateResetPasswordLink'
+    );
+    return defer(() => generateResetPasswordLink(uid)).pipe(map(r => r.data));
   }
 }
