@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { AdministeredUser, UserService } from '../user.service';
-import { BehaviorSubject, from, Observable, switchMap, tap, timer } from 'rxjs';
+import { from, Observable } from 'rxjs';
 import {
   clipboard2Fill,
   clipboardCheck,
@@ -8,6 +8,7 @@ import {
   pencilSquare,
   plusCircle,
   shieldFill,
+  shieldLock,
   xOctagonFill
 } from '../../bootstrap-icons/bootstrap-icons';
 import { PageTitleDirective } from '../../page-title/page-title.directive';
@@ -15,6 +16,9 @@ import { LoadingSpinnerComponent } from '../../loading-spinner/loading-spinner.c
 import { IconDirective } from '../../icon/icon.directive';
 import { RouterLink } from '@angular/router';
 import { AsyncPipe, NgFor, NgIf } from '@angular/common';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ResetPasswordLinkModalComponent } from '../reset-password-link-modal/reset-password-link-modal.component';
+import { ToastService } from '../../toast/toast.service';
 
 @Component({
   selector: 'dn-users',
@@ -41,12 +45,14 @@ export class UsersComponent {
     edit: pencilSquare,
     addUser: plusCircle,
     resetPasswordEmail: envelope,
-    copied: clipboardCheck
+    resetPasswordLink: shieldLock
   };
 
-  copied = new BehaviorSubject(false);
-
-  constructor(userService: UserService) {
+  constructor(
+    userService: UserService,
+    private ngbModal: NgbModal,
+    private toastService: ToastService
+  ) {
     this.users$ = userService.listUsers();
   }
 
@@ -60,15 +66,20 @@ Pour pouvoir créer de nouvelles activités dans l'application "Découvertes Nat
 il te faudra choisir un mot de passe en te rendant à l'adresse suivante\u00a0:
 ${resetPasswordPath}.
 
-Une fois le mot de passe choisi, vous pourrez accéder à l'application à l'adresse
+Une fois le mot de passe choisi, tu pourras accéder à l'application à l'adresse
 suivante\u00a0:
 ${homePath}.`;
-    from(navigator.clipboard.writeText(email))
-      .pipe(
-        tap(() => this.copied.next(true)),
-        switchMap(() => timer(3000)),
-        tap(() => this.copied.next(false))
-      )
-      .subscribe();
+    from(navigator.clipboard.writeText(email)).subscribe(() =>
+      this.toastService.display({
+        icon: clipboardCheck,
+        message: 'Email copié dans le presse-papier\u00a0!'
+      })
+    );
+  }
+
+  generateResetPasswordLink(user: AdministeredUser) {
+    const modal = this.ngbModal.open(ResetPasswordLinkModalComponent);
+    const modalComponent: ResetPasswordLinkModalComponent = modal.componentInstance;
+    modalComponent.user = user;
   }
 }

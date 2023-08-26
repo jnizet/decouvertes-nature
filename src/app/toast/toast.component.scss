@@ -1,0 +1,19 @@
+@import '../../common';
+
+.toast {
+  position: fixed;
+  bottom: 20px;
+  left: 0;
+  right: 0;
+  margin: auto;
+  width: 200px;
+  visibility: hidden;
+  opacity: 0;
+  transition: all 400ms ease;
+  &.active {
+    visibility: visible;
+    opacity: 1;
+    transform: translateY(-50px);
+  }
+  z-index: $zindex-toast;
+}

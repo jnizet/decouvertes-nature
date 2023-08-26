@@ -1,0 +1,11 @@
+<div role="alert" aria-live="polite" aria-atomic="true">
+  <div
+    class="toast bg-dark text-light border rounded p-2 text-center"
+    [class.active]="toast$ | async"
+  >
+    <ng-container *ngIf="toast$ | async as toast">
+      <dn-icon *ngIf="toast.icon" [icon]="toast.icon" class="me-1" />
+      {{ toast.message }}
+    </ng-container>
+  </div>
+</div>

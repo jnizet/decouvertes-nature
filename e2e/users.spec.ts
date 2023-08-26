@@ -37,4 +37,19 @@ test.describe('Users', () => {
     await page.click('text=Enregistrer');
     await test.expect(card).toContainText('désactivé');
   });
+
+  test('should generate a reset password link', async ({ page }) => {
+    await page.click('text=Utilisateurs');
+
+    await page.click('text=Demander un lien de réinitialisation de mot de passe');
+    await test
+      .expect(page.locator('h1', { hasText: 'Lien de réinitialisation de mot de passe\n' }))
+      .toBeVisible();
+
+    const modal = page.locator('.modal-dialog');
+    await modal.getByText('Demander un lien', { exact: true }).click();
+    await test.expect(modal).toContainText('Le lien a été créé');
+    await modal.locator('text=Fermer').click();
+    await test.expect(modal).not.toBeVisible();
+  });
 });
