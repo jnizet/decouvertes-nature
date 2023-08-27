@@ -13,6 +13,7 @@ import { IconDirective } from '../../icon/icon.directive';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { UserCreatedModalComponent } from '../user-created-modal/user-created-modal.component';
 import { AsyncPipe, NgIf } from '@angular/common';
+import { SpinningIconComponent } from '../../shared/spinning-icon/spinning-icon.component';
 
 @Component({
   selector: 'dn-user-edition',
@@ -27,7 +28,8 @@ import { AsyncPipe, NgIf } from '@angular/common';
     FormControlValidationDirective,
     PageTitleDirective,
     LoadingSpinnerComponent,
-    IconDirective
+    IconDirective,
+    SpinningIconComponent
   ]
 })
 export class UserEditionComponent {

@@ -320,16 +320,11 @@
         [disabled]="(savingWhateverTheMode$ | async) === true"
         (click)="draftManager.switchTo('draft')"
       >
-        <dn-icon
-          class="me-1"
+        <dn-spinning-icon
           [icon]="icons.saveAsDraft"
-          *ngIf="(savingAsDraft.isSpinning | async) === false"
+          [spinner]="savingAsDraft"
+          message="enregistrement en cours..."
         />
-        <div
-          *ngIf="(savingAsDraft.isSpinning | async) === true"
-          class="spinner-border spinner-border-sm me-1"
-          role="status"
-        ></div>
         Enregistrer en brouillon
       </button>
 
@@ -339,12 +334,11 @@
         (click)="draftManager.switchTo('final')"
         id="save-button"
       >
-        <dn-icon class="me-1" [icon]="icons.save" *ngIf="(saving.isSpinning | async) === false" />
-        <div
-          *ngIf="(saving.isSpinning | async) === true"
-          class="spinner-border spinner-border-sm me-1"
-          role="status"
-        ></div>
+        <dn-spinning-icon
+          [icon]="icons.save"
+          [spinner]="saving"
+          message="enregistrement en cours..."
+        />
         Enregistrer
       </button>
     </div>

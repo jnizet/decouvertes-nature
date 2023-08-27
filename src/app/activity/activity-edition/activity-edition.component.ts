@@ -39,6 +39,7 @@ import { NgbCollapse, NgbTypeahead } from '@ng-bootstrap/ng-bootstrap';
 import { IconDirective } from '../../icon/icon.directive';
 import { MultiChoiceComponent } from '../multi-choice/multi-choice.component';
 import { PageTitleDirective } from '../../page-title/page-title.directive';
+import { SpinningIconComponent } from '../../shared/spinning-icon/spinning-icon.component';
 
 interface Timing {
   startDate: LocalDate | null;
@@ -158,7 +159,8 @@ type ActivityFormGroup = FormGroup<{
     FormControlValidationDirective,
     PageTitleDirective,
     IconDirective,
-    MultiChoiceComponent
+    MultiChoiceComponent,
+    SpinningIconComponent
   ]
 })
 export class ActivityEditionComponent {
