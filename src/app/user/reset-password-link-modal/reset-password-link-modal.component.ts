@@ -7,6 +7,7 @@ import { IconDirective } from '../../icon/icon.directive';
 import { Spinner } from '../../shared/spinner';
 import { ToastService } from '../../toast/toast.service';
 import { clipboardCheck, envelope, shieldLock } from '../../bootstrap-icons/bootstrap-icons';
+import { SpinningIconComponent } from '../../shared/spinning-icon/spinning-icon.component';
 
 interface ViewModel {
   resetPasswordLinkInfo?: ResetPasswordLinkInfo;
@@ -15,7 +16,7 @@ interface ViewModel {
 @Component({
   selector: 'dn-reset-password-link-modal',
   standalone: true,
-  imports: [CommonModule, IconDirective],
+  imports: [CommonModule, IconDirective, SpinningIconComponent],
   templateUrl: './reset-password-link-modal.component.html',
   styleUrls: ['./reset-password-link-modal.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush

@@ -67,18 +67,11 @@
         </div>
         <div class="text-end">
           <button class="btn btn-primary" [disabled]="(saving.isSpinning | async) === true">
-            <dn-icon
-              *ngIf="(saving.isSpinning | async) === false"
-              class="me-1"
+            <dn-spinning-icon
               [icon]="icons.save"
+              [spinner]="saving"
+              message="enregistrement en cours..."
             />
-            <div
-              *ngIf="(saving.isSpinning | async) === true"
-              class="spinner-border spinner-border-sm me-1"
-              role="status"
-            >
-              <span class="visually-hidden">enregistrement en cours...</span>
-            </div>
             Enregistrer
           </button>
         </div>

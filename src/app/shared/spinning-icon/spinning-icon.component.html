@@ -1,0 +1,8 @@
+<dn-icon [icon]="icon" class="me-1" *ngIf="(spinner.isSpinning | async) === false" />
+<div
+  *ngIf="(spinner.isSpinning | async) === true"
+  class="spinner-border spinner-border-sm me-1"
+  role="status"
+>
+  <span class="visually-hidden">{{ message }}</span>
+</div>
