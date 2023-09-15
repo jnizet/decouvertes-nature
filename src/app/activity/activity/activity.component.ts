@@ -13,6 +13,7 @@ import {
   people,
   peopleFill,
   personHearts,
+  personWheelchair,
   piggyBank,
   pinMap,
   subtract,
@@ -21,7 +22,7 @@ import {
   trash3,
   unlock
 } from '../../bootstrap-icons/bootstrap-icons';
-import { barredIcon, barredWheelchair, wheelchair } from '../../icon/icons';
+import { barredIcon } from '../../icon/icons';
 import { ConfirmService } from '../../confirm/confirm.service';
 import { CurrentUser, CurrentUserService } from '../../current-user.service';
 import { AsyncPipe, CurrencyPipe, DecimalPipe, NgFor, NgIf } from '@angular/common';
@@ -74,8 +75,8 @@ export class ActivityComponent {
     paymentNotRequired: barredIcon(piggyBank),
     participants: people,
     edit: pencilSquare,
-    accessible: wheelchair,
-    notAccessible: barredWheelchair,
+    accessible: personWheelchair,
+    notAccessible: barredIcon(personWheelchair),
     delete: trash3,
     duplicate: subtract,
     equipment: bucket,
