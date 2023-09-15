@@ -3,6 +3,9 @@ import { ActivitiesComponent } from './activities/activities.component';
 import { ActivityEditionComponent } from './activity-edition/activity-edition.component';
 import { ActivityComponent } from './activity/activity.component';
 import { ActivitiesTabsComponent } from './activities-tabs/activities-tabs.component';
+import { ActivityTabsComponent } from './activity-tabs/activity-tabs.component';
+import { ActivityPicturesComponent } from './activity-pictures/activity-pictures.component';
+import { ActivityReportContainerComponent } from './activity-report-container/activity-report-container.component';
 
 export const ACTIVITY_ROUTES: Routes = [
   {
@@ -31,7 +34,21 @@ export const ACTIVITY_ROUTES: Routes = [
   },
   {
     path: ':id',
-    component: ActivityComponent
+    component: ActivityTabsComponent,
+    children: [
+      {
+        path: '',
+        component: ActivityComponent
+      },
+      {
+        path: 'pictures',
+        component: ActivityPicturesComponent
+      },
+      {
+        path: 'report',
+        component: ActivityReportContainerComponent
+      }
+    ]
   },
   {
     path: ':id/edit',

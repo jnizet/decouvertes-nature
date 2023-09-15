@@ -1,0 +1,80 @@
+<ng-container *ngIf="vm$ | async as vm">
+  <p *ngIf="vm.pictures.length === 0">Aucune photo associée à cette sortie.</p>
+
+  <div class="alert alert-info">
+    <div class="row">
+      <div class="col-auto"><dn-icon [icon]="icons.info" /></div>
+      <div class="col">
+        <h2 class="fs-5">Consignes pour les photos&nbsp;</h2>
+        <ul>
+          <li>Fichiers JPEG uniquement</li>
+          <li>Format paysage</li>
+          <li>Pas de photos où apparaissent des personnes sans leur consentement</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="row gy-3">
+    <div *ngFor="let picture of vm.pictures; trackBy: byPath" class="col-lg-6 col-xl-4">
+      <div class="card h-100">
+        <img [src]="picture.thumbnailDownloadUrl" class="card-img-top" [alt]="picture.legend" />
+        <div class="card-body flex-grow-1">
+          <p class="card-text text-body-secondary">
+            {{ picture.legend }}
+          </p>
+          <p class="card-text small text-body-secondary text-end">{{ picture.credit }}</p>
+        </div>
+        <div class="card-footer text-end">
+          <button
+            class="btn btn-sm btn-outline-success me-1"
+            type="button"
+            (click)="download(picture)"
+          >
+            <dn-icon [icon]="icons.download" />
+            Télécharger
+          </button>
+          <button
+            class="btn btn-sm btn-outline-primary me-1"
+            type="button"
+            (click)="editPicture(picture)"
+          >
+            <dn-icon [icon]="icons.edit" />
+            Modifier
+          </button>
+          <button
+            class="btn btn-sm btn-outline-danger"
+            type="button"
+            (click)="removePicture(picture)"
+          >
+            <dn-icon [icon]="icons.trash" />
+            Supprimer
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="d-grid gap-2 d-sm-block text-sm-end mt-3">
+    <button
+      class="btn btn-outline-secondary"
+      type="button"
+      (click)="fileInput.click()"
+      [disabled]="(uploading.isSpinning | async) === true"
+    >
+      <dn-spinning-icon
+        [icon]="icons.add"
+        [spinner]="uploading"
+        message="Enregistrement de l'image en cours..."
+      />
+      Ajouter une photo
+    </button>
+    <input
+      class="d-none"
+      type="file"
+      accept="image/jpeg"
+      (change)="addPicture($event)"
+      #fileInput
+    />
+  </div>
+</ng-container>

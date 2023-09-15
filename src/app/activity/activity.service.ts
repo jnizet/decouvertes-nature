@@ -24,6 +24,13 @@ export interface ActivityReport {
   comment: string;
 }
 
+export interface ActivityPicture {
+  path: string;
+  thumbnailPath: string;
+  legend: string;
+  credit: string;
+}
+
 export interface Activity {
   id: string;
   type: string;
@@ -55,6 +62,7 @@ export interface Activity {
   lastModifier: AuditUser | null;
   report?: ActivityReport;
   draft: boolean;
+  pictures?: Array<ActivityPicture>;
 }
 
 export interface ActivityType {
@@ -63,7 +71,7 @@ export interface ActivityType {
   readonly example?: string;
 }
 
-export type ActivityCommand = Omit<Activity, 'id'>;
+export type ActivityCommand = Omit<Activity, 'id' | 'report'>;
 export type ActivityReportCommand = ActivityReport;
 
 export interface Animator {
@@ -167,7 +175,7 @@ export class ActivityService {
 
   update(id: string, command: ActivityCommand): Observable<void> {
     return defer(() =>
-      setDoc(doc(this.activityCollection, id), {
+      updateDoc(doc(this.activityCollection, id), {
         ...command,
         id
       })
@@ -236,5 +244,13 @@ export class ActivityService {
   private isActivityVisibleBy(activity: Activity, currentUser: CurrentUser | null): boolean {
     return true;
     // if we go back to hiding drafts not created by the current user unless the user is an admin, change the code here
+  }
+
+  updatePictures(id: string, pictures: Array<ActivityPicture>) {
+    return defer(() =>
+      updateDoc(doc(this.activityCollection, id), {
+        pictures
+      })
+    );
   }
 }

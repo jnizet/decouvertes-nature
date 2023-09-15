@@ -1,0 +1,48 @@
+<div class="modal-header">
+  <h1 class="modal-title fs-4">
+    <ng-container *ngIf="mode === 'create'">Ajout d'une photo à l'activité</ng-container>
+    <ng-container *ngIf="mode === 'update'">Modification des information de la photo</ng-container>
+  </h1>
+  <button
+    type="button"
+    class="btn-close"
+    aria-label="Close"
+    (click)="cancel()"
+    [disabled]="(saving.isSpinning | async) === true"
+  ></button>
+</div>
+<div class="modal-body">
+  <img [src]="pictureUrl" alt="Photo à légender" class="img-fluid" />
+
+  <form id="picture-form" [formGroup]="form" class="mt-3" (ngSubmit)="save()">
+    <div class="mb-3">
+      <label for="legend">Légende de la photo</label>
+      <input id="legend" class="form-control" formControlName="legend" />
+      <val-errors controlName="legend"></val-errors>
+    </div>
+    <div class="mb-3">
+      <label for="credit">Crédits de la photo</label>
+      <input id="credit" class="form-control" formControlName="credit" />
+      <val-errors controlName="credit"></val-errors>
+    </div>
+  </form>
+</div>
+<div class="modal-footer">
+  <button
+    type="submit"
+    form="picture-form"
+    class="btn btn-primary me-2"
+    [disabled]="(saving.isSpinning | async) === true"
+  >
+    <dn-spinning-icon [spinner]="saving" message="Enregistrement en cours" [icon]="icons.save" />
+    Enregistrer
+  </button>
+  <button
+    type="button"
+    class="btn btn-danger"
+    (click)="cancel()"
+    [disabled]="(saving.isSpinning | async) === true"
+  >
+    Annuler
+  </button>
+</div>

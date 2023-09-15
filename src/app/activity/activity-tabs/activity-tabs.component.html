@@ -1,0 +1,48 @@
+<ng-container *ngIf="activity$ | async as activity">
+  <h1>{{ activity.title }}</h1>
+
+  <ul class="nav nav-tabs mb-3">
+    <li class="nav-item">
+      <a
+        class="nav-link"
+        routerLinkActive="active"
+        [routerLinkActiveOptions]="routerLinkActiveOptions"
+        #detailsActive="routerLinkActive"
+        [attr.aria-current]="detailsActive.isActive"
+        [routerLink]="['/activities', activity.id]"
+      >
+        Détails
+      </a>
+    </li>
+    <li class="nav-item">
+      <a
+        class="nav-link"
+        routerLinkActive="active"
+        [routerLinkActiveOptions]="routerLinkActiveOptions"
+        #picturesActive="routerLinkActive"
+        [attr.aria-current]="picturesActive.isActive"
+        [routerLink]="['/activities', activity.id, 'pictures']"
+      >
+        Photos
+        <span class="ms-1 badge rounded-pill text-bg-secondary">
+          {{ activity.pictures?.length ?? 0 | number }}
+          <span class="visually-hidden">photo(s) associées à cette activité</span>
+        </span>
+      </a>
+    </li>
+    <li class="nav-item">
+      <a
+        class="nav-link"
+        routerLinkActive="active"
+        [routerLinkActiveOptions]="routerLinkActiveOptions"
+        #reportActive="routerLinkActive"
+        [attr.aria-current]="reportActive.isActive"
+        [routerLink]="['/activities', activity.id, 'report']"
+      >
+        Rapport
+      </a>
+    </li>
+  </ul>
+
+  <router-outlet />
+</ng-container>

@@ -140,6 +140,7 @@ type ActivityFormGroup = FormGroup<{
   associatedOrganizations: FormControl<Array<string> | null>;
   equipments: FormControl<Array<string> | null>;
   comment: FormControl<string | null>;
+  useSamePictures: FormControl<boolean | null>;
 }>;
 
 @Component({
@@ -283,7 +284,8 @@ export class ActivityEditionComponent {
       labels: new FormControl<Array<string>>([]),
       associatedOrganizations: new FormControl<Array<string>>([]),
       equipments: new FormControl<Array<string>>([]),
-      comment: new FormControl('')
+      comment: new FormControl(''),
+      useSamePictures: new FormControl<boolean | null>(false)
     });
 
     route.paramMap
@@ -326,7 +328,8 @@ export class ActivityEditionComponent {
             maxNumberOfParticipants: activity.maxNumberOfParticipants,
             paymentRequired: activity.paymentRequired,
             price: activity.price,
-            comment: activity.comment
+            comment: activity.comment,
+            useSamePictures: this.shouldDisplayUseSamePictures
           };
 
           this.form.setValue(formValue);
@@ -389,6 +392,10 @@ export class ActivityEditionComponent {
     );
   }
 
+  get shouldDisplayUseSamePictures() {
+    return this.mode === 'duplicate' && (this.editedActivity?.pictures ?? []).length > 0;
+  }
+
   save() {
     if (this.form.invalid) {
       return;
@@ -429,6 +436,10 @@ export class ActivityEditionComponent {
       draft: this.draftManager.mode === 'draft'
     };
 
+    if (formValue.useSamePictures) {
+      command.pictures = this.editedActivity?.pictures;
+    }
+
     const spinner = this.draftManager.mode === 'draft' ? this.savingAsDraft : this.saving;
     const result$ =
       this.mode === 'create' || this.mode === 'duplicate'
@@ -437,7 +448,11 @@ export class ActivityEditionComponent {
             .update(this.editedActivity!.id, command)
             .pipe(map(() => this.editedActivity!));
     result$.pipe(spinner.spinUntilFinalization()).subscribe(activity => {
-      this.router.navigate(['/activities', activity.id]);
+      if (this.mode === 'create' || (this.mode === 'duplicate' && !formValue.useSamePictures)) {
+        this.router.navigate(['/activities', activity.id, 'pictures']);
+      } else {
+        this.router.navigate(['/activities', activity.id]);
+      }
     });
   }
 }

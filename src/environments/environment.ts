@@ -8,6 +8,7 @@ import { firebaseConfig } from './firebase-config';
 import { connectFunctionsEmulator, getFunctions, provideFunctions } from '@angular/fire/functions';
 import { importProvidersFrom } from '@angular/core';
 import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
+import { connectStorageEmulator, getStorage, provideStorage } from '@angular/fire/storage';
 
 export const environment = {
   production: false,
@@ -32,6 +33,13 @@ export const environment = {
         const functions = getFunctions();
         connectFunctionsEmulator(functions, 'localhost', 5001);
         return functions;
+      })
+    ),
+    importProvidersFrom(
+      provideStorage(() => {
+        const storage = getStorage();
+        connectStorageEmulator(storage, 'localhost', 9199);
+        return storage;
       })
     )
   ]

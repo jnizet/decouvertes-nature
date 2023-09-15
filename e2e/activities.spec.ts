@@ -40,6 +40,7 @@ test.describe('Activities', () => {
     await page.click('#save-button');
 
     await test.expect(page.locator('h1')).toHaveText(title);
+    await page.click('text=Détails');
     await page.click('text=Modifier');
 
     const newTitle = randomString();
@@ -85,6 +86,7 @@ test.describe('Activities', () => {
     await page.click('text="Enregistrer en brouillon"');
 
     await test.expect(page.locator('h1')).toContainText(title);
+    await page.click('text="Détails"');
     await test.expect(page.locator('.badge:has-text("brouillon")')).toBeVisible();
     await page.click('text=Modifier');
 

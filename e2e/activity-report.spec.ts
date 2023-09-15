@@ -9,6 +9,7 @@ test.describe('Activity report', () => {
   test('should create, modify and delete report', async ({ page }) => {
     await createActivity(page);
 
+    await page.click('text=Rapport');
     await page.click('text=Remplir le rapport');
     await checkAccessibility(page, 'Fill report page should be accessible');
 

@@ -2,9 +2,13 @@
 <h1>Export des activités</h1>
 
 <div class="alert alert-info">
-  <dn-icon [icon]="icons.info" class="mr-1" />
-  Cette page vous permet de filtrer puis de copier-coller, avec un formatage minimal, les
-  informations sur les sorties.
+  <div class="row">
+    <div class="col-auto"><dn-icon [icon]="icons.info" /></div>
+    <div class="col">
+      Cette page vous permet de filtrer puis de copier-coller, avec un formatage minimal, les
+      informations sur les sorties.
+    </div>
+  </div>
 </div>
 
 <form [formGroup]="form" class="col-md-6 mb-4">

@@ -1,6 +1,9 @@
 <ng-container *ngIf="mode">
   <dn-page-title [title]="mode === 'edit' ? editedActivity!.title : 'Nouvelle activité'" />
-  <h1 *ngIf="mode === 'create' || mode === 'duplicate'">Création d'une nouvelle activité</h1>
+  <h1 *ngIf="mode === 'create'">Création d'une nouvelle activité</h1>
+  <h1 *ngIf="mode === 'duplicate'">
+    Duplication de l'activité <em>{{ editedActivity!.title }}</em>
+  </h1>
   <h1 *ngIf="mode === 'edit'">
     Modification de l'activité <em>{{ editedActivity!.title }}</em>
   </h1>
@@ -309,6 +312,21 @@
             rows="4"
             placeholder="Saisissez ici tout commentaire qui vous semblerait utile concernant cette activité, en particulier ce qui peut être nécessaire à la LPO. S'il s'agit d'un brouillon, indiquez ce qui est encore inconnu."
           ></textarea>
+        </div>
+
+        <div class="mb-3" *ngIf="shouldDisplayUseSamePictures">
+          <div class="form-check form-switch">
+            <input
+              formControlName="useSamePictures"
+              class="form-check-input"
+              type="checkbox"
+              role="switch"
+              id="use-same-pictures"
+            />
+            <label class="form-check-label" for="use-same-pictures">
+              Réutiliser les photos de l'activité originale
+            </label>
+          </div>
         </div>
       </div>
     </div>

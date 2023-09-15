@@ -5,7 +5,11 @@
   },
   "hosting": {
     "public": "dist/decouvertes-nature",
-    "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ],
     "rewrites": [
       {
         "source": "**",
@@ -45,9 +49,18 @@
     },
     "hosting": {
       "port": 12000
+    },
+    "storage": {
+      "port": 9199
     }
   },
   "functions": {
-    "predeploy": ["cd functions && yarn build"]
+    "predeploy": [
+      "cd functions && yarn build"
+    ],
+    "source": "functions"
+  },
+  "storage": {
+    "rules": "storage.rules"
   }
 }

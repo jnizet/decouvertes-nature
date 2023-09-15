@@ -11,6 +11,7 @@ import {
   chevronCompactUp,
   clipboard2,
   clipboard2Fill,
+  download as bsDownload,
   emojiLaughing,
   envelope,
   exclamationTriangleFill,
@@ -101,3 +102,4 @@ export const addUser = plusCircle;
 export const left = arrowLeftCircle;
 export const right = arrowRightCircle;
 export const plus = bsPlus;
+export const download = bsDownload;

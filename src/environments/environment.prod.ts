@@ -4,6 +4,7 @@ import { firebaseConfig } from './firebase-config';
 import { getFunctions, provideFunctions } from '@angular/fire/functions';
 import { importProvidersFrom } from '@angular/core';
 import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
+import { getStorage, provideStorage } from '@angular/fire/storage';
 
 export const environment = {
   production: true,
@@ -11,6 +12,7 @@ export const environment = {
     importProvidersFrom(provideFirebaseApp(() => initializeApp(firebaseConfig))),
     importProvidersFrom(provideFirestore(() => getFirestore())),
     importProvidersFrom(provideAuth(() => getAuth())),
-    importProvidersFrom(provideFunctions(() => getFunctions()))
+    importProvidersFrom(provideFunctions(() => getFunctions())),
+    importProvidersFrom(provideStorage(() => getStorage()))
   ]
 };
