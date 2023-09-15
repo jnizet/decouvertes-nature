@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
-import { envelope } from '../../bootstrap-icons/bootstrap-icons';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { IconDirective } from '../../icon/icon.directive';
+import * as icons from '../../icon/icons';
 
 @Component({
   selector: 'dn-user-created-modal',
@@ -11,9 +11,7 @@ import { IconDirective } from '../../icon/icon.directive';
   imports: [IconDirective]
 })
 export class UserCreatedModalComponent {
-  readonly icons = {
-    resetPasswordEmail: envelope
-  };
+  readonly icons = icons;
 
   userName?: string;
 

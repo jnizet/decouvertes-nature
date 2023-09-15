@@ -1,16 +1,11 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { Activity } from '../activity.service';
-import {
-  bookmarkPlus,
-  calendar4Event,
-  emojiLaughing,
-  pinMap
-} from '../../bootstrap-icons/bootstrap-icons';
 import { NgIf } from '@angular/common';
 import { IconDirective } from '../../icon/icon.directive';
 import { ActivityDatePipe } from '../../activity-date-pipe/activity-date.pipe';
 import { ActivityTypePipe } from '../../activity-type-pipe/activity-type.pipe';
 import { RouterLink } from '@angular/router';
+import * as icons from '../../icon/icons';
 
 @Component({
   selector: 'dn-activity-card',
@@ -22,10 +17,5 @@ import { RouterLink } from '@angular/router';
 })
 export class ActivityCardComponent {
   @Input({ required: true }) activity!: Activity;
-  icons = {
-    date: calendar4Event,
-    location: pinMap,
-    animator: emojiLaughing,
-    bookToRoom: bookmarkPlus
-  };
+  icons = icons;
 }

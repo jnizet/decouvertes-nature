@@ -2,27 +2,7 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { Observable, switchMap } from 'rxjs';
 import { Activity, ActivityReportCommand, ActivityService } from '../activity.service';
-import {
-  bookmarkPlus,
-  bucket,
-  calendar4Event,
-  emojiLaughing,
-  geoFill,
-  lock,
-  pencilSquare,
-  people,
-  peopleFill,
-  personHearts,
-  personWheelchair,
-  piggyBank,
-  pinMap,
-  subtract,
-  tag,
-  telephone,
-  trash3,
-  unlock
-} from '../../bootstrap-icons/bootstrap-icons';
-import { barredIcon } from '../../icon/icons';
+import * as icons from '../../icon/icons';
 import { ConfirmService } from '../../confirm/confirm.service';
 import { CurrentUser, CurrentUserService } from '../../current-user.service';
 import { AsyncPipe, CurrencyPipe, DecimalPipe, NgFor, NgIf } from '@angular/common';
@@ -59,30 +39,7 @@ export class ActivityComponent {
   currentUser$: Observable<CurrentUser | null>;
   editingReport = false;
 
-  icons = {
-    date: calendar4Event,
-    location: pinMap,
-    appointmentLocation: geoFill,
-    animator: emojiLaughing,
-    roomToBook: bookmarkPlus,
-    label: tag,
-    associatedOrganization: peopleFill,
-    bookingMandatory: telephone,
-    bookingNotMandatory: barredIcon(telephone),
-    membersOnly: lock,
-    notMembersOnly: unlock,
-    paymentRequired: piggyBank,
-    paymentNotRequired: barredIcon(piggyBank),
-    participants: people,
-    edit: pencilSquare,
-    accessible: personWheelchair,
-    notAccessible: barredIcon(personWheelchair),
-    delete: trash3,
-    duplicate: subtract,
-    equipment: bucket,
-    accessibleToChildren: personHearts,
-    notAccessibleToChildren: barredIcon(personHearts)
-  };
+  icons = icons;
 
   constructor(
     route: ActivatedRoute,

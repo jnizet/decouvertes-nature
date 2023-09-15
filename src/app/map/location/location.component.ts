@@ -3,12 +3,12 @@ import {
   ActivityLocation,
   UnmappedActivityLocation
 } from '../activities-map/activities-map.component';
-import { chevronCompactUp } from '../../bootstrap-icons/bootstrap-icons';
 import { RouterLink } from '@angular/router';
 import { NgbCollapse } from '@ng-bootstrap/ng-bootstrap';
 import { IconDirective } from '../../icon/icon.directive';
 import { ActivityDatePipe } from '../../activity-date-pipe/activity-date.pipe';
 import { DecimalPipe, NgFor, NgIf } from '@angular/common';
+import * as icons from '../../icon/icons';
 
 @Component({
   selector: 'dn-location',
@@ -23,7 +23,5 @@ export class LocationComponent {
   @Input({ required: true }) title!: string;
   @Input({ required: true }) collapsedId!: string;
 
-  icons = {
-    collapsed: chevronCompactUp
-  };
+  icons = icons;
 }

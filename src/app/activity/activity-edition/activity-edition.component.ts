@@ -29,7 +29,6 @@ import {
   switchMap
 } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
-import { fileArrowUp, journalArrowUp } from '../../bootstrap-icons/bootstrap-icons';
 import { CurrentUserService } from '../../current-user.service';
 import { Spinner } from '../../shared/spinner';
 import { AsyncPipe, NgFor, NgIf } from '@angular/common';
@@ -40,6 +39,7 @@ import { IconDirective } from '../../icon/icon.directive';
 import { MultiChoiceComponent } from '../multi-choice/multi-choice.component';
 import { PageTitleDirective } from '../../page-title/page-title.directive';
 import { SpinningIconComponent } from '../../shared/spinning-icon/spinning-icon.component';
+import * as icons from '../../icon/icons';
 
 interface Timing {
   startDate: LocalDate | null;
@@ -218,10 +218,8 @@ export class ActivityEditionComponent {
   readonly knownLabels = KNOWN_LABELS;
   readonly knownOrganizations = KNOWN_ORGANIZATIONS;
   readonly knownEquipments = KNOWN_EQUIPMENTS;
-  readonly icons = {
-    save: fileArrowUp,
-    saveAsDraft: journalArrowUp
-  };
+  readonly icons = icons;
+
   readonly saving = new Spinner();
   readonly savingAsDraft = new Spinner();
   readonly savingWhateverTheMode$ = combineLatest([
