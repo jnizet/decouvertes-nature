@@ -1,8 +1,8 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { YearService } from '../year.service';
-import { arrowLeftCircle, arrowRightCircle } from '../bootstrap-icons/bootstrap-icons';
 import { IconDirective } from '../icon/icon.directive';
 import { AsyncPipe, DecimalPipe, NgIf } from '@angular/common';
+import * as icons from '../icon/icons';
 
 @Component({
   selector: 'dn-year-selector',
@@ -13,10 +13,7 @@ import { AsyncPipe, DecimalPipe, NgIf } from '@angular/common';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class YearSelectorComponent {
-  icons = {
-    left: arrowLeftCircle,
-    right: arrowRightCircle
-  };
+  icons = icons;
 
   year$ = this.yearService.year$;
 

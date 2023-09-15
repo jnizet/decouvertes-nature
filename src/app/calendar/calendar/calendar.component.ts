@@ -3,7 +3,6 @@ import { Activity, ActivityService } from '../../activity/activity.service';
 import { LocalDate, localDateToYearMonth, YearMonth } from '../../shared/types';
 import { combineLatest, map, Observable } from 'rxjs';
 import { parseISO } from 'date-fns';
-import { plusCircle } from '../../bootstrap-icons/bootstrap-icons';
 import { AsyncPipe, NgFor, NgIf } from '@angular/common';
 import { PageTitleDirective } from '../../page-title/page-title.directive';
 import { LoadingSpinnerComponent } from '../../loading-spinner/loading-spinner.component';
@@ -14,6 +13,7 @@ import { RouterLink } from '@angular/router';
 import { ActivityDatePipe } from '../../activity-date-pipe/activity-date.pipe';
 import { YearService } from '../../year.service';
 import { YearSelectorComponent } from '../../year-selector/year-selector.component';
+import * as icons from '../../icon/icons';
 
 interface Month {
   month: YearMonth;
@@ -52,9 +52,7 @@ interface ActivityWithDayRange extends Activity {
 })
 export class CalendarComponent {
   vm$: Observable<ViewModel>;
-  icons = {
-    addActivity: plusCircle
-  };
+  icons = icons;
 
   constructor(
     activityService: ActivityService,

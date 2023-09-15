@@ -10,7 +10,6 @@ import {
   switchMap,
   switchScan
 } from 'rxjs';
-import { plusCircle } from '../../bootstrap-icons/bootstrap-icons';
 import { Activity, ActivityService } from '../../activity/activity.service';
 import { parseISO } from 'date-fns';
 import { ALL_MUNICIPALITIES, Municipality } from '../../shared/municipalities';
@@ -23,6 +22,7 @@ import { YearService } from '../../year.service';
 import { YearSelectorComponent } from '../../year-selector/year-selector.component';
 import { RouterLink } from '@angular/router';
 import { AsyncPipe, NgFor, NgIf } from '@angular/common';
+import * as icons from '../../icon/icons';
 
 export interface ActivityLocation {
   municipality: Municipality;
@@ -85,9 +85,7 @@ export class ActivitiesMapComponent {
   private actionSubject = new Subject<Action>();
 
   vm$: Observable<ViewModel>;
-  icons = {
-    addActivity: plusCircle
-  };
+  icons = icons;
 
   constructor(
     activityService: ActivityService,

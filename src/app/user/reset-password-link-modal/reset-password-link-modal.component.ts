@@ -6,8 +6,9 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { IconDirective } from '../../icon/icon.directive';
 import { Spinner } from '../../shared/spinner';
 import { ToastService } from '../../toast/toast.service';
-import { clipboardCheck, envelope, shieldLock } from '../../bootstrap-icons/bootstrap-icons';
+import { clipboardCheck } from '../../bootstrap-icons/bootstrap-icons';
 import { SpinningIconComponent } from '../../shared/spinning-icon/spinning-icon.component';
+import * as icons from '../../icon/icons';
 
 interface ViewModel {
   resetPasswordLinkInfo?: ResetPasswordLinkInfo;
@@ -23,10 +24,8 @@ interface ViewModel {
 })
 export class ResetPasswordLinkModalComponent {
   readonly vm$: Observable<ViewModel>;
-  readonly icons = {
-    resetPasswordEmail: envelope,
-    resetPasswordLink: shieldLock
-  };
+  readonly icons = icons;
+
   private readonly generateResetPasswordLinkSubject = new Subject<void>();
   readonly generating = new Spinner();
 

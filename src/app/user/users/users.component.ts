@@ -1,16 +1,7 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { AdministeredUser, UserService } from '../user.service';
 import { from, Observable } from 'rxjs';
-import {
-  clipboard2Fill,
-  clipboardCheck,
-  envelope,
-  pencilSquare,
-  plusCircle,
-  shieldFill,
-  shieldLock,
-  xOctagonFill
-} from '../../bootstrap-icons/bootstrap-icons';
+import { clipboardCheck } from '../../bootstrap-icons/bootstrap-icons';
 import { PageTitleDirective } from '../../page-title/page-title.directive';
 import { LoadingSpinnerComponent } from '../../loading-spinner/loading-spinner.component';
 import { IconDirective } from '../../icon/icon.directive';
@@ -19,6 +10,7 @@ import { AsyncPipe, NgFor, NgIf } from '@angular/common';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ResetPasswordLinkModalComponent } from '../reset-password-link-modal/reset-password-link-modal.component';
 import { ToastService } from '../../toast/toast.service';
+import * as icons from '../../icon/icons';
 
 @Component({
   selector: 'dn-users',
@@ -38,15 +30,7 @@ import { ToastService } from '../../toast/toast.service';
 })
 export class UsersComponent {
   users$: Observable<Array<AdministeredUser>>;
-  icons = {
-    admin: shieldFill,
-    export: clipboard2Fill,
-    disabled: xOctagonFill,
-    edit: pencilSquare,
-    addUser: plusCircle,
-    resetPasswordEmail: envelope,
-    resetPasswordLink: shieldLock
-  };
+  icons = icons;
 
   constructor(
     userService: UserService,

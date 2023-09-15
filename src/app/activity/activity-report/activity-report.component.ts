@@ -1,8 +1,8 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { ActivityReport } from '../activity.service';
-import { checkCircleFill, xCircleFill } from '../../bootstrap-icons/bootstrap-icons';
 import { IconDirective } from '../../icon/icon.directive';
 import { DecimalPipe, NgIf } from '@angular/common';
+import * as icons from '../../icon/icons';
 
 @Component({
   selector: 'dn-activity-report',
@@ -14,8 +14,5 @@ import { DecimalPipe, NgIf } from '@angular/common';
 })
 export class ActivityReportComponent {
   @Input({ required: true }) report!: ActivityReport;
-  icons = {
-    cancelled: xCircleFill,
-    notCancelled: checkCircleFill
-  };
+  icons = icons;
 }

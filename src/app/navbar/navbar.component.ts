@@ -1,17 +1,6 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { map, Observable } from 'rxjs';
 import { Router, RouterLink } from '@angular/router';
-import {
-  boxArrowInRight,
-  calendar2Event,
-  cardList,
-  clipboard2,
-  geoAlt,
-  key,
-  personCircle,
-  personWorkspace,
-  power
-} from '../bootstrap-icons/bootstrap-icons';
 import { CurrentUser, CurrentUserService } from '../current-user.service';
 import { AsyncPipe, NgIf } from '@angular/common';
 import {
@@ -23,6 +12,7 @@ import {
 } from '@ng-bootstrap/ng-bootstrap';
 import { UsernamePipe } from '../username-pipe/username.pipe';
 import { IconDirective } from '../icon/icon.directive';
+import * as icons from '../icon/icons';
 
 @Component({
   selector: 'dn-navbar',
@@ -48,17 +38,7 @@ export class NavbarComponent {
   vm$: Observable<{
     user: CurrentUser | null;
   }>;
-  icons = {
-    logout: power,
-    login: boxArrowInRight,
-    activities: cardList,
-    calendar: calendar2Event,
-    users: personWorkspace,
-    user: personCircle,
-    changePassword: key,
-    exports: clipboard2,
-    map: geoAlt
-  };
+  icons = icons;
 
   constructor(
     private currentUserService: CurrentUserService,

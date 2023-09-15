@@ -3,12 +3,12 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { Auth, sendPasswordResetEmail } from '@angular/fire/auth';
 import { from } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
-import { exclamationTriangleFill } from '../bootstrap-icons/bootstrap-icons';
 import { ValidationErrorsComponent } from 'ngx-valdemort';
 import { FormControlValidationDirective } from '../validation/form-control-validation.directive';
 import { PageTitleDirective } from '../page-title/page-title.directive';
 import { IconDirective } from '../icon/icon.directive';
 import { NgIf } from '@angular/common';
+import * as icons from '../icon/icons';
 
 @Component({
   selector: 'dn-reset-password',
@@ -30,9 +30,7 @@ export class ResetPasswordComponent {
   });
   error = false;
   emailSent = false;
-  icons = {
-    warning: exclamationTriangleFill
-  };
+  icons = icons;
 
   constructor(
     private route: ActivatedRoute,

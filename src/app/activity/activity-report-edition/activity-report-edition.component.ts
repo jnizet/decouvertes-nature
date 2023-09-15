@@ -1,11 +1,11 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ActivityReport, ActivityReportCommand, ActivityService } from '../activity.service';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { fileArrowUp, xSquare } from '../../bootstrap-icons/bootstrap-icons';
 import { NgIf } from '@angular/common';
 import { ValidationErrorsComponent } from 'ngx-valdemort';
 import { FormControlValidationDirective } from '../../validation/form-control-validation.directive';
 import { IconDirective } from '../../icon/icon.directive';
+import * as icons from '../../icon/icons';
 
 @Component({
   selector: 'dn-activity-report-edition',
@@ -30,10 +30,7 @@ export class ActivityReportEditionComponent implements OnInit {
   @Output()
   readonly cancelled = new EventEmitter<void>();
 
-  readonly icons = {
-    save: fileArrowUp,
-    cancel: xSquare
-  };
+  readonly icons = icons;
 
   readonly form: FormGroup<{
     cancelled: FormControl<boolean | null>;

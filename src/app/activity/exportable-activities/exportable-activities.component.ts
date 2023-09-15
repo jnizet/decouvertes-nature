@@ -13,7 +13,6 @@ import {
 import { ActivatedRoute } from '@angular/router';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { ALL_INTERCOMMUNALITIES } from '../../shared/municipalities';
-import { infoCircleFill } from '../../bootstrap-icons/bootstrap-icons';
 import { AsyncPipe, NgFor, NgIf } from '@angular/common';
 import { ExportableActivityComponent } from '../exportable-activity/exportable-activity.component';
 import { PageTitleDirective } from '../../page-title/page-title.directive';
@@ -21,6 +20,7 @@ import { IconDirective } from '../../icon/icon.directive';
 import { NgbTypeahead } from '@ng-bootstrap/ng-bootstrap';
 import { LoadingSpinnerComponent } from '../../loading-spinner/loading-spinner.component';
 import { MonthPipe } from '../../month-pipe/month.pipe';
+import * as icons from '../../icon/icons';
 
 interface Month {
   month: YearMonth;
@@ -66,9 +66,7 @@ export class ExportableActivitiesComponent {
             ).slice(0, 10)
       )
     );
-  readonly icons = {
-    info: infoCircleFill
-  };
+  readonly icons = icons;
 
   constructor(route: ActivatedRoute, activityService: ActivityService) {
     const activities$ = activityService.findNonDraft();
