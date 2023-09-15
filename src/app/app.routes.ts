@@ -57,6 +57,11 @@ export const APP_ROUTES: Routes = [
         path: 'users',
         loadChildren: () => import('./user/user.routes').then(m => m.USER_ROUTES),
         data: {}
+      },
+      {
+        path: 'animators',
+        loadComponent: () =>
+          import('./animator/animators/animators.component').then(m => m.AnimatorsComponent)
       }
     ]
   }

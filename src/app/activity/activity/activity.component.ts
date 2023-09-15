@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
-import { Observable, switchMap } from 'rxjs';
+import { map, Observable, switchMap } from 'rxjs';
 import { Activity, ActivityService } from '../activity.service';
 import * as icons from '../../icon/icons';
 import { ConfirmService } from '../../confirm/confirm.service';
@@ -13,6 +13,13 @@ import { ActivityTypePipe } from '../../activity-type-pipe/activity-type.pipe';
 import { ActivityReportComponent } from '../activity-report/activity-report.component';
 import { ActivityReportEditionComponent } from '../activity-report-edition/activity-report-edition.component';
 import { CurrentActivityService } from '../current-activity.service';
+import { Animator, AnimatorService } from '../../animator/animator.service';
+import { ConsentComponent } from '../../animator/consent/consent.component';
+
+interface ViewModel {
+  activity: Activity;
+  animator: Animator;
+}
 
 @Component({
   selector: 'dn-activity',
@@ -32,11 +39,12 @@ import { CurrentActivityService } from '../current-activity.service';
     ActivityDatePipe,
     ActivityTypePipe,
     ActivityReportComponent,
-    ActivityReportEditionComponent
+    ActivityReportEditionComponent,
+    ConsentComponent
   ]
 })
 export class ActivityComponent {
-  activity$: Observable<Activity>;
+  vm$: Observable<ViewModel>;
   currentUser$: Observable<CurrentUser | null>;
 
   icons = icons;
@@ -45,11 +53,18 @@ export class ActivityComponent {
     route: ActivatedRoute,
     private currentActivityService: CurrentActivityService,
     private activityService: ActivityService,
+    animatorService: AnimatorService,
     private confirmService: ConfirmService,
     private router: Router,
     private currentUserService: CurrentUserService
   ) {
-    this.activity$ = currentActivityService.activity$;
+    this.vm$ = currentActivityService.activity$.pipe(
+      switchMap(activity =>
+        animatorService
+          .getByNameOrCreate(activity.animator)
+          .pipe(map(animator => ({ activity, animator })))
+      )
+    );
     this.currentUser$ = this.currentUserService.getCurrentUser();
   }
 

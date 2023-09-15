@@ -50,7 +50,12 @@ async function createActivity(page: Page) {
   await page.fill('text=Titre', title);
   await page.selectOption(`text=Type d'activité`, { label: 'Atelier' });
   await page.fill('text=Description', 'Learn to write tests');
-  await page.fill('text=Animateur / Organisateur', 'Adama Doumbouya');
+
+  await page.click('text=Nouvel animateur');
+  await page.fill("text=Prénom et nom de l'animateur", randomString(10));
+  await page.click('#save-animator-button');
+  await test.expect(page.locator(`text=Création d'un nouvel animateur`)).toBeHidden();
+
   await page.fill(`text=Commune du lieu de l'activité`, 'Api');
   await page.locator('button.dropdown-item:has-text("Apinac")').click();
   await page.fill(`text=Début de l'activité`, '2023-10-01');

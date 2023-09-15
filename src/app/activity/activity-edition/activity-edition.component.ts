@@ -34,12 +34,15 @@ import { Spinner } from '../../shared/spinner';
 import { AsyncPipe, NgFor, NgIf } from '@angular/common';
 import { ValidationErrorDirective, ValidationErrorsComponent } from 'ngx-valdemort';
 import { FormControlValidationDirective } from '../../validation/form-control-validation.directive';
-import { NgbCollapse, NgbTypeahead } from '@ng-bootstrap/ng-bootstrap';
+import { NgbCollapse, NgbModal, NgbTypeahead } from '@ng-bootstrap/ng-bootstrap';
 import { IconDirective } from '../../icon/icon.directive';
 import { MultiChoiceComponent } from '../multi-choice/multi-choice.component';
 import { PageTitleDirective } from '../../page-title/page-title.directive';
 import { SpinningIconComponent } from '../../shared/spinning-icon/spinning-icon.component';
 import * as icons from '../../icon/icons';
+import { AnimatorEditionModalComponent } from '../../animator/animator-edition-modal/animator-edition-modal.component';
+import { Animator, AnimatorService } from '../../animator/animator.service';
+import { ToastService } from '../../toast/toast.service';
 
 interface Timing {
   startDate: LocalDate | null;
@@ -115,7 +118,7 @@ class DraftManager {
 type ActivityFormGroup = FormGroup<{
   type: FormControl<string | null>;
   title: FormControl<string | null>;
-  animator: FormControl<string | null>;
+  animator: FormControl<Animator | null>;
   description: FormControl<string | null>;
   timing: FormGroup<{
     startDate: FormControl<LocalDate | null>;
@@ -207,14 +210,15 @@ export class ActivityEditionComponent {
       )
     );
 
-  readonly animatorTypeahead: OperatorFunction<string, ReadonlyArray<string>> = (
+  readonly animatorTypeahead: OperatorFunction<string, ReadonlyArray<Animator>> = (
     text$: Observable<string>
   ) =>
     text$.pipe(
       debounceTime(300),
       distinctUntilChanged(),
-      switchMap(term => (term.length < 1 ? of([]) : this.activityService.suggestAnimators(term)))
+      switchMap(term => (term.length < 1 ? of([]) : this.animatorService.suggest(term)))
     );
+  readonly animatorFormatter = (a: Animator) => a.name;
 
   readonly knownLabels = KNOWN_LABELS;
   readonly knownOrganizations = KNOWN_ORGANIZATIONS;
@@ -233,8 +237,11 @@ export class ActivityEditionComponent {
   constructor(
     route: ActivatedRoute,
     private activityService: ActivityService,
+    private animatorService: AnimatorService,
     private router: Router,
-    private currentUserService: CurrentUserService
+    private currentUserService: CurrentUserService,
+    private modalService: NgbModal,
+    private toastService: ToastService
   ) {
     const paymentRequiredCtrl = new FormControl(false);
     const priceCtrl = new FormControl<number | null>(null, [
@@ -265,7 +272,7 @@ export class ActivityEditionComponent {
     this.form = new FormGroup({
       type: new FormControl<string | null>(null, Validators.required),
       title: new FormControl('', Validators.required),
-      animator: new FormControl('', Validators.required),
+      animator: new FormControl<Animator | null>(null, Validators.required),
       description: new FormControl(''),
       timing: timingFormGroup,
       location: locationCtrl,
@@ -291,10 +298,17 @@ export class ActivityEditionComponent {
     route.paramMap
       .pipe(
         map(paramMap => paramMap.get('id')),
-        switchMap(id => (id ? activityService.get(id) : of(null))),
-        first()
+        switchMap(id => (id ? activityService.get(id).pipe(first()) : of(null))),
+        switchMap(activity =>
+          activity
+            ? animatorService
+                .getByNameOrCreate(activity.animator)
+                .pipe(first())
+                .pipe(map(animator => ({ activity, animator })))
+            : of({ activity: null, animator: null })
+        )
       )
-      .subscribe(activity => {
+      .subscribe(({ activity, animator }) => {
         this.mode = activity ? (route.snapshot.data['duplicate'] ? 'duplicate' : 'edit') : 'create';
         this.editedActivity = activity;
         this.draftManager.initialize(this.form, this.maySaveAsDraft);
@@ -305,7 +319,7 @@ export class ActivityEditionComponent {
             type: activity.type,
             title: activity.title,
             description: activity.description,
-            animator: activity.animator,
+            animator: animator,
             timing: {
               startDate: this.mode === 'edit' ? activity.startDate : null,
               startTime: activity.startTime,
@@ -406,7 +420,7 @@ export class ActivityEditionComponent {
       type: formValue.type!,
       title: formValue.title!,
       description: formValue.description!,
-      animator: formValue.animator!,
+      animator: formValue.animator!.name,
       minNumberOfParticipants: formValue.minNumberOfParticipants!,
       maxNumberOfParticipants: formValue.maxNumberOfParticipants!,
       paymentRequired: formValue.paymentRequired!,
@@ -454,5 +468,37 @@ export class ActivityEditionComponent {
         this.router.navigate(['/activities', activity.id]);
       }
     });
+  }
+
+  clearAnimatorIfNotSelected(animatorInput: HTMLInputElement) {
+    if (!this.form.controls.animator.value) {
+      animatorInput.value = '';
+    }
+  }
+
+  addAnimator() {
+    const modalRef = this.modalService.open(AnimatorEditionModalComponent, {
+      fullscreen: 'sm'
+    });
+    (modalRef.componentInstance as AnimatorEditionModalComponent).prepareForCreation();
+    modalRef.closed.subscribe((createdAnimator: Animator) =>
+      this.form.controls.animator.setValue(createdAnimator)
+    );
+  }
+
+  editAnimator() {
+    this.animatorService
+      .get(this.form.controls.animator.value!.id)
+      .pipe(
+        first(),
+        switchMap(animator => {
+          const modalRef = this.modalService.open(AnimatorEditionModalComponent, {
+            fullscreen: 'sm'
+          });
+          (modalRef.componentInstance as AnimatorEditionModalComponent).prepareForUpdate(animator!);
+          return modalRef.closed;
+        })
+      )
+      .subscribe(() => this.toastService.success(`L'animateur a été modifié`));
   }
 }

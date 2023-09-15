@@ -1,0 +1,61 @@
+<dn-page-title title="Animateurs et animatrices" />
+<div class="row justify-content-md-center">
+  <div class="col col-md-8 col-lg-6">
+    <ng-container *ngIf="animators$ | async as animators; else loading">
+      <div class="row align-items-center mb-4">
+        <div class="col">
+          <h1>Animateurs</h1>
+        </div>
+        <div class="col-auto">
+          <button type="button" class="btn btn-outline-secondary" (click)="createAnimator()">
+            <dn-icon [icon]="icons.add" />
+            Créer un animateur / une animatrice
+          </button>
+        </div>
+      </div>
+
+      <div class="mb-3">
+        <label for="search" class="visually-hidden">Rechercher</label>
+        <input
+          [formControl]="searchControl"
+          class="form-control"
+          id="search"
+          placeholder="Rechercher un animateur ou une animatrice"
+          type="search"
+          (keydown.escape)="clearSearch()"
+        />
+      </div>
+
+      <div *ngFor="let animator of animators; trackBy: trackById" class="card card-primary mb-2">
+        <div class="card-body">
+          <h2 class="fs-5">{{ animator.name }}</h2>
+          <div class="row">
+            <div class="col-8">Consentement email&nbsp;:</div>
+            <div class="col-4">
+              <dn-consent [consent]="animator.emailConsent" />
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-8">Consentement téléphone&nbsp;:</div>
+            <div class="col-4">
+              <dn-consent [consent]="animator.phoneConsent" />
+            </div>
+          </div>
+        </div>
+        <div class="card-footer text-end">
+          <button
+            type="button"
+            class="btn btn-outline-secondary btn-sm me-2"
+            (click)="editAnimator(animator)"
+          >
+            <dn-icon [icon]="icons.edit" class="me-1" />
+            Modifier
+          </button>
+        </div>
+      </div>
+    </ng-container>
+    <ng-template #loading>
+      <dn-loading-spinner />
+    </ng-template>
+  </div>
+</div>

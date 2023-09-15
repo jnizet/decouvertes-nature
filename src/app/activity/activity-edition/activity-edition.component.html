@@ -41,13 +41,38 @@
         </div>
         <div class="mb-3">
           <label for="animator" class="form-label">Animateur / Organisateur</label>
-          <input
-            formControlName="animator"
-            class="form-control"
-            id="animator"
-            [ngbTypeahead]="animatorTypeahead"
-            [focusFirst]="false"
-          />
+          <div class="input-group">
+            <input
+              #animatorInput
+              formControlName="animator"
+              class="form-control"
+              id="animator"
+              [ngbTypeahead]="animatorTypeahead"
+              [focusFirst]="false"
+              [inputFormatter]="animatorFormatter"
+              [resultFormatter]="animatorFormatter"
+              [editable]="false"
+              (blur)="clearAnimatorIfNotSelected(animatorInput)"
+            />
+            <button
+              *ngIf="!form.controls.animator.value"
+              type="button"
+              class="btn btn-outline-secondary"
+              (click)="addAnimator()"
+            >
+              <dn-icon [icon]="icons.add" />
+              Nouvel animateur
+            </button>
+            <button
+              *ngIf="form.controls.animator.value"
+              type="button"
+              class="btn btn-outline-secondary"
+              (click)="editAnimator()"
+            >
+              <dn-icon [icon]="icons.edit" />
+              Consentements
+            </button>
+          </div>
           <val-errors controlName="animator" label="L'animateur" />
         </div>
         <div class="mb-3">

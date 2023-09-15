@@ -14,7 +14,7 @@ import {
   updateDoc,
   where
 } from '@angular/fire/firestore';
-import { combineLatest, defer, EMPTY, first, from, map, Observable, switchMap, tap } from 'rxjs';
+import { combineLatest, defer, map, Observable } from 'rxjs';
 import { LocalDate, LocalTime } from '../shared/types';
 import { AuditUser, CurrentUser, CurrentUserService } from '../current-user.service';
 
@@ -74,10 +74,6 @@ export interface ActivityType {
 export type ActivityCommand = Omit<Activity, 'id' | 'report'>;
 export type ActivityReportCommand = ActivityReport;
 
-export interface Animator {
-  name: string;
-}
-
 export const ALL_ACTIVITY_TYPES: ReadonlyArray<ActivityType> = [
   {
     key: 'PROSPECTION',
@@ -127,14 +123,12 @@ export const ALL_ACTIVITY_TYPES: ReadonlyArray<ActivityType> = [
 })
 export class ActivityService {
   private activityCollection: CollectionReference<Activity>;
-  private animatorCollection: CollectionReference<Animator>;
 
   constructor(
     private firestore: Firestore,
     private currentUserService: CurrentUserService
   ) {
     this.activityCollection = collection(firestore, 'activities') as CollectionReference<Activity>;
-    this.animatorCollection = collection(firestore, 'animators') as CollectionReference<Animator>;
   }
 
   findVisible(): Observable<Array<Activity>> {
@@ -168,9 +162,7 @@ export class ActivityService {
       ...command,
       id: document.id
     };
-    return defer(() => setDoc(document, activity))
-      .pipe(map(() => activity))
-      .pipe(tap(() => this.addAnimatorIfNecessary(command.animator)));
+    return defer(() => setDoc(document, activity)).pipe(map(() => activity));
   }
 
   update(id: string, command: ActivityCommand): Observable<void> {
@@ -191,41 +183,8 @@ export class ActivityService {
     );
   }
 
-  suggestAnimators(text: string): Observable<Array<string>> {
-    const query = text.toLowerCase();
-    return collectionData(this.animatorCollection).pipe(
-      first(),
-      map(animators =>
-        animators
-          .filter(a => a.name.toLowerCase().includes(query))
-          .map(a => a.name)
-          .sort()
-          .slice(0, 10)
-      )
-    );
-  }
-
   get(id: string): Observable<Activity> {
     return docData(doc(this.activityCollection, id));
-  }
-
-  private addAnimatorIfNecessary(name: string) {
-    collectionData(query(this.animatorCollection, where('name', '==', name)))
-      .pipe(
-        first(),
-        switchMap(animators => {
-          if (animators.length === 0) {
-            const document = doc(this.animatorCollection);
-            const animator: Animator = {
-              name
-            };
-            return from(setDoc(document, animator));
-          } else {
-            return EMPTY;
-          }
-        })
-      )
-      .subscribe();
   }
 
   deleteActivity(id: string): Observable<void> {
