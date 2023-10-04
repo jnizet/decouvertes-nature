@@ -1,8 +1,8 @@
-<h3 class="text-black fs-6">{{ activity.title }}</h3>
+<h4 class="text-black fs-6">{{ activity.title }}</h4>
 <div>{{ activity | activityDate: 'time' }}</div>
 <div>{{ activity.type | activityType }}</div>
-<div>Animé par {{ activity.animator }}</div>
 <p style="white-space: pre-line">{{ activity.description }}</p>
+<div>Animé par {{ activity.animator }}</div>
 <div>
   Lieu&nbsp;: {{ activity.location }}
   <span *ngIf="activity.intercommunality">({{ activity.intercommunality }})</span>

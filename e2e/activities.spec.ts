@@ -10,7 +10,7 @@ test.describe('Activities', () => {
     await page.click('text=Activités');
 
     const romimineCard = page.locator('.card', { hasText: 'Romimine' });
-    await test.expect(romimineCard.locator('h3')).toHaveText('Romimine');
+    await test.expect(romimineCard.locator('h4')).toHaveText('Romimine');
     await checkAccessibility(page, 'Activities page should be accessible');
 
     await page.click('text=Romimine');
@@ -49,18 +49,18 @@ test.describe('Activities', () => {
     await page.click('#save-button');
 
     await page.click('text=Activités');
-    await test.expect(page.locator('h3', { hasText: newTitle })).toBeVisible();
+    await test.expect(page.locator('h4', { hasText: newTitle })).toBeVisible();
 
     await page.click('text=Mes activités');
-    await test.expect(page.locator('h3', { hasText: newTitle })).toBeVisible();
+    await test.expect(page.locator('h4', { hasText: newTitle })).toBeVisible();
     await checkAccessibility(page, 'My activities page should be accessible');
 
     await page.click('text=Exports');
-    await test.expect(page.locator('h3', { hasText: newTitle })).toBeVisible();
+    await test.expect(page.locator('h4', { hasText: newTitle })).toBeVisible();
     await page.fill(`text="Filtre sur l'intercommunalité"`, 'oulala');
-    await test.expect(page.locator('h3', { hasText: newTitle })).toBeHidden();
+    await test.expect(page.locator('h4', { hasText: newTitle })).toBeHidden();
     await page.fill(`text="Filtre sur l'intercommunalité"`, 'forez');
-    await test.expect(page.locator('h3', { hasText: newTitle })).toBeVisible();
+    await test.expect(page.locator('h4', { hasText: newTitle })).toBeVisible();
     await checkAccessibility(page, 'Activities exports page should be accessible');
 
     await page.click('text=Activités');
@@ -71,7 +71,7 @@ test.describe('Activities', () => {
     await test.expect(page.locator('h1', { hasText: 'Confirmation' })).not.toBeVisible();
 
     await test.expect(page.locator('h1')).toHaveText('Activités');
-    await test.expect(page.locator('h3', { hasText: newTitle })).toBeHidden();
+    await test.expect(page.locator('h4', { hasText: newTitle })).toBeHidden();
   });
 
   test('should create and modify draft activities', async ({ page }) => {
@@ -101,13 +101,13 @@ test.describe('Activities', () => {
     await page.click('text="Enregistrer en brouillon"');
 
     await page.click('text=Activités');
-    await test.expect(page.locator('h3', { hasText: newTitle })).toBeVisible();
+    await test.expect(page.locator('h4', { hasText: newTitle })).toBeVisible();
     await test.expect(page.locator('.card', { hasText: newTitle })).toContainText('brouillon');
 
     await page.click('text=Mes activités');
-    await test.expect(page.locator('h3', { hasText: newTitle })).toBeVisible();
+    await test.expect(page.locator('h4', { hasText: newTitle })).toBeVisible();
 
     await page.click('text=Exports');
-    await test.expect(page.locator('h3', { hasText: newTitle })).toBeHidden();
+    await test.expect(page.locator('h4', { hasText: newTitle })).toBeHidden();
   });
 });
