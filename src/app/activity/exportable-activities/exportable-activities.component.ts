@@ -1,5 +1,4 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { LocalDate, localDateToYearMonth, YearMonth } from '../../shared/types';
 import { Activity, ActivityService } from '../activity.service';
 import {
   combineLatest,
@@ -21,11 +20,7 @@ import { NgbTypeahead } from '@ng-bootstrap/ng-bootstrap';
 import { LoadingSpinnerComponent } from '../../loading-spinner/loading-spinner.component';
 import { MonthPipe } from '../../month-pipe/month.pipe';
 import * as icons from '../../icon/icons';
-
-interface Month {
-  month: YearMonth;
-  activities: Array<Activity>;
-}
+import { groupByYearAndMonth, YearOfActivities } from '../activity-utils';
 
 @Component({
   selector: 'dn-exportable-activities',
@@ -47,7 +42,7 @@ interface Month {
   ]
 })
 export class ExportableActivitiesComponent {
-  readonly months$: Observable<Array<Month>>;
+  readonly years$: Observable<Array<YearOfActivities>>;
   readonly form = new FormGroup({
     intercommunality: new FormControl('')
   });
@@ -77,22 +72,7 @@ export class ExportableActivitiesComponent {
       )
     );
 
-    this.months$ = filteredActivities$.pipe(
-      map(activities => {
-        const activitiesByMonth = new Map<LocalDate, Array<Activity>>();
-        activities.forEach(activity => {
-          const month = localDateToYearMonth(activity.startDate);
-          if (!activitiesByMonth.has(month)) {
-            activitiesByMonth.set(month, []);
-          }
-          activitiesByMonth.get(month)?.push(activity);
-        });
-        return Array.from(activitiesByMonth.entries()).map(([month, activities]) => ({
-          month,
-          activities
-        }));
-      })
-    );
+    this.years$ = filteredActivities$.pipe(map(activities => groupByYearAndMonth(activities)));
   }
 
   private filteredActivities(

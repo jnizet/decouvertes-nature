@@ -1,18 +1,21 @@
 <dn-page-title [title]="mode === 'mine' ? 'Mes activités' : 'Activité'" />
-<div *ngIf="months$ | async as months; else loading">
-  <div *ngFor="let month of months" class="mb-4">
-    <h2 class="fs-5">{{ month.month | month }}</h2>
-    <div
-      *ngFor="let activity of month.activities"
-      class="card mb-2"
-      [class.card-done]="activity.report && !activity.report.cancelled"
-      [class.card-cancelled]="activity.report?.cancelled"
-      [class.card-draft]="activity.draft"
-    >
-      <div class="card-body">
-        <dn-activity-card [activity]="activity" />
+<div *ngIf="years$ | async as years; else loading">
+  <div *ngFor="let year of years" class="mb-4">
+    <h2 class="fs-4">{{ year.year }}</h2>
+    <ng-container *ngFor="let month of year.months">
+      <h3 class="fs-5">{{ month.month | month }}</h3>
+      <div
+        *ngFor="let activity of month.activities"
+        class="card mb-2"
+        [class.card-done]="activity.report && !activity.report.cancelled"
+        [class.card-cancelled]="activity.report?.cancelled"
+        [class.card-draft]="activity.draft"
+      >
+        <div class="card-body">
+          <dn-activity-card [activity]="activity" />
+        </div>
       </div>
-    </div>
+    </ng-container>
   </div>
 </div>
 <ng-template #loading>
