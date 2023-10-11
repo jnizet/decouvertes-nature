@@ -115,7 +115,7 @@
             </ng-container>
           </span>
         </div>
-        <div *ngIf="vm.activity.accessibleToChildren">
+        <div *ngIf="!vm.activity.accessibleToChildren">
           <dn-icon class="me-1" [icon]="icons.notAccessibleToChildren" />
           <span>Non-accessible aux enfants</span>
         </div>
