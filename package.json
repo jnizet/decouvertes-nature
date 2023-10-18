@@ -55,7 +55,7 @@
     "@angular/localize": "16.2.9",
     "@axe-core/playwright": "4.8.1",
     "@playwright/test": "1.39.0",
-    "@types/jasmine": "5.1.0",
+    "@types/jasmine": "5.1.1",
     "@types/leaflet": "1.9.6",
     "@typescript-eslint/eslint-plugin": "6.9.0",
     "@typescript-eslint/parser": "6.9.0",
