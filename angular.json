@@ -31,11 +31,11 @@
       "prefix": "dn",
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-angular:browser",
+          "builder": "@angular-devkit/build-angular:application",
           "options": {
             "outputPath": "dist/decouvertes-nature",
             "index": "src/index.html",
-            "main": "src/main.ts",
+            "browser": "src/main.ts",
             "polyfills": [
               "zone.js"
             ],
@@ -76,9 +76,7 @@
               "outputHashing": "all"
             },
             "development": {
-              "buildOptimizer": false,
               "optimization": false,
-              "vendorChunk": true,
               "extractLicenses": false,
               "sourceMap": true,
               "namedChunks": true
@@ -93,17 +91,17 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "decouvertes-nature:build:production"
+              "buildTarget": "decouvertes-nature:build:production"
             },
             "perf": {
-              "browserTarget": "decouvertes-nature:build:perf"
+              "buildTarget": "decouvertes-nature:build:perf"
             },
             "development": {
-              "browserTarget": "decouvertes-nature:build:development"
+              "buildTarget": "decouvertes-nature:build:development"
             },
             "e2e": {
-              "browserTarget": "decouvertes-nature:build:e2e",
-              "port": 4201
+              "port": 4201,
+              "buildTarget": "decouvertes-nature:build:e2e"
             }
           },
           "defaultConfiguration": "development"
@@ -111,7 +109,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "decouvertes-nature:build"
+            "buildTarget": "decouvertes-nature:build"
           }
         },
         "test": {

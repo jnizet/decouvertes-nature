@@ -4,7 +4,7 @@
     "indexes": "firestore.indexes.json"
   },
   "hosting": {
-    "public": "dist/decouvertes-nature",
+    "public": "dist/decouvertes-nature/browser",
     "ignore": [
       "firebase.json",
       "**/.*",
