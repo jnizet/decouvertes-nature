@@ -1,12 +1,20 @@
-<ng-container *ngIf="mode">
+@if (mode) {
   <dn-page-title [title]="mode === 'edit' ? editedActivity!.title : 'Nouvelle activité'" />
-  <h1 *ngIf="mode === 'create'">Création d'une nouvelle activité</h1>
-  <h1 *ngIf="mode === 'duplicate'">
-    Duplication de l'activité <em>{{ editedActivity!.title }}</em>
-  </h1>
-  <h1 *ngIf="mode === 'edit'">
-    Modification de l'activité <em>{{ editedActivity!.title }}</em>
-  </h1>
+  @switch (mode) {
+    @case ('create') {
+      <h1>Création d'une nouvelle activité</h1>
+    }
+    @case ('duplicate') {
+      <h1>
+        Duplication de l'activité <em>{{ editedActivity!.title }}</em>
+      </h1>
+    }
+    @case ('edit') {
+      <h1>
+        Modification de l'activité <em>{{ editedActivity!.title }}</em>
+      </h1>
+    }
+  }
 
   <form [formGroup]="form" (ngSubmit)="save()">
     <div class="row">
@@ -20,12 +28,14 @@
           <label for="type" class="form-label">Type d'activité</label>
           <select formControlName="type" class="form-select" id="type">
             <option [value]="null"></option>
-            <option *ngFor="let activityType of activityTypes" [value]="activityType.key">
-              {{ activityType.label }}
-              <ng-container *ngIf="activityType.example">
-                (ex: {{ activityType.example }})
-              </ng-container>
-            </option>
+            @for (activityType of activityTypes; track activityType) {
+              <option [value]="activityType.key">
+                {{ activityType.label }}
+                @if (activityType.example) {
+                  (ex: {{ activityType.example }})
+                }
+              </option>
+            }
           </select>
           <val-errors controlName="type" label="Le type d'activité" />
         </div>
@@ -54,24 +64,17 @@
               [editable]="false"
               (blur)="clearAnimatorIfNotSelected(animatorInput)"
             />
-            <button
-              *ngIf="!form.controls.animator.value"
-              type="button"
-              class="btn btn-outline-secondary"
-              (click)="addAnimator()"
-            >
-              <dn-icon [icon]="icons.add" />
-              Nouvel animateur
-            </button>
-            <button
-              *ngIf="form.controls.animator.value"
-              type="button"
-              class="btn btn-outline-secondary"
-              (click)="editAnimator()"
-            >
-              <dn-icon [icon]="icons.edit" />
-              Consentements
-            </button>
+            @if (form.controls.animator.value) {
+              <button type="button" class="btn btn-outline-secondary" (click)="editAnimator()">
+                <dn-icon [icon]="icons.edit" />
+                Consentements
+              </button>
+            } @else {
+              <button type="button" class="btn btn-outline-secondary" (click)="addAnimator()">
+                <dn-icon [icon]="icons.add" />
+                Nouvel animateur
+              </button>
+            }
           </div>
           <val-errors controlName="animator" label="L'animateur" />
         </div>
@@ -339,37 +342,40 @@
           ></textarea>
         </div>
 
-        <div class="mb-3" *ngIf="shouldDisplayUseSamePictures">
-          <div class="form-check form-switch">
-            <input
-              formControlName="useSamePictures"
-              class="form-check-input"
-              type="checkbox"
-              role="switch"
-              id="use-same-pictures"
-            />
-            <label class="form-check-label" for="use-same-pictures">
-              Réutiliser les photos de l'activité originale
-            </label>
+        @if (shouldDisplayUseSamePictures) {
+          <div class="mb-3">
+            <div class="form-check form-switch">
+              <input
+                formControlName="useSamePictures"
+                class="form-check-input"
+                type="checkbox"
+                role="switch"
+                id="use-same-pictures"
+              />
+              <label class="form-check-label" for="use-same-pictures">
+                Réutiliser les photos de l'activité originale
+              </label>
+            </div>
           </div>
-        </div>
+        }
       </div>
     </div>
 
     <div class="d-grid gap-2 d-sm-block text-sm-end">
-      <button
-        *ngIf="maySaveAsDraft"
-        class="btn btn-warning me-sm-2"
-        [disabled]="(savingWhateverTheMode$ | async) === true"
-        (click)="draftManager.switchTo('draft')"
-      >
-        <dn-spinning-icon
-          [icon]="icons.saveAsDraft"
-          [spinner]="savingAsDraft"
-          message="enregistrement en cours..."
-        />
-        Enregistrer en brouillon
-      </button>
+      @if (maySaveAsDraft) {
+        <button
+          class="btn btn-warning me-sm-2"
+          [disabled]="(savingWhateverTheMode$ | async) === true"
+          (click)="draftManager.switchTo('draft')"
+        >
+          <dn-spinning-icon
+            [icon]="icons.saveAsDraft"
+            [spinner]="savingAsDraft"
+            message="enregistrement en cours..."
+          />
+          Enregistrer en brouillon
+        </button>
+      }
 
       <button
         class="btn btn-primary"
@@ -386,4 +392,4 @@
       </button>
     </div>
   </form>
-</ng-container>
+}

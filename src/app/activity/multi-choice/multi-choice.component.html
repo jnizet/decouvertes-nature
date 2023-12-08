@@ -1,15 +1,17 @@
-<div *ngFor="let option of options; index as i" class="form-check form-switch">
-  <input
-    class="form-check-input"
-    type="checkbox"
-    role="switch"
-    [id]="prefix + i"
-    [checked]="option.checked"
-    (change)="toggleOption(option)"
-    (blur)="onTouch()"
-  />
-  <label class="form-check-label" [for]="prefix + i">{{ option.value }}</label>
-</div>
+@for (option of options; track option) {
+  <div class="form-check form-switch">
+    <input
+      class="form-check-input"
+      type="checkbox"
+      role="switch"
+      [id]="prefix + $index"
+      [checked]="option.checked"
+      (change)="toggleOption(option)"
+      (blur)="onTouch()"
+    />
+    <label class="form-check-label" [for]="prefix + $index">{{ option.value }}</label>
+  </div>
+}
 <div class="mt-1">
   <label class="visually-hidden" [for]="prefix + 'add'">{{ addText }}</label>
   <div class="input-group input-group-sm">

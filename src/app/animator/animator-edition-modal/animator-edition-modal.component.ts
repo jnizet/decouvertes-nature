@@ -12,7 +12,7 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { save } from '../../bootstrap-icons/bootstrap-icons';
 import { first, map } from 'rxjs';
 import { Animator, AnimatorCommand, AnimatorService, Consent } from '../animator.service';
-import { AsyncPipe, NgIf } from '@angular/common';
+import { AsyncPipe } from '@angular/common';
 
 @Component({
   selector: 'dn-animator-edition-modal',
@@ -22,7 +22,6 @@ import { AsyncPipe, NgIf } from '@angular/common';
     SpinningIconComponent,
     ValidationErrorsComponent,
     ValidationErrorDirective,
-    NgIf,
     AsyncPipe
   ],
   templateUrl: './animator-edition-modal.component.html',

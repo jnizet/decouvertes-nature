@@ -13,56 +13,66 @@
       </div>
     </div>
 
-    <ng-container *ngIf="users$ | async as users; else loading">
-      <div *ngFor="let user of users" class="card mb-2">
-        <div class="card-body">
-          <div class="row">
-            <div class="col-8">
-              <h2 class="fs-5" [class.disabled]="user.disabled">{{ user.displayName }}</h2>
-              <div class="text-body-secondary">{{ user.email }}</div>
-              <div>
-                <button type="button" class="btn btn-link btn-sm" (click)="copyEmail(user)">
-                  <dn-icon [icon]="icons.resetPasswordEmail" class="me-1" />
-                  Choix du mot de passe
-                </button>
+    @if (users$ | async; as users) {
+      @for (user of users; track user.uid) {
+        <div class="card mb-2">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-8">
+                <h2 class="fs-5" [class.disabled]="user.disabled">{{ user.displayName }}</h2>
+                <div class="text-body-secondary">{{ user.email }}</div>
+                <div>
+                  <button type="button" class="btn btn-link btn-sm" (click)="copyEmail(user)">
+                    <dn-icon [icon]="icons.resetPasswordEmail" class="me-1" />
+                    Choix du mot de passe
+                  </button>
+                </div>
+                <div>
+                  <button
+                    type="button"
+                    class="btn btn-link btn-sm text-start"
+                    (click)="generateResetPasswordLink(user)"
+                  >
+                    <dn-icon [icon]="icons.resetPasswordLink" class="me-1" />
+                    Demander un lien de réinitialisation de mot de passe
+                  </button>
+                </div>
               </div>
-              <div>
-                <button
-                  type="button"
-                  class="btn btn-link btn-sm text-start"
-                  (click)="generateResetPasswordLink(user)"
-                >
-                  <dn-icon [icon]="icons.resetPasswordLink" class="me-1" />
-                  Demander un lien de réinitialisation de mot de passe
-                </button>
+              <div class="col-4">
+                @if (user.admin) {
+                  <div>
+                    <dn-icon [icon]="icons.admin" class="me-1" />
+                    Administrateur
+                  </div>
+                }
+                @if (user.export) {
+                  <div>
+                    <dn-icon [icon]="icons.exporter" class="me-1" />
+                    Exporteur
+                  </div>
+                }
+                @if (user.disabled) {
+                  <div>
+                    <dn-icon [icon]="icons.disabled" class="me-1" />
+                    Utilisateur désactivé
+                  </div>
+                }
               </div>
             </div>
-            <div class="col-4">
-              <div *ngIf="user.admin">
-                <dn-icon [icon]="icons.admin" class="me-1" />
-                Administrateur
-              </div>
-              <div *ngIf="user.export">
-                <dn-icon [icon]="icons.exporter" class="me-1" />
-                Exporteur
-              </div>
-              <div *ngIf="user.disabled">
-                <dn-icon [icon]="icons.disabled" class="me-1" />
-                Utilisateur désactivé
-              </div>
+            <div class="text-end">
+              <a
+                class="btn btn-outline-secondary btn-sm"
+                [routerLink]="['/users', user.uid, 'edit']"
+              >
+                <dn-icon [icon]="icons.edit" class="me-1" />
+                Modifier
+              </a>
             </div>
-          </div>
-          <div class="text-end">
-            <a class="btn btn-outline-secondary btn-sm" [routerLink]="['/users', user.uid, 'edit']">
-              <dn-icon [icon]="icons.edit" class="me-1" />
-              Modifier
-            </a>
           </div>
         </div>
-      </div>
-    </ng-container>
-    <ng-template #loading>
+      }
+    } @else {
       <dn-loading-spinner />
-    </ng-template>
+    }
   </div>
 </div>

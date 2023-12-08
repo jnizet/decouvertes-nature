@@ -14,21 +14,23 @@
         <label class="form-check-label" for="cancelled">Activité annulée</label>
       </div>
     </div>
-    <div class="col-sm-auto mb-3 d-flex flex-column" *ngIf="!form.value.cancelled">
-      <label for="number-of-participants" class="form-label">Nombre de participants</label>
-      <input
-        formControlName="numberOfParticipants"
-        type="number"
-        class="form-control"
-        id="number-of-participants"
-        min="0"
-      />
-      <val-errors
-        controlName="numberOfParticipants"
-        label="Le nombre de participants"
-        class="flex-shrink-1"
-      />
-    </div>
+    @if (!form.value.cancelled) {
+      <div class="col-sm-auto mb-3 d-flex flex-column">
+        <label for="number-of-participants" class="form-label">Nombre de participants</label>
+        <input
+          formControlName="numberOfParticipants"
+          type="number"
+          class="form-control"
+          id="number-of-participants"
+          min="0"
+        />
+        <val-errors
+          controlName="numberOfParticipants"
+          label="Le nombre de participants"
+          class="flex-shrink-1"
+        />
+      </div>
+    }
   </div>
   <div class="mb-3">
     <label for="comment" class="form-label">Commentaire</label>

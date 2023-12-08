@@ -1,4 +1,4 @@
-<ng-container *ngIf="vm$ | async as vm">
+@if (vm$ | async; as vm) {
   <dn-page-title [title]="vm.activity.title" />
   <div class="row gy-3">
     <div class="col-lg-4">
@@ -10,26 +10,32 @@
         </strong>
       </div>
       <div class="badge text-bg-dark">{{ vm.activity.type | activityType }}</div>
-      <div *ngIf="vm.activity.draft" class="badge text-bg-warning ms-1">brouillon</div>
+      @if (vm.activity.draft) {
+        <div class="badge text-bg-warning ms-1">brouillon</div>
+      }
       <p class="text-body-secondary mt-1" style="white-space: pre-line">
         {{ vm.activity.description }}
       </p>
     </div>
     <div class="col-lg-4 d-flex align-items-stretch">
       <div class="info-card rounded p-2 flex-grow-1">
-        <div *ngIf="vm.activity.location">
-          <dn-icon class="me-1" [icon]="icons.location" />
-          <span class="visually-hidden">Lieu</span>
-          <span>{{ vm.activity.location }}</span>
-          <span *ngIf="vm.activity.intercommunality">
-            &ndash; {{ vm.activity.intercommunality }}</span
-          >
-        </div>
-        <div *ngIf="vm.activity.appointmentLocation">
-          <dn-icon class="me-1" [icon]="icons.appointmentLocation" />
-          <span class="visually-hidden">Lieu de rendez-vous</span>
-          <span>{{ vm.activity.appointmentLocation }}</span>
-        </div>
+        @if (vm.activity.location) {
+          <div>
+            <dn-icon class="me-1" [icon]="icons.location" />
+            <span class="visually-hidden">Lieu</span>
+            <span>{{ vm.activity.location }}</span>
+            @if (vm.activity.intercommunality) {
+              <span> &ndash; {{ vm.activity.intercommunality }}</span>
+            }
+          </div>
+        }
+        @if (vm.activity.appointmentLocation) {
+          <div>
+            <dn-icon class="me-1" [icon]="icons.appointmentLocation" />
+            <span class="visually-hidden">Lieu de rendez-vous</span>
+            <span>{{ vm.activity.appointmentLocation }}</span>
+          </div>
+        }
         <div>
           <dn-icon class="me-1" [icon]="icons.animator" />
           <span class="visually-hidden">Animateur / Organisateur</span>
@@ -49,119 +55,142 @@
             </div>
           </div>
         </div>
-        <div *ngIf="vm.activity.roomToBook">
-          <dn-icon class="me-1" [icon]="icons.roomToBook" />
-          <span>Salle {{ vm.activity.roomToBook }} à réserver</span>
+        @if (vm.activity.roomToBook) {
+          <div>
+            <dn-icon class="me-1" [icon]="icons.roomToBook" />
+            <span>Salle {{ vm.activity.roomToBook }} à réserver</span>
+          </div>
+        }
+        <div>
+          @for (label of vm.activity.labels; track label) {
+            <div class="badge text-bg-secondary me-1 mb-1">
+              <dn-icon class="me-1" [icon]="icons.label" />
+              <span>{{ label }}</span>
+            </div>
+          }
         </div>
         <div>
-          <div *ngFor="let label of vm.activity.labels" class="badge text-bg-secondary me-1 mb-1">
-            <dn-icon class="me-1" [icon]="icons.label" />
-            <span>{{ label }}</span>
-          </div>
+          @for (org of vm.activity.associatedOrganizations; track org) {
+            <div class="badge text-bg-success me-1 mb-1">
+              <dn-icon class="me-1" [icon]="icons.associatedOrganization" />
+              <span>{{ org }}</span>
+            </div>
+          }
         </div>
         <div>
-          <div
-            *ngFor="let org of vm.activity.associatedOrganizations"
-            class="badge text-bg-success me-1 mb-1"
-          >
-            <dn-icon class="me-1" [icon]="icons.associatedOrganization" />
-            <span>{{ org }}</span>
-          </div>
-        </div>
-        <div>
-          <div
-            *ngFor="let equipment of vm.activity.equipments"
-            class="badge text-bg-pink me-1 mb-1"
-          >
-            <dn-icon class="me-1" [icon]="icons.equipment" />
-            <span>{{ equipment }}</span>
-          </div>
+          @for (equipment of vm.activity.equipments; track equipment) {
+            <div class="badge text-bg-pink me-1 mb-1">
+              <dn-icon class="me-1" [icon]="icons.equipment" />
+              <span>{{ equipment }}</span>
+            </div>
+          }
         </div>
       </div>
     </div>
     <div class="col-lg-4 d-flex align-items-stretch">
       <div class="info-card rounded p-2 flex-grow-1">
-        <div *ngIf="vm.activity.bookingMandatory">
-          <dn-icon class="me-1" [icon]="icons.bookingMandatory" />
-          <span>Réservation obligatoire</span>
-        </div>
-        <div *ngIf="!vm.activity.bookingMandatory">
-          <dn-icon class="me-1" [icon]="icons.bookingNotMandatory" />
-          <span>Sans réservation nécessaire</span>
-        </div>
-        <div *ngIf="vm.activity.membersOnly">
-          <dn-icon class="me-1" [icon]="icons.membersOnly" />
-          <span>Réservée aux adhérents</span>
-        </div>
-        <div *ngIf="!vm.activity.membersOnly">
-          <dn-icon class="me-1" [icon]="icons.notMembersOnly" />
-          <span>Ouverte aux non-adhérents</span>
-        </div>
-        <div *ngIf="vm.activity.accessible">
-          <dn-icon class="me-1" [icon]="icons.accessible" />
-          <span>Accessible aux personnes à mobilité réduite</span>
-        </div>
-        <div *ngIf="!vm.activity.accessible">
-          <dn-icon class="me-1" [icon]="icons.notAccessible" />
-          <span>Non-accessible aux personnes à mobilité réduite</span>
-        </div>
-        <div *ngIf="vm.activity.accessibleToChildren">
-          <dn-icon class="me-1" [icon]="icons.accessibleToChildren" />
-          <span
-            >Accessible aux enfants
-            <ng-container *ngIf="vm.activity.minChildrenAge">
-              à partir de {{ vm.activity.minChildrenAge | number }}
-              {{ vm.activity.minChildrenAge > 0 ? 'ans' : 'an' }}
-            </ng-container>
-          </span>
-        </div>
-        <div *ngIf="!vm.activity.accessibleToChildren">
-          <dn-icon class="me-1" [icon]="icons.notAccessibleToChildren" />
-          <span>Non-accessible aux enfants</span>
-        </div>
-        <div *ngIf="vm.activity.paymentRequired">
-          <dn-icon class="me-1" [icon]="icons.paymentRequired" />
-          <span>{{ vm.activity.price | currency: 'EUR' : 'symbol-narrow' }}</span>
-        </div>
-        <div *ngIf="!vm.activity.paymentRequired">
-          <dn-icon class="me-1" [icon]="icons.paymentNotRequired" />
-          <span>Gratuit</span>
-        </div>
+        @if (vm.activity.bookingMandatory) {
+          <div>
+            <dn-icon class="me-1" [icon]="icons.bookingMandatory" />
+            <span>Réservation obligatoire</span>
+          </div>
+        } @else {
+          <div>
+            <dn-icon class="me-1" [icon]="icons.bookingNotMandatory" />
+            <span>Sans réservation nécessaire</span>
+          </div>
+        }
+        @if (vm.activity.membersOnly) {
+          <div>
+            <dn-icon class="me-1" [icon]="icons.membersOnly" />
+            <span>Réservée aux adhérents</span>
+          </div>
+        } @else {
+          <div>
+            <dn-icon class="me-1" [icon]="icons.notMembersOnly" />
+            <span>Ouverte aux non-adhérents</span>
+          </div>
+        }
+        @if (vm.activity.accessible) {
+          <div>
+            <dn-icon class="me-1" [icon]="icons.accessible" />
+            <span>Accessible aux personnes à mobilité réduite</span>
+          </div>
+        } @else {
+          <div>
+            <dn-icon class="me-1" [icon]="icons.notAccessible" />
+            <span>Non-accessible aux personnes à mobilité réduite</span>
+          </div>
+        }
+        @if (vm.activity.accessibleToChildren) {
+          <div>
+            <dn-icon class="me-1" [icon]="icons.accessibleToChildren" />
+            <span
+              >Accessible aux enfants
+              @if (vm.activity.minChildrenAge) {
+                à partir de {{ vm.activity.minChildrenAge | number }}
+                {{ vm.activity.minChildrenAge > 0 ? 'ans' : 'an' }}
+              }
+            </span>
+          </div>
+        } @else {
+          <div>
+            <dn-icon class="me-1" [icon]="icons.notAccessibleToChildren" />
+            <span>Non-accessible aux enfants</span>
+          </div>
+        }
+        @if (vm.activity.paymentRequired) {
+          <div>
+            <dn-icon class="me-1" [icon]="icons.paymentRequired" />
+            <span>{{ vm.activity.price | currency: 'EUR' : 'symbol-narrow' }}</span>
+          </div>
+        } @else {
+          <div>
+            <dn-icon class="me-1" [icon]="icons.paymentNotRequired" />
+            <span>Gratuit</span>
+          </div>
+        }
         <div>
           <dn-icon class="me-1" [icon]="icons.participants" />
-          <span *ngIf="vm.activity.minNumberOfParticipants && vm.activity.maxNumberOfParticipants">
-            {{ vm.activity.minNumberOfParticipants | number }}
-            {{ vm.activity.minNumberOfParticipants > 1 ? 'participants' : 'participant' }} minimum,
-            {{ vm.activity.maxNumberOfParticipants | number }} maximum
-          </span>
-          <span *ngIf="vm.activity.minNumberOfParticipants && !vm.activity.maxNumberOfParticipants">
-            {{ vm.activity.minNumberOfParticipants | number }}
-            {{ vm.activity.minNumberOfParticipants > 1 ? 'participants' : 'participant' }}
-            minimum
-          </span>
-          <span *ngIf="vm.activity.maxNumberOfParticipants && !vm.activity.minNumberOfParticipants">
-            {{ vm.activity.maxNumberOfParticipants | number }}
-            {{ vm.activity.maxNumberOfParticipants > 1 ? 'participants' : 'participant' }}
-            maximum
-          </span>
-          <span
-            *ngIf="!vm.activity.minNumberOfParticipants && !vm.activity.maxNumberOfParticipants"
-          >
-            Pas de limite de participants
-          </span>
+          @if (vm.activity.minNumberOfParticipants && vm.activity.maxNumberOfParticipants) {
+            <span>
+              {{ vm.activity.minNumberOfParticipants | number }}
+              {{ vm.activity.minNumberOfParticipants > 1 ? 'participants' : 'participant' }}
+              minimum, {{ vm.activity.maxNumberOfParticipants | number }} maximum
+            </span>
+          }
+          @if (vm.activity.minNumberOfParticipants && !vm.activity.maxNumberOfParticipants) {
+            <span>
+              {{ vm.activity.minNumberOfParticipants | number }}
+              {{ vm.activity.minNumberOfParticipants > 1 ? 'participants' : 'participant' }}
+              minimum
+            </span>
+          }
+          @if (vm.activity.maxNumberOfParticipants && !vm.activity.minNumberOfParticipants) {
+            <span>
+              {{ vm.activity.maxNumberOfParticipants | number }}
+              {{ vm.activity.maxNumberOfParticipants > 1 ? 'participants' : 'participant' }}
+              maximum
+            </span>
+          }
+          @if (!vm.activity.minNumberOfParticipants && !vm.activity.maxNumberOfParticipants) {
+            <span> Pas de limite de participants </span>
+          }
         </div>
       </div>
     </div>
   </div>
-  <div *ngIf="vm.activity.comment" class="comment mt-3">
-    <div class="p-3" style="white-space: pre-line">{{ vm.activity.comment }}</div>
-  </div>
+  @if (vm.activity.comment) {
+    <div class="comment mt-3">
+      <div class="p-3" style="white-space: pre-line">{{ vm.activity.comment }}</div>
+    </div>
+  }
   <div class="text-body-secondary small text-end mt-1">
     <em>
       Activité créée par {{ vm.activity.author.displayName }}.
-      <ng-container *ngIf="vm.activity.lastModifier">
+      @if (vm.activity.lastModifier) {
         Modifiée en dernier par {{ vm.activity.lastModifier.displayName }}.
-      </ng-container>
+      }
     </em>
   </div>
   <div class="d-grid gap-2 d-sm-block text-sm-end mt-3">
@@ -184,4 +213,4 @@
       Supprimer
     </button>
   </div>
-</ng-container>
+}

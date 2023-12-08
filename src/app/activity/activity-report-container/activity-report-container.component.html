@@ -1,34 +1,42 @@
-<ng-container *ngIf="vm$ | async as vm">
-  <div *ngIf="vm.activity.report && !editingReport" class="mt-3 border rounded p-3">
-    <dn-activity-report [report]="vm.activity.report" />
-    <div *ngIf="vm.currentUser?.admin" class="mt-3">
+@if (vm$ | async; as vm) {
+  @if (vm.activity.report && !editingReport) {
+    <div class="mt-3 border rounded p-3">
+      <dn-activity-report [report]="vm.activity.report" />
+      @if (vm.currentUser?.admin) {
+        <div class="mt-3">
+          <button type="button" class="btn btn-outline-secondary" (click)="editingReport = true">
+            <dn-icon [icon]="icons.edit" class="me-1" />
+            Modifier le rapport
+          </button>
+          @if (vm.activity.report) {
+            <button
+              type="button"
+              class="btn btn-outline-danger ms-2"
+              (click)="deleteReport(vm.activity)"
+            >
+              <dn-icon [icon]="icons.trash" class="me-1" />
+              Supprimer le rapport
+            </button>
+          }
+        </div>
+      }
+    </div>
+  }
+  @if (!vm.activity.report && !editingReport && vm.currentUser?.admin) {
+    <div class="mt-3">
       <button type="button" class="btn btn-outline-secondary" (click)="editingReport = true">
         <dn-icon [icon]="icons.edit" class="me-1" />
-        Modifier le rapport
-      </button>
-      <button
-        *ngIf="vm.activity.report"
-        type="button"
-        class="btn btn-outline-danger ms-2"
-        (click)="deleteReport(vm.activity)"
-      >
-        <dn-icon [icon]="icons.trash" class="me-1" />
-        Supprimer le rapport
+        Remplir le rapport
       </button>
     </div>
-  </div>
-  <div *ngIf="!vm.activity.report && !editingReport && vm.currentUser?.admin" class="mt-3">
-    <button type="button" class="btn btn-outline-secondary" (click)="editingReport = true">
-      <dn-icon [icon]="icons.edit" class="me-1" />
-      Remplir le rapport
-    </button>
-  </div>
-  <div *ngIf="editingReport" class="mt-3 border rounded p-3">
-    <dn-activity-report-edition
-      *ngIf="editingReport"
-      [report]="vm.activity.report"
-      (saved)="updateReport(vm.activity, $event)"
-      (cancelled)="editingReport = false"
-    />
-  </div>
-</ng-container>
+  }
+  @if (editingReport) {
+    <div class="mt-3 border rounded p-3">
+      <dn-activity-report-edition
+        [report]="vm.activity.report"
+        (saved)="updateReport(vm.activity, $event)"
+        (cancelled)="editingReport = false"
+      />
+    </div>
+  }
+}

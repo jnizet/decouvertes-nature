@@ -1,4 +1,4 @@
-<ng-container *ngIf="activity$ | async as activity">
+@if (activity$ | async; as activity) {
   <h1>{{ activity.title }}</h1>
 
   <ul class="nav nav-tabs mb-3">
@@ -45,4 +45,4 @@
   </ul>
 
   <router-outlet />
-</ng-container>
+}

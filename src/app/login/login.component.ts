@@ -3,7 +3,7 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { Auth, signInWithEmailAndPassword } from '@angular/fire/auth';
 import { from } from 'rxjs';
 import { Router, RouterLink } from '@angular/router';
-import { NgIf } from '@angular/common';
+
 import { ValidationErrorsComponent } from 'ngx-valdemort';
 import { FormControlValidationDirective } from '../validation/form-control-validation.directive';
 import { PageTitleDirective } from '../page-title/page-title.directive';
@@ -14,7 +14,6 @@ import { PageTitleDirective } from '../page-title/page-title.directive';
   styleUrls: ['./login.component.scss'],
   standalone: true,
   imports: [
-    NgIf,
     ReactiveFormsModule,
     RouterLink,
     ValidationErrorsComponent,

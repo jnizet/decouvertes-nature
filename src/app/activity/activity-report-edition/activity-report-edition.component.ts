@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ActivityReport, ActivityReportCommand, ActivityService } from '../activity.service';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { NgIf } from '@angular/common';
+
 import { ValidationErrorsComponent } from 'ngx-valdemort';
 import { FormControlValidationDirective } from '../../validation/form-control-validation.directive';
 import { IconDirective } from '../../icon/icon.directive';
@@ -13,7 +13,6 @@ import * as icons from '../../icon/icons';
   styleUrls: ['./activity-report-edition.component.scss'],
   standalone: true,
   imports: [
-    NgIf,
     ReactiveFormsModule,
     ValidationErrorsComponent,
     FormControlValidationDirective,

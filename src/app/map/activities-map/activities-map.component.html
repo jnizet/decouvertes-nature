@@ -1,5 +1,5 @@
 <dn-page-title title="Carte des activités" />
-<ng-container *ngIf="vm$ | async as vm; else loading">
+@if (vm$ | async; as vm) {
   <div class="row">
     <div class="col">
       <h1>Carte <span class="d-none d-sm-inline">des activités</span></h1>
@@ -24,71 +24,60 @@
       </div>
     </div>
     <div class="col-md-4 order-md-0">
-      <div
-        *ngIf="vm.mappedLocations.length + vm.unmappedLocations.length === 0"
-        class="text-body-secondary mt-md-4"
-      >
-        Aucune activité en {{ vm.year }}
-      </div>
-      <ng-container *ngIf="vm.mappedLocations.length">
+      @if (vm.mappedLocations.length + vm.unmappedLocations.length === 0) {
+        <div class="text-body-secondary mt-md-4">Aucune activité en {{ vm.year }}</div>
+      }
+      @if (vm.mappedLocations.length) {
         <h2 class="fs-5" [class.visually-hidden]="vm.unmappedLocations.length === 0">
           Sur la carte
         </h2>
-        <div
-          *ngFor="
-            let location of vm.mappedLocations;
-            index as locationIndex;
-            trackBy: byMunicipality
-          "
-          class="card mb-2"
-          (mouseenter)="setFocusedLocation(location)"
-          (mouseleave)="setFocusedLocation(null)"
-          role="button"
-          tabindex="0"
-          (keyup.enter)="toggle(location)"
-          (click)="toggle(location)"
-          [attr.aria-expanded]="!location.collapsed"
-          [attr.aria-controls]="'location-' + locationIndex"
-        >
-          <dn-location
-            class="card-body"
-            [location]="location"
-            [title]="location.municipality.name"
-            [collapsedId]="'location-' + locationIndex"
-          />
-        </div>
-      </ng-container>
-      <ng-container *ngIf="vm.unmappedLocations.length">
+        @for (location of vm.mappedLocations; track location.municipality) {
+          <div
+            class="card mb-2"
+            (mouseenter)="setFocusedLocation(location)"
+            (mouseleave)="setFocusedLocation(null)"
+            role="button"
+            tabindex="0"
+            (keyup.enter)="toggle(location)"
+            (click)="toggle(location)"
+            [attr.aria-expanded]="!location.collapsed"
+            [attr.aria-controls]="'location-' + $index"
+          >
+            <dn-location
+              class="card-body"
+              [location]="location"
+              [title]="location.municipality.name"
+              [collapsedId]="'location-' + $index"
+            />
+          </div>
+        }
+
         <h2 class="fs-5">Hors carte</h2>
         <p class="text-body-secondary small">
           Les lieux ci-dessous ne sont pas sur la carte parce qu'ils ne sont pas une commune de la
           Loire connue par l'application.
         </p>
-        <div
-          *ngFor="
-            let location of vm.unmappedLocations;
-            trackBy: byUnmappedLocation;
-            index as unmappedLocationIndex
-          "
-          class="card unmapped mb-2"
-          role="button"
-          (click)="toggleUnmapped(location)"
-          tabindex="0"
-          (keyup.enter)="toggleUnmapped(location)"
-          [attr.aria-expanded]="!location.collapsed"
-          [attr.aria-controls]="'unmapped-location-' + unmappedLocationIndex"
-        >
-          <dn-location
-            class="card-body"
-            [location]="location"
-            [title]="location.location || 'Non renseigné'"
-            [collapsedId]="'unmapped-location-' + unmappedLocationIndex"
-          />
-        </div>
-      </ng-container>
+        @for (location of vm.unmappedLocations; track location.location) {
+          <div
+            class="card unmapped mb-2"
+            role="button"
+            (click)="toggleUnmapped(location)"
+            tabindex="0"
+            (keyup.enter)="toggleUnmapped(location)"
+            [attr.aria-expanded]="!location.collapsed"
+            [attr.aria-controls]="'unmapped-location-' + $index"
+          >
+            <dn-location
+              class="card-body"
+              [location]="location"
+              [title]="location.location || 'Non renseigné'"
+              [collapsedId]="'unmapped-location-' + $index"
+            />
+          </div>
+        }
+      }
     </div>
   </div>
-</ng-container>
-<ng-template #loading>
+} @else {
   <dn-loading-spinner />
-</ng-template>
+}

@@ -1,3 +1,7 @@
-<span class="badge text-bg-success" *ngIf="consent === 'YES'">Oui</span>
-<span class="badge text-bg-danger" *ngIf="consent === 'NO'">Non</span>
-<span class="badge text-bg-dark" *ngIf="consent === 'UNKNOWN' || consent == null">Inconnu</span>
+@if (consent === 'YES') {
+  <span class="badge text-bg-success">Oui</span>
+} @else if (consent === 'NO') {
+  <span class="badge text-bg-danger">Non</span>
+} @else if (consent === 'UNKNOWN' || consent == null) {
+  <span class="badge text-bg-dark">Inconnu</span>
+}

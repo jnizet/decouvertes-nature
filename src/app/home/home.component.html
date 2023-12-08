@@ -1,4 +1,4 @@
-<ng-container *ngIf="vm$ | async as vm">
+@if (vm$ | async; as vm) {
   <h1 class="text-center">Découvertes Nature de la LPO Loire</h1>
 
   <div class="row justify-content-center">
@@ -15,42 +15,46 @@
             alt="deux jolis guêpiers sur une branche, dans un ciel bleu d'été"
           />
         </picture>
-        <p
-          *ngIf="vm.user"
-          class="m-3 p-2 rounded lead text-white fs-4 darken"
-          style="position: absolute; left: 0; bottom: 0"
-        >
-          C'est aussi grâce à vous, {{ vm.user | username }}, que les gens découvrent la nature.
-          <br />
-          Bravo, et merci&nbsp;!
-        </p>
+        @if (vm.user) {
+          <p
+            class="m-3 p-2 rounded lead text-white fs-4 darken"
+            style="position: absolute; left: 0; bottom: 0"
+          >
+            C'est aussi grâce à vous, {{ vm.user | username }}, que les gens découvrent la nature.
+            <br />
+            Bravo, et merci&nbsp;!
+          </p>
+        }
       </div>
     </div>
   </div>
-  <div *ngIf="!vm.user" class="text-center">
-    <div>
-      <a class="btn btn-primary btn-lg" routerLink="/login">
-        <dn-icon class="me-1" [icon]="icons.login" />
-        Identification
-      </a>
+  @if (!vm.user) {
+    <div class="text-center">
+      <div>
+        <a class="btn btn-primary btn-lg" routerLink="/login">
+          <dn-icon class="me-1" [icon]="icons.login" />
+          Identification
+        </a>
+      </div>
     </div>
-  </div>
-  <div *ngIf="vm.user" class="row">
-    <div class="col-6 col-lg-3 offset-lg-3">
-      <a routerLink="/activities" class="d-block btn btn-outline-primary h-100">
-        <div class="fs-1">
-          <dn-icon [icon]="icons.activities" />
-        </div>
-        <div class="fs-4">Liste des activités</div>
-      </a>
+  } @else {
+    <div class="row">
+      <div class="col-6 col-lg-3 offset-lg-3">
+        <a routerLink="/activities" class="d-block btn btn-outline-primary h-100">
+          <div class="fs-1">
+            <dn-icon [icon]="icons.activities" />
+          </div>
+          <div class="fs-4">Liste des activités</div>
+        </a>
+      </div>
+      <div class="col-6 col-lg-3">
+        <a routerLink="/calendar" class="d-block btn btn-outline-primary h-100">
+          <div class="fs-1">
+            <dn-icon [icon]="icons.calendar" />
+          </div>
+          <div class="fs-4">Calendrier des activités</div>
+        </a>
+      </div>
     </div>
-    <div class="col-6 col-lg-3">
-      <a routerLink="/calendar" class="d-block btn btn-outline-primary h-100">
-        <div class="fs-1">
-          <dn-icon [icon]="icons.calendar" />
-        </div>
-        <div class="fs-4">Calendrier des activités</div>
-      </a>
-    </div>
-  </div>
-</ng-container>
+  }
+}

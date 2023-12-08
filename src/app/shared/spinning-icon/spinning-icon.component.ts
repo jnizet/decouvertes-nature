@@ -1,12 +1,12 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { IconDirective } from '../../icon/icon.directive';
 import { Spinner } from '../spinner';
-import { AsyncPipe, NgIf } from '@angular/common';
+import { AsyncPipe } from '@angular/common';
 
 @Component({
   selector: 'dn-spinning-icon',
   standalone: true,
-  imports: [IconDirective, NgIf, AsyncPipe],
+  imports: [IconDirective, AsyncPipe],
   templateUrl: './spinning-icon.component.html',
   styleUrls: ['./spinning-icon.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush

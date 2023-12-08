@@ -1,7 +1,7 @@
 <dn-page-title title="Animateurs et animatrices" />
 <div class="row justify-content-md-center">
   <div class="col col-md-8 col-lg-6">
-    <ng-container *ngIf="animators$ | async as animators; else loading">
+    @if (animators$ | async; as animators) {
       <div class="row align-items-center mb-4">
         <div class="col">
           <h1>Animateurs</h1>
@@ -26,36 +26,37 @@
         />
       </div>
 
-      <div *ngFor="let animator of animators; trackBy: trackById" class="card card-primary mb-2">
-        <div class="card-body">
-          <h2 class="fs-5">{{ animator.name }}</h2>
-          <div class="row">
-            <div class="col-8">Consentement email&nbsp;:</div>
-            <div class="col-4">
-              <dn-consent [consent]="animator.emailConsent" />
+      @for (animator of animators; track animator.id) {
+        <div class="card card-primary mb-2">
+          <div class="card-body">
+            <h2 class="fs-5">{{ animator.name }}</h2>
+            <div class="row">
+              <div class="col-8">Consentement email&nbsp;:</div>
+              <div class="col-4">
+                <dn-consent [consent]="animator.emailConsent" />
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-8">Consentement téléphone&nbsp;:</div>
+              <div class="col-4">
+                <dn-consent [consent]="animator.phoneConsent" />
+              </div>
             </div>
           </div>
-          <div class="row">
-            <div class="col-8">Consentement téléphone&nbsp;:</div>
-            <div class="col-4">
-              <dn-consent [consent]="animator.phoneConsent" />
-            </div>
+          <div class="card-footer text-end">
+            <button
+              type="button"
+              class="btn btn-outline-secondary btn-sm me-2"
+              (click)="editAnimator(animator)"
+            >
+              <dn-icon [icon]="icons.edit" class="me-1" />
+              Modifier
+            </button>
           </div>
         </div>
-        <div class="card-footer text-end">
-          <button
-            type="button"
-            class="btn btn-outline-secondary btn-sm me-2"
-            (click)="editAnimator(animator)"
-          >
-            <dn-icon [icon]="icons.edit" class="me-1" />
-            Modifier
-          </button>
-        </div>
-      </div>
-    </ng-container>
-    <ng-template #loading>
+      }
+    } @else {
       <dn-loading-spinner />
-    </ng-template>
+    }
   </div>
 </div>

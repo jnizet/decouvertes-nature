@@ -17,29 +17,37 @@
         <div>
           <div class="badge text-bg-dark">{{ activity.type | activityType }}</div>
         </div>
-        <div *ngIf="activity.draft">
-          <div class="badge text-bg-warning mt-1">brouillon</div>
-        </div>
+        @if (activity.draft) {
+          <div>
+            <div class="badge text-bg-warning mt-1">brouillon</div>
+          </div>
+        }
       </div>
     </div>
   </div>
   <div class="col-lg-4">
     <div class="info-card rounded p-2 mt-2 mt-md-0">
-      <div *ngIf="activity.location">
-        <dn-icon class="me-1" [icon]="icons.location" />
-        <span class="visually-hidden">Lieu</span>
-        {{ activity.location }}
-        <span *ngIf="activity.intercommunality"> &ndash; {{ activity.intercommunality }} </span>
-      </div>
+      @if (activity.location) {
+        <div>
+          <dn-icon class="me-1" [icon]="icons.location" />
+          <span class="visually-hidden">Lieu</span>
+          {{ activity.location }}
+          @if (activity.intercommunality) {
+            <span> &ndash; {{ activity.intercommunality }} </span>
+          }
+        </div>
+      }
       <div>
         <dn-icon class="me-1" [icon]="icons.animator" />
         <span class="visually-hidden">Animateur / Organisateur</span>
         {{ activity.animator }}
       </div>
-      <div *ngIf="activity.roomToBook">
-        <dn-icon class="me-1" [icon]="icons.roomToBook" />
-        <span>Salle {{ activity.roomToBook }} à réserver</span>
-      </div>
+      @if (activity.roomToBook) {
+        <div>
+          <dn-icon class="me-1" [icon]="icons.roomToBook" />
+          <span>Salle {{ activity.roomToBook }} à réserver</span>
+        </div>
+      }
     </div>
   </div>
 </div>
