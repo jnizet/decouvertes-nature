@@ -3,4 +3,4 @@
 set -e
 
 pushd functions && yarn && popd
-firebase deploy --only functions
+yarn firebase deploy --only functions
