@@ -1,5 +1,7 @@
-<ng-container *ngIf="vm$ | async as vm">
-  <p *ngIf="vm.pictures.length === 0">Aucune photo associée à cette sortie.</p>
+@if (vm$ | async; as vm) {
+  @if (vm.pictures.length === 0) {
+    <p>Aucune photo associée à cette sortie.</p>
+  }
 
   <div class="alert alert-info">
     <div class="row">
@@ -16,43 +18,45 @@
   </div>
 
   <div class="row gy-3">
-    <div *ngFor="let picture of vm.pictures; trackBy: byPath" class="col-lg-6 col-xl-4">
-      <div class="card h-100">
-        <img [src]="picture.thumbnailDownloadUrl" class="card-img-top" [alt]="picture.legend" />
-        <div class="card-body flex-grow-1">
-          <p class="card-text text-body-secondary">
-            {{ picture.legend }}
-          </p>
-          <p class="card-text small text-body-secondary text-end">{{ picture.credit }}</p>
-        </div>
-        <div class="card-footer text-end">
-          <button
-            class="btn btn-sm btn-outline-success me-1"
-            type="button"
-            (click)="download(picture)"
-          >
-            <dn-icon [icon]="icons.download" />
-            Télécharger
-          </button>
-          <button
-            class="btn btn-sm btn-outline-primary me-1"
-            type="button"
-            (click)="editPicture(picture)"
-          >
-            <dn-icon [icon]="icons.edit" />
-            Modifier
-          </button>
-          <button
-            class="btn btn-sm btn-outline-danger"
-            type="button"
-            (click)="removePicture(picture)"
-          >
-            <dn-icon [icon]="icons.trash" />
-            Supprimer
-          </button>
+    @for (picture of vm.pictures; track picture.path) {
+      <div class="col-lg-6 col-xl-4">
+        <div class="card h-100">
+          <img [src]="picture.thumbnailDownloadUrl" class="card-img-top" [alt]="picture.legend" />
+          <div class="card-body flex-grow-1">
+            <p class="card-text text-body-secondary">
+              {{ picture.legend }}
+            </p>
+            <p class="card-text small text-body-secondary text-end">{{ picture.credit }}</p>
+          </div>
+          <div class="card-footer text-end">
+            <button
+              class="btn btn-sm btn-outline-success me-1"
+              type="button"
+              (click)="download(picture)"
+            >
+              <dn-icon [icon]="icons.download" />
+              Télécharger
+            </button>
+            <button
+              class="btn btn-sm btn-outline-primary me-1"
+              type="button"
+              (click)="editPicture(picture)"
+            >
+              <dn-icon [icon]="icons.edit" />
+              Modifier
+            </button>
+            <button
+              class="btn btn-sm btn-outline-danger"
+              type="button"
+              (click)="removePicture(picture)"
+            >
+              <dn-icon [icon]="icons.trash" />
+              Supprimer
+            </button>
+          </div>
         </div>
       </div>
-    </div>
+    }
   </div>
 
   <div class="d-grid gap-2 d-sm-block text-sm-end mt-3">
@@ -77,4 +81,4 @@
       #fileInput
     />
   </div>
-</ng-container>
+}

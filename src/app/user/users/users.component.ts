@@ -6,7 +6,7 @@ import { PageTitleDirective } from '../../page-title/page-title.directive';
 import { LoadingSpinnerComponent } from '../../loading-spinner/loading-spinner.component';
 import { IconDirective } from '../../icon/icon.directive';
 import { RouterLink } from '@angular/router';
-import { AsyncPipe, NgFor, NgIf } from '@angular/common';
+import { AsyncPipe } from '@angular/common';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ResetPasswordLinkModalComponent } from '../reset-password-link-modal/reset-password-link-modal.component';
 import { ToastService } from '../../toast/toast.service';
@@ -18,15 +18,7 @@ import * as icons from '../../icon/icons';
   styleUrls: ['./users.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [
-    NgIf,
-    NgFor,
-    AsyncPipe,
-    RouterLink,
-    PageTitleDirective,
-    LoadingSpinnerComponent,
-    IconDirective
-  ]
+  imports: [AsyncPipe, RouterLink, PageTitleDirective, LoadingSpinnerComponent, IconDirective]
 })
 export class UsersComponent {
   users$: Observable<Array<AdministeredUser>>;

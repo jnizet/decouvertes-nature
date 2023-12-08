@@ -9,23 +9,29 @@
 <div class="text-body-secondary">
   {{ location.activities.length | number }}
   {{ location.activities.length > 1 ? 'activités' : 'activité' }}
-  <div *ngIf="location.draftCount" class="badge text-bg-warning ms-1">
-    {{ location.draftCount | number }}
-    {{ location.draftCount > 1 ? 'brouillons' : 'brouillon' }}
-  </div>
+  @if (location.draftCount) {
+    <div class="badge text-bg-warning ms-1">
+      {{ location.draftCount | number }}
+      {{ location.draftCount > 1 ? 'brouillons' : 'brouillon' }}
+    </div>
+  }
 </div>
 <div [ngbCollapse]="location.collapsed" [id]="collapsedId">
   <div>
     <ul class="list-unstyled mt-3 mb-0 ms-2">
-      <li *ngFor="let activity of location.activities; last as last" [class.mb-2]="!last">
-        <div>{{ activity | activityDate }}</div>
-        <div>
-          <a [routerLink]="['/activities', activity.id]">
-            {{ activity.title }}
-            <span *ngIf="activity.draft" class="badge text-bg-warning">brouillon</span>
-          </a>
-        </div>
-      </li>
+      @for (activity of location.activities; track activity.id) {
+        <li [class.mb-2]="!$last">
+          <div>{{ activity | activityDate }}</div>
+          <div>
+            <a [routerLink]="['/activities', activity.id]">
+              {{ activity.title }}
+              @if (activity.draft) {
+                <span class="badge text-bg-warning">brouillon</span>
+              }
+            </a>
+          </div>
+        </li>
+      }
     </ul>
   </div>
 </div>

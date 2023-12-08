@@ -21,7 +21,7 @@ import { LocationComponent } from '../location/location.component';
 import { YearService } from '../../year.service';
 import { YearSelectorComponent } from '../../year-selector/year-selector.component';
 import { RouterLink } from '@angular/router';
-import { AsyncPipe, NgFor, NgIf } from '@angular/common';
+import { AsyncPipe } from '@angular/common';
 import * as icons from '../../icon/icons';
 
 export interface ActivityLocation {
@@ -69,8 +69,6 @@ type Action = FocusAction | ToggleCollapseAction | ToggleCollapseUnmappedAction;
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
   imports: [
-    NgIf,
-    NgFor,
     AsyncPipe,
     RouterLink,
     PageTitleDirective,
@@ -163,14 +161,6 @@ export class ActivitiesMapComponent {
 
   toggleUnmapped(location: UnmappedActivityLocation) {
     this.actionSubject.next({ type: 'toggleCollapseUnmapped', location });
-  }
-
-  byMunicipality(index: number, location: ActivityLocation) {
-    return location.municipality;
-  }
-
-  byUnmappedLocation(index: number, location: UnmappedActivityLocation) {
-    return location.location;
   }
 
   private isInYear(activity: Activity, year: number) {

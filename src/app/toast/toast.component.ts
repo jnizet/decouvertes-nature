@@ -2,12 +2,12 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Toast, ToastService } from './toast.service';
 import { IconDirective } from '../icon/icon.directive';
-import { AsyncPipe, NgIf } from '@angular/common';
+import { AsyncPipe } from '@angular/common';
 
 @Component({
   selector: 'dn-toast',
   standalone: true,
-  imports: [IconDirective, AsyncPipe, NgIf],
+  imports: [IconDirective, AsyncPipe],
   templateUrl: './toast.component.html',
   styleUrls: ['./toast.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush

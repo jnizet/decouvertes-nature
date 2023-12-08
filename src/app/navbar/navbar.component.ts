@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { map, Observable } from 'rxjs';
 import { Router, RouterLink } from '@angular/router';
 import { CurrentUser, CurrentUserService } from '../current-user.service';
-import { AsyncPipe, NgIf } from '@angular/common';
+import { AsyncPipe } from '@angular/common';
 import {
   NgbCollapse,
   NgbDropdown,
@@ -21,7 +21,6 @@ import * as icons from '../icon/icons';
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
   imports: [
-    NgIf,
     AsyncPipe,
     RouterLink,
     NgbCollapse,

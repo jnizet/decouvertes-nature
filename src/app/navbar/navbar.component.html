@@ -1,93 +1,101 @@
-<nav class="navbar navbar-expand-lg bg-dark py-0" *ngIf="vm$ | async as vm" data-bs-theme="dark">
-  <div class="container-fluid">
-    <a class="navbar-brand" routerLink="/">
-      <span class="visually-hidden">Accueil</span>
-      <img src="/assets/logo.png" style="width: 111.2px; height: 50px" alt="" />
-    </a>
-    <button
-      *ngIf="vm.user"
-      class="navbar-toggler"
-      type="button"
-      aria-controls="navbar"
-      [attr.aria-expanded]="expanded"
-      aria-label="Afficher ou masquer la navigation"
-      (click)="toggle()"
-    >
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbar" [ngbCollapse]="!expanded">
-      <ul *ngIf="vm.user" class="navbar-nav me-auto mb-2 mb-lg-0">
-        <li class="nav-item">
-          <a class="nav-link" routerLink="/activities" (click)="collapse()">
-            <dn-icon [icon]="icons.activities" />
-            Activités
-          </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" routerLink="/calendar" (click)="collapse()">
-            <dn-icon [icon]="icons.calendar" />
-            Calendrier
-          </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" routerLink="/map" (click)="collapse()">
-            <dn-icon [icon]="icons.map" />
-            Carte
-          </a>
-        </li>
-        <li class="nav-item" *ngIf="vm.user.export">
-          <a class="nav-link" routerLink="/activities/exportable" (click)="collapse()">
-            <dn-icon [icon]="icons.exports" />
-            Exports
-          </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" routerLink="/animators" (click)="collapse()">
-            <dn-icon [icon]="icons.animator" />
-            Animateurs
-          </a>
-        </li>
-        <li class="nav-item" *ngIf="vm.user.admin">
-          <a class="nav-link" routerLink="/users" (click)="collapse()">
-            <dn-icon [icon]="icons.users" />
-            Utilisateurs
-          </a>
-        </li>
-      </ul>
-      <ul class="navbar-nav mb-2 mb-lg-0 ms-auto">
-        <ng-container *ngIf="vm.user">
-          <li class="nav-item me-2" ngbDropdown display="static">
-            <a class="nav-link" tabindex="0" ngbDropdownToggle id="user-dropdown" role="button">
-              <dn-icon [icon]="icons.user" />
-              {{ vm.user.user | username }}
-            </a>
-            <div ngbDropdownMenu aria-labelledby="user-dropdown" class="dropdown-menu-end">
-              <a ngbDropdownItem routerLink="/change-password" (click)="collapse()">
-                <dn-icon [icon]="icons.changePassword" />
-                Changer de mot de passe
+@if (vm$ | async; as vm) {
+  <nav class="navbar navbar-expand-lg bg-dark py-0" data-bs-theme="dark">
+    <div class="container-fluid">
+      <a class="navbar-brand" routerLink="/">
+        <span class="visually-hidden">Accueil</span>
+        <img src="/assets/logo.png" style="width: 111.2px; height: 50px" alt="" />
+      </a>
+      @if (vm.user) {
+        <button
+          class="navbar-toggler"
+          type="button"
+          aria-controls="navbar"
+          [attr.aria-expanded]="expanded"
+          aria-label="Afficher ou masquer la navigation"
+          (click)="toggle()"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+      }
+      <div class="collapse navbar-collapse" id="navbar" [ngbCollapse]="!expanded">
+        @if (vm.user) {
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+              <a class="nav-link" routerLink="/activities" (click)="collapse()">
+                <dn-icon [icon]="icons.activities" />
+                Activités
               </a>
-              <a ngbDropdownItem role="button" (click)="logout(); collapse()">
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" routerLink="/calendar" (click)="collapse()">
+                <dn-icon [icon]="icons.calendar" />
+                Calendrier
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" routerLink="/map" (click)="collapse()">
+                <dn-icon [icon]="icons.map" />
+                Carte
+              </a>
+            </li>
+            @if (vm.user.export) {
+              <li class="nav-item">
+                <a class="nav-link" routerLink="/activities/exportable" (click)="collapse()">
+                  <dn-icon [icon]="icons.exports" />
+                  Exports
+                </a>
+              </li>
+            }
+            <li class="nav-item">
+              <a class="nav-link" routerLink="/animators" (click)="collapse()">
+                <dn-icon [icon]="icons.animator" />
+                Animateurs
+              </a>
+            </li>
+            @if (vm.user.admin) {
+              <li class="nav-item">
+                <a class="nav-link" routerLink="/users" (click)="collapse()">
+                  <dn-icon [icon]="icons.users" />
+                  Utilisateurs
+                </a>
+              </li>
+            }
+          </ul>
+        }
+        <ul class="navbar-nav mb-2 mb-lg-0 ms-auto">
+          @if (vm.user) {
+            <li class="nav-item me-2" ngbDropdown display="static">
+              <a class="nav-link" tabindex="0" ngbDropdownToggle id="user-dropdown" role="button">
+                <dn-icon [icon]="icons.user" />
+                {{ vm.user.user | username }}
+              </a>
+              <div ngbDropdownMenu aria-labelledby="user-dropdown" class="dropdown-menu-end">
+                <a ngbDropdownItem routerLink="/change-password" (click)="collapse()">
+                  <dn-icon [icon]="icons.changePassword" />
+                  Changer de mot de passe
+                </a>
+                <a ngbDropdownItem role="button" (click)="logout(); collapse()">
+                  <dn-icon [icon]="icons.logout" />
+                  Déconnexion
+                </a>
+              </div>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" role="button" tabindex="0" (click)="logout(); collapse()">
+                <span class="visually-hidden">Déconnexion</span>
                 <dn-icon [icon]="icons.logout" />
-                Déconnexion
               </a>
-            </div>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" role="button" tabindex="0" (click)="logout(); collapse()">
-              <span class="visually-hidden">Déconnexion</span>
-              <dn-icon [icon]="icons.logout" />
-            </a>
-          </li>
-        </ng-container>
-        <ng-container *ngIf="!vm.user">
-          <li class="nav-item">
-            <a class="nav-link" routerLink="/login">
-              <dn-icon [icon]="icons.login" />
-              Identification
-            </a>
-          </li>
-        </ng-container>
-      </ul>
+            </li>
+          } @else {
+            <li class="nav-item">
+              <a class="nav-link" routerLink="/login">
+                <dn-icon [icon]="icons.login" />
+                Identification
+              </a>
+            </li>
+          }
+        </ul>
+      </div>
     </div>
-  </div>
-</nav>
+  </nav>
+}

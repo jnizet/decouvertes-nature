@@ -19,9 +19,9 @@
           <button class="btn btn-primary">S'identifier</button>
         </div>
         <div class="col-sm">
-          <div *ngIf="loginError" class="text-danger">
-            L'adresse email ou le mot de passe est incorrect.
-          </div>
+          @if (loginError) {
+            <div class="text-danger">L'adresse email ou le mot de passe est incorrect.</div>
+          }
         </div>
       </div>
 

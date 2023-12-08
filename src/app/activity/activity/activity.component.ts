@@ -5,7 +5,7 @@ import { Activity, ActivityService } from '../activity.service';
 import * as icons from '../../icon/icons';
 import { ConfirmService } from '../../confirm/confirm.service';
 import { CurrentUser, CurrentUserService } from '../../current-user.service';
-import { AsyncPipe, CurrencyPipe, DecimalPipe, NgFor, NgIf } from '@angular/common';
+import { AsyncPipe, CurrencyPipe, DecimalPipe } from '@angular/common';
 import { IconDirective } from '../../icon/icon.directive';
 import { PageTitleDirective } from '../../page-title/page-title.directive';
 import { ActivityDatePipe } from '../../activity-date-pipe/activity-date.pipe';
@@ -28,8 +28,6 @@ interface ViewModel {
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
   imports: [
-    NgIf,
-    NgFor,
     AsyncPipe,
     DecimalPipe,
     CurrencyPipe,

@@ -106,10 +106,6 @@ export class ActivityPicturesComponent {
     );
   }
 
-  byPath(index: number, picture: DownloadablePicture) {
-    return picture.path;
-  }
-
   private openModal(): NgbModalRef {
     return this.modalService.open(ActivityPictureEditionModalComponent, {
       backdrop: false,

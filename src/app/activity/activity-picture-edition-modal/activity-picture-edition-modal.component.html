@@ -1,7 +1,13 @@
 <div class="modal-header">
   <h1 class="modal-title fs-4">
-    <ng-container *ngIf="mode === 'create'">Ajout d'une photo à l'activité</ng-container>
-    <ng-container *ngIf="mode === 'update'">Modification des informations de la photo</ng-container>
+    @switch (mode) {
+      @case ('create') {
+        Ajout d'une photo à l'activité
+      }
+      @case ('update') {
+        Modification des informations de la photo
+      }
+    }
   </h1>
   <button
     type="button"

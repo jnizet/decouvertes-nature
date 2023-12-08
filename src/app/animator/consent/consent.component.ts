@@ -1,11 +1,11 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
-import { NgIf } from '@angular/common';
+
 import { Consent } from '../animator.service';
 
 @Component({
   selector: 'dn-consent',
   standalone: true,
-  imports: [NgIf],
+  imports: [],
   templateUrl: './consent.component.html',
   styleUrls: ['./consent.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush

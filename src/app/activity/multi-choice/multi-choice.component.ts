@@ -1,6 +1,6 @@
 import { Component, forwardRef, Input, OnInit } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { NgFor } from '@angular/common';
+
 import { IconDirective } from '../../icon/icon.directive';
 import * as icons from '../../icon/icons';
 
@@ -19,7 +19,7 @@ interface Option {
     { provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => MultiChoiceComponent), multi: true }
   ],
   standalone: true,
-  imports: [NgFor, IconDirective]
+  imports: [IconDirective]
 })
 export class MultiChoiceComponent implements OnInit, ControlValueAccessor {
   @Input({ required: true }) knownOptions!: Array<string>;

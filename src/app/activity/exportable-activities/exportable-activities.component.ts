@@ -12,7 +12,7 @@ import {
 import { ActivatedRoute } from '@angular/router';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { ALL_INTERCOMMUNALITIES } from '../../shared/municipalities';
-import { AsyncPipe, NgFor, NgIf } from '@angular/common';
+import { AsyncPipe } from '@angular/common';
 import { ExportableActivityComponent } from '../exportable-activity/exportable-activity.component';
 import { PageTitleDirective } from '../../page-title/page-title.directive';
 import { IconDirective } from '../../icon/icon.directive';
@@ -29,8 +29,6 @@ import { groupByYearAndMonth, YearOfActivities } from '../activity-utils';
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
   imports: [
-    NgIf,
-    NgFor,
     AsyncPipe,
     ReactiveFormsModule,
     NgbTypeahead,

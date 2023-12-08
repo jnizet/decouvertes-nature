@@ -1,11 +1,17 @@
-<ng-container *ngIf="mode; else loading">
+@if (mode) {
   <div class="row justify-content-md-center">
     <div class="col col-md-8 col-lg-6">
       <dn-page-title [title]="mode === 'edit' ? editedUser!.displayName : 'Nouvel utilisateur'" />
-      <h1 *ngIf="mode === 'create'">Création d'un nouvel utilisateur</h1>
-      <h1 *ngIf="mode === 'edit'">
-        Modification de l'utilisateur <em>{{ editedUser!.displayName }}</em>
-      </h1>
+      @switch (mode) {
+        @case ('create') {
+          <h1>Création d'un nouvel utilisateur</h1>
+        }
+        @case ('edit') {
+          <h1>
+            Modification de l'utilisateur <em>{{ editedUser!.displayName }}</em>
+          </h1>
+        }
+      }
 
       <form [formGroup]="form" (ngSubmit)="save()">
         <div class="mb-3">
@@ -78,9 +84,6 @@
       </form>
     </div>
   </div>
-</ng-container>
-<ng-template #loading>
-  <ng-template #loading>
-    <dn-loading-spinner />
-  </ng-template>
-</ng-template>
+} @else {
+  <dn-loading-spinner />
+}

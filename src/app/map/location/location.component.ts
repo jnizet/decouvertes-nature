@@ -7,13 +7,13 @@ import { RouterLink } from '@angular/router';
 import { NgbCollapse } from '@ng-bootstrap/ng-bootstrap';
 import { IconDirective } from '../../icon/icon.directive';
 import { ActivityDatePipe } from '../../activity-date-pipe/activity-date.pipe';
-import { DecimalPipe, NgFor, NgIf } from '@angular/common';
+import { DecimalPipe } from '@angular/common';
 import * as icons from '../../icon/icons';
 
 @Component({
   selector: 'dn-location',
   standalone: true,
-  imports: [NgIf, NgFor, DecimalPipe, RouterLink, NgbCollapse, IconDirective, ActivityDatePipe],
+  imports: [DecimalPipe, RouterLink, NgbCollapse, IconDirective, ActivityDatePipe],
   templateUrl: './location.component.html',
   styleUrls: ['./location.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush

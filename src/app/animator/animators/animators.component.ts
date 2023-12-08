@@ -4,7 +4,7 @@ import { PageTitleDirective } from '../../page-title/page-title.directive';
 import { IconDirective } from '../../icon/icon.directive';
 import { RouterLink } from '@angular/router';
 import { LoadingSpinnerComponent } from '../../loading-spinner/loading-spinner.component';
-import { AsyncPipe, NgFor, NgIf } from '@angular/common';
+import { AsyncPipe } from '@angular/common';
 import { NonNullableFormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { Animator, AnimatorService } from '../animator.service';
 import { pencilSquare, plusCircle } from '../../bootstrap-icons/bootstrap-icons';
@@ -21,9 +21,7 @@ import { ToastService } from '../../toast/toast.service';
     IconDirective,
     RouterLink,
     LoadingSpinnerComponent,
-    NgIf,
     AsyncPipe,
-    NgFor,
     ReactiveFormsModule,
     ConsentComponent
   ],
@@ -55,10 +53,6 @@ export class AnimatorsComponent {
     this.animators$ = combineLatest([animatorService.list(), filter$]).pipe(
       map(([animators, filter]) => this.filterAnimators(animators, filter))
     );
-  }
-
-  trackById(index: number, animator: Animator) {
-    return animator.id;
   }
 
   clearSearch() {

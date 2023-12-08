@@ -5,33 +5,45 @@
 <div>Animé par {{ activity.animator }}</div>
 <div>
   Lieu&nbsp;: {{ activity.location }}
-  <span *ngIf="activity.intercommunality">({{ activity.intercommunality }})</span>
+  @if (activity.intercommunality) {
+    <span>({{ activity.intercommunality }})</span>
+  }
 </div>
 <div>Rendez-vous&nbsp;: {{ activity.appointmentLocation }}</div>
 <div>
   Prix&nbsp;:
   {{ activity.paymentRequired ? (activity.price | currency: 'EUR' : 'symbol-narrow') : 'gratuit' }}
 </div>
-<div *ngIf="activity.minNumberOfParticipants">
-  Nombre minimum de participants&nbsp;: {{ activity.minNumberOfParticipants | number }}
-</div>
-<div *ngIf="activity.maxNumberOfParticipants">
-  Nombre maximum de participants&nbsp;: {{ activity.maxNumberOfParticipants | number }}
-</div>
-<div *ngIf="activity.membersOnly">Réservé aux adhérents LPO</div>
-<div *ngIf="activity.accessible">Accessible aux personnes à mobilité réduite</div>
-<div *ngIf="activity.accessibleToChildren">
-  Accessible aux enfants
-  <ng-container *ngIf="activity.minChildrenAge">
-    à partir de {{ activity.minChildrenAge | number }}
-    {{ activity.minChildrenAge > 0 ? 'ans' : 'an' }}
-  </ng-container>
-</div>
-<div *ngIf="activity.bookingMandatory">Réservation obligatoire</div>
-<div *ngIf="activity.labels.length">Labels&nbsp;: {{ activity.labels.join(', ') }}</div>
-<div *ngIf="activity.associatedOrganizations.length">
-  Association partenaires&nbsp;: {{ activity.associatedOrganizations.join(', ') }}
-</div>
-<div *ngIf="activity.equipments.length">
-  Matériel spécifique&nbsp;: {{ activity.equipments.join(', ') }}
-</div>
+@if (activity.minNumberOfParticipants) {
+  <div>Nombre minimum de participants&nbsp;: {{ activity.minNumberOfParticipants | number }}</div>
+}
+@if (activity.maxNumberOfParticipants) {
+  <div>Nombre maximum de participants&nbsp;: {{ activity.maxNumberOfParticipants | number }}</div>
+}
+@if (activity.membersOnly) {
+  <div>Réservé aux adhérents LPO</div>
+}
+@if (activity.accessible) {
+  <div>Accessible aux personnes à mobilité réduite</div>
+}
+@if (activity.accessibleToChildren) {
+  <div>
+    Accessible aux enfants
+    @if (activity.minChildrenAge) {
+      à partir de {{ activity.minChildrenAge | number }}
+      {{ activity.minChildrenAge > 0 ? 'ans' : 'an' }}
+    }
+  </div>
+}
+@if (activity.bookingMandatory) {
+  <div>Réservation obligatoire</div>
+}
+@if (activity.labels.length) {
+  <div>Labels&nbsp;: {{ activity.labels.join(', ') }}</div>
+}
+@if (activity.associatedOrganizations.length) {
+  <div>Association partenaires&nbsp;: {{ activity.associatedOrganizations.join(', ') }}</div>
+}
+@if (activity.equipments.length) {
+  <div>Matériel spécifique&nbsp;: {{ activity.equipments.join(', ') }}</div>
+}

@@ -1,7 +1,13 @@
 <div class="modal-header">
   <h1 class="modal-title fs-4">
-    <ng-container *ngIf="mode === 'create'">Création d'un nouvel animateur</ng-container>
-    <ng-container *ngIf="mode === 'update'">{{ editedAnimator!.name }}</ng-container>
+    @switch (mode) {
+      @case ('create') {
+        Création d'un nouvel animateur
+      }
+      @case ('update') {
+        {{ editedAnimator!.name }}
+      }
+    }
   </h1>
   <button
     type="button"
@@ -13,13 +19,15 @@
 </div>
 <div class="modal-body">
   <form id="animator-form" [formGroup]="form" class="mt-3" (ngSubmit)="save()">
-    <div class="mb-3" *ngIf="mode === 'create'">
-      <label for="animator-name" class="form-label">Prénom et nom de l'animateur</label>
-      <input id="animator-name" class="form-control" formControlName="name" />
-      <val-errors controlName="name">
-        <ng-template valError="nameUnique">Il existe déjà un animateur avec ce nom</ng-template>
-      </val-errors>
-    </div>
+    @if (mode === 'create') {
+      <div class="mb-3">
+        <label for="animator-name" class="form-label">Prénom et nom de l'animateur</label>
+        <input id="animator-name" class="form-control" formControlName="name" />
+        <val-errors controlName="name">
+          <ng-template valError="nameUnique">Il existe déjà un animateur avec ce nom</ng-template>
+        </val-errors>
+      </div>
+    }
     <div class="mb-3">
       <label class="form-label">
         accepte que son adresse email personnelle apparaisse sur le site internet de la LPO

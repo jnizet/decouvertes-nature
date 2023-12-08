@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { map, Observable } from 'rxjs';
 import { ActivityService } from '../activity.service';
 import { ActivatedRoute } from '@angular/router';
-import { AsyncPipe, NgFor, NgIf } from '@angular/common';
+import { AsyncPipe } from '@angular/common';
 import { PageTitleDirective } from '../../page-title/page-title.directive';
 import { LoadingSpinnerComponent } from '../../loading-spinner/loading-spinner.component';
 import { ActivityCardComponent } from '../activity-card/activity-card.component';
@@ -16,8 +16,6 @@ import { groupByYearAndMonth, YearOfActivities } from '../activity-utils';
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
   imports: [
-    NgIf,
-    NgFor,
     AsyncPipe,
     PageTitleDirective,
     LoadingSpinnerComponent,
