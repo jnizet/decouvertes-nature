@@ -15,4 +15,4 @@ yarn
 yarn build
 popd
 # then start the emulators
-firebase emulators:start --import=emulator-data
+yarn firebase emulators:start --import=emulator-data
