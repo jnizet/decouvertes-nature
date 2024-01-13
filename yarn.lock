@@ -265,10 +265,10 @@
   dependencies:
     tslib "^2.3.0"
 
-"@angular/fire@17.0.0":
-  version "17.0.0"
-  resolved "https://registry.yarnpkg.com/@angular/fire/-/fire-17.0.0.tgz#b8cf8f99000f4f8e72cb61baad6d6f5466bf8a0b"
-  integrity sha512-sv9OExC87Lgac5pYuD97LMjetEk2xwrCtqedzK49CAc5T6B3vPu9ncZS+uypDFp9bmY4Wp4Du0RzeiYO2aIUjA==
+"@angular/fire@17.0.1":
+  version "17.0.1"
+  resolved "https://registry.yarnpkg.com/@angular/fire/-/fire-17.0.1.tgz#b66575c59a3f8b7990d4b40faa22455a7b90f615"
+  integrity sha512-bhbogL4m50AKzSVn4kdZX3/2XrYTMvpsgP/4xnTPuMoTFgOrjV24CDc+1lOL+Z0QXRIupj84/Pg4KNFD4lXXzQ==
   dependencies:
     "@angular-devkit/schematics" "^17.0.0"
     "@schematics/angular" "^17.0.0"
