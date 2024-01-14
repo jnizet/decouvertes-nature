@@ -13,7 +13,7 @@
   </div>
 }
 <div class="mt-1">
-  <label class="visually-hidden" [for]="prefix + 'add'">{{ addText }}</label>
+  <label class="visually-hidden" [for]="prefix + 'add'">{{ addText() }}</label>
   <div class="input-group input-group-sm">
     <input
       #addInput
@@ -21,7 +21,7 @@
       [id]="prefix + 'add'"
       (keyup.enter)="addOption(addInput.value, addInput); $event.preventDefault()"
       (keydown.enter)="$event.preventDefault()"
-      [placeholder]="addText"
+      [placeholder]="addText()"
     />
     <button
       type="button"
