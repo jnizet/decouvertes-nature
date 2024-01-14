@@ -1,7 +1,6 @@
-import { ChangeDetectionStrategy, Component, Signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, Signal } from '@angular/core';
 import { Activity, ActivityService } from '../../activity/activity.service';
 import { LocalDate, localDateToYearMonth, YearMonth } from '../../shared/types';
-import { combineLatest, map } from 'rxjs';
 import { parseISO } from 'date-fns';
 import { PageTitleDirective } from '../../page-title/page-title.directive';
 import { LoadingSpinnerComponent } from '../../loading-spinner/loading-spinner.component';
@@ -13,7 +12,7 @@ import { ActivityDatePipe } from '../../activity-date-pipe/activity-date.pipe';
 import { YearService } from '../../year.service';
 import { YearSelectorComponent } from '../../year-selector/year-selector.component';
 import * as icons from '../../icon/icons';
-import { toObservable, toSignal } from '@angular/core/rxjs-interop';
+import { toSignal } from '@angular/core/rxjs-interop';
 
 interface Month {
   month: YearMonth;
@@ -52,35 +51,37 @@ export class CalendarComponent {
   icons = icons;
 
   constructor(activityService: ActivityService, yearService: YearService) {
-    const vm$ = combineLatest([toObservable(yearService.year), activityService.findVisible()]).pipe(
-      map(([year, activities]) => {
-        // reverse to have them in chronological order, since the backend returns them in anti-chronological order
-        const yearActivities = activities
-          .filter(activity => this.isInYear(activity, year))
-          .reverse();
-        const reportActivities = yearActivities.filter(
-          activity => !activity.draft && this.isStartInYear(activity, year)
-        );
-        const months: Array<Month> = [];
-        for (let m = 1; m <= 12; m++) {
-          const paddedMonth = `${m < 10 ? '0' : ''}${m}`;
-          const yearMonth = `${year}-${paddedMonth}`;
-          months.push({
-            month: yearMonth,
-            activities: yearActivities
-              .filter(a => this.isInMonth(a, yearMonth))
-              .map(a => this.withDayRange(a, yearMonth))
-          });
-        }
-        return {
-          year,
-          reportActivities,
-          months
-        };
-      })
-    );
+    const visibleActivities = toSignal(activityService.findVisible());
+    this.vm = computed(() => {
+      const activities = visibleActivities();
+      const year = yearService.year();
 
-    this.vm = toSignal(vm$);
+      if (!activities) {
+        return undefined;
+      }
+
+      // reverse to have them in chronological order, since the backend returns them in anti-chronological order
+      const yearActivities = activities.filter(activity => this.isInYear(activity, year)).reverse();
+      const reportActivities = yearActivities.filter(
+        activity => !activity.draft && this.isStartInYear(activity, year)
+      );
+      const months: Array<Month> = [];
+      for (let m = 1; m <= 12; m++) {
+        const paddedMonth = `${m < 10 ? '0' : ''}${m}`;
+        const yearMonth = `${year}-${paddedMonth}`;
+        months.push({
+          month: yearMonth,
+          activities: yearActivities
+            .filter(a => this.isInMonth(a, yearMonth))
+            .map(a => this.withDayRange(a, yearMonth))
+        });
+      }
+      return {
+        year,
+        reportActivities,
+        months
+      };
+    });
   }
 
   private isInYear(activity: Activity, year: number) {
