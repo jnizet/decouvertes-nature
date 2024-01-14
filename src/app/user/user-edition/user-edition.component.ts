@@ -11,7 +11,6 @@ import { LoadingSpinnerComponent } from '../../loading-spinner/loading-spinner.c
 import { IconDirective } from '../../icon/icon.directive';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { UserCreatedModalComponent } from '../user-created-modal/user-created-modal.component';
-import { AsyncPipe } from '@angular/common';
 import { SpinningIconComponent } from '../../shared/spinning-icon/spinning-icon.component';
 import * as icons from '../../icon/icons';
 
@@ -21,7 +20,6 @@ import * as icons from '../../icon/icons';
   styleUrls: ['./user-edition.component.scss'],
   standalone: true,
   imports: [
-    AsyncPipe,
     ReactiveFormsModule,
     ValidationErrorsComponent,
     FormControlValidationDirective,

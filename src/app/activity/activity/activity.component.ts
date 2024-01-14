@@ -1,11 +1,11 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { ActivatedRoute, Router, RouterLink } from '@angular/router';
-import { map, Observable, switchMap } from 'rxjs';
+import { ChangeDetectionStrategy, Component, Signal } from '@angular/core';
+import { Router, RouterLink } from '@angular/router';
+import { map, switchMap } from 'rxjs';
 import { Activity, ActivityService } from '../activity.service';
 import * as icons from '../../icon/icons';
 import { ConfirmService } from '../../confirm/confirm.service';
-import { CurrentUser, CurrentUserService } from '../../current-user.service';
-import { AsyncPipe, CurrencyPipe, DecimalPipe } from '@angular/common';
+import { CurrentUserService } from '../../current-user.service';
+import { CurrencyPipe, DecimalPipe } from '@angular/common';
 import { IconDirective } from '../../icon/icon.directive';
 import { PageTitleDirective } from '../../page-title/page-title.directive';
 import { ActivityDatePipe } from '../../activity-date-pipe/activity-date.pipe';
@@ -15,6 +15,7 @@ import { ActivityReportEditionComponent } from '../activity-report-edition/activ
 import { CurrentActivityService } from '../current-activity.service';
 import { Animator, AnimatorService } from '../../animator/animator.service';
 import { ConsentComponent } from '../../animator/consent/consent.component';
+import { toSignal } from '@angular/core/rxjs-interop';
 
 interface ViewModel {
   activity: Activity;
@@ -28,7 +29,6 @@ interface ViewModel {
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
   imports: [
-    AsyncPipe,
     DecimalPipe,
     CurrencyPipe,
     RouterLink,
@@ -42,13 +42,11 @@ interface ViewModel {
   ]
 })
 export class ActivityComponent {
-  vm$: Observable<ViewModel>;
-  currentUser$: Observable<CurrentUser | null>;
+  vm: Signal<ViewModel | undefined>;
 
   icons = icons;
 
   constructor(
-    route: ActivatedRoute,
     private currentActivityService: CurrentActivityService,
     private activityService: ActivityService,
     animatorService: AnimatorService,
@@ -56,14 +54,15 @@ export class ActivityComponent {
     private router: Router,
     private currentUserService: CurrentUserService
   ) {
-    this.vm$ = currentActivityService.activity$.pipe(
-      switchMap(activity =>
-        animatorService
-          .getByNameOrCreate(activity.animator)
-          .pipe(map(animator => ({ activity, animator })))
+    this.vm = toSignal(
+      currentActivityService.activity$.pipe(
+        switchMap(activity =>
+          animatorService
+            .getByNameOrCreate(activity.animator)
+            .pipe(map(animator => ({ activity, animator })))
+        )
       )
     );
-    this.currentUser$ = this.currentUserService.getCurrentUser();
   }
 
   deleteActivity(activity: Activity) {

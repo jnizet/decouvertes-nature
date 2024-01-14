@@ -1,5 +1,4 @@
 import { Component, NgZone } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { NonNullableFormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ValidationErrorsComponent } from 'ngx-valdemort';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
@@ -17,7 +16,7 @@ const MAX_PICTURE_SIZE = 800;
 @Component({
   selector: 'dn-activity-picture-edition-modal',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, ValidationErrorsComponent, SpinningIconComponent],
+  imports: [ReactiveFormsModule, ValidationErrorsComponent, SpinningIconComponent],
   templateUrl: './activity-picture-edition-modal.component.html',
   styleUrls: ['./activity-picture-edition-modal.component.scss']
 })

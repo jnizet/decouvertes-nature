@@ -1,16 +1,16 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Signal } from '@angular/core';
 import { AdministeredUser, UserService } from '../user.service';
-import { from, Observable } from 'rxjs';
+import { from } from 'rxjs';
 import { clipboardCheck } from '../../bootstrap-icons/bootstrap-icons';
 import { PageTitleDirective } from '../../page-title/page-title.directive';
 import { LoadingSpinnerComponent } from '../../loading-spinner/loading-spinner.component';
 import { IconDirective } from '../../icon/icon.directive';
 import { RouterLink } from '@angular/router';
-import { AsyncPipe } from '@angular/common';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ResetPasswordLinkModalComponent } from '../reset-password-link-modal/reset-password-link-modal.component';
 import { ToastService } from '../../toast/toast.service';
 import * as icons from '../../icon/icons';
+import { toSignal } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'dn-users',
@@ -18,10 +18,10 @@ import * as icons from '../../icon/icons';
   styleUrls: ['./users.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [AsyncPipe, RouterLink, PageTitleDirective, LoadingSpinnerComponent, IconDirective]
+  imports: [RouterLink, PageTitleDirective, LoadingSpinnerComponent, IconDirective]
 })
 export class UsersComponent {
-  users$: Observable<Array<AdministeredUser>>;
+  users: Signal<Array<AdministeredUser> | undefined>;
   icons = icons;
 
   constructor(
@@ -29,7 +29,7 @@ export class UsersComponent {
     private ngbModal: NgbModal,
     private toastService: ToastService
   ) {
-    this.users$ = userService.listUsers();
+    this.users = toSignal(userService.listUsers());
   }
 
   copyEmail(user: AdministeredUser) {
@@ -56,6 +56,6 @@ ${homePath}.`;
   generateResetPasswordLink(user: AdministeredUser) {
     const modal = this.ngbModal.open(ResetPasswordLinkModalComponent);
     const modalComponent: ResetPasswordLinkModalComponent = modal.componentInstance;
-    modalComponent.user = user;
+    modalComponent.user.set(user);
   }
 }

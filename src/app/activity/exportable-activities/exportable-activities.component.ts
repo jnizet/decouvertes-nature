@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Signal } from '@angular/core';
 import { Activity, ActivityService } from '../activity.service';
 import {
   combineLatest,
@@ -9,10 +9,8 @@ import {
   OperatorFunction,
   startWith
 } from 'rxjs';
-import { ActivatedRoute } from '@angular/router';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { ALL_INTERCOMMUNALITIES } from '../../shared/municipalities';
-import { AsyncPipe } from '@angular/common';
 import { ExportableActivityComponent } from '../exportable-activity/exportable-activity.component';
 import { PageTitleDirective } from '../../page-title/page-title.directive';
 import { IconDirective } from '../../icon/icon.directive';
@@ -21,6 +19,7 @@ import { LoadingSpinnerComponent } from '../../loading-spinner/loading-spinner.c
 import { MonthPipe } from '../../month-pipe/month.pipe';
 import * as icons from '../../icon/icons';
 import { groupByYearAndMonth, YearOfActivities } from '../activity-utils';
+import { toSignal } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'dn-exportable-activities',
@@ -29,7 +28,6 @@ import { groupByYearAndMonth, YearOfActivities } from '../activity-utils';
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
   imports: [
-    AsyncPipe,
     ReactiveFormsModule,
     NgbTypeahead,
     PageTitleDirective,
@@ -40,7 +38,7 @@ import { groupByYearAndMonth, YearOfActivities } from '../activity-utils';
   ]
 })
 export class ExportableActivitiesComponent {
-  readonly years$: Observable<Array<YearOfActivities>>;
+  readonly years: Signal<Array<YearOfActivities> | undefined>;
   readonly form = new FormGroup({
     intercommunality: new FormControl('')
   });
@@ -61,7 +59,7 @@ export class ExportableActivitiesComponent {
     );
   readonly icons = icons;
 
-  constructor(route: ActivatedRoute, activityService: ActivityService) {
+  constructor(activityService: ActivityService) {
     const activities$ = activityService.findNonDraft();
     const filter$ = this.form.valueChanges.pipe(startWith(this.form.value));
     const filteredActivities$ = combineLatest([activities$, filter$]).pipe(
@@ -70,7 +68,9 @@ export class ExportableActivitiesComponent {
       )
     );
 
-    this.years$ = filteredActivities$.pipe(map(activities => groupByYearAndMonth(activities)));
+    this.years = toSignal(
+      filteredActivities$.pipe(map(activities => groupByYearAndMonth(activities)))
+    );
   }
 
   private filteredActivities(

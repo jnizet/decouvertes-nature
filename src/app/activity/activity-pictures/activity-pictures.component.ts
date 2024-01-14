@@ -1,7 +1,5 @@
-import { Component, Injector } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component, Injector, Signal } from '@angular/core';
 import { CurrentActivityService } from '../current-activity.service';
-import { CurrentUser, CurrentUserService } from '../../current-user.service';
 import { Activity, ActivityPicture, ActivityService } from '../activity.service';
 import { combineLatest, first, forkJoin, map, Observable, of, switchMap } from 'rxjs';
 import { ConfirmService } from '../../confirm/confirm.service';
@@ -13,13 +11,13 @@ import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { ActivityPictureEditionModalComponent } from '../activity-picture-edition-modal/activity-picture-edition-modal.component';
 import { StorageService } from '../../storage.service';
 import * as icons from '../../icon/icons';
+import { toSignal } from '@angular/core/rxjs-interop';
 
 export interface DownloadablePicture extends ActivityPicture {
   thumbnailDownloadUrl: string;
 }
 
 interface ViewModel {
-  currentUser: CurrentUser | null;
   activity: Activity;
   pictures: Array<DownloadablePicture>;
 }
@@ -27,12 +25,12 @@ interface ViewModel {
 @Component({
   selector: 'dn-activity-pictures',
   standalone: true,
-  imports: [CommonModule, IconDirective, SpinningIconComponent],
+  imports: [IconDirective, SpinningIconComponent],
   templateUrl: './activity-pictures.component.html',
   styleUrls: ['./activity-pictures.component.scss']
 })
 export class ActivityPicturesComponent {
-  vm$: Observable<ViewModel>;
+  vm: Signal<ViewModel | undefined>;
 
   icons = icons;
 
@@ -40,7 +38,6 @@ export class ActivityPicturesComponent {
   constructor(
     private currentActivityService: CurrentActivityService,
     private activityService: ActivityService,
-    currentUserService: CurrentUserService,
     private storageService: StorageService,
     private confirmService: ConfirmService,
     private modalService: NgbModal,
@@ -64,11 +61,12 @@ export class ActivityPicturesComponent {
           : of([])
       )
     );
-    this.vm$ = combineLatest({
-      pictures: pictures$,
-      activity: currentActivityService.activity$,
-      currentUser: currentUserService.getCurrentUser()
-    });
+    this.vm = toSignal(
+      combineLatest({
+        pictures: pictures$,
+        activity: currentActivityService.activity$
+      })
+    );
   }
 
   removePicture(picture: DownloadablePicture) {

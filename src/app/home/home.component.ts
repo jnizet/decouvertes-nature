@@ -1,11 +1,11 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { map, Observable } from 'rxjs';
+import { ChangeDetectionStrategy, Component, Signal } from '@angular/core';
+import { map } from 'rxjs';
 import { Auth, authState, User } from '@angular/fire/auth';
-import { AsyncPipe } from '@angular/common';
 import { IconDirective } from '../icon/icon.directive';
 import { RouterLink } from '@angular/router';
 import { UsernamePipe } from '../username-pipe/username.pipe';
 import * as icons from '../icon/icons';
+import { toSignal } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'dn-home',
@@ -13,13 +13,13 @@ import * as icons from '../icon/icons';
   styleUrls: ['./home.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [AsyncPipe, RouterLink, IconDirective, UsernamePipe]
+  imports: [RouterLink, IconDirective, UsernamePipe]
 })
 export class HomeComponent {
-  vm$: Observable<{ user: User | null }>;
+  vm: Signal<{ user: User | null } | undefined>;
   icons = icons;
 
   constructor(auth: Auth) {
-    this.vm$ = authState(auth).pipe(map(user => ({ user })));
+    this.vm = toSignal(authState(auth).pipe(map(user => ({ user }))));
   }
 }

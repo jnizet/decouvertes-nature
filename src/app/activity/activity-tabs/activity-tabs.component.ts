@@ -1,29 +1,29 @@
-import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component, Signal } from '@angular/core';
 import { IconDirective } from '../../icon/icon.directive';
 import { IsActiveMatchOptions, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { Activity } from '../activity.service';
-import { Observable } from 'rxjs';
 import { PageTitleDirective } from '../../page-title/page-title.directive';
 import { CurrentActivityService } from '../current-activity.service';
+import { toSignal } from '@angular/core/rxjs-interop';
+import { DecimalPipe } from '@angular/common';
 
 @Component({
   selector: 'dn-activity-tabs',
   standalone: true,
   imports: [
-    CommonModule,
     IconDirective,
     RouterLink,
     RouterLinkActive,
     RouterOutlet,
-    PageTitleDirective
+    PageTitleDirective,
+    DecimalPipe
   ],
   templateUrl: './activity-tabs.component.html',
   styleUrls: ['./activity-tabs.component.scss'],
   providers: [CurrentActivityService]
 })
 export class ActivityTabsComponent {
-  activity$: Observable<Activity>;
+  activity: Signal<Activity | undefined>;
 
   routerLinkActiveOptions: IsActiveMatchOptions = {
     paths: 'exact',
@@ -33,6 +33,6 @@ export class ActivityTabsComponent {
   };
 
   constructor(private currentActivityService: CurrentActivityService) {
-    this.activity$ = currentActivityService.activity$;
+    this.activity = toSignal(currentActivityService.activity$);
   }
 }

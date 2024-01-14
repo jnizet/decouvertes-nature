@@ -1,5 +1,5 @@
 <dn-page-title [title]="mode === 'mine' ? 'Mes activités' : 'Activité'" />
-@if (years$ | async; as years) {
+@if (years(); as years) {
   <div>
     @for (year of years; track year.year) {
       <div class="mb-4">

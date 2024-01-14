@@ -1,8 +1,6 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { map, Observable } from 'rxjs';
+import { ChangeDetectionStrategy, Component, Signal } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { CurrentUser, CurrentUserService } from '../current-user.service';
-import { AsyncPipe } from '@angular/common';
 import {
   NgbCollapse,
   NgbDropdown,
@@ -21,7 +19,6 @@ import * as icons from '../icon/icons';
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
   imports: [
-    AsyncPipe,
     RouterLink,
     NgbCollapse,
     NgbDropdown,
@@ -34,16 +31,14 @@ import * as icons from '../icon/icons';
 })
 export class NavbarComponent {
   expanded = false;
-  vm$: Observable<{
-    user: CurrentUser | null;
-  }>;
+  user: Signal<CurrentUser | null>;
   icons = icons;
 
   constructor(
     private currentUserService: CurrentUserService,
     private router: Router
   ) {
-    this.vm$ = currentUserService.getCurrentUser().pipe(map(user => ({ user })));
+    this.user = currentUserService.currentUser;
   }
 
   logout() {

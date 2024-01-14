@@ -1,7 +1,7 @@
 <dn-page-title title="Animateurs et animatrices" />
 <div class="row justify-content-md-center">
   <div class="col col-md-8 col-lg-6">
-    @if (animators$ | async; as animators) {
+    @if (animators(); as animators) {
       <div class="row align-items-center mb-4">
         <div class="col">
           <h1>Animateurs</h1>

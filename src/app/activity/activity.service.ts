@@ -133,7 +133,7 @@ export class ActivityService {
 
   findVisible(): Observable<Array<Activity>> {
     return combineLatest([
-      this.currentUserService.getCurrentUser(),
+      this.currentUserService.currentUser$,
       collectionData(query(this.activityCollection, orderBy('startDate', 'desc')))
     ]).pipe(
       map(([currentUser, activities]) =>

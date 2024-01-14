@@ -1,9 +1,8 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Signal } from '@angular/core';
 import { Activity, ActivityService } from '../../activity/activity.service';
 import { LocalDate, localDateToYearMonth, YearMonth } from '../../shared/types';
-import { combineLatest, map, Observable } from 'rxjs';
+import { combineLatest, map } from 'rxjs';
 import { parseISO } from 'date-fns';
-import { AsyncPipe } from '@angular/common';
 import { PageTitleDirective } from '../../page-title/page-title.directive';
 import { LoadingSpinnerComponent } from '../../loading-spinner/loading-spinner.component';
 import { IconDirective } from '../../icon/icon.directive';
@@ -14,6 +13,7 @@ import { ActivityDatePipe } from '../../activity-date-pipe/activity-date.pipe';
 import { YearService } from '../../year.service';
 import { YearSelectorComponent } from '../../year-selector/year-selector.component';
 import * as icons from '../../icon/icons';
+import { toObservable, toSignal } from '@angular/core/rxjs-interop';
 
 interface Month {
   month: YearMonth;
@@ -37,7 +37,6 @@ interface ActivityWithDayRange extends Activity {
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
   imports: [
-    AsyncPipe,
     RouterLink,
     PageTitleDirective,
     LoadingSpinnerComponent,
@@ -49,14 +48,11 @@ interface ActivityWithDayRange extends Activity {
   ]
 })
 export class CalendarComponent {
-  vm$: Observable<ViewModel>;
+  vm: Signal<ViewModel | undefined>;
   icons = icons;
 
-  constructor(
-    activityService: ActivityService,
-    private yearService: YearService
-  ) {
-    this.vm$ = combineLatest([yearService.year$, activityService.findVisible()]).pipe(
+  constructor(activityService: ActivityService, yearService: YearService) {
+    const vm$ = combineLatest([toObservable(yearService.year), activityService.findVisible()]).pipe(
       map(([year, activities]) => {
         // reverse to have them in chronological order, since the backend returns them in anti-chronological order
         const yearActivities = activities
@@ -83,6 +79,8 @@ export class CalendarComponent {
         };
       })
     );
+
+    this.vm = toSignal(vm$);
   }
 
   private isInYear(activity: Activity, year: number) {

@@ -1,5 +1,4 @@
-import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { Injectable, signal } from '@angular/core';
 
 function storeYear(year: number) {
   window.localStorage.setItem('year', `${year}`);
@@ -23,12 +22,11 @@ function readYear(): number | null {
   providedIn: 'root'
 })
 export class YearService {
-  private yearSubject = new BehaviorSubject<number>(readYear() ?? new Date().getFullYear());
-
-  readonly year$: Observable<number> = this.yearSubject.asObservable();
+  private yearSignal = signal<number>(readYear() ?? new Date().getFullYear());
+  readonly year = this.yearSignal.asReadonly();
 
   set(year: number) {
-    this.yearSubject.next(year);
+    this.yearSignal.set(year);
     storeYear(year);
   }
 }

@@ -1,21 +1,15 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { Observable } from 'rxjs';
-import { Toast, ToastService } from './toast.service';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { ToastService } from './toast.service';
 import { IconDirective } from '../icon/icon.directive';
-import { AsyncPipe } from '@angular/common';
 
 @Component({
   selector: 'dn-toast',
   standalone: true,
-  imports: [IconDirective, AsyncPipe],
+  imports: [IconDirective],
   templateUrl: './toast.component.html',
   styleUrls: ['./toast.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ToastComponent {
-  toast$: Observable<Toast | null>;
-
-  constructor(toastService: ToastService) {
-    this.toast$ = toastService.toast$;
-  }
+  toast = inject(ToastService).toast;
 }
