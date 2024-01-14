@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 
 import { Consent } from '../animator.service';
 
@@ -11,5 +11,5 @@ import { Consent } from '../animator.service';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ConsentComponent {
-  @Input({ required: true }) consent: Consent | undefined;
+  consent = input.required<Consent | undefined>();
 }

@@ -17,8 +17,9 @@ export class ConfirmService {
     const modalRef = this.modalService.open(ConfirmModalContentComponent, {
       ariaLabelledBy: 'confirmation-modal-title'
     });
-    modalRef.componentInstance.title = options.title ?? 'Confirmation';
-    modalRef.componentInstance.message = options.message;
+    const componentInstance = modalRef.componentInstance as ConfirmModalContentComponent;
+    componentInstance.title.set(options.title ?? 'Confirmation');
+    componentInstance.message.set(options.message);
     return from(modalRef.result).pipe(
       catchError(err => (options.errorOnClose ? throwError(err ?? 'not confirmed') : EMPTY))
     );

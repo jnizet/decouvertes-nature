@@ -1,4 +1,4 @@
-import { Directive, Input, OnDestroy } from '@angular/core';
+import { DestroyRef, Directive, effect, input } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 
 const DEFAULT_TITLE = 'Découvertes Nature';
@@ -7,15 +7,17 @@ const DEFAULT_TITLE = 'Découvertes Nature';
   selector: 'dn-page-title',
   standalone: true
 })
-export class PageTitleDirective implements OnDestroy {
-  @Input({ required: true })
-  set title(title: string) {
-    this.titleService.setTitle(`${title} - ${DEFAULT_TITLE}`);
-  }
+export class PageTitleDirective {
+  title = input.required<string>();
 
-  constructor(private titleService: Title) {}
+  constructor(
+    private titleService: Title,
+    destroyRef: DestroyRef
+  ) {
+    effect(() => {
+      this.titleService.setTitle(`${this.title()} - ${DEFAULT_TITLE}`);
+    });
 
-  ngOnDestroy(): void {
-    this.titleService.setTitle(DEFAULT_TITLE);
+    destroyRef.onDestroy(() => this.titleService.setTitle(DEFAULT_TITLE));
   }
 }

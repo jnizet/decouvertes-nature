@@ -1,47 +1,47 @@
 <div class="row g-2">
   <div class="col-lg">
     <div class="border border-2 border-secondary rounded h-100 p-2 text-secondary">
-      <div class="number">{{ total | number }}</div>
+      <div class="number">{{ vm().total | number }}</div>
       <div class="legend">
-        {{ total > 1 ? 'activités prévues' : 'activité prévue' }}
+        {{ vm().total > 1 ? 'activités prévues' : 'activité prévue' }}
       </div>
     </div>
   </div>
   <div class="col-lg">
     <div class="border border-2 border-success rounded h-100 p-2 text-success">
-      <div class="number">{{ done | number }}</div>
+      <div class="number">{{ vm().done | number }}</div>
       <div class="legend">
-        {{ done > 1 ? 'activités réalisées' : 'activité réalisée' }}
-        @if (total) {
-          <div class="small">({{ done / total | percent: '.0' }})</div>
+        {{ vm().done > 1 ? 'activités réalisées' : 'activité réalisée' }}
+        @if (vm().total) {
+          <div class="small">({{ vm().done / vm().total | percent: '.0' }})</div>
         }
       </div>
     </div>
   </div>
   <div class="col-lg">
     <div class="border border-2 border-success rounded h-100 p-2 text-success">
-      <div class="number">{{ participants | number }}</div>
-      <div class="legend">{{ participants > 1 ? 'participants' : 'participant' }}</div>
+      <div class="number">{{ vm().participants | number }}</div>
+      <div class="legend">{{ vm().participants > 1 ? 'participants' : 'participant' }}</div>
     </div>
   </div>
   <div class="col-lg">
     <div class="border border-2 border-danger rounded h-100 p-2 text-danger">
-      <div class="number">{{ cancelled | number }}</div>
+      <div class="number">{{ vm().cancelled | number }}</div>
       <div class="legend">
-        {{ cancelled > 1 ? 'activités annulées' : 'activité annulée' }}
-        @if (total) {
-          <div class="small">({{ cancelled / total | percent: '.0' }})</div>
+        {{ vm().cancelled > 1 ? 'activités annulées' : 'activité annulée' }}
+        @if (vm().total) {
+          <div class="small">({{ vm().cancelled / vm().total | percent: '.0' }})</div>
         }
       </div>
     </div>
   </div>
   <div class="col-lg">
     <div class="border border-2 border-primary rounded h-100 p-2 text-primary">
-      <div class="number">{{ withoutReport | number }}</div>
+      <div class="number">{{ vm().withoutReport | number }}</div>
       <div class="legend">
-        {{ withoutReport > 1 ? 'activités sans rapport' : 'activité sans rapport' }}
-        @if (total) {
-          <div class="small">({{ withoutReport / total | percent: '.0' }})</div>
+        {{ vm().withoutReport > 1 ? 'activités sans rapport' : 'activité sans rapport' }}
+        @if (vm().total) {
+          <div class="small">({{ vm().withoutReport / vm().total | percent: '.0' }})</div>
         }
       </div>
     </div>

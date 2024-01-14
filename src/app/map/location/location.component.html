@@ -1,25 +1,25 @@
 <div class="d-flex gap-2">
-  <h3 class="fs-6 flex-grow-1">{{ title }}</h3>
+  <h3 class="fs-6 flex-grow-1">{{ title() }}</h3>
   <div>
-    <div class="chevron" [class.expanded]="!location.collapsed">
+    <div class="chevron" [class.expanded]="!location().collapsed">
       <dn-icon [icon]="icons.collapsed" />
     </div>
   </div>
 </div>
 <div class="text-body-secondary">
-  {{ location.activities.length | number }}
-  {{ location.activities.length > 1 ? 'activités' : 'activité' }}
-  @if (location.draftCount) {
+  {{ location().activities.length | number }}
+  {{ location().activities.length > 1 ? 'activités' : 'activité' }}
+  @if (location().draftCount) {
     <div class="badge text-bg-warning ms-1">
-      {{ location.draftCount | number }}
-      {{ location.draftCount > 1 ? 'brouillons' : 'brouillon' }}
+      {{ location().draftCount | number }}
+      {{ location().draftCount > 1 ? 'brouillons' : 'brouillon' }}
     </div>
   }
 </div>
-<div [ngbCollapse]="location.collapsed" [id]="collapsedId">
+<div [ngbCollapse]="location().collapsed" [id]="collapsedId()">
   <div>
     <ul class="list-unstyled mt-3 mb-0 ms-2">
-      @for (activity of location.activities; track activity.id) {
+      @for (activity of location().activities; track activity.id) {
         <li [class.mb-2]="!$last">
           <div>{{ activity | activityDate }}</div>
           <div>

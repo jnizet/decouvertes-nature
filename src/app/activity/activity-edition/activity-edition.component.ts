@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, computed } from '@angular/core';
 import {
   AbstractControl,
   FormControl,
@@ -16,7 +16,6 @@ import {
 } from '../activity.service';
 import { ALL_MUNICIPALITIES, Municipality } from '../../shared/municipalities';
 import {
-  combineLatest,
   debounceTime,
   distinctUntilChanged,
   first,
@@ -225,10 +224,9 @@ export class ActivityEditionComponent {
 
   readonly saving = new Spinner();
   readonly savingAsDraft = new Spinner();
-  readonly savingWhateverTheMode$ = combineLatest([
-    this.saving.isSpinning,
-    this.savingAsDraft.isSpinning
-  ]).pipe(map(([saving, savingAsDraft]) => saving || savingAsDraft));
+  readonly savingWhateverTheMode = computed(
+    () => this.saving.isSpinning() || this.savingAsDraft.isSpinning()
+  );
 
   readonly draftManager = new DraftManager();
 

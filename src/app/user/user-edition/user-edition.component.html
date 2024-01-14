@@ -72,7 +72,7 @@
           </div>
         </div>
         <div class="text-end">
-          <button class="btn btn-primary" [disabled]="(saving.isSpinning | async) === true">
+          <button class="btn btn-primary" [disabled]="saving.isSpinning()">
             <dn-spinning-icon
               [icon]="icons.save"
               [spinner]="saving"

@@ -1,11 +1,11 @@
 import {
-  AfterViewInit,
+  afterNextRender,
   ChangeDetectionStrategy,
   Component,
+  effect,
   ElementRef,
-  Input,
+  input,
   NgZone,
-  OnChanges,
   ViewEncapsulation
 } from '@angular/core';
 import { ActivityLocation } from '../activities-map/activities-map.component';
@@ -2043,9 +2043,9 @@ const LOIRE: Array<LatLngExpression> = [
   encapsulation: ViewEncapsulation.None,
   standalone: true
 })
-export class MapComponent implements AfterViewInit, OnChanges {
-  @Input({ required: true }) locations: Array<ActivityLocation> = [];
-  @Input() focusedLocation: ActivityLocation | null = null;
+export class MapComponent {
+  locations = input.required<Array<ActivityLocation>>();
+  focusedLocation = input<ActivityLocation | null>(null);
 
   private map!: L.Map;
   private markers: Array<L.Marker<any>> = [];
@@ -2053,15 +2053,14 @@ export class MapComponent implements AfterViewInit, OnChanges {
   constructor(
     private elementRef: ElementRef,
     private ngZone: NgZone
-  ) {}
-
-  ngOnChanges(): void {
-    this.setMarkers();
-  }
-
-  ngAfterViewInit(): void {
-    this.initMap();
-    this.setMarkers();
+  ) {
+    afterNextRender(() => {
+      this.initMap();
+      this.setMarkers();
+    });
+    effect(() => {
+      this.setMarkers();
+    });
   }
 
   private initMap(): void {
@@ -2091,7 +2090,8 @@ export class MapComponent implements AfterViewInit, OnChanges {
       if (this.map) {
         this.markers.forEach(marker => this.map.removeLayer(marker));
 
-        const locationsToMark = this.focusedLocation ? [this.focusedLocation] : this.locations;
+        const focusedLocation = this.focusedLocation();
+        const locationsToMark = focusedLocation ? [focusedLocation] : this.locations();
 
         this.markers = locationsToMark.map(location => {
           const divIcon = L.divIcon({

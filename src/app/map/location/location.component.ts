@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 import {
   ActivityLocation,
   UnmappedActivityLocation
@@ -19,9 +19,9 @@ import * as icons from '../../icon/icons';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class LocationComponent {
-  @Input({ required: true }) location!: ActivityLocation | UnmappedActivityLocation;
-  @Input({ required: true }) title!: string;
-  @Input({ required: true }) collapsedId!: string;
+  location = input.required<ActivityLocation | UnmappedActivityLocation>();
+  title = input.required<string>();
+  collapsedId = input.required<string>();
 
   icons = icons;
 }

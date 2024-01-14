@@ -365,7 +365,7 @@
       @if (maySaveAsDraft) {
         <button
           class="btn btn-warning me-sm-2"
-          [disabled]="(savingWhateverTheMode$ | async) === true"
+          [disabled]="savingWhateverTheMode()"
           (click)="draftManager.switchTo('draft')"
         >
           <dn-spinning-icon
@@ -379,7 +379,7 @@
 
       <button
         class="btn btn-primary"
-        [disabled]="(savingWhateverTheMode$ | async) === true"
+        [disabled]="savingWhateverTheMode()"
         (click)="draftManager.switchTo('final')"
         id="save-button"
       >

@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 import { Activity } from '../activity.service';
 import { CurrencyPipe, DecimalPipe } from '@angular/common';
 import { ActivityTypePipe } from '../../activity-type-pipe/activity-type.pipe';
@@ -13,5 +13,5 @@ import { ActivityDatePipe } from '../../activity-date-pipe/activity-date.pipe';
   imports: [CurrencyPipe, DecimalPipe, ActivityTypePipe, ActivityDatePipe]
 })
 export class ExportableActivityComponent {
-  @Input({ required: true }) activity!: Activity;
+  activity = input.required<Activity>();
 }

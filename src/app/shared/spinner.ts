@@ -1,17 +1,15 @@
-import { BehaviorSubject, defer, finalize, Observable, OperatorFunction } from 'rxjs';
+import { defer, finalize, OperatorFunction } from 'rxjs';
+import { signal } from '@angular/core';
 
 export class Spinner {
-  private spinning = new BehaviorSubject<boolean>(false);
-
-  get isSpinning(): Observable<boolean> {
-    return this.spinning;
-  }
+  private spinning = signal(false);
+  readonly isSpinning = this.spinning.asReadonly();
 
   spinUntilFinalization<T>(): OperatorFunction<T, T> {
     return o =>
       defer(() => {
-        this.spinning.next(true);
+        this.spinning.set(true);
         return o;
-      }).pipe(finalize(() => this.spinning.next(false)));
+      }).pipe(finalize(() => this.spinning.set(false)));
   }
 }
