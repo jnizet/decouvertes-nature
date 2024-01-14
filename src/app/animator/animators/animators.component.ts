@@ -1,10 +1,9 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { combineLatest, distinctUntilChanged, map, Observable, startWith } from 'rxjs';
+import { ChangeDetectionStrategy, Component, Signal } from '@angular/core';
+import { combineLatest, distinctUntilChanged, map, startWith } from 'rxjs';
 import { PageTitleDirective } from '../../page-title/page-title.directive';
 import { IconDirective } from '../../icon/icon.directive';
 import { RouterLink } from '@angular/router';
 import { LoadingSpinnerComponent } from '../../loading-spinner/loading-spinner.component';
-import { AsyncPipe } from '@angular/common';
 import { NonNullableFormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { Animator, AnimatorService } from '../animator.service';
 import { pencilSquare, plusCircle } from '../../bootstrap-icons/bootstrap-icons';
@@ -12,6 +11,7 @@ import { ConsentComponent } from '../consent/consent.component';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { AnimatorEditionModalComponent } from '../animator-edition-modal/animator-edition-modal.component';
 import { ToastService } from '../../toast/toast.service';
+import { toSignal } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'dn-animators',
@@ -21,7 +21,6 @@ import { ToastService } from '../../toast/toast.service';
     IconDirective,
     RouterLink,
     LoadingSpinnerComponent,
-    AsyncPipe,
     ReactiveFormsModule,
     ConsentComponent
   ],
@@ -30,7 +29,7 @@ import { ToastService } from '../../toast/toast.service';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AnimatorsComponent {
-  animators$: Observable<Array<Animator>>;
+  animators: Signal<Array<Animator> | undefined>;
 
   searchControl = this.fb.control('');
 
@@ -40,7 +39,7 @@ export class AnimatorsComponent {
   };
 
   constructor(
-    private animatorService: AnimatorService,
+    animatorService: AnimatorService,
     private fb: NonNullableFormBuilder,
     private modalService: NgbModal,
     private toastService: ToastService
@@ -50,8 +49,10 @@ export class AnimatorsComponent {
       map(f => f.trim()),
       distinctUntilChanged()
     );
-    this.animators$ = combineLatest([animatorService.list(), filter$]).pipe(
-      map(([animators, filter]) => this.filterAnimators(animators, filter))
+    this.animators = toSignal(
+      combineLatest([animatorService.list(), filter$]).pipe(
+        map(([animators, filter]) => this.filterAnimators(animators, filter))
+      )
     );
   }
 

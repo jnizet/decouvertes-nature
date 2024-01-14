@@ -23,7 +23,7 @@
   />
 </form>
 
-@if (years$ | async; as years) {
+@if (years(); as years) {
   <div>
     @for (year of years; track year.year) {
       <div class="mb-4">

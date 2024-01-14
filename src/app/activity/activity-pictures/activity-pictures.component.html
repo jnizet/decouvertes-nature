@@ -1,4 +1,4 @@
-@if (vm$ | async; as vm) {
+@if (vm(); as vm) {
   @if (vm.pictures.length === 0) {
     <p>Aucune photo associée à cette sortie.</p>
   }

@@ -1,9 +1,6 @@
 <div role="alert" aria-live="polite" aria-atomic="true">
-  <div
-    class="toast bg-dark text-light border rounded p-2 text-center"
-    [class.active]="toast$ | async"
-  >
-    @if (toast$ | async; as toast) {
+  <div class="toast bg-dark text-light border rounded p-2 text-center" [class.active]="toast()">
+    @if (toast(); as toast) {
       @if (toast.icon) {
         <dn-icon [icon]="toast.icon" class="me-1" />
       }

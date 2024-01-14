@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Signal } from '@angular/core';
 import {
   combineLatest,
   debounceTime,
@@ -21,8 +21,8 @@ import { LocationComponent } from '../location/location.component';
 import { YearService } from '../../year.service';
 import { YearSelectorComponent } from '../../year-selector/year-selector.component';
 import { RouterLink } from '@angular/router';
-import { AsyncPipe } from '@angular/common';
 import * as icons from '../../icon/icons';
+import { toObservable, toSignal } from '@angular/core/rxjs-interop';
 
 export interface ActivityLocation {
   municipality: Municipality;
@@ -69,7 +69,6 @@ type Action = FocusAction | ToggleCollapseAction | ToggleCollapseUnmappedAction;
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
   imports: [
-    AsyncPipe,
     RouterLink,
     PageTitleDirective,
     LoadingSpinnerComponent,
@@ -82,14 +81,14 @@ type Action = FocusAction | ToggleCollapseAction | ToggleCollapseUnmappedAction;
 export class ActivitiesMapComponent {
   private actionSubject = new Subject<Action>();
 
-  vm$: Observable<ViewModel>;
+  vm: Signal<ViewModel | undefined>;
   icons = icons;
 
   constructor(
     activityService: ActivityService,
     private yearService: YearService
   ) {
-    this.vm$ = combineLatest([yearService.year$, activityService.findVisible()]).pipe(
+    const vm$ = combineLatest([toObservable(yearService.year), activityService.findVisible()]).pipe(
       map(([year, activities]) => {
         // reverse to have them in chronological order, since the backend returns them in anti-chronological order
         const yearActivities = activities
@@ -149,6 +148,8 @@ export class ActivitiesMapComponent {
         )
       )
     );
+
+    this.vm = toSignal(vm$);
   }
 
   setFocusedLocation(location: ActivityLocation | null) {

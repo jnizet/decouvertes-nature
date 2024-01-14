@@ -30,7 +30,6 @@ import {
 import { ActivatedRoute, Router } from '@angular/router';
 import { CurrentUserService } from '../../current-user.service';
 import { Spinner } from '../../shared/spinner';
-import { AsyncPipe } from '@angular/common';
 import { ValidationErrorDirective, ValidationErrorsComponent } from 'ngx-valdemort';
 import { FormControlValidationDirective } from '../../validation/form-control-validation.directive';
 import { NgbCollapse, NgbModal, NgbTypeahead } from '@ng-bootstrap/ng-bootstrap';
@@ -151,7 +150,6 @@ type ActivityFormGroup = FormGroup<{
   styleUrls: ['./activity-edition.component.scss'],
   standalone: true,
   imports: [
-    AsyncPipe,
     ReactiveFormsModule,
     NgbTypeahead,
     NgbCollapse,
