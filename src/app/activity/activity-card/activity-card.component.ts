@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 import { Activity } from '../activity.service';
 
 import { IconDirective } from '../../icon/icon.directive';
@@ -16,6 +16,6 @@ import * as icons from '../../icon/icons';
   imports: [RouterLink, IconDirective, ActivityTypePipe, ActivityDatePipe]
 })
 export class ActivityCardComponent {
-  @Input({ required: true }) activity!: Activity;
+  activity = input.required<Activity>();
   icons = icons;
 }

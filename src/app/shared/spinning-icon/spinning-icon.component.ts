@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 import { IconDirective } from '../../icon/icon.directive';
 import { Spinner } from '../spinner';
 import { AsyncPipe } from '@angular/common';
@@ -12,7 +12,7 @@ import { AsyncPipe } from '@angular/common';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SpinningIconComponent {
-  @Input({ required: true }) icon!: string;
-  @Input({ required: true }) spinner!: Spinner;
-  @Input({ required: true }) message!: string;
+  icon = input.required<string>();
+  spinner = input.required<Spinner>();
+  message = input.required<string>();
 }

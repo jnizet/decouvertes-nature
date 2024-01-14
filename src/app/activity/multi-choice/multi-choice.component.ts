@@ -1,4 +1,4 @@
-import { Component, forwardRef, Input, OnInit } from '@angular/core';
+import { Component, forwardRef, input, OnInit } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 import { IconDirective } from '../../icon/icon.directive';
@@ -22,8 +22,8 @@ interface Option {
   imports: [IconDirective]
 })
 export class MultiChoiceComponent implements OnInit, ControlValueAccessor {
-  @Input({ required: true }) knownOptions!: Array<string>;
-  @Input() addText = 'Ajouter une option';
+  knownOptions = input.required<Array<string>>();
+  addText = input('Ajouter une option');
 
   options: Array<Option> = [];
   private onChange: (value: Array<string>) => void = () => {
@@ -36,7 +36,7 @@ export class MultiChoiceComponent implements OnInit, ControlValueAccessor {
   icons = icons;
 
   ngOnInit(): void {
-    this.options = (this.knownOptions ?? []).map(value => ({ value, checked: false }));
+    this.options = this.knownOptions().map(value => ({ value, checked: false }));
   }
 
   registerOnChange(fn: any): void {
@@ -53,7 +53,7 @@ export class MultiChoiceComponent implements OnInit, ControlValueAccessor {
   }
 
   writeValue(obj: Array<string> | null | undefined): void {
-    const newOptions = (this.knownOptions ?? []).map(value => ({ value, checked: false }));
+    const newOptions = this.knownOptions().map(value => ({ value, checked: false }));
     obj?.forEach(value => {
       let option = newOptions.find(o => o.value === value);
       if (!option) {

@@ -47,7 +47,8 @@
           "error",
           { "ignoreParameters": true }
         ],
-        "no-fallthrough": "error"
+        "no-fallthrough": "error",
+        "@angular-eslint/no-host-metadata-property": "off"
       }
     },
     {

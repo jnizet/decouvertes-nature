@@ -1,6 +1,14 @@
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, input, Signal } from '@angular/core';
 import { Activity } from '../../activity/activity.service';
 import { DecimalPipe, PercentPipe } from '@angular/common';
+
+interface ViewModel {
+  total: number;
+  cancelled: number;
+  done: number;
+  withoutReport: number;
+  participants: number;
+}
 
 @Component({
   selector: 'dn-report',
@@ -11,31 +19,32 @@ import { DecimalPipe, PercentPipe } from '@angular/common';
   imports: [DecimalPipe, PercentPipe]
 })
 export class ReportComponent {
-  total = 0;
-  cancelled = 0;
-  done = 0;
-  withoutReport = 0;
-  participants = 0;
-
-  @Input({ required: true })
-  set activities(activities: Array<Activity>) {
-    this.total = 0;
-    this.cancelled = 0;
-    this.done = 0;
-    this.withoutReport = 0;
-    this.participants = 0;
-    activities.forEach(activity => {
-      this.total++;
+  activities = input.required<Array<Activity>>();
+  vm: Signal<ViewModel> = computed(() => {
+    let total = 0;
+    let cancelled = 0;
+    let done = 0;
+    let withoutReport = 0;
+    let participants = 0;
+    this.activities().forEach(activity => {
+      total++;
       if (activity.report) {
         if (activity.report.cancelled) {
-          this.cancelled++;
+          cancelled++;
         } else {
-          this.done++;
-          this.participants += activity.report.numberOfParticipants;
+          done++;
+          participants += activity.report.numberOfParticipants;
         }
       } else {
-        this.withoutReport++;
+        withoutReport++;
       }
     });
-  }
+    return {
+      total,
+      cancelled,
+      done,
+      withoutReport,
+      participants
+    };
+  });
 }

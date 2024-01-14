@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, input, OnInit, Output } from '@angular/core';
 import { ActivityReport, ActivityReportCommand, ActivityService } from '../activity.service';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 
@@ -20,8 +20,7 @@ import * as icons from '../../icon/icons';
   ]
 })
 export class ActivityReportEditionComponent implements OnInit {
-  @Input()
-  report?: ActivityReport;
+  report = input<ActivityReport>();
 
   @Output()
   readonly saved = new EventEmitter<ActivityReportCommand>();
@@ -59,8 +58,9 @@ export class ActivityReportEditionComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    if (this.report) {
-      this.form.setValue(this.report);
+    const report = this.report();
+    if (report) {
+      this.form.setValue(report);
     }
   }
 

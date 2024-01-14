@@ -1,7 +1,7 @@
-@if (consent === 'YES') {
+@if (consent() === 'YES') {
   <span class="badge text-bg-success">Oui</span>
-} @else if (consent === 'NO') {
+} @else if (consent() === 'NO') {
   <span class="badge text-bg-danger">Non</span>
-} @else if (consent === 'UNKNOWN' || consent == null) {
+} @else if (consent() === 'UNKNOWN' || consent() == null) {
   <span class="badge text-bg-dark">Inconnu</span>
 }

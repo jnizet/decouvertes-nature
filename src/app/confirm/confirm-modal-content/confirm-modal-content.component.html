@@ -1,5 +1,5 @@
 <div class="modal-header">
-  <h1 class="fs-4 modal-title" id="confirmation-modal-title">{{ title }}</h1>
+  <h1 class="fs-4 modal-title" id="confirmation-modal-title">{{ title() }}</h1>
   <button
     type="button"
     class="btn-close"
@@ -8,7 +8,7 @@
   ></button>
 </div>
 <div class="modal-body">
-  <p style="white-space: pre-line">{{ message }}</p>
+  <p style="white-space: pre-line">{{ message() }}</p>
 </div>
 <div class="modal-footer">
   <button type="button" class="btn btn-danger" (click)="activeModal.close()">Oui</button>

@@ -1,49 +1,53 @@
-<h4 class="text-black fs-6">{{ activity.title }}</h4>
-<div>{{ activity | activityDate: 'time' }}</div>
-<div>{{ activity.type | activityType }}</div>
-<p style="white-space: pre-line">{{ activity.description }}</p>
-<div>Animé par {{ activity.animator }}</div>
-<div>
-  Lieu&nbsp;: {{ activity.location }}
-  @if (activity.intercommunality) {
-    <span>({{ activity.intercommunality }})</span>
-  }
-</div>
-<div>Rendez-vous&nbsp;: {{ activity.appointmentLocation }}</div>
-<div>
-  Prix&nbsp;:
-  {{ activity.paymentRequired ? (activity.price | currency: 'EUR' : 'symbol-narrow') : 'gratuit' }}
-</div>
-@if (activity.minNumberOfParticipants) {
-  <div>Nombre minimum de participants&nbsp;: {{ activity.minNumberOfParticipants | number }}</div>
-}
-@if (activity.maxNumberOfParticipants) {
-  <div>Nombre maximum de participants&nbsp;: {{ activity.maxNumberOfParticipants | number }}</div>
-}
-@if (activity.membersOnly) {
-  <div>Réservé aux adhérents LPO</div>
-}
-@if (activity.accessible) {
-  <div>Accessible aux personnes à mobilité réduite</div>
-}
-@if (activity.accessibleToChildren) {
+@if (activity(); as activity) {
+  <h4 class="text-black fs-6">{{ activity.title }}</h4>
+  <div>{{ activity | activityDate: 'time' }}</div>
+  <div>{{ activity.type | activityType }}</div>
+  <p style="white-space: pre-line">{{ activity.description }}</p>
+  <div>Animé par {{ activity.animator }}</div>
   <div>
-    Accessible aux enfants
-    @if (activity.minChildrenAge) {
-      à partir de {{ activity.minChildrenAge | number }}
-      {{ activity.minChildrenAge > 0 ? 'ans' : 'an' }}
+    Lieu&nbsp;: {{ activity.location }}
+    @if (activity.intercommunality) {
+      <span>({{ activity.intercommunality }})</span>
     }
   </div>
-}
-@if (activity.bookingMandatory) {
-  <div>Réservation obligatoire</div>
-}
-@if (activity.labels.length) {
-  <div>Labels&nbsp;: {{ activity.labels.join(', ') }}</div>
-}
-@if (activity.associatedOrganizations.length) {
-  <div>Association partenaires&nbsp;: {{ activity.associatedOrganizations.join(', ') }}</div>
-}
-@if (activity.equipments.length) {
-  <div>Matériel spécifique&nbsp;: {{ activity.equipments.join(', ') }}</div>
+  <div>Rendez-vous&nbsp;: {{ activity.appointmentLocation }}</div>
+  <div>
+    Prix&nbsp;:
+    {{
+      activity.paymentRequired ? (activity.price | currency: 'EUR' : 'symbol-narrow') : 'gratuit'
+    }}
+  </div>
+  @if (activity.minNumberOfParticipants) {
+    <div>Nombre minimum de participants&nbsp;: {{ activity.minNumberOfParticipants | number }}</div>
+  }
+  @if (activity.maxNumberOfParticipants) {
+    <div>Nombre maximum de participants&nbsp;: {{ activity.maxNumberOfParticipants | number }}</div>
+  }
+  @if (activity.membersOnly) {
+    <div>Réservé aux adhérents LPO</div>
+  }
+  @if (activity.accessible) {
+    <div>Accessible aux personnes à mobilité réduite</div>
+  }
+  @if (activity.accessibleToChildren) {
+    <div>
+      Accessible aux enfants
+      @if (activity.minChildrenAge) {
+        à partir de {{ activity.minChildrenAge | number }}
+        {{ activity.minChildrenAge > 0 ? 'ans' : 'an' }}
+      }
+    </div>
+  }
+  @if (activity.bookingMandatory) {
+    <div>Réservation obligatoire</div>
+  }
+  @if (activity.labels.length) {
+    <div>Labels&nbsp;: {{ activity.labels.join(', ') }}</div>
+  }
+  @if (activity.associatedOrganizations.length) {
+    <div>Association partenaires&nbsp;: {{ activity.associatedOrganizations.join(', ') }}</div>
+  }
+  @if (activity.equipments.length) {
+    <div>Matériel spécifique&nbsp;: {{ activity.equipments.join(', ') }}</div>
+  }
 }

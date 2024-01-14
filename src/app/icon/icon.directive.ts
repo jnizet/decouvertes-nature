@@ -1,20 +1,19 @@
-import { Directive, HostBinding, Input } from '@angular/core';
+import { computed, Directive, input, Signal } from '@angular/core';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 
 @Directive({
   selector: 'dn-icon',
-  standalone: true
+  standalone: true,
+  host: {
+    '[innerHtml]': 'safeIcon()',
+    '[attr.aria-hidden]': 'true'
+  }
 })
 export class IconDirective {
-  @HostBinding('innerHTML')
-  safeIcon?: SafeHtml;
+  icon = input.required<string>();
+  safeIcon: Signal<SafeHtml>;
 
-  @Input({ required: true }) set icon(icon: string) {
-    this.safeIcon = this.sanitizer.bypassSecurityTrustHtml(icon);
+  constructor(sanitizer: DomSanitizer) {
+    this.safeIcon = computed(() => sanitizer.bypassSecurityTrustHtml(this.icon()));
   }
-
-  @HostBinding('attr.aria-hidden')
-  ariaHidden = true;
-
-  constructor(private sanitizer: DomSanitizer) {}
 }

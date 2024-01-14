@@ -14,7 +14,7 @@
     class="btn-close"
     aria-label="Close"
     (click)="cancel()"
-    [disabled]="(saving.isSpinning | async) === true"
+    [disabled]="saving.isSpinning()"
   ></button>
 </div>
 <div class="modal-body">
@@ -108,17 +108,12 @@
     form="animator-form"
     id="save-animator-button"
     class="btn btn-primary me-2"
-    [disabled]="(saving.isSpinning | async) === true"
+    [disabled]="saving.isSpinning()"
   >
     <dn-spinning-icon [spinner]="saving" message="Enregistrement en cours" [icon]="icons.save" />
     Enregistrer
   </button>
-  <button
-    type="button"
-    class="btn btn-danger"
-    (click)="cancel()"
-    [disabled]="(saving.isSpinning | async) === true"
-  >
+  <button type="button" class="btn btn-danger" (click)="cancel()" [disabled]="saving.isSpinning()">
     Annuler
   </button>
 </div>

@@ -64,7 +64,7 @@
       class="btn btn-outline-secondary"
       type="button"
       (click)="fileInput.click()"
-      [disabled]="(uploading.isSpinning | async) === true"
+      [disabled]="uploading.isSpinning()"
     >
       <dn-spinning-icon
         [icon]="icons.add"
