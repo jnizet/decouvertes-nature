@@ -38,8 +38,8 @@
             (mouseleave)="setFocusedLocation(null)"
             role="button"
             tabindex="0"
-            (keyup.enter)="toggle(location)"
-            (click)="toggle(location)"
+            (keyup.enter)="toggleMapped(location)"
+            (click)="toggleMapped(location)"
             [attr.aria-expanded]="!location.collapsed"
             [attr.aria-controls]="'location-' + $index"
           >
