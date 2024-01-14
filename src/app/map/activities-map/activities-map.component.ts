@@ -1,15 +1,5 @@
-import { ChangeDetectionStrategy, Component, Signal } from '@angular/core';
-import {
-  combineLatest,
-  debounceTime,
-  map,
-  Observable,
-  of,
-  startWith,
-  Subject,
-  switchMap,
-  switchScan
-} from 'rxjs';
+import { ChangeDetectionStrategy, Component, computed, Signal, signal } from '@angular/core';
+import { debounceTime, Observable, of } from 'rxjs';
 import { Activity, ActivityService } from '../../activity/activity.service';
 import { parseISO } from 'date-fns';
 import { ALL_MUNICIPALITIES, Municipality } from '../../shared/municipalities';
@@ -22,7 +12,7 @@ import { YearService } from '../../year.service';
 import { YearSelectorComponent } from '../../year-selector/year-selector.component';
 import { RouterLink } from '@angular/router';
 import * as icons from '../../icon/icons';
-import { toObservable, toSignal } from '@angular/core/rxjs-interop';
+import { toSignal } from '@angular/core/rxjs-interop';
 
 export interface ActivityLocation {
   municipality: Municipality;
@@ -62,6 +52,13 @@ interface ToggleCollapseUnmappedAction {
 
 type Action = FocusAction | ToggleCollapseAction | ToggleCollapseUnmappedAction;
 
+function mappedLocationId(municipality: Municipality): string {
+  return `mapped-${municipality.postalCode}-${municipality.name}`;
+}
+function unmappedLocationId(location: string): string {
+  return `unmapped-${location}`;
+}
+
 @Component({
   selector: 'dn-activities-map',
   templateUrl: './activities-map.component.html',
@@ -79,89 +76,105 @@ type Action = FocusAction | ToggleCollapseAction | ToggleCollapseUnmappedAction;
   ]
 })
 export class ActivitiesMapComponent {
-  private actionSubject = new Subject<Action>();
-
   vm: Signal<ViewModel | undefined>;
   icons = icons;
+
+  private expandedLocationIds = signal<Array<string>>([]);
+  private focusedLocationId = signal<string | null>(null);
 
   constructor(
     activityService: ActivityService,
     private yearService: YearService
   ) {
-    const vm$ = combineLatest([toObservable(yearService.year), activityService.findVisible()]).pipe(
-      map(([year, activities]) => {
-        // reverse to have them in chronological order, since the backend returns them in anti-chronological order
-        const yearActivities = activities
-          .filter(activity => this.isInYear(activity, year))
-          .reverse();
-        const mappedLocations = new Map<Municipality, ActivityLocation>();
-        const unmappedLocations = new Map<string, UnmappedActivityLocation>();
-        for (const activity of yearActivities) {
-          const municipality = ALL_MUNICIPALITIES.find(m => m.name === activity.location);
-          if (municipality) {
-            let location = mappedLocations.get(municipality);
-            if (!location) {
-              location = {
-                municipality,
-                activities: [],
-                draftCount: 0,
-                collapsed: true
-              };
-              mappedLocations.set(municipality, location);
-            }
-            location.activities.push(activity);
-            if (activity.draft) {
-              location.draftCount++;
-            }
-          } else {
-            let location = unmappedLocations.get(activity.location);
-            if (!location) {
-              location = {
-                location: activity.location,
-                activities: [],
-                draftCount: 0,
-                collapsed: true
-              };
-              unmappedLocations.set(activity.location, location);
-            }
-            location.activities.push(activity);
-            if (activity.draft) {
-              location.draftCount++;
-            }
-          }
-        }
-        return {
-          year,
-          mappedLocations: [...mappedLocations.values()].sort((l1, l2) =>
-            l1.municipality.name < l2.municipality.name ? -1 : 1
-          ),
-          unmappedLocations: [...unmappedLocations.values()].sort((l1, l2) =>
-            l1.location < l2.location ? -1 : 1
-          )
-        };
-      }),
-      map(partialVm => ({ ...partialVm, focusedLocation: null })),
-      switchMap(vm =>
-        this.actionSubject.pipe(
-          switchScan((vm, action) => this.applyAction(vm, action), vm),
-          startWith(vm)
-        )
-      )
-    );
+    const visibleActivities = toSignal(activityService.findVisible());
+    this.vm = computed(() => {
+      const activities = visibleActivities();
+      const year = yearService.year();
+      const expandedLocationIds = this.expandedLocationIds();
+      const focusedLocationId = this.focusedLocationId();
 
-    this.vm = toSignal(vm$);
+      if (!activities) {
+        return undefined;
+      }
+
+      const yearActivities = activities.filter(activity => this.isInYear(activity, year)).reverse();
+      const mappedLocations = new Map<string, ActivityLocation>();
+      const unmappedLocations = new Map<string, UnmappedActivityLocation>();
+      for (const activity of yearActivities) {
+        const municipality = ALL_MUNICIPALITIES.find(m => m.name === activity.location);
+        if (municipality) {
+          const locationId = mappedLocationId(municipality);
+          let location = mappedLocations.get(locationId);
+          if (!location) {
+            location = {
+              municipality,
+              activities: [],
+              draftCount: 0,
+              collapsed: true
+            };
+            mappedLocations.set(locationId, location);
+          }
+          location.activities.push(activity);
+          if (activity.draft) {
+            location.draftCount++;
+          }
+          location.collapsed = !expandedLocationIds.includes(locationId);
+        } else {
+          const locationId = unmappedLocationId(activity.location);
+          let location = unmappedLocations.get(locationId);
+          if (!location) {
+            location = {
+              location: activity.location,
+              activities: [],
+              draftCount: 0,
+              collapsed: true
+            };
+            unmappedLocations.set(activity.location, location);
+          }
+          location.activities.push(activity);
+          if (activity.draft) {
+            location.draftCount++;
+          }
+          location.collapsed = !expandedLocationIds.includes(locationId);
+        }
+      }
+
+      const focusedLocation: ActivityLocation | null =
+        focusedLocationId == null ? null : mappedLocations.get(focusedLocationId) ?? null;
+
+      return {
+        year,
+        mappedLocations: [...mappedLocations.values()].sort((l1, l2) =>
+          l1.municipality.name < l2.municipality.name ? -1 : 1
+        ),
+        unmappedLocations: [...unmappedLocations.values()].sort((l1, l2) =>
+          l1.location < l2.location ? -1 : 1
+        ),
+        focusedLocation
+      };
+    });
   }
 
   setFocusedLocation(location: ActivityLocation | null) {
-    this.actionSubject.next({ type: 'focus', location });
+    this.focusedLocationId.set(location == null ? null : mappedLocationId(location.municipality));
   }
 
-  toggle(location: ActivityLocation) {
-    this.actionSubject.next({ type: 'toggleCollapse', location });
+  toggleMapped(location: ActivityLocation) {
+    this.toggle(mappedLocationId(location.municipality), location.collapsed);
   }
 
   toggleUnmapped(location: UnmappedActivityLocation) {
-    this.actionSubject.next({ type: 'toggleCollapseUnmapped', location });
+    this.toggle(unmappedLocationId(location.location), location.collapsed);
+  }
+
+  private toggle(locationId: string, collapsed: boolean) {
+    this.expandedLocationIds.update(ids => {
+      if (collapsed) {
+        return [...ids, locationId];
+      } else {
+        return ids.filter(id => id !== locationId);
+      }
+    });
   }
 
   private isInYear(activity: Activity, year: number) {
