@@ -1,5 +1,4 @@
 import { ChangeDetectionStrategy, Component, computed, Signal, signal } from '@angular/core';
-import { debounceTime, Observable, of } from 'rxjs';
 import { Activity, ActivityService } from '../../activity/activity.service';
 import { parseISO } from 'date-fns';
 import { ALL_MUNICIPALITIES, Municipality } from '../../shared/municipalities';
@@ -13,6 +12,7 @@ import { YearSelectorComponent } from '../../year-selector/year-selector.compone
 import { RouterLink } from '@angular/router';
 import * as icons from '../../icon/icons';
 import { toSignal } from '@angular/core/rxjs-interop';
+import { debounceTime, startWith, Subject } from 'rxjs';
 
 export interface ActivityLocation {
   municipality: Municipality;
@@ -34,23 +34,6 @@ interface ViewModel {
   unmappedLocations: Array<UnmappedActivityLocation>;
   focusedLocation: ActivityLocation | null;
 }
-
-interface FocusAction {
-  type: 'focus';
-  location: ActivityLocation | null;
-}
-
-interface ToggleCollapseAction {
-  type: 'toggleCollapse';
-  location: ActivityLocation;
-}
-
-interface ToggleCollapseUnmappedAction {
-  type: 'toggleCollapseUnmapped';
-  location: UnmappedActivityLocation;
-}
-
-type Action = FocusAction | ToggleCollapseAction | ToggleCollapseUnmappedAction;
 
 function mappedLocationId(municipality: Municipality): string {
   return `mapped-${municipality.postalCode}-${municipality.name}`;
@@ -80,12 +63,12 @@ export class ActivitiesMapComponent {
   icons = icons;
 
   private expandedLocationIds = signal<Array<string>>([]);
-  private focusedLocationId = signal<string | null>(null);
+  private focusedLocationIdSubject = new Subject<string | null>();
+  private focusedLocationId = toSignal(
+    this.focusedLocationIdSubject.pipe(startWith(null), debounceTime(100))
+  );
 
-  constructor(
-    activityService: ActivityService,
-    private yearService: YearService
-  ) {
+  constructor(activityService: ActivityService, yearService: YearService) {
     const visibleActivities = toSignal(activityService.findVisible());
     this.vm = computed(() => {
       const activities = visibleActivities();
@@ -156,7 +139,9 @@ export class ActivitiesMapComponent {
   }
 
   setFocusedLocation(location: ActivityLocation | null) {
-    this.focusedLocationId.set(location == null ? null : mappedLocationId(location.municipality));
+    this.focusedLocationIdSubject.next(
+      location == null ? null : mappedLocationId(location.municipality)
+    );
   }
 
   toggleMapped(location: ActivityLocation) {
@@ -181,49 +166,5 @@ export class ActivitiesMapComponent {
     const startYear = parseISO(activity.startDate).getFullYear();
     const endYear = parseISO(activity.endDate ?? activity.startDate).getFullYear();
     return year >= startYear && year <= endYear;
-  }
-
-  private applyAction(vm: ViewModel, action: Action): Observable<ViewModel> {
-    switch (action.type) {
-      case 'focus':
-        return this.switchFocus(vm, action);
-      case 'toggleCollapse':
-        return this.toggleCollapse(vm, action);
-      case 'toggleCollapseUnmapped':
-        return this.toggleCollapseUnmapped(vm, action);
-    }
-  }
-
-  private switchFocus(vm: ViewModel, action: FocusAction): Observable<ViewModel> {
-    return of({ ...vm, focusedLocation: action.location }).pipe(debounceTime(100));
-  }
-
-  private toggleCollapse(vm: ViewModel, action: ToggleCollapseAction): Observable<ViewModel> {
-    return of({
-      ...vm,
-      mappedLocations: vm.mappedLocations.map(location => {
-        if (location === action.location) {
-          return { ...location, collapsed: !location.collapsed };
-        } else {
-          return location;
-        }
-      })
-    });
-  }
-
-  private toggleCollapseUnmapped(
-    vm: ViewModel,
-    action: ToggleCollapseUnmappedAction
-  ): Observable<ViewModel> {
-    return of({
-      ...vm,
-      unmappedLocations: vm.unmappedLocations.map(location => {
-        if (location === action.location) {
-          return { ...location, collapsed: !location.collapsed };
-        } else {
-          return location;
-        }
-      })
-    });
   }
 }
