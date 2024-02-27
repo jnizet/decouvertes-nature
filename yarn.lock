@@ -4694,6 +4694,14 @@ debug@^3.2.7:
   dependencies:
     ms "^2.1.1"
 
+deep-equal-in-any-order@^2.0.6:
+  version "2.0.6"
+  resolved "https://registry.yarnpkg.com/deep-equal-in-any-order/-/deep-equal-in-any-order-2.0.6.tgz#9fb208dfc6836e35e2d4c942db85fc291820318a"
+  integrity sha512-RfnWHQzph10YrUjvWwhd15Dne8ciSJcZ3U6OD7owPwiVwsdE5IFSoZGg8rlwJD11ES+9H5y8j3fCofviRHOqLQ==
+  dependencies:
+    lodash.mapvalues "^4.6.0"
+    sort-any "^2.0.0"
+
 deep-extend@^0.6.0:
   version "0.6.0"
   resolved "https://registry.yarnpkg.com/deep-extend/-/deep-extend-0.6.0.tgz#c4fa7c95404a17a9c3e8ca7e1537312b736330ac"
@@ -5601,10 +5609,10 @@ firebase-admin@12.0.0:
     "@google-cloud/firestore" "^7.1.0"
     "@google-cloud/storage" "^7.7.0"
 
-firebase-tools@13.3.0:
-  version "13.3.0"
-  resolved "https://registry.yarnpkg.com/firebase-tools/-/firebase-tools-13.3.0.tgz#a9cf2ca48eb60444396352a4ddb99c0aaac9de6f"
-  integrity sha512-WooMk02Wucre63XGHNOopwRp/FFCL/zjq1Jz0itZ6fDeytdTxZabhlcvnX+HMCyccPhuwbs3extIEh/T6SFWtA==
+firebase-tools@13.4.0:
+  version "13.4.0"
+  resolved "https://registry.yarnpkg.com/firebase-tools/-/firebase-tools-13.4.0.tgz#1e17637a6189c6c9a05dabaf31504ba20a4d4411"
+  integrity sha512-yoxET4Xifezr+SopwFgkpMIRGmp11aTTE67tFcfJoTOZDveBbY16dfo6so2xiuqBXQ7DNxsZIQ+d3JEm2Jn40A==
   dependencies:
     "@google-cloud/pubsub" "^3.0.1"
     abort-controller "^3.0.0"
@@ -5622,15 +5630,18 @@ firebase-tools@13.3.0:
     cross-env "^5.1.3"
     cross-spawn "^7.0.3"
     csv-parse "^5.0.4"
+    deep-equal-in-any-order "^2.0.6"
     exegesis "^4.1.0"
     exegesis-express "^4.0.0"
     express "^4.16.4"
     filesize "^6.1.0"
     form-data "^4.0.0"
     fs-extra "^10.1.0"
+    fuzzy "^0.1.3"
     glob "^7.1.2"
     google-auth-library "^7.11.0"
-    inquirer "^8.2.0"
+    inquirer "^8.2.6"
+    inquirer-autocomplete-prompt "^2.0.1"
     js-yaml "^3.13.1"
     jsonwebtoken "^9.0.0"
     leven "^3.1.0"
@@ -6517,6 +6528,17 @@ inquirer-autocomplete-prompt@^1.0.1:
     run-async "^2.4.0"
     rxjs "^6.6.2"
 
+inquirer-autocomplete-prompt@^2.0.1:
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/inquirer-autocomplete-prompt/-/inquirer-autocomplete-prompt-2.0.1.tgz#72868aada4d9d36814a6054cbd1ececc63aab0c6"
+  integrity sha512-jUHrH0btO7j5r8DTQgANf2CBkTZChoVySD8zF/wp5fZCOLIuUbleXhf4ZY5jNBOc1owA3gdfWtfZuppfYBhcUg==
+  dependencies:
+    ansi-escapes "^4.3.2"
+    figures "^3.2.0"
+    picocolors "^1.0.0"
+    run-async "^2.4.1"
+    rxjs "^7.5.4"
+
 inquirer@9.2.14:
   version "9.2.14"
   resolved "https://registry.yarnpkg.com/inquirer/-/inquirer-9.2.14.tgz#b55474f1e4f5f0eb28b2f75f09c082209f0cc2ca"
@@ -6538,7 +6560,7 @@ inquirer@9.2.14:
     strip-ansi "^6.0.1"
     wrap-ansi "^6.2.0"
 
-inquirer@^8.1.1, inquirer@^8.2.0:
+inquirer@^8.1.1, inquirer@^8.2.6:
   version "8.2.6"
   resolved "https://registry.yarnpkg.com/inquirer/-/inquirer-8.2.6.tgz#733b74888195d8d400a67ac332011b5fae5ea562"
   integrity sha512-M1WuAmb7pn9zdFRtQYk26ZBoY043Sse0wVDdk4Bppr+JOXyQYybdtvK+l9wUibhtjdjvtoiNy8tk+EgsYIUqKg==
@@ -7440,6 +7462,11 @@ lodash.isstring@^4.0.1:
   version "4.0.1"
   resolved "https://registry.yarnpkg.com/lodash.isstring/-/lodash.isstring-4.0.1.tgz#d527dfb5456eca7cc9bb95d5daeaf88ba54a5451"
   integrity sha512-0wJxfxH1wgO3GrbuP+dTTk7op+6L41QCXbGINEmD+ny/G/eCqGzxyCsh7159S+mgDDcoarnBw6PC1PS5+wUGgw==
+
+lodash.mapvalues@^4.6.0:
+  version "4.6.0"
+  resolved "https://registry.yarnpkg.com/lodash.mapvalues/-/lodash.mapvalues-4.6.0.tgz#1bafa5005de9dd6f4f26668c30ca37230cc9689c"
+  integrity sha512-JPFqXFeZQ7BfS00H58kClY7SPVeHertPE0lNuCyZ26/XlN8TvakYD7b9bGyNmXbT/D3BbtPAAmq90gPWqLkxlQ==
 
 lodash.merge@^4.6.2:
   version "4.6.2"
@@ -9222,7 +9249,7 @@ router@^1.3.1:
     setprototypeof "1.2.0"
     utils-merge "1.0.1"
 
-run-async@^2.4.0:
+run-async@^2.4.0, run-async@^2.4.1:
   version "2.4.1"
   resolved "https://registry.yarnpkg.com/run-async/-/run-async-2.4.1.tgz#8440eccf99ea3e70bd409d49aab88e10c189a455"
   integrity sha512-tvVnVv01b8c1RrA6Ep7JkStj85Guv/YrMcwqYQnwjsAS2cTmmPGBBjAjpCW7RrSodNSoE2/qg9O4bceNvUuDgQ==
@@ -9244,7 +9271,7 @@ rxfire@^6.0.5:
   resolved "https://registry.yarnpkg.com/rxfire/-/rxfire-6.0.5.tgz#02035400b150dd730353c786ffa15283f0389dd4"
   integrity sha512-ycBsANGbya3GNtOBKzZVATLEV+0S9gUrlTfwnN15TCXtgG8OgIMAuv2k9+kMeVaevp/DRp1KT+vYf6Wkop6gvw==
 
-rxjs@7.8.1, rxjs@^7.5.5, rxjs@^7.8.1:
+rxjs@7.8.1, rxjs@^7.5.4, rxjs@^7.5.5, rxjs@^7.8.1:
   version "7.8.1"
   resolved "https://registry.yarnpkg.com/rxjs/-/rxjs-7.8.1.tgz#6f6f3d99ea8044291efd92e7c7fcf562c4057543"
   integrity sha512-AA3TVj+0A2iuIoQkWEK/tqFjBq2j+6PO6Y0zJcvzLAFhEFIO3HL0vls9hWLncZbAAbK0mar7oZ4V079I/qPMxg==
@@ -9624,6 +9651,13 @@ socks@^2.7.1:
   dependencies:
     ip "^2.0.0"
     smart-buffer "^4.2.0"
+
+sort-any@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/sort-any/-/sort-any-2.0.0.tgz#62a5409c9905c9483f03e41e17f46cc451aa7c55"
+  integrity sha512-T9JoiDewQEmWcnmPn/s9h/PH9t3d/LSWi0RgVmXSuDYeZXTZOZ1/wrK2PHaptuR1VXe3clLLt0pD6sgVOwjNEA==
+  dependencies:
+    lodash "^4.17.21"
 
 "source-map-js@>=0.6.2 <2.0.0", source-map-js@^1.0.2:
   version "1.0.2"
