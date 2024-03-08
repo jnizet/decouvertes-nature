@@ -1,7 +1,7 @@
 import { Injectable, Signal } from '@angular/core';
 import { concat, delay, of, Subject, switchMap } from 'rxjs';
-import { checkCircleFill } from '../bootstrap-icons/bootstrap-icons';
 import { toSignal } from '@angular/core/rxjs-interop';
+import success from 'bootstrap-icons/icons/check-circle-fill.svg';
 
 export interface Toast {
   message: string;
@@ -28,7 +28,7 @@ export class ToastService {
 
   success(message: string) {
     this.display({
-      icon: checkCircleFill,
+      icon: success,
       message
     });
   }

@@ -5,9 +5,9 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { IconDirective } from '../../icon/icon.directive';
 import { Spinner } from '../../shared/spinner';
 import { ToastService } from '../../toast/toast.service';
-import { clipboardCheck } from '../../bootstrap-icons/bootstrap-icons';
 import { SpinningIconComponent } from '../../shared/spinning-icon/spinning-icon.component';
 import * as icons from '../../icon/icons';
+import { copied } from '../../icon/icons';
 
 @Component({
   selector: 'dn-reset-password-link-modal',
@@ -50,7 +50,7 @@ suivante\u00a0:
 ${homePath}.`;
     from(navigator.clipboard.writeText(email)).subscribe(() =>
       this.toastService.display({
-        icon: clipboardCheck,
+        icon: copied,
         message: 'Message copié dans le presse-papier\u00a0!'
       })
     );

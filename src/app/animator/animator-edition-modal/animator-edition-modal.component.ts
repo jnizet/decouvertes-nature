@@ -9,9 +9,9 @@ import { SpinningIconComponent } from '../../shared/spinning-icon/spinning-icon.
 import { ValidationErrorDirective, ValidationErrorsComponent } from 'ngx-valdemort';
 import { Spinner } from '../../shared/spinner';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { save } from '../../bootstrap-icons/bootstrap-icons';
 import { first, map } from 'rxjs';
 import { Animator, AnimatorCommand, AnimatorService, Consent } from '../animator.service';
+import * as icons from '../../icon/icons';
 
 @Component({
   selector: 'dn-animator-edition-modal',
@@ -44,9 +44,7 @@ export class AnimatorEditionModalComponent {
 
   saving = new Spinner();
 
-  icons = {
-    save: save
-  };
+  icons = icons;
 
   constructor(
     private activeModal: NgbActiveModal,

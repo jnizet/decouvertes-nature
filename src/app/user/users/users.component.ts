@@ -1,7 +1,6 @@
 import { ChangeDetectionStrategy, Component, Signal } from '@angular/core';
 import { AdministeredUser, UserService } from '../user.service';
 import { from } from 'rxjs';
-import { clipboardCheck } from '../../bootstrap-icons/bootstrap-icons';
 import { PageTitleDirective } from '../../page-title/page-title.directive';
 import { LoadingSpinnerComponent } from '../../loading-spinner/loading-spinner.component';
 import { IconDirective } from '../../icon/icon.directive';
@@ -10,6 +9,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ResetPasswordLinkModalComponent } from '../reset-password-link-modal/reset-password-link-modal.component';
 import { ToastService } from '../../toast/toast.service';
 import * as icons from '../../icon/icons';
+import { copied } from '../../icon/icons';
 import { toSignal } from '@angular/core/rxjs-interop';
 
 @Component({
@@ -47,7 +47,7 @@ suivante\u00a0:
 ${homePath}.`;
     from(navigator.clipboard.writeText(email)).subscribe(() =>
       this.toastService.display({
-        icon: clipboardCheck,
+        icon: copied,
         message: 'Email copié dans le presse-papier\u00a0!'
       })
     );

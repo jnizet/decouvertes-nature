@@ -6,12 +6,12 @@ import { RouterLink } from '@angular/router';
 import { LoadingSpinnerComponent } from '../../loading-spinner/loading-spinner.component';
 import { NonNullableFormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { Animator, AnimatorService } from '../animator.service';
-import { pencilSquare, plusCircle } from '../../bootstrap-icons/bootstrap-icons';
 import { ConsentComponent } from '../consent/consent.component';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { AnimatorEditionModalComponent } from '../animator-edition-modal/animator-edition-modal.component';
 import { ToastService } from '../../toast/toast.service';
 import { toSignal } from '@angular/core/rxjs-interop';
+import * as icons from '../../icon/icons';
 
 @Component({
   selector: 'dn-animators',
@@ -33,10 +33,7 @@ export class AnimatorsComponent {
 
   searchControl = this.fb.control('');
 
-  icons = {
-    add: plusCircle,
-    edit: pencilSquare
-  };
+  icons = icons;
 
   constructor(
     animatorService: AnimatorService,
