@@ -10,7 +10,6 @@
     "lint": "ng lint",
     "format": "prettier --write \"src/**/*.+(ts|js|json|html|scss)\"",
     "format:check": "prettier --check \"src/**/*.+(ts|js|json|html|scss)\"",
-    "postinstall": "node generate-bootstrap-icons.mjs",
     "serve:e2e": "ng serve -c e2e",
     "e2e": "yarn playwright test",
     "build:e2e:ci": "ng build -c e2e",

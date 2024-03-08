@@ -1,50 +1,49 @@
-import {
-  arrowLeftCircle,
-  arrowRightCircle,
-  bookmarkPlus,
-  boxArrowInRight,
-  bucket,
-  calendar2Event,
-  calendar4Event,
-  cardList,
-  checkCircleFill,
-  chevronCompactUp,
-  clipboard2,
-  clipboard2Fill,
-  download as bsDownload,
-  emojiLaughing,
-  envelope,
-  exclamationTriangleFill,
-  geoAlt,
-  geoFill,
-  infoCircleFill,
-  key,
-  lock,
-  pencilSquare,
-  people,
-  peopleFill,
-  personCircle,
-  personHearts,
-  personWheelchair,
-  personWorkspace,
-  piggyBank,
-  pinMap,
-  plus as bsPlus,
-  plusCircle,
-  power,
-  save as bsSave,
-  save2,
-  shieldFill,
-  shieldLock,
-  subtract,
-  tag,
-  telephone,
-  trash3,
-  unlock,
-  xCircleFill,
-  xOctagonFill,
-  xSquare
-} from '../bootstrap-icons/bootstrap-icons';
+import bsPlusCircle from 'bootstrap-icons/icons/plus-circle.svg';
+import bsArrowLeftCircle from 'bootstrap-icons/icons/arrow-left-circle.svg';
+import bsArrowRightCircle from 'bootstrap-icons/icons/arrow-right-circle.svg';
+import bsBookmarkPlus from 'bootstrap-icons/icons/bookmark-plus.svg';
+import bsBoxArrowInRight from 'bootstrap-icons/icons/box-arrow-in-right.svg';
+import bsBucket from 'bootstrap-icons/icons/bucket.svg';
+import bsCalendar2Event from 'bootstrap-icons/icons/calendar2-event.svg';
+import bsCalendar4Event from 'bootstrap-icons/icons/calendar4-event.svg';
+import bsCardList from 'bootstrap-icons/icons/card-list.svg';
+import bsCheckCircleFill from 'bootstrap-icons/icons/check-circle-fill.svg';
+import bsChevronCompactUp from 'bootstrap-icons/icons/chevron-compact-up.svg';
+import bsClipboard2 from 'bootstrap-icons/icons/clipboard2.svg';
+import bsClipboard2Fill from 'bootstrap-icons/icons/clipboard2-fill.svg';
+import bsClipboardCheck from 'bootstrap-icons/icons/clipboard-check.svg';
+import bsDownload from 'bootstrap-icons/icons/download.svg';
+import bsEmojiLaughing from 'bootstrap-icons/icons/emoji-laughing.svg';
+import bsEnvelope from 'bootstrap-icons/icons/envelope.svg';
+import bsExclamationTriangleFill from 'bootstrap-icons/icons/exclamation-triangle-fill.svg';
+import bsGeoAlt from 'bootstrap-icons/icons/geo-alt.svg';
+import bsGeoFill from 'bootstrap-icons/icons/geo-fill.svg';
+import bsInfoCircleFill from 'bootstrap-icons/icons/info-circle-fill.svg';
+import bsKey from 'bootstrap-icons/icons/key.svg';
+import bsLock from 'bootstrap-icons/icons/lock.svg';
+import bsPencilSquare from 'bootstrap-icons/icons/pencil-square.svg';
+import bsPeople from 'bootstrap-icons/icons/people.svg';
+import bsPeopleFill from 'bootstrap-icons/icons/people-fill.svg';
+import bsPersonCircle from 'bootstrap-icons/icons/person-circle.svg';
+import bsPersonHearts from 'bootstrap-icons/icons/person-hearts.svg';
+import bsPersonWheelchair from 'bootstrap-icons/icons/person-wheelchair.svg';
+import bsPersonWorkspace from 'bootstrap-icons/icons/person-workspace.svg';
+import bsPiggyBank from 'bootstrap-icons/icons/piggy-bank.svg';
+import bsPinMap from 'bootstrap-icons/icons/pin-map.svg';
+import bsPlus from 'bootstrap-icons/icons/plus.svg';
+import bsPower from 'bootstrap-icons/icons/power.svg';
+import bsSave from 'bootstrap-icons/icons/save.svg';
+import bsSave2 from 'bootstrap-icons/icons/save2.svg';
+import bsShieldFill from 'bootstrap-icons/icons/shield-fill.svg';
+import bsShieldLock from 'bootstrap-icons/icons/shield-lock.svg';
+import bsSubtract from 'bootstrap-icons/icons/subtract.svg';
+import bsTag from 'bootstrap-icons/icons/tag.svg';
+import bsTelephone from 'bootstrap-icons/icons/telephone.svg';
+import bsTrash3 from 'bootstrap-icons/icons/trash3.svg';
+import bsUnlock from 'bootstrap-icons/icons/unlock.svg';
+import bsXCircleFill from 'bootstrap-icons/icons/x-circle-fill.svg';
+import bsXOctagonFill from 'bootstrap-icons/icons/x-octagon-fill.svg';
+import bsXSquare from 'bootstrap-icons/icons/x-square.svg';
 
 function barredIcon(icon: string, viewBowSize = 16): string {
   return icon.replace(
@@ -53,53 +52,55 @@ function barredIcon(icon: string, viewBowSize = 16): string {
   );
 }
 
-export const add = plusCircle;
-export const date = calendar4Event;
-export const location = pinMap;
-export const appointmentLocation = geoFill;
-export const animator = emojiLaughing;
-export const roomToBook = bookmarkPlus;
-export const label = tag;
-export const associatedOrganization = peopleFill;
-export const bookingMandatory = telephone;
-export const bookingNotMandatory = barredIcon(telephone);
-export const membersOnly = lock;
-export const notMembersOnly = unlock;
-export const paymentRequired = piggyBank;
-export const paymentNotRequired = barredIcon(piggyBank);
-export const participants = people;
-export const edit = pencilSquare;
-export const accessible = personWheelchair;
-export const notAccessible = barredIcon(personWheelchair);
-export const trash = trash3;
-export const duplicate = subtract;
-export const equipment = bucket;
-export const accessibleToChildren = personHearts;
-export const notAccessibleToChildren = barredIcon(personHearts);
+export const add = bsPlusCircle;
+export const date = bsCalendar4Event;
+export const location = bsPinMap;
+export const appointmentLocation = bsGeoFill;
+export const animator = bsEmojiLaughing;
+export const roomToBook = bsBookmarkPlus;
+export const label = bsTag;
+export const associatedOrganization = bsPeopleFill;
+export const bookingMandatory = bsTelephone;
+export const bookingNotMandatory = barredIcon(bsTelephone);
+export const membersOnly = bsLock;
+export const notMembersOnly = bsUnlock;
+export const paymentRequired = bsPiggyBank;
+export const paymentNotRequired = barredIcon(bsPiggyBank);
+export const participants = bsPeople;
+export const edit = bsPencilSquare;
+export const accessible = bsPersonWheelchair;
+export const notAccessible = barredIcon(bsPersonWheelchair);
+export const trash = bsTrash3;
+export const duplicate = bsSubtract;
+export const equipment = bsBucket;
+export const accessibleToChildren = bsPersonHearts;
+export const notAccessibleToChildren = barredIcon(bsPersonHearts);
 export const save = bsSave;
-export const cancel = xSquare;
-export const saveAsDraft = save2;
-export const cancelled = xCircleFill;
-export const notCancelled = checkCircleFill;
-export const info = infoCircleFill;
-export const login = boxArrowInRight;
-export const logout = power;
-export const activities = cardList;
-export const calendar = calendar2Event;
-export const collapsed = chevronCompactUp;
-export const users = personWorkspace;
-export const user = personCircle;
-export const changePassword = key;
-export const exports = clipboard2;
-export const map = geoAlt;
-export const warning = exclamationTriangleFill;
-export const resetPasswordEmail = envelope;
-export const resetPasswordLink = shieldLock;
-export const admin = shieldFill;
-export const exporter = clipboard2Fill;
-export const disabled = xOctagonFill;
-export const addUser = plusCircle;
-export const left = arrowLeftCircle;
-export const right = arrowRightCircle;
+export const cancel = bsXSquare;
+export const saveAsDraft = bsSave2;
+export const cancelled = bsXCircleFill;
+export const notCancelled = bsCheckCircleFill;
+export const info = bsInfoCircleFill;
+export const login = bsBoxArrowInRight;
+export const logout = bsPower;
+export const activities = bsCardList;
+export const calendar = bsCalendar2Event;
+export const collapsed = bsChevronCompactUp;
+export const users = bsPersonWorkspace;
+export const user = bsPersonCircle;
+export const changePassword = bsKey;
+export const exports = bsClipboard2;
+export const map = bsGeoAlt;
+export const warning = bsExclamationTriangleFill;
+export const resetPasswordEmail = bsEnvelope;
+export const resetPasswordLink = bsShieldLock;
+export const admin = bsShieldFill;
+export const exporter = bsClipboard2Fill;
+export const disabled = bsXOctagonFill;
+export const addUser = bsPlusCircle;
+export const left = bsArrowLeftCircle;
+export const right = bsArrowRightCircle;
 export const plus = bsPlus;
 export const download = bsDownload;
+export const copied = bsClipboardCheck;
+export const success = bsCheckCircleFill;
