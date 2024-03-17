@@ -1,4 +1,4 @@
-import { Component, EventEmitter, input, OnInit, Output } from '@angular/core';
+import { Component, input, OnInit, output } from '@angular/core';
 import { ActivityReport, ActivityReportCommand, ActivityService } from '../activity.service';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 
@@ -22,11 +22,8 @@ import * as icons from '../../icon/icons';
 export class ActivityReportEditionComponent implements OnInit {
   report = input<ActivityReport>();
 
-  @Output()
-  readonly saved = new EventEmitter<ActivityReportCommand>();
-
-  @Output()
-  readonly cancelled = new EventEmitter<void>();
+  readonly saved = output<ActivityReportCommand>();
+  readonly cancelled = output();
 
   readonly icons = icons;
 
