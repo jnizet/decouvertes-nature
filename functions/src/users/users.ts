@@ -1,7 +1,6 @@
-import * as functions from 'firebase-functions';
+import { CallableRequest, HttpsError, onCall } from 'firebase-functions/v2/https';
 import * as crypto from 'crypto';
 import { getAuth, UserRecord } from 'firebase-admin/auth';
-import { CallableContext } from 'firebase-functions/lib/common/providers/https';
 import { ActionCodeSettings } from 'firebase-admin/lib/auth/action-code-settings-builder';
 
 interface User {
@@ -44,54 +43,51 @@ function randomPassword() {
   return result;
 }
 
-function checkAdmin(context: CallableContext) {
-  if (!(context.auth?.token?.['admin'] || context.auth?.token.email === 'jnizet@gmail.com')) {
-    throw new functions.https.HttpsError(
-      'permission-denied',
-      'You must be an admin to access this function'
-    );
+function checkAdmin(request: CallableRequest<unknown>) {
+  if (!(request.auth?.token?.['admin'] || request.auth?.token.email === 'jnizet@gmail.com')) {
+    throw new HttpsError('permission-denied', 'You must be an admin to access this function');
   }
 }
 
-export const listUsers = functions.https.onCall(async (_, context): Promise<Array<User>> => {
-  checkAdmin(context);
+export const listUsers = onCall(async (request: CallableRequest<void>): Promise<Array<User>> => {
+  checkAdmin(request);
   const auth = getAuth();
   const userRecords = await auth.listUsers();
   return userRecords.users.map(userRecordToUser);
 });
 
-export const getUser = functions.https.onCall(async (uid: string, context): Promise<User> => {
-  checkAdmin(context);
+export const getUser = onCall(async (request: CallableRequest<string>): Promise<User> => {
+  checkAdmin(request);
   const auth = getAuth();
-  const userRecord = await auth.getUser(uid);
+  const userRecord = await auth.getUser(request.data);
   return userRecordToUser(userRecord);
 });
 
-export const createUser = functions.https.onCall(
-  async (command: UserCommand, context): Promise<User> => {
-    checkAdmin(context);
-    const auth = getAuth();
-    const createdUser = await auth.createUser({
-      email: command.email,
-      displayName: command.displayName,
-      emailVerified: true,
-      disabled: command.disabled,
-      password: randomPassword()
-    });
-    await auth.setCustomUserClaims(createdUser.uid, {
-      admin: command.admin,
-      export: command.export,
-      // this is checked by firebase security rules in order to prevent access to any document if the user hasn't been
-      // created or updated by these functions, since there is no way to actually prevent signup on Firebase
-      user: true
-    });
-    return { ...userRecordToUser(createdUser), admin: command.admin };
-  }
-);
-
-export const updateUser = functions.https.onCall(async (command: User, context): Promise<void> => {
-  checkAdmin(context);
+export const createUser = onCall(async (request: CallableRequest<UserCommand>): Promise<User> => {
+  checkAdmin(request);
   const auth = getAuth();
+  const command = request.data;
+  const createdUser = await auth.createUser({
+    email: command.email,
+    displayName: command.displayName,
+    emailVerified: true,
+    disabled: command.disabled,
+    password: randomPassword()
+  });
+  await auth.setCustomUserClaims(createdUser.uid, {
+    admin: command.admin,
+    export: command.export,
+    // this is checked by firebase security rules in order to prevent access to any document if the user hasn't been
+    // created or updated by these functions, since there is no way to actually prevent signup on Firebase
+    user: true
+  });
+  return { ...userRecordToUser(createdUser), admin: command.admin };
+});
+
+export const updateUser = onCall(async (request: CallableRequest<User>): Promise<void> => {
+  checkAdmin(request);
+  const auth = getAuth();
+  const command = request.data;
   const updatedUser = await auth.updateUser(command.uid, {
     email: command.email,
     displayName: command.displayName,
@@ -107,10 +103,11 @@ export const updateUser = functions.https.onCall(async (command: User, context):
   });
 });
 
-export const generateResetPasswordLink = functions.https.onCall(
-  async (uid: string, context): Promise<ResetPasswordLinkInfo> => {
-    checkAdmin(context);
+export const generateResetPasswordLink = onCall(
+  async (request: CallableRequest<string>): Promise<ResetPasswordLinkInfo> => {
+    checkAdmin(request);
     const auth = getAuth();
+    const uid = request.data;
     const userRecord = await auth.getUser(uid);
     const actionCodeSettings: ActionCodeSettings = {
       url: 'https://decouvertes-nature.web.app/reset-password'
