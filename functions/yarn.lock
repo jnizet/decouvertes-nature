@@ -1402,16 +1402,15 @@ firebase-functions-test@3.1.1:
     lodash "^4.17.5"
     ts-deepmerge "^2.0.1"
 
-firebase-functions@4.8.1:
-  version "4.8.1"
-  resolved "https://registry.yarnpkg.com/firebase-functions/-/firebase-functions-4.8.1.tgz#4e1dc809390f6bbdab645adcc3ad720b5bc94cdd"
-  integrity sha512-SHA7ZUlG+MOOsKyp+D4vhSyF4FsJMD+qyVUkTcPry6wbbxDitv9k4xgUPXffhbiokxFi1AbeckA8SGD41AZiCg==
+firebase-functions@4.8.2:
+  version "4.8.2"
+  resolved "https://registry.yarnpkg.com/firebase-functions/-/firebase-functions-4.8.2.tgz#dde3a154d45a1dcb372f0b5c45d06693662ab701"
+  integrity sha512-1M86Wu6IoE5f+r8QithaBFnkzygejh6OhaCz3p3dGjl+3lvL/9Xbm8GovZWZRmZzJ1nzb4dZpXWCalunLwZtOg==
   dependencies:
     "@types/cors" "^2.8.5"
     "@types/express" "4.17.3"
     cors "^2.8.5"
     express "^4.17.1"
-    node-fetch "^2.6.7"
     protobufjs "^7.2.2"
 
 flat-cache@^3.0.4:
@@ -2217,7 +2216,7 @@ negotiator@0.6.3:
   resolved "https://registry.yarnpkg.com/negotiator/-/negotiator-0.6.3.tgz#58e323a72fedc0d6f9cd4d31fe49f51479590ccd"
   integrity sha512-+EUsqGPLsM+j/zdChZjsnX51g4XrHFOIXwfnCVPGlQk/k5giakcKsuxCObBRu6DSm9opw/O6slWbJdghQM4bBg==
 
-node-fetch@^2.6.1, node-fetch@^2.6.7:
+node-fetch@^2.6.1:
   version "2.6.7"
   resolved "https://registry.yarnpkg.com/node-fetch/-/node-fetch-2.6.7.tgz#24de9fba827e3b4ae44dc8b20256a379160052ad"
   integrity sha512-ZjMPFEfVx5j+y2yF35Kzx5sF7kDzxuDj6ziH4FFbOp87zKDZNx8yExJIb05OGF4Nlt9IHFIMBkRl41VdvcNdbQ==
