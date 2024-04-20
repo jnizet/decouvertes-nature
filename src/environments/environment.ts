@@ -30,7 +30,7 @@ export const environment = {
     ),
     importProvidersFrom(
       provideFunctions(() => {
-        const functions = getFunctions();
+        const functions = getFunctions(undefined, 'europe-west1');
         connectFunctionsEmulator(functions, 'localhost', 5001);
         return functions;
       })
