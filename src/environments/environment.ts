@@ -6,42 +6,33 @@ import { connectFirestoreEmulator, getFirestore, provideFirestore } from '@angul
 import { connectAuthEmulator, getAuth, provideAuth } from '@angular/fire/auth';
 import { firebaseConfig } from './firebase-config';
 import { connectFunctionsEmulator, getFunctions, provideFunctions } from '@angular/fire/functions';
-import { importProvidersFrom } from '@angular/core';
 import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
 import { connectStorageEmulator, getStorage, provideStorage } from '@angular/fire/storage';
 
 export const environment = {
   production: false,
   firebaseProviders: [
-    importProvidersFrom(provideFirebaseApp(() => initializeApp(firebaseConfig))),
-    importProvidersFrom(
-      provideFirestore(() => {
-        const firestore = getFirestore();
-        connectFirestoreEmulator(firestore, 'localhost', 7070);
-        return firestore;
-      })
-    ),
-    importProvidersFrom(
-      provideAuth(() => {
-        const auth = getAuth();
-        connectAuthEmulator(auth, 'http://localhost:9099', { disableWarnings: true });
-        return auth;
-      })
-    ),
-    importProvidersFrom(
-      provideFunctions(() => {
-        const functions = getFunctions(undefined, 'europe-west1');
-        connectFunctionsEmulator(functions, 'localhost', 5001);
-        return functions;
-      })
-    ),
-    importProvidersFrom(
-      provideStorage(() => {
-        const storage = getStorage();
-        connectStorageEmulator(storage, 'localhost', 9199);
-        return storage;
-      })
-    )
+    provideFirebaseApp(() => initializeApp(firebaseConfig)),
+    provideFirestore(() => {
+      const firestore = getFirestore();
+      connectFirestoreEmulator(firestore, 'localhost', 7070);
+      return firestore;
+    }),
+    provideAuth(() => {
+      const auth = getAuth();
+      connectAuthEmulator(auth, 'http://localhost:9099', { disableWarnings: true });
+      return auth;
+    }),
+    provideFunctions(() => {
+      const functions = getFunctions(undefined, 'europe-west1');
+      connectFunctionsEmulator(functions, 'localhost', 5001);
+      return functions;
+    }),
+    provideStorage(() => {
+      const storage = getStorage();
+      connectStorageEmulator(storage, 'localhost', 9199);
+      return storage;
+    })
   ]
 };
 
