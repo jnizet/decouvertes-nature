@@ -1,5 +1,13 @@
-import { AuthGuard, redirectUnauthorizedTo } from '@angular/fire/auth-guard';
-import { Routes } from '@angular/router';
+import { CanActivateFn, Router, Routes } from '@angular/router';
+import { Auth, user } from '@angular/fire/auth';
+import { inject } from '@angular/core';
+import { map } from 'rxjs';
+
+export const authenticationGuard: CanActivateFn = () => {
+  const auth = inject(Auth);
+  const router = inject(Router);
+  return user(auth).pipe(map(userOrNull => !!userOrNull || router.parseUrl('/login')));
+};
 
 export const APP_ROUTES: Routes = [
   {
@@ -22,8 +30,7 @@ export const APP_ROUTES: Routes = [
   },
   {
     path: '',
-    canActivate: [AuthGuard],
-    data: { authGuardPipe: () => redirectUnauthorizedTo('/login') },
+    canActivate: [authenticationGuard],
     children: [
       {
         path: 'activities/exportable',
