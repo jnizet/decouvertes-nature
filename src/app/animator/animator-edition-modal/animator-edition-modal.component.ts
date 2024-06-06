@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import {
   AsyncValidatorFn,
   NonNullableFormBuilder,
@@ -36,7 +36,7 @@ export class AnimatorEditionModalComponent {
     );
   };
 
-  form = this.fb.group({
+  form = inject(NonNullableFormBuilder).group({
     name: ['', Validators.required, this.uniqueNameAsyncValidator],
     emailConsent: ['UNKNOWN' as Consent],
     phoneConsent: ['UNKNOWN' as Consent]
@@ -48,8 +48,7 @@ export class AnimatorEditionModalComponent {
 
   constructor(
     private activeModal: NgbActiveModal,
-    private animatorService: AnimatorService,
-    private fb: NonNullableFormBuilder
+    private animatorService: AnimatorService
   ) {}
 
   prepareForCreation() {

@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { YearService } from '../year.service';
 import { IconDirective } from '../icon/icon.directive';
 import { DecimalPipe } from '@angular/common';
@@ -15,9 +15,8 @@ import * as icons from '../icon/icons';
 export class YearSelectorComponent {
   icons = icons;
 
+  private yearService = inject(YearService);
   year = this.yearService.year;
-
-  constructor(private yearService: YearService) {}
 
   changeYear(year: number) {
     this.yearService.set(year);

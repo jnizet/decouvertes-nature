@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, Signal } from '@angular/core';
 import { combineLatest, distinctUntilChanged, map, startWith } from 'rxjs';
 import { PageTitleDirective } from '../../page-title/page-title.directive';
 import { IconDirective } from '../../icon/icon.directive';
@@ -31,13 +31,12 @@ import * as icons from '../../icon/icons';
 export class AnimatorsComponent {
   animators: Signal<Array<Animator> | undefined>;
 
-  searchControl = this.fb.control('');
+  searchControl = inject(NonNullableFormBuilder).control('');
 
   icons = icons;
 
   constructor(
     animatorService: AnimatorService,
-    private fb: NonNullableFormBuilder,
     private modalService: NgbModal,
     private toastService: ToastService
   ) {
