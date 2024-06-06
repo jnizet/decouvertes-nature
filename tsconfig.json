@@ -24,8 +24,7 @@
     ],
     "types": [
       "@angular/localize"
-    ],
-    "useDefineForClassFields": false
+    ]
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,

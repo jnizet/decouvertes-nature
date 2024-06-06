@@ -1,4 +1,4 @@
-import { Component, NgZone } from '@angular/core';
+import { Component, inject, NgZone } from '@angular/core';
 import { NonNullableFormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ValidationErrorsComponent } from 'ngx-valdemort';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
@@ -26,7 +26,7 @@ export class ActivityPictureEditionModalComponent {
   file?: File;
   editedPicture?: DownloadablePicture;
 
-  form = this.fb.group({
+  form = inject(NonNullableFormBuilder).group({
     legend: ['', Validators.required],
     credit: ['', Validators.required]
   });
@@ -40,7 +40,6 @@ export class ActivityPictureEditionModalComponent {
     private storageService: StorageService,
     private currentActivityService: CurrentActivityService,
     private activityService: ActivityService,
-    private fb: NonNullableFormBuilder,
     private ngZone: NgZone
   ) {}
 
