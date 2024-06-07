@@ -10,13 +10,19 @@ import { first, forkJoin, Observable, Subscriber, switchMap } from 'rxjs';
 import { StorageService } from '../../storage.service';
 import { SpinningIconComponent } from '../../shared/spinning-icon/spinning-icon.component';
 import * as icons from '../../icon/icons';
+import { FormControlValidationDirective } from '../../validation/form-control-validation.directive';
 
 const MAX_PICTURE_SIZE = 800;
 
 @Component({
   selector: 'dn-activity-picture-edition-modal',
   standalone: true,
-  imports: [ReactiveFormsModule, ValidationErrorsComponent, SpinningIconComponent],
+  imports: [
+    ReactiveFormsModule,
+    ValidationErrorsComponent,
+    FormControlValidationDirective,
+    SpinningIconComponent
+  ],
   templateUrl: './activity-picture-edition-modal.component.html',
   styleUrls: ['./activity-picture-edition-modal.component.scss']
 })
