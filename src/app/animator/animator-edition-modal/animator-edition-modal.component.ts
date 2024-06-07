@@ -12,6 +12,7 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { first, map } from 'rxjs';
 import { Animator, AnimatorCommand, AnimatorService, Consent } from '../animator.service';
 import * as icons from '../../icon/icons';
+import { FormControlValidationDirective } from '../../validation/form-control-validation.directive';
 
 @Component({
   selector: 'dn-animator-edition-modal',
@@ -20,7 +21,8 @@ import * as icons from '../../icon/icons';
     ReactiveFormsModule,
     SpinningIconComponent,
     ValidationErrorsComponent,
-    ValidationErrorDirective
+    ValidationErrorDirective,
+    FormControlValidationDirective
   ],
   templateUrl: './animator-edition-modal.component.html',
   styleUrls: ['./animator-edition-modal.component.scss']
