@@ -72,7 +72,7 @@
     "karma-jasmine-html-reporter": "2.1.0",
     "prettier": "3.3.2",
     "serve": "14.2.3",
-    "typescript": "5.4.5",
+    "typescript": "5.5.3",
     "wait-on": "7.2.0"
   },
   "resolutions": {
