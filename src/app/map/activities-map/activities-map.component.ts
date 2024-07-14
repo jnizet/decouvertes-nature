@@ -123,7 +123,7 @@ export class ActivitiesMapComponent {
       }
 
       const focusedLocation: ActivityLocation | null =
-        focusedLocationId == null ? null : mappedLocations.get(focusedLocationId) ?? null;
+        focusedLocationId == null ? null : (mappedLocations.get(focusedLocationId) ?? null);
 
       return {
         year,
