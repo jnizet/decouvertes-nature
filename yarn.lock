@@ -2979,10 +2979,10 @@
   resolved "https://registry.yarnpkg.com/@msgpackr-extract/msgpackr-extract-win32-x64/-/msgpackr-extract-win32-x64-3.0.2.tgz#0f164b726869f71da3c594171df5ebc1c4b0a407"
   integrity sha512-O+6Gs8UeDbyFpbSh2CPEz/UOrrdWPTBYNblZK5CxxLisYt4kGX3Sc+czffFonyjiGSq3jWLwJS/CCJc7tBr4sQ==
 
-"@ng-bootstrap/ng-bootstrap@17.0.0":
-  version "17.0.0"
-  resolved "https://registry.yarnpkg.com/@ng-bootstrap/ng-bootstrap/-/ng-bootstrap-17.0.0.tgz#b6331b1135fe23b821456ac4b84f9f4d0aadc87b"
-  integrity sha512-hTbBtozJlpevF1RO6J2adCoXiAkMTPV3wmXIyK05dVha4VsKjHibgaL6YldToKoh6ElQnIYkPEIJHX9z5EtyMw==
+"@ng-bootstrap/ng-bootstrap@17.0.1":
+  version "17.0.1"
+  resolved "https://registry.yarnpkg.com/@ng-bootstrap/ng-bootstrap/-/ng-bootstrap-17.0.1.tgz#76e37b738618b42a2e1958f3378cb75f0557d117"
+  integrity sha512-utbm8OXIoqVVYGVzQkOS773ymbjc+UMkXv8lyi7hTqLhCQs0rZ0yA74peqVZRuOGXLHgcSTA7fnJhA80iQOblw==
   dependencies:
     tslib "^2.3.0"
 
