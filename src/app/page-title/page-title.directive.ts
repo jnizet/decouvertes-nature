@@ -4,6 +4,7 @@ import { Title } from '@angular/platform-browser';
 const DEFAULT_TITLE = 'Découvertes Nature';
 
 @Directive({
+  // eslint-disable-next-line @angular-eslint/directive-selector
   selector: 'dn-page-title',
   standalone: true
 })
