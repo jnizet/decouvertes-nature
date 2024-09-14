@@ -22,7 +22,7 @@ module.exports = [
         // Apply the recommended TypeScript rules
         ...tseslint.configs.recommended,
         // Optionally apply stylistic rules from typescript-eslint that improve code consistency
-        // ...tseslint.configs.stylistic,
+        ...tseslint.configs.stylistic,
         // Apply the recommended Angular rules
         ...angular.configs.tsRecommended
       ],
@@ -48,9 +48,14 @@ module.exports = [
           }
         ],
         '@angular-eslint/no-host-metadata-property': 'off',
-        '@typescript-eslint/explicit-module-boundary-types': 'off',
+        '@typescript-eslint/array-type': [
+          'error',
+          {
+            default: 'generic',
+            readonly: 'generic'
+          }
+        ],
         '@typescript-eslint/no-explicit-any': 'off',
-        '@typescript-eslint/no-inferrable-types': ['error', { ignoreParameters: true }],
         '@typescript-eslint/no-non-null-assertion': 'off',
         eqeqeq: ['error', 'always', { null: 'ignore' }],
         'no-fallthrough': 'error',
@@ -63,17 +68,6 @@ module.exports = [
           {
             selector: "CallExpression[callee.name='fit']",
             message: 'do not use fit'
-          }
-        ],
-        'no-restricted-imports': [
-          'error',
-          {
-            paths: [
-              {
-                name: 'rxjs/Rx',
-                message: "Please import directly from 'rxjs' instead"
-              }
-            ]
           }
         ]
       }
