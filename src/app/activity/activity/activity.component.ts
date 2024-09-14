@@ -4,7 +4,6 @@ import { map, switchMap } from 'rxjs';
 import { Activity, ActivityService } from '../activity.service';
 import * as icons from '../../icon/icons';
 import { ConfirmService } from '../../confirm/confirm.service';
-import { CurrentUserService } from '../../current-user.service';
 import { CurrencyPipe, DecimalPipe } from '@angular/common';
 import { IconDirective } from '../../icon/icon.directive';
 import { PageTitleDirective } from '../../page-title/page-title.directive';
@@ -47,12 +46,11 @@ export class ActivityComponent {
   icons = icons;
 
   constructor(
-    private currentActivityService: CurrentActivityService,
+    currentActivityService: CurrentActivityService,
     private activityService: ActivityService,
     animatorService: AnimatorService,
     private confirmService: ConfirmService,
-    private router: Router,
-    private currentUserService: CurrentUserService
+    private router: Router
   ) {
     this.vm = toSignal(
       currentActivityService.activity$.pipe(

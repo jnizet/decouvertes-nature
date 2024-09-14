@@ -47,10 +47,13 @@ module.exports = [
             style: 'kebab-case'
           }
         ],
-
+        '@angular-eslint/no-host-metadata-property': 'off',
         '@typescript-eslint/explicit-module-boundary-types': 'off',
         '@typescript-eslint/no-explicit-any': 'off',
+        '@typescript-eslint/no-inferrable-types': ['error', { ignoreParameters: true }],
         '@typescript-eslint/no-non-null-assertion': 'off',
+        eqeqeq: ['error', 'always', { null: 'ignore' }],
+        'no-fallthrough': 'error',
         'no-restricted-syntax': [
           'error',
           {
@@ -72,10 +75,7 @@ module.exports = [
               }
             ]
           }
-        ],
-        '@typescript-eslint/no-inferrable-types': ['error', { ignoreParameters: true }],
-        'no-fallthrough': 'error',
-        '@angular-eslint/no-host-metadata-property': 'off'
+        ]
       }
     },
     {
