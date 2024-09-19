@@ -21,7 +21,7 @@ export class ConfirmService {
     componentInstance.title.set(options.title ?? 'Confirmation');
     componentInstance.message.set(options.message);
     return from(modalRef.result).pipe(
-      catchError(err => (options.errorOnClose ? throwError(err ?? 'not confirmed') : EMPTY))
+      catchError(err => (options.errorOnClose ? throwError(() => err ?? 'not confirmed') : EMPTY))
     );
   }
 }
