@@ -1,17 +1,17 @@
 // @ts-check
 
 // Allows us to bring in the recommended core rules from eslint itself
-const eslint = require('@eslint/js');
+import eslint from '@eslint/js';
 
 // Allows us to use the typed utility for our config, and to bring in the recommended rules for TypeScript projects from typescript-eslint
-const tseslint = require('typescript-eslint');
+import tseslint from 'typescript-eslint';
 
 // Allows us to bring in the recommended rules for Angular projects from angular-eslint
-const angular = require('angular-eslint');
-const eslintPluginPrettierRecommended = require('eslint-plugin-prettier/recommended');
+import angular from 'angular-eslint';
+import eslintPluginPrettierRecommended from 'eslint-plugin-prettier/recommended';
 
 // Export our config array, which is composed together thanks to the typed utility function from typescript-eslint
-module.exports = [
+export default [
   ...tseslint.config(
     {
       // Everything in this config object targets our TypeScript files (Components, Directives, Pipes etc)
@@ -55,6 +55,7 @@ module.exports = [
             readonly: 'generic'
           }
         ],
+        '@typescript-eslint/no-deprecated': 'error',
         '@typescript-eslint/no-explicit-any': 'off',
         '@typescript-eslint/no-non-null-assertion': 'off',
         eqeqeq: ['error', 'always', { null: 'ignore' }],
@@ -92,5 +93,14 @@ module.exports = [
       }
     }
   ),
-  eslintPluginPrettierRecommended
+  eslintPluginPrettierRecommended,
+  // set the parse options for typed rules
+  {
+    languageOptions: {
+      parserOptions: {
+        projectService: true,
+        tsconfigRootDir: import.meta.dirname
+      }
+    }
+  }
 ];
