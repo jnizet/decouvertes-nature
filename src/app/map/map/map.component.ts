@@ -2069,7 +2069,7 @@ export class MapComponent {
         center: [45.75624, 4.2246],
         zoom: 9,
         dragging: !L.Browser.mobile,
-        tap: !L.Browser.mobile
+        tapHold: !L.Browser.mobile
       });
 
       const tiles = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
