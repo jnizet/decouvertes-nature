@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import {
   Auth,
@@ -24,7 +24,8 @@ import { PageTitleDirective } from '../page-title/page-title.directive';
     ValidationErrorsComponent,
     FormControlValidationDirective,
     PageTitleDirective
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ChangePasswordComponent {
   private auth = inject(Auth);
@@ -34,7 +35,7 @@ export class ChangePasswordComponent {
     currentPassword: new FormControl('', [Validators.required]),
     newPassword: new FormControl('', [Validators.required, Validators.minLength(8)])
   });
-  error = false;
+  error = signal(false);
 
   changePassword() {
     if (this.form.invalid) {
@@ -52,7 +53,7 @@ export class ChangePasswordComponent {
       .pipe(switchMap(() => from(updatePassword(user, formValue.newPassword!))))
       .subscribe({
         next: () => this.router.navigate(['/']),
-        error: () => (this.error = true)
+        error: () => this.error.set(true)
       });
   }
 }
