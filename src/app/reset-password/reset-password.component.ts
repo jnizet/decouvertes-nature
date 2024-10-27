@@ -1,4 +1,4 @@
-import { Component, inject, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Auth, sendPasswordResetEmail } from '@angular/fire/auth';
 import { from } from 'rxjs';
@@ -21,7 +21,8 @@ import * as icons from '../icon/icons';
     FormControlValidationDirective,
     PageTitleDirective,
     IconDirective
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ResetPasswordComponent {
   private auth = inject(Auth);
