@@ -1,4 +1,4 @@
-import { Component, inject, NgZone } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, NgZone, signal } from '@angular/core';
 import { NonNullableFormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ValidationErrorsComponent } from 'ngx-valdemort';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
@@ -14,6 +14,18 @@ import { FormControlValidationDirective } from '../../validation/form-control-va
 
 const MAX_PICTURE_SIZE = 800;
 
+type ViewModel =
+  | {
+      mode: 'create';
+      file: File;
+      pictureUrl: string;
+    }
+  | {
+      mode: 'update';
+      editedPicture: DownloadablePicture;
+      pictureUrl: string;
+    };
+
 @Component({
   selector: 'dn-activity-picture-edition-modal',
   standalone: true,
@@ -24,7 +36,8 @@ const MAX_PICTURE_SIZE = 800;
     SpinningIconComponent
   ],
   templateUrl: './activity-picture-edition-modal.component.html',
-  styleUrls: ['./activity-picture-edition-modal.component.scss']
+  styleUrls: ['./activity-picture-edition-modal.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ActivityPictureEditionModalComponent {
   private activeModal = inject(NgbActiveModal);
@@ -33,10 +46,7 @@ export class ActivityPictureEditionModalComponent {
   private activityService = inject(ActivityService);
   private ngZone = inject(NgZone);
 
-  mode!: 'create' | 'update';
-  pictureUrl!: string;
-  file?: File;
-  editedPicture?: DownloadablePicture;
+  vm = signal<ViewModel | undefined>(undefined);
 
   form = inject(NonNullableFormBuilder).group({
     legend: ['', Validators.required],
@@ -48,35 +58,39 @@ export class ActivityPictureEditionModalComponent {
   icons = icons;
 
   prepareForCreation(file: File) {
-    this.file = file;
-    this.pictureUrl = URL.createObjectURL(file);
-    this.mode = 'create';
+    this.vm.set({
+      mode: 'create',
+      file: file,
+      pictureUrl: URL.createObjectURL(file)
+    });
   }
 
   prepareForUpdate(picture: DownloadablePicture) {
-    this.editedPicture = picture;
-    this.pictureUrl = picture.thumbnailDownloadUrl;
+    this.vm.set({
+      mode: 'update',
+      editedPicture: picture,
+      pictureUrl: picture.thumbnailDownloadUrl
+    });
     this.form.setValue({
       legend: picture.legend,
       credit: picture.credit
     });
-    this.mode = 'update';
   }
 
   save() {
-    if (!this.form.valid) {
+    const vm = this.vm();
+    if (!this.form.valid || !vm) {
       return;
     }
 
     const formValue = this.form.getRawValue();
 
     const activity$ = this.currentActivityService.activity$.pipe(first());
-    if (this.mode === 'create') {
+    if (vm.mode === 'create') {
       const path = this.storageService.generateUniquePath('activities/', '.jpg');
       let thumbnailPath = path;
 
-      const file = this.file!;
-      const thumbnail$ = this.resizePicture(file);
+      const thumbnail$ = this.resizePicture(vm.file);
 
       thumbnail$
         .pipe(
@@ -84,11 +98,11 @@ export class ActivityPictureEditionModalComponent {
             if (thumbnailOrNull) {
               thumbnailPath = this.storageService.generateUniquePath('activities/', '.jpg');
               return forkJoin([
-                this.storageService.upload(path, file),
+                this.storageService.upload(path, vm.file),
                 this.storageService.upload(thumbnailPath, thumbnailOrNull)
               ]);
             } else {
-              return this.storageService.upload(path, file);
+              return this.storageService.upload(path, vm.file);
             }
           }),
           switchMap(() => activity$),
@@ -107,12 +121,12 @@ export class ActivityPictureEditionModalComponent {
           this.saving.spinUntilFinalization()
         )
         .subscribe(() => this.activeModal.close());
-    } else if (this.mode === 'update') {
+    } else if (vm.mode === 'update') {
       activity$
         .pipe(
           switchMap(activity => {
             const picture: ActivityPicture = {
-              ...this.editedPicture!,
+              ...vm.editedPicture,
               legend: formValue.legend,
               credit: formValue.credit
             };
