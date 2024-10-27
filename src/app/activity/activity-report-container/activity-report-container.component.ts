@@ -1,4 +1,4 @@
-import { Component, inject, signal, Signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, signal, Signal } from '@angular/core';
 import { switchMap } from 'rxjs';
 import { Activity, ActivityReportCommand, ActivityService } from '../activity.service';
 import { CurrentUser, CurrentUserService } from '../../current-user.service';
@@ -15,7 +15,8 @@ import { toSignal } from '@angular/core/rxjs-interop';
   standalone: true,
   imports: [ActivityReportComponent, IconDirective, ActivityReportEditionComponent],
   templateUrl: './activity-report-container.component.html',
-  styleUrls: ['./activity-report-container.component.scss']
+  styleUrls: ['./activity-report-container.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ActivityReportContainerComponent {
   private activityService = inject(ActivityService);
