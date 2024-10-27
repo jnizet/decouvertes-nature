@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, Signal } from '@angular/core';
 import { map } from 'rxjs';
 import { Auth, authState, User } from '@angular/fire/auth';
 import { IconDirective } from '../icon/icon.directive';
@@ -16,10 +16,8 @@ import { toSignal } from '@angular/core/rxjs-interop';
   imports: [RouterLink, IconDirective, UsernamePipe]
 })
 export class HomeComponent {
-  vm: Signal<{ user: User | null } | undefined>;
+  vm: Signal<{ user: User | null } | undefined> = toSignal(
+    authState(inject(Auth)).pipe(map(user => ({ user })))
+  );
   icons = icons;
-
-  constructor(auth: Auth) {
-    this.vm = toSignal(authState(auth).pipe(map(user => ({ user }))));
-  }
 }

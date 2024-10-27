@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { defer, map, Observable } from 'rxjs';
 import { Functions, httpsCallable } from '@angular/fire/functions';
 
@@ -21,7 +21,7 @@ export interface ResetPasswordLinkInfo {
   providedIn: 'root'
 })
 export class UserService {
-  constructor(private functions: Functions) {}
+  private functions = inject(Functions);
 
   listUsers(): Observable<Array<AdministeredUser>> {
     const listUsers = httpsCallable<void, Array<AdministeredUser>>(this.functions, 'listUsers');

@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Signal, inject } from '@angular/core';
 import { map } from 'rxjs';
 import { ActivityService } from '../activity.service';
 import { ActivatedRoute } from '@angular/router';
@@ -20,7 +20,10 @@ import { toSignal } from '@angular/core/rxjs-interop';
 export class ActivitiesComponent {
   years: Signal<Array<YearOfActivities> | undefined>;
   mode: 'all' | 'mine';
-  constructor(route: ActivatedRoute, activityService: ActivityService) {
+  constructor() {
+    const route = inject(ActivatedRoute);
+    const activityService = inject(ActivityService);
+
     this.mode = route.snapshot.data['mode'];
     const activities$ =
       this.mode === 'all' ? activityService.findVisible() : activityService.findMine();

@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, Signal } from '@angular/core';
 import { AdministeredUser, UserService } from '../user.service';
 import { from } from 'rxjs';
 import { PageTitleDirective } from '../../page-title/page-title.directive';
@@ -21,16 +21,11 @@ import { toSignal } from '@angular/core/rxjs-interop';
   imports: [RouterLink, PageTitleDirective, LoadingSpinnerComponent, IconDirective]
 })
 export class UsersComponent {
-  users: Signal<Array<AdministeredUser> | undefined>;
-  icons = icons;
+  private ngbModal = inject(NgbModal);
+  private toastService = inject(ToastService);
 
-  constructor(
-    userService: UserService,
-    private ngbModal: NgbModal,
-    private toastService: ToastService
-  ) {
-    this.users = toSignal(userService.listUsers());
-  }
+  users: Signal<Array<AdministeredUser> | undefined> = toSignal(inject(UserService).listUsers());
+  icons = icons;
 
   copyEmail(user: AdministeredUser) {
     const resetPasswordPath =

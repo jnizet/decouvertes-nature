@@ -1,4 +1,4 @@
-import { Injectable, Signal } from '@angular/core';
+import { inject, Injectable, Signal } from '@angular/core';
 import { Auth, authState, User } from '@angular/fire/auth';
 import { from, map, Observable, of, switchMap } from 'rxjs';
 import { toUsername } from './username-pipe/username.pipe';
@@ -19,11 +19,13 @@ export interface AuditUser {
   providedIn: 'root'
 })
 export class CurrentUserService {
+  private auth = inject(Auth);
+
   readonly currentUser$: Observable<CurrentUser | null>;
   readonly currentUser: Signal<CurrentUser | null>;
 
-  constructor(private auth: Auth) {
-    this.currentUser$ = authState(auth).pipe(
+  constructor() {
+    this.currentUser$ = authState(this.auth).pipe(
       switchMap(user => {
         if (user) {
           return from(user.getIdTokenResult()).pipe(

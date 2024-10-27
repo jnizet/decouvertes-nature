@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import {
   Auth,
@@ -27,16 +27,14 @@ import { PageTitleDirective } from '../page-title/page-title.directive';
   ]
 })
 export class ChangePasswordComponent {
+  private auth = inject(Auth);
+  private router = inject(Router);
+
   form = new FormGroup({
     currentPassword: new FormControl('', [Validators.required]),
     newPassword: new FormControl('', [Validators.required, Validators.minLength(8)])
   });
   error = false;
-
-  constructor(
-    private auth: Auth,
-    private router: Router
-  ) {}
 
   changePassword() {
     if (this.form.invalid) {

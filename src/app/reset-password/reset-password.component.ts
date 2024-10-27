@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Auth, sendPasswordResetEmail } from '@angular/fire/auth';
 import { from } from 'rxjs';
@@ -24,17 +24,17 @@ import * as icons from '../icon/icons';
   ]
 })
 export class ResetPasswordComponent {
+  private auth = inject(Auth);
+
   form = new FormGroup({
     email: new FormControl('', [Validators.required, Validators.email])
   });
-  error = false;
-  emailSent = false;
+  error = signal(false);
+  emailSent = signal(false);
   icons = icons;
 
-  constructor(
-    private route: ActivatedRoute,
-    private auth: Auth
-  ) {
+  constructor() {
+    const route = inject(ActivatedRoute);
     this.form.setValue({ email: route.snapshot.queryParamMap.get('email') || '' });
   }
 
@@ -44,8 +44,8 @@ export class ResetPasswordComponent {
     }
 
     from(sendPasswordResetEmail(this.auth, this.form.value.email!)).subscribe({
-      next: () => (this.emailSent = true),
-      error: () => (this.error = true)
+      next: () => this.emailSent.set(true),
+      error: () => this.error.set(true)
     });
   }
 }

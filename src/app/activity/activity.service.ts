@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import {
   collection,
   collectionData,
@@ -122,14 +122,12 @@ export const ALL_ACTIVITY_TYPES: ReadonlyArray<ActivityType> = [
   providedIn: 'root'
 })
 export class ActivityService {
-  private activityCollection: CollectionReference<Activity>;
+  private currentUserService = inject(CurrentUserService);
 
-  constructor(
-    private firestore: Firestore,
-    private currentUserService: CurrentUserService
-  ) {
-    this.activityCollection = collection(firestore, 'activities') as CollectionReference<Activity>;
-  }
+  private activityCollection = collection(
+    inject(Firestore),
+    'activities'
+  ) as CollectionReference<Activity>;
 
   findVisible(): Observable<Array<Activity>> {
     return combineLatest([

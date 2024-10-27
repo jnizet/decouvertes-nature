@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import {
   Auth,
@@ -25,6 +25,9 @@ import { PageTitleDirective } from '../page-title/page-title.directive';
   ]
 })
 export class EmailActionComponent {
+  private auth = inject(Auth);
+  private router = inject(Router);
+
   private actionCode: string;
   form = new FormGroup({
     password: new FormControl('', [Validators.required, Validators.minLength(8)])
@@ -34,11 +37,9 @@ export class EmailActionComponent {
   verificationError = false;
   resetError = false;
 
-  constructor(
-    route: ActivatedRoute,
-    private auth: Auth,
-    private router: Router
-  ) {
+  constructor() {
+    const route = inject(ActivatedRoute);
+
     const params = route.snapshot.queryParamMap;
     const mode = params.get('mode');
     if (mode !== 'resetPassword') {
@@ -46,7 +47,7 @@ export class EmailActionComponent {
     }
     this.actionCode = params.get('oobCode')!;
 
-    from(verifyPasswordResetCode(auth, this.actionCode)).subscribe({
+    from(verifyPasswordResetCode(this.auth, this.actionCode)).subscribe({
       next: email => (this.email = email),
       error: () => (this.verificationError = true)
     });

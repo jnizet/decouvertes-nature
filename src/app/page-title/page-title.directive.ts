@@ -1,4 +1,4 @@
-import { DestroyRef, Directive, effect, input } from '@angular/core';
+import { DestroyRef, Directive, effect, input, inject } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 
 const DEFAULT_TITLE = 'Découvertes Nature';
@@ -11,7 +11,10 @@ const DEFAULT_TITLE = 'Découvertes Nature';
 export class PageTitleDirective {
   title = input.required<string>();
 
-  constructor(titleService: Title, destroyRef: DestroyRef) {
+  constructor() {
+    const titleService = inject(Title);
+    const destroyRef = inject(DestroyRef);
+
     effect(() => {
       titleService.setTitle(`${this.title()} - ${DEFAULT_TITLE}`);
     });

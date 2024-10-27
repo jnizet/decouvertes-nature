@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, signal, inject } from '@angular/core';
 import { from } from 'rxjs';
 import { AdministeredUser, ResetPasswordLinkInfo, UserService } from '../user.service';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
@@ -18,17 +18,15 @@ import { copied } from '../../icon/icons';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ResetPasswordLinkModalComponent {
+  activeModal = inject(NgbActiveModal);
+  private userService = inject(UserService);
+  private toastService = inject(ToastService);
+
   readonly resetPasswordLinkInfo = signal<ResetPasswordLinkInfo | null>(null);
   readonly icons = icons;
 
   readonly generating = new Spinner();
   readonly user = signal<AdministeredUser>(undefined!);
-
-  constructor(
-    public activeModal: NgbActiveModal,
-    private userService: UserService,
-    private toastService: ToastService
-  ) {}
 
   generateResetPasswordLink() {
     this.userService

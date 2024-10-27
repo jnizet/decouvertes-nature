@@ -29,17 +29,18 @@ import * as icons from '../../icon/icons';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AnimatorsComponent {
+  private modalService = inject(NgbModal);
+  private toastService = inject(ToastService);
+
   animators: Signal<Array<Animator> | undefined>;
 
   searchControl = inject(NonNullableFormBuilder).control('');
 
   icons = icons;
 
-  constructor(
-    animatorService: AnimatorService,
-    private modalService: NgbModal,
-    private toastService: ToastService
-  ) {
+  constructor() {
+    const animatorService = inject(AnimatorService);
+
     const filter$ = this.searchControl.valueChanges.pipe(
       startWith(this.searchControl.value),
       map(f => f.trim()),

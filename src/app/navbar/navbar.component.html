@@ -9,14 +9,14 @@
         class="navbar-toggler"
         type="button"
         aria-controls="navbar"
-        [attr.aria-expanded]="expanded"
+        [attr.aria-expanded]="expanded()"
         aria-label="Afficher ou masquer la navigation"
         (click)="toggle()"
       >
         <span class="navbar-toggler-icon"></span>
       </button>
     }
-    <div class="collapse navbar-collapse" id="navbar" [ngbCollapse]="!expanded">
+    <div class="collapse navbar-collapse" id="navbar" [ngbCollapse]="!expanded()">
       @if (user(); as user) {
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
           <li class="nav-item">

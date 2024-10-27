@@ -1,17 +1,17 @@
-@if (mode) {
-  <dn-page-title [title]="mode === 'edit' ? editedActivity!.title : 'Nouvelle activité'" />
-  @switch (mode) {
+@if (mode()) {
+  <dn-page-title [title]="mode() === 'edit' ? editedActivity()!.title : 'Nouvelle activité'" />
+  @switch (mode()) {
     @case ('create') {
       <h1>Création d'une nouvelle activité</h1>
     }
     @case ('duplicate') {
       <h1>
-        Duplication de l'activité <em>{{ editedActivity!.title }}</em>
+        Duplication de l'activité <em>{{ editedActivity()!.title }}</em>
       </h1>
     }
     @case ('edit') {
       <h1>
-        Modification de l'activité <em>{{ editedActivity!.title }}</em>
+        Modification de l'activité <em>{{ editedActivity()!.title }}</em>
       </h1>
     }
   }
