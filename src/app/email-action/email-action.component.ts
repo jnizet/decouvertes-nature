@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import {
   Auth,
@@ -22,7 +22,8 @@ import { PageTitleDirective } from '../page-title/page-title.directive';
     ValidationErrorsComponent,
     FormControlValidationDirective,
     PageTitleDirective
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class EmailActionComponent {
   private auth = inject(Auth);
@@ -33,9 +34,9 @@ export class EmailActionComponent {
     password: new FormControl('', [Validators.required, Validators.minLength(8)])
   });
 
-  email: string | null = null;
-  verificationError = false;
-  resetError = false;
+  email = signal<string | null>(null);
+  verificationError = signal(false);
+  resetError = signal(false);
 
   constructor() {
     const route = inject(ActivatedRoute);
@@ -48,8 +49,8 @@ export class EmailActionComponent {
     this.actionCode = params.get('oobCode')!;
 
     from(verifyPasswordResetCode(this.auth, this.actionCode)).subscribe({
-      next: email => (this.email = email),
-      error: () => (this.verificationError = true)
+      next: email => this.email.set(email),
+      error: () => this.verificationError.set(true)
     });
   }
 
@@ -61,10 +62,10 @@ export class EmailActionComponent {
     // Save the new password.
     const password = this.form.value.password!;
     from(confirmPasswordReset(this.auth, this.actionCode, password))
-      .pipe(switchMap(() => from(signInWithEmailAndPassword(this.auth, this.email!, password))))
+      .pipe(switchMap(() => from(signInWithEmailAndPassword(this.auth, this.email()!, password))))
       .subscribe({
         next: () => this.router.navigate(['/']),
-        error: () => (this.resetError = true)
+        error: () => this.resetError.set(true)
       });
   }
 }
