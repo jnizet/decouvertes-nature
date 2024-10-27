@@ -1,4 +1,4 @@
-import { Component, input, OnInit, output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input, OnInit, output } from '@angular/core';
 import { ActivityReport, ActivityReportCommand } from '../activity.service';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 
@@ -17,7 +17,8 @@ import * as icons from '../../icon/icons';
     ValidationErrorsComponent,
     FormControlValidationDirective,
     IconDirective
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ActivityReportEditionComponent implements OnInit {
   report = input<ActivityReport>();
