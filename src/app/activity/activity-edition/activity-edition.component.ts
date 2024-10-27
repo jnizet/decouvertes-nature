@@ -141,6 +141,15 @@ type ActivityFormGroup = FormGroup<{
   useSamePictures: FormControl<boolean | null>;
 }>;
 
+type EditionMode =
+  | {
+      mode: 'create';
+    }
+  | {
+      mode: 'edit' | 'duplicate';
+      editedActivity: Activity;
+    };
+
 @Component({
   selector: 'dn-activity-edition',
   templateUrl: './activity-edition.component.html',
@@ -168,8 +177,7 @@ export class ActivityEditionComponent {
   private modalService = inject(NgbModal);
   private toastService = inject(ToastService);
 
-  mode = signal<'create' | 'edit' | 'duplicate' | null>(null);
-  editedActivity = signal<Activity | null>(null);
+  mode = signal<EditionMode | undefined>(undefined);
 
   readonly form: ActivityFormGroup;
   readonly activityTypes = ALL_ACTIVITY_TYPES;
@@ -304,10 +312,16 @@ export class ActivityEditionComponent {
         )
       )
       .subscribe(({ activity, animator }) => {
-        this.mode.set(
-          activity ? (route.snapshot.data['duplicate'] ? 'duplicate' : 'edit') : 'create'
-        );
-        this.editedActivity.set(activity);
+        if (activity) {
+          this.mode.set({
+            editedActivity: activity,
+            mode: route.snapshot.data['duplicate'] ? ('duplicate' as const) : ('edit' as const)
+          });
+        } else {
+          this.mode.set({
+            mode: 'create'
+          });
+        }
         this.draftManager.initialize(this.form, this.maySaveAsDraft);
         this.draftManager.switchTo('final');
 
@@ -318,9 +332,9 @@ export class ActivityEditionComponent {
             description: activity.description,
             animator: animator,
             timing: {
-              startDate: this.mode() === 'edit' ? activity.startDate : null,
+              startDate: this.mode()!.mode === 'edit' ? activity.startDate : null,
               startTime: activity.startTime,
-              endDate: this.mode() === 'edit' ? activity.endDate : null,
+              endDate: this.mode()!.mode === 'edit' ? activity.endDate : null,
               endTime: activity.endTime
             },
             location: activity.location,
@@ -395,21 +409,28 @@ export class ActivityEditionComponent {
       });
   }
 
-  get maySaveAsDraft() {
-    const editedActivity = this.editedActivity();
+  get maySaveAsDraft(): boolean {
+    const editionMode = this.mode();
     return (
-      this.mode() === 'create' ||
-      this.mode() === 'duplicate' ||
-      (!!editedActivity && editedActivity.draft)
+      !!editionMode &&
+      (editionMode.mode === 'create' ||
+        editionMode.mode === 'duplicate' ||
+        (editionMode.mode === 'edit' && editionMode.editedActivity.draft))
     );
   }
 
-  get shouldDisplayUseSamePictures() {
-    return this.mode() === 'duplicate' && (this.editedActivity()?.pictures ?? []).length > 0;
+  get shouldDisplayUseSamePictures(): boolean {
+    const editionMode = this.mode();
+    return (
+      !!editionMode &&
+      editionMode.mode === 'duplicate' &&
+      (editionMode.editedActivity.pictures ?? []).length > 0
+    );
   }
 
   save() {
-    if (this.form.invalid) {
+    const editionMode = this.mode();
+    if (this.form.invalid || !editionMode) {
       return;
     }
 
@@ -441,26 +462,30 @@ export class ActivityEditionComponent {
       equipments: formValue.equipments!,
       comment: formValue.comment!,
       author:
-        this.mode() === 'edit'
-          ? this.editedActivity()!.author
+        editionMode.mode === 'edit'
+          ? editionMode.editedActivity.author
           : this.currentUserService.getCurrentAuditUser(),
-      lastModifier: this.mode() === 'edit' ? this.currentUserService.getCurrentAuditUser() : null,
+      lastModifier:
+        editionMode.mode === 'edit' ? this.currentUserService.getCurrentAuditUser() : null,
       draft: this.draftManager.mode() === 'draft'
     };
 
-    if (formValue.useSamePictures) {
-      command.pictures = this.editedActivity()?.pictures;
+    if (editionMode.mode === 'duplicate' && formValue.useSamePictures) {
+      command.pictures = editionMode.editedActivity.pictures;
     }
 
     const spinner = this.draftManager.mode() === 'draft' ? this.savingAsDraft : this.saving;
     const result$ =
-      this.mode() === 'create' || this.mode() === 'duplicate'
-        ? this.activityService.create(command)
-        : this.activityService
-            .update(this.editedActivity()!.id, command)
-            .pipe(map(() => this.editedActivity()!));
+      editionMode.mode === 'edit'
+        ? this.activityService
+            .update(editionMode.editedActivity.id, command)
+            .pipe(map(() => editionMode.editedActivity))
+        : this.activityService.create(command);
     result$.pipe(spinner.spinUntilFinalization()).subscribe(activity => {
-      if (this.mode() === 'create' || (this.mode() === 'duplicate' && !formValue.useSamePictures)) {
+      if (
+        editionMode.mode === 'create' ||
+        (editionMode.mode === 'duplicate' && !formValue.useSamePictures)
+      ) {
         this.router.navigate(['/activities', activity.id, 'pictures']);
       } else {
         this.router.navigate(['/activities', activity.id]);
