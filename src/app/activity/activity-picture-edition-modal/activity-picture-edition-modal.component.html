@@ -1,49 +1,56 @@
-<div class="modal-header">
-  <h1 class="modal-title fs-4">
-    @switch (mode) {
-      @case ('create') {
-        Ajout d'une photo à l'activité
+@if (vm(); as vm) {
+  <div class="modal-header">
+    <h1 class="modal-title fs-4">
+      @switch (vm.mode) {
+        @case ('create') {
+          Ajout d'une photo à l'activité
+        }
+        @case ('update') {
+          Modification des informations de la photo
+        }
       }
-      @case ('update') {
-        Modification des informations de la photo
-      }
-    }
-  </h1>
-  <button
-    type="button"
-    class="btn-close"
-    aria-label="Close"
-    (click)="cancel()"
-    [disabled]="saving.isSpinning()"
-  ></button>
-</div>
-<div class="modal-body">
-  <img [src]="pictureUrl" alt="Photo à légender" class="img-fluid" />
+    </h1>
+    <button
+      type="button"
+      class="btn-close"
+      aria-label="Close"
+      (click)="cancel()"
+      [disabled]="saving.isSpinning()"
+    ></button>
+  </div>
+  <div class="modal-body">
+    <img [src]="vm.pictureUrl" alt="Photo à légender" class="img-fluid" />
 
-  <form id="picture-form" [formGroup]="form" class="mt-3" (ngSubmit)="save()">
-    <div class="mb-3">
-      <label for="legend" class="form-label">Légende de la photo</label>
-      <input id="legend" class="form-control" formControlName="legend" />
-      <val-errors controlName="legend"></val-errors>
-    </div>
-    <div class="mb-3">
-      <label for="credit" class="form-label">Crédits de la photo</label>
-      <input id="credit" class="form-control" formControlName="credit" />
-      <val-errors controlName="credit"></val-errors>
-    </div>
-  </form>
-</div>
-<div class="modal-footer">
-  <button
-    type="submit"
-    form="picture-form"
-    class="btn btn-primary me-2"
-    [disabled]="saving.isSpinning()"
-  >
-    <dn-spinning-icon [spinner]="saving" message="Enregistrement en cours" [icon]="icons.save" />
-    Enregistrer
-  </button>
-  <button type="button" class="btn btn-danger" (click)="cancel()" [disabled]="saving.isSpinning()">
-    Annuler
-  </button>
-</div>
+    <form id="picture-form" [formGroup]="form" class="mt-3" (ngSubmit)="save()">
+      <div class="mb-3">
+        <label for="legend" class="form-label">Légende de la photo</label>
+        <input id="legend" class="form-control" formControlName="legend" />
+        <val-errors controlName="legend"></val-errors>
+      </div>
+      <div class="mb-3">
+        <label for="credit" class="form-label">Crédits de la photo</label>
+        <input id="credit" class="form-control" formControlName="credit" />
+        <val-errors controlName="credit"></val-errors>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button
+      type="submit"
+      form="picture-form"
+      class="btn btn-primary me-2"
+      [disabled]="saving.isSpinning()"
+    >
+      <dn-spinning-icon [spinner]="saving" message="Enregistrement en cours" [icon]="icons.save" />
+      Enregistrer
+    </button>
+    <button
+      type="button"
+      class="btn btn-danger"
+      (click)="cancel()"
+      [disabled]="saving.isSpinning()"
+    >
+      Annuler
+    </button>
+  </div>
+}
