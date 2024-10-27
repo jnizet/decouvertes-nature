@@ -27,7 +27,7 @@
         <div class="mb-3">
           <label for="type" class="form-label">Type d'activité</label>
           <select formControlName="type" class="form-select" id="type">
-            <option [value]="null"></option>
+            <option [ngValue]="null"></option>
             @for (activityType of activityTypes; track activityType) {
               <option [value]="activityType.key">
                 {{ activityType.label }}
