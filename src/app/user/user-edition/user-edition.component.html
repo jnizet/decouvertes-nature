@@ -1,14 +1,16 @@
-@if (mode) {
+@if (vm(); as vm) {
   <div class="row justify-content-md-center">
     <div class="col col-md-8 col-lg-6">
-      <dn-page-title [title]="mode === 'edit' ? editedUser!.displayName : 'Nouvel utilisateur'" />
-      @switch (mode) {
+      <dn-page-title
+        [title]="vm.mode === 'update' ? vm.editedUser.displayName : 'Nouvel utilisateur'"
+      />
+      @switch (vm.mode) {
         @case ('create') {
           <h1>Création d'un nouvel utilisateur</h1>
         }
-        @case ('edit') {
+        @case ('update') {
           <h1>
-            Modification de l'utilisateur <em>{{ editedUser!.displayName }}</em>
+            Modification de l'utilisateur <em>{{ vm.editedUser.displayName }}</em>
           </h1>
         }
       }
