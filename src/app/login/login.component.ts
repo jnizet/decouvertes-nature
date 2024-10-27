@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Auth, signInWithEmailAndPassword } from '@angular/fire/auth';
 import { from } from 'rxjs';
@@ -19,7 +19,8 @@ import { PageTitleDirective } from '../page-title/page-title.directive';
     ValidationErrorsComponent,
     FormControlValidationDirective,
     PageTitleDirective
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class LoginComponent {
   private auth = inject(Auth);
@@ -30,7 +31,7 @@ export class LoginComponent {
     password: new FormControl('', Validators.required)
   });
 
-  loginError = false;
+  loginError = signal(false);
 
   login() {
     if (this.form.invalid) {
@@ -42,10 +43,10 @@ export class LoginComponent {
       signInWithEmailAndPassword(this.auth, credentials.email!, credentials.password!)
     ).subscribe({
       next: () => {
-        this.loginError = false;
+        this.loginError.set(false);
         this.router.navigate(['/']);
       },
-      error: () => (this.loginError = true)
+      error: () => this.loginError.set(true)
     });
   }
 }
