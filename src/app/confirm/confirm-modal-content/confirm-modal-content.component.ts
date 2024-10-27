@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, signal, inject } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
@@ -10,8 +10,8 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
   imports: []
 })
 export class ConfirmModalContentComponent {
+  activeModal = inject(NgbActiveModal);
+
   message = signal('');
   title = signal('');
-
-  constructor(public activeModal: NgbActiveModal) {}
 }

@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, computed, Signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, Signal, inject } from '@angular/core';
 import { Activity, ActivityService } from '../../activity/activity.service';
 import { LocalDate, localDateToYearMonth, YearMonth } from '../../shared/types';
 import { parseISO } from 'date-fns';
@@ -50,7 +50,10 @@ export class CalendarComponent {
   vm: Signal<ViewModel | undefined>;
   icons = icons;
 
-  constructor(activityService: ActivityService, yearService: YearService) {
+  constructor() {
+    const activityService = inject(ActivityService);
+    const yearService = inject(YearService);
+
     const visibleActivities = toSignal(activityService.findVisible());
     this.vm = computed(() => {
       const activities = visibleActivities();

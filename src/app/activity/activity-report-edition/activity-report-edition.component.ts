@@ -1,5 +1,5 @@
 import { Component, input, OnInit, output } from '@angular/core';
-import { ActivityReport, ActivityReportCommand, ActivityService } from '../activity.service';
+import { ActivityReport, ActivityReportCommand } from '../activity.service';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 
 import { ValidationErrorsComponent } from 'ngx-valdemort';
@@ -33,7 +33,7 @@ export class ActivityReportEditionComponent implements OnInit {
     comment: FormControl<string | null>;
   }>;
 
-  constructor(private activityService: ActivityService) {
+  constructor() {
     const numberOfParticipantsCtrl = new FormControl<number | null>(null, [
       Validators.required,
       Validators.min(0)

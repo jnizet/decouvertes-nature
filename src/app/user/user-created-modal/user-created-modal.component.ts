@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { IconDirective } from '../../icon/icon.directive';
 import * as icons from '../../icon/icons';
@@ -11,9 +11,7 @@ import * as icons from '../../icon/icons';
   imports: [IconDirective]
 })
 export class UserCreatedModalComponent {
+  readonly activeModal = inject(NgbActiveModal);
   readonly icons = icons;
-
-  userName?: string;
-
-  constructor(public activeModal: NgbActiveModal) {}
+  readonly userName = signal<string | undefined>(undefined);
 }

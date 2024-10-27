@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import {
   DefaultValidationErrorsDirective,
   ValdemortConfig,
@@ -16,7 +16,9 @@ import { DecimalPipe } from '@angular/common';
   imports: [DecimalPipe, DefaultValidationErrorsDirective, ValidationErrorDirective]
 })
 export class ValidationDefaultsComponent {
-  constructor(config: ValdemortConfig) {
+  constructor() {
+    const config = inject(ValdemortConfig);
+
     config.errorsClasses = 'invalid-feedback';
     config.shouldThrowOnMissingControl = () => !environment.production;
   }

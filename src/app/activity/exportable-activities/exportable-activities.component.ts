@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Signal, inject } from '@angular/core';
 import { Activity, ActivityService } from '../activity.service';
 import {
   combineLatest,
@@ -59,7 +59,9 @@ export class ExportableActivitiesComponent {
     );
   readonly icons = icons;
 
-  constructor(activityService: ActivityService) {
+  constructor() {
+    const activityService = inject(ActivityService);
+
     const activities$ = activityService.findNonDraft();
     const filter$ = this.form.valueChanges.pipe(startWith(this.form.value));
     const filteredActivities$ = combineLatest([activities$, filter$]).pipe(

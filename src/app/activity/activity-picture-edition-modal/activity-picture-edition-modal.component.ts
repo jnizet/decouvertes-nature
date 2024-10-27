@@ -27,6 +27,12 @@ const MAX_PICTURE_SIZE = 800;
   styleUrls: ['./activity-picture-edition-modal.component.scss']
 })
 export class ActivityPictureEditionModalComponent {
+  private activeModal = inject(NgbActiveModal);
+  private storageService = inject(StorageService);
+  private currentActivityService = inject(CurrentActivityService);
+  private activityService = inject(ActivityService);
+  private ngZone = inject(NgZone);
+
   mode!: 'create' | 'update';
   pictureUrl!: string;
   file?: File;
@@ -40,14 +46,6 @@ export class ActivityPictureEditionModalComponent {
   saving = new Spinner();
 
   icons = icons;
-
-  constructor(
-    private activeModal: NgbActiveModal,
-    private storageService: StorageService,
-    private currentActivityService: CurrentActivityService,
-    private activityService: ActivityService,
-    private ngZone: NgZone
-  ) {}
 
   prepareForCreation(file: File) {
     this.file = file;

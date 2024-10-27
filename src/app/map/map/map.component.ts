@@ -6,7 +6,8 @@ import {
   ElementRef,
   input,
   NgZone,
-  ViewEncapsulation
+  ViewEncapsulation,
+  inject
 } from '@angular/core';
 import { ActivityLocation } from '../activities-map/activities-map.component';
 import * as L from 'leaflet';
@@ -2044,16 +2045,16 @@ const LOIRE: Array<LatLngExpression> = [
   standalone: true
 })
 export class MapComponent {
+  private elementRef = inject(ElementRef);
+  private ngZone = inject(NgZone);
+
   locations = input.required<Array<ActivityLocation>>();
   focusedLocation = input<ActivityLocation | null>(null);
 
   private map!: L.Map;
   private markers: Array<L.Marker<any>> = [];
 
-  constructor(
-    private elementRef: ElementRef,
-    private ngZone: NgZone
-  ) {
+  constructor() {
     afterNextRender(() => {
       this.initMap();
       this.setMarkers();

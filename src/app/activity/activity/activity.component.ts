@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Signal, inject } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { map, switchMap } from 'rxjs';
 import { Activity, ActivityService } from '../activity.service';
@@ -41,17 +41,18 @@ interface ViewModel {
   ]
 })
 export class ActivityComponent {
+  private activityService = inject(ActivityService);
+  private confirmService = inject(ConfirmService);
+  private router = inject(Router);
+
   vm: Signal<ViewModel | undefined>;
 
   icons = icons;
 
-  constructor(
-    currentActivityService: CurrentActivityService,
-    private activityService: ActivityService,
-    animatorService: AnimatorService,
-    private confirmService: ConfirmService,
-    private router: Router
-  ) {
+  constructor() {
+    const currentActivityService = inject(CurrentActivityService);
+    const animatorService = inject(AnimatorService);
+
     this.vm = toSignal(
       currentActivityService.activity$.pipe(
         switchMap(activity =>

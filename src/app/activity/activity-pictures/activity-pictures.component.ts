@@ -1,4 +1,4 @@
-import { Component, Injector, Signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, Injector, Signal } from '@angular/core';
 import { CurrentActivityService } from '../current-activity.service';
 import { Activity, ActivityPicture, ActivityService } from '../activity.service';
 import { combineLatest, first, forkJoin, map, Observable, of, switchMap } from 'rxjs';
@@ -27,23 +27,28 @@ interface ViewModel {
   standalone: true,
   imports: [IconDirective, SpinningIconComponent],
   templateUrl: './activity-pictures.component.html',
-  styleUrls: ['./activity-pictures.component.scss']
+  styleUrls: ['./activity-pictures.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ActivityPicturesComponent {
+  private currentActivityService = inject(CurrentActivityService);
+  private activityService = inject(ActivityService);
+  private storageService = inject(StorageService);
+  private confirmService = inject(ConfirmService);
+  private modalService = inject(NgbModal);
+  private toastService = inject(ToastService);
+  private injector = inject(Injector);
+
   vm: Signal<ViewModel | undefined>;
 
   icons = icons;
 
   uploading = new Spinner();
-  constructor(
-    private currentActivityService: CurrentActivityService,
-    private activityService: ActivityService,
-    private storageService: StorageService,
-    private confirmService: ConfirmService,
-    private modalService: NgbModal,
-    private toastService: ToastService,
-    private injector: Injector
-  ) {
+
+  constructor() {
+    const currentActivityService = this.currentActivityService;
+    const storageService = this.storageService;
+
     const pictures$: Observable<Array<DownloadablePicture>> = currentActivityService.activity$.pipe(
       map(activity => activity.pictures ?? []),
       switchMap(pictures =>

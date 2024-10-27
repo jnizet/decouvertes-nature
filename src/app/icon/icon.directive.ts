@@ -1,4 +1,4 @@
-import { computed, Directive, input, Signal } from '@angular/core';
+import { computed, Directive, input, Signal, inject } from '@angular/core';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 
 @Directive({
@@ -14,7 +14,9 @@ export class IconDirective {
   icon = input.required<string>();
   safeIcon: Signal<SafeHtml>;
 
-  constructor(sanitizer: DomSanitizer) {
+  constructor() {
+    const sanitizer = inject(DomSanitizer);
+
     this.safeIcon = computed(() => sanitizer.bypassSecurityTrustHtml(this.icon()));
   }
 }

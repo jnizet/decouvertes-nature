@@ -1,4 +1,4 @@
-import { Component, Signal } from '@angular/core';
+import { Component, inject, signal, Signal } from '@angular/core';
 import { switchMap } from 'rxjs';
 import { Activity, ActivityReportCommand, ActivityService } from '../activity.service';
 import { CurrentUser, CurrentUserService } from '../../current-user.service';
@@ -18,18 +18,19 @@ import { toSignal } from '@angular/core/rxjs-interop';
   styleUrls: ['./activity-report-container.component.scss']
 })
 export class ActivityReportContainerComponent {
+  private activityService = inject(ActivityService);
+  private confirmService = inject(ConfirmService);
+
   activity: Signal<Activity | undefined>;
   currentUser: Signal<CurrentUser | null>;
 
-  editingReport = false;
+  editingReport = signal(false);
   icons = icons;
 
-  constructor(
-    currentActivityService: CurrentActivityService,
-    currentUserService: CurrentUserService,
-    private activityService: ActivityService,
-    private confirmService: ConfirmService
-  ) {
+  constructor() {
+    const currentActivityService = inject(CurrentActivityService);
+    const currentUserService = inject(CurrentUserService);
+
     this.activity = toSignal(currentActivityService.activity$);
     this.currentUser = currentUserService.currentUser;
   }
@@ -37,7 +38,7 @@ export class ActivityReportContainerComponent {
   updateReport(activity: Activity, command: ActivityReportCommand) {
     this.activityService
       .updateReport(activity.id, command)
-      .subscribe(() => (this.editingReport = false));
+      .subscribe(() => this.editingReport.set(false));
   }
 
   deleteReport(activity: Activity) {

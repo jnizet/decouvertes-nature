@@ -1,4 +1,4 @@
-import { Component, computed } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
 import {
   AbstractControl,
   FormControl,
@@ -82,23 +82,24 @@ const requiredExceptWhenDraft: ValidatorFn = ctrl => {
 
 class DraftManager {
   private fieldsAndValidators: Array<[AbstractControl, ValidatorFn]> = [];
-  private _mode: 'draft' | 'final' = 'draft';
+  private _mode = signal<'draft' | 'final'>('draft');
+  readonly mode = this._mode.asReadonly();
 
   initialize(form: ActivityFormGroup, maySaveAsDraft: boolean) {
     const requiredValidator = maySaveAsDraft ? requiredExceptWhenDraft : Validators.required;
     this.fieldsAndValidators = [
-      [form.get('description')!, requiredValidator],
-      [form.get('timing.startTime')!, requiredValidator],
-      [form.get('timing.endDate')!, requiredValidator],
-      [form.get('timing.endTime')!, requiredValidator],
-      [form.get('location')!, requiredValidator],
-      [form.get('appointmentLocation')!, requiredValidator]
+      [form.controls.description, requiredValidator],
+      [form.controls.timing.controls.startTime, requiredValidator],
+      [form.controls.timing.controls.endDate, requiredValidator],
+      [form.controls.timing.controls.endTime, requiredValidator],
+      [form.controls.location, requiredValidator],
+      [form.controls.appointmentLocation, requiredValidator]
     ];
   }
 
   switchTo(mode: 'draft' | 'final') {
-    if (this._mode !== mode) {
-      this._mode = mode;
+    if (this._mode() !== mode) {
+      this._mode.set(mode);
       if (mode === 'draft') {
         this.fieldsAndValidators.forEach(([ctrl, validator]) => ctrl.removeValidators(validator));
       } else {
@@ -106,10 +107,6 @@ class DraftManager {
       }
       this.fieldsAndValidators.forEach(([ctrl]) => ctrl.updateValueAndValidity());
     }
-  }
-
-  get mode() {
-    return this._mode;
   }
 }
 
@@ -160,11 +157,19 @@ type ActivityFormGroup = FormGroup<{
     IconDirective,
     MultiChoiceComponent,
     SpinningIconComponent
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ActivityEditionComponent {
-  mode: 'create' | 'edit' | 'duplicate' | null = null;
-  editedActivity: Activity | null = null;
+  private activityService = inject(ActivityService);
+  private animatorService = inject(AnimatorService);
+  private router = inject(Router);
+  private currentUserService = inject(CurrentUserService);
+  private modalService = inject(NgbModal);
+  private toastService = inject(ToastService);
+
+  mode = signal<'create' | 'edit' | 'duplicate' | null>(null);
+  editedActivity = signal<Activity | null>(null);
 
   readonly form: ActivityFormGroup;
   readonly activityTypes = ALL_ACTIVITY_TYPES;
@@ -228,15 +233,11 @@ export class ActivityEditionComponent {
 
   readonly draftManager = new DraftManager();
 
-  constructor(
-    route: ActivatedRoute,
-    private activityService: ActivityService,
-    private animatorService: AnimatorService,
-    private router: Router,
-    private currentUserService: CurrentUserService,
-    private modalService: NgbModal,
-    private toastService: ToastService
-  ) {
+  constructor() {
+    const route = inject(ActivatedRoute);
+    const activityService = this.activityService;
+    const animatorService = this.animatorService;
+
     const paymentRequiredCtrl = new FormControl(false);
     const priceCtrl = new FormControl<number | null>(null, [
       Validators.required,
@@ -303,8 +304,10 @@ export class ActivityEditionComponent {
         )
       )
       .subscribe(({ activity, animator }) => {
-        this.mode = activity ? (route.snapshot.data['duplicate'] ? 'duplicate' : 'edit') : 'create';
-        this.editedActivity = activity;
+        this.mode.set(
+          activity ? (route.snapshot.data['duplicate'] ? 'duplicate' : 'edit') : 'create'
+        );
+        this.editedActivity.set(activity);
         this.draftManager.initialize(this.form, this.maySaveAsDraft);
         this.draftManager.switchTo('final');
 
@@ -315,9 +318,9 @@ export class ActivityEditionComponent {
             description: activity.description,
             animator: animator,
             timing: {
-              startDate: this.mode === 'edit' ? activity.startDate : null,
+              startDate: this.mode() === 'edit' ? activity.startDate : null,
               startTime: activity.startTime,
-              endDate: this.mode === 'edit' ? activity.endDate : null,
+              endDate: this.mode() === 'edit' ? activity.endDate : null,
               endTime: activity.endTime
             },
             location: activity.location,
@@ -393,15 +396,16 @@ export class ActivityEditionComponent {
   }
 
   get maySaveAsDraft() {
+    const editedActivity = this.editedActivity();
     return (
-      this.mode === 'create' ||
-      this.mode === 'duplicate' ||
-      (!!this.editedActivity && this.editedActivity.draft)
+      this.mode() === 'create' ||
+      this.mode() === 'duplicate' ||
+      (!!editedActivity && editedActivity.draft)
     );
   }
 
   get shouldDisplayUseSamePictures() {
-    return this.mode === 'duplicate' && (this.editedActivity?.pictures ?? []).length > 0;
+    return this.mode() === 'duplicate' && (this.editedActivity()?.pictures ?? []).length > 0;
   }
 
   save() {
@@ -437,26 +441,26 @@ export class ActivityEditionComponent {
       equipments: formValue.equipments!,
       comment: formValue.comment!,
       author:
-        this.mode === 'edit'
-          ? this.editedActivity!.author
+        this.mode() === 'edit'
+          ? this.editedActivity()!.author
           : this.currentUserService.getCurrentAuditUser(),
-      lastModifier: this.mode === 'edit' ? this.currentUserService.getCurrentAuditUser() : null,
-      draft: this.draftManager.mode === 'draft'
+      lastModifier: this.mode() === 'edit' ? this.currentUserService.getCurrentAuditUser() : null,
+      draft: this.draftManager.mode() === 'draft'
     };
 
     if (formValue.useSamePictures) {
-      command.pictures = this.editedActivity?.pictures;
+      command.pictures = this.editedActivity()?.pictures;
     }
 
-    const spinner = this.draftManager.mode === 'draft' ? this.savingAsDraft : this.saving;
+    const spinner = this.draftManager.mode() === 'draft' ? this.savingAsDraft : this.saving;
     const result$ =
-      this.mode === 'create' || this.mode === 'duplicate'
+      this.mode() === 'create' || this.mode() === 'duplicate'
         ? this.activityService.create(command)
         : this.activityService
-            .update(this.editedActivity!.id, command)
-            .pipe(map(() => this.editedActivity!));
+            .update(this.editedActivity()!.id, command)
+            .pipe(map(() => this.editedActivity()!));
     result$.pipe(spinner.spinUntilFinalization()).subscribe(activity => {
-      if (this.mode === 'create' || (this.mode === 'duplicate' && !formValue.useSamePictures)) {
+      if (this.mode() === 'create' || (this.mode() === 'duplicate' && !formValue.useSamePictures)) {
         this.router.navigate(['/activities', activity.id, 'pictures']);
       } else {
         this.router.navigate(['/activities', activity.id]);

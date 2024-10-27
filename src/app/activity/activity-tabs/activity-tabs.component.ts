@@ -1,7 +1,6 @@
-import { Component, Signal } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { IconDirective } from '../../icon/icon.directive';
 import { IsActiveMatchOptions, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
-import { Activity } from '../activity.service';
 import { PageTitleDirective } from '../../page-title/page-title.directive';
 import { CurrentActivityService } from '../current-activity.service';
 import { toSignal } from '@angular/core/rxjs-interop';
@@ -23,7 +22,7 @@ import { DecimalPipe } from '@angular/common';
   providers: [CurrentActivityService]
 })
 export class ActivityTabsComponent {
-  activity: Signal<Activity | undefined>;
+  activity = toSignal(inject(CurrentActivityService).activity$);
 
   routerLinkActiveOptions: IsActiveMatchOptions = {
     paths: 'exact',
@@ -31,8 +30,4 @@ export class ActivityTabsComponent {
     queryParams: 'ignored',
     fragment: 'ignored'
   };
-
-  constructor(private currentActivityService: CurrentActivityService) {
-    this.activity = toSignal(currentActivityService.activity$);
-  }
 }

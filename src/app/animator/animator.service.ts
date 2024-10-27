@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import {
   collection,
   CollectionReference,
@@ -30,11 +30,10 @@ export interface Animator {
   providedIn: 'root'
 })
 export class AnimatorService {
-  private animatorCollection: CollectionReference<Animator>;
-
-  constructor(private firestore: Firestore) {
-    this.animatorCollection = collection(firestore, 'animators') as CollectionReference<Animator>;
-  }
+  private animatorCollection = collection(
+    inject(Firestore),
+    'animators'
+  ) as CollectionReference<Animator>;
 
   list(): Observable<Array<Animator>> {
     return collectionSnapshots(query(this.animatorCollection, orderBy('name'))).pipe(

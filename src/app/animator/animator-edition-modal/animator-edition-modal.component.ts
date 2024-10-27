@@ -28,6 +28,9 @@ import { FormControlValidationDirective } from '../../validation/form-control-va
   styleUrls: ['./animator-edition-modal.component.scss']
 })
 export class AnimatorEditionModalComponent {
+  private activeModal = inject(NgbActiveModal);
+  private animatorService = inject(AnimatorService);
+
   mode!: 'create' | 'update';
   editedAnimator?: Animator;
 
@@ -47,11 +50,6 @@ export class AnimatorEditionModalComponent {
   saving = new Spinner();
 
   icons = icons;
-
-  constructor(
-    private activeModal: NgbActiveModal,
-    private animatorService: AnimatorService
-  ) {}
 
   prepareForCreation() {
     this.mode = 'create';

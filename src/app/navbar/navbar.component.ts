@@ -1,6 +1,6 @@
-import { ChangeDetectionStrategy, Component, Signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
-import { CurrentUser, CurrentUserService } from '../current-user.service';
+import { CurrentUserService } from '../current-user.service';
 import {
   NgbCollapse,
   NgbDropdown,
@@ -30,16 +30,12 @@ import * as icons from '../icon/icons';
   ]
 })
 export class NavbarComponent {
-  expanded = false;
-  user: Signal<CurrentUser | null>;
-  icons = icons;
+  private currentUserService = inject(CurrentUserService);
+  private router = inject(Router);
 
-  constructor(
-    private currentUserService: CurrentUserService,
-    private router: Router
-  ) {
-    this.user = currentUserService.currentUser;
-  }
+  expanded = signal(false);
+  user = this.currentUserService.currentUser;
+  icons = icons;
 
   logout() {
     this.currentUserService.signOut();
@@ -47,10 +43,10 @@ export class NavbarComponent {
   }
 
   collapse() {
-    this.expanded = false;
+    this.expanded.set(false);
   }
 
   toggle() {
-    this.expanded = !this.expanded;
+    this.expanded.update(expanded => !expanded);
   }
 }

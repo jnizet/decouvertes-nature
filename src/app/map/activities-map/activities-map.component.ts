@@ -1,4 +1,11 @@
-import { ChangeDetectionStrategy, Component, computed, Signal, signal } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  computed,
+  Signal,
+  signal,
+  inject
+} from '@angular/core';
 import { Activity, ActivityService } from '../../activity/activity.service';
 import { parseISO } from 'date-fns';
 import { ALL_MUNICIPALITIES, Municipality } from '../../shared/municipalities';
@@ -68,7 +75,10 @@ export class ActivitiesMapComponent {
     this.focusedLocationIdSubject.pipe(startWith(null), debounceTime(100))
   );
 
-  constructor(activityService: ActivityService, yearService: YearService) {
+  constructor() {
+    const activityService = inject(ActivityService);
+    const yearService = inject(YearService);
+
     const visibleActivities = toSignal(activityService.findVisible());
     this.vm = computed(() => {
       const activities = visibleActivities();

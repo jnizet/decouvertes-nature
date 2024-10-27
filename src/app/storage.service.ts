@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { getBlob, getDownloadURL, ref, Storage, uploadBytes } from '@angular/fire/storage';
 import { defer, from, map, Observable, tap } from 'rxjs';
 
@@ -6,7 +6,7 @@ import { defer, from, map, Observable, tap } from 'rxjs';
   providedIn: 'root'
 })
 export class StorageService {
-  constructor(private storage: Storage) {}
+  private storage = inject(Storage);
 
   generateUniquePath(prefix: string, extension: string): string {
     return prefix + crypto.randomUUID() + (extension.startsWith('.') ? '' : '.') + extension;

@@ -1,10 +1,10 @@
 @if (activity(); as activity) {
-  @if (activity.report && !editingReport) {
+  @if (activity.report && !editingReport()) {
     <div class="mt-3 border rounded p-3">
       <dn-activity-report [report]="activity.report" />
       @if (currentUser()?.admin) {
         <div class="mt-3">
-          <button type="button" class="btn btn-outline-secondary" (click)="editingReport = true">
+          <button type="button" class="btn btn-outline-secondary" (click)="editingReport.set(true)">
             <dn-icon [icon]="icons.edit" class="me-1" />
             Modifier le rapport
           </button>
@@ -22,20 +22,20 @@
       }
     </div>
   }
-  @if (!activity.report && !editingReport && currentUser()?.admin) {
+  @if (!activity.report && !editingReport() && currentUser()?.admin) {
     <div class="mt-3">
-      <button type="button" class="btn btn-outline-secondary" (click)="editingReport = true">
+      <button type="button" class="btn btn-outline-secondary" (click)="editingReport.set(true)">
         <dn-icon [icon]="icons.edit" class="me-1" />
         Remplir le rapport
       </button>
     </div>
   }
-  @if (editingReport) {
+  @if (editingReport()) {
     <div class="mt-3 border rounded p-3">
       <dn-activity-report-edition
         [report]="activity.report"
         (saved)="updateReport(activity, $event)"
-        (cancelled)="editingReport = false"
+        (cancelled)="editingReport.set(false)"
       />
     </div>
   }

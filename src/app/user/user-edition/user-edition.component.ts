@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AdministeredUser, AdministeredUserCommand, UserService } from '../user.service';
@@ -30,6 +30,10 @@ import * as icons from '../../icon/icons';
   ]
 })
 export class UserEditionComponent {
+  private router = inject(Router);
+  private userService = inject(UserService);
+  private modalService = inject(NgbModal);
+
   form = new FormGroup({
     displayName: new FormControl('', Validators.required),
     email: new FormControl('', [Validators.required, Validators.email]),
@@ -43,16 +47,13 @@ export class UserEditionComponent {
 
   saving = new Spinner();
 
-  constructor(
-    route: ActivatedRoute,
-    private router: Router,
-    private userService: UserService,
-    private modalService: NgbModal
-  ) {
+  constructor() {
+    const route = inject(ActivatedRoute);
+
     route.paramMap
       .pipe(
         map(paramMap => paramMap.get('uid')),
-        switchMap(uid => (uid ? userService.get(uid) : of(null))),
+        switchMap(uid => (uid ? this.userService.get(uid) : of(null))),
         first()
       )
       .subscribe(user => {
@@ -94,7 +95,9 @@ export class UserEditionComponent {
       this.router.navigate(['/users']);
       if (this.mode === 'create') {
         const modalRef = this.modalService.open(UserCreatedModalComponent);
-        (modalRef.componentInstance as UserCreatedModalComponent).userName = formValue.displayName!;
+        (modalRef.componentInstance as UserCreatedModalComponent).userName.set(
+          formValue.displayName!
+        );
       }
     });
   }
