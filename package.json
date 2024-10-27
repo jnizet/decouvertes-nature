@@ -58,7 +58,7 @@
     "eslint": "9.13.0",
     "eslint-config-prettier": "9.1.0",
     "eslint-plugin-prettier": "5.2.1",
-    "firebase-admin": "12.6.0",
+    "firebase-admin": "12.7.0",
     "firebase-tools": "13.23.0",
     "globals": "15.11.0",
     "jasmine-core": "5.4.0",
