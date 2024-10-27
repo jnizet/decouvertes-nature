@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import {
   AsyncValidatorFn,
   NonNullableFormBuilder,
@@ -14,6 +14,15 @@ import { Animator, AnimatorCommand, AnimatorService, Consent } from '../animator
 import * as icons from '../../icon/icons';
 import { FormControlValidationDirective } from '../../validation/form-control-validation.directive';
 
+type ViewModel =
+  | {
+      mode: 'create';
+    }
+  | {
+      mode: 'update';
+      editedAnimator: Animator;
+    };
+
 @Component({
   selector: 'dn-animator-edition-modal',
   standalone: true,
@@ -25,14 +34,14 @@ import { FormControlValidationDirective } from '../../validation/form-control-va
     FormControlValidationDirective
   ],
   templateUrl: './animator-edition-modal.component.html',
-  styleUrls: ['./animator-edition-modal.component.scss']
+  styleUrls: ['./animator-edition-modal.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AnimatorEditionModalComponent {
   private activeModal = inject(NgbActiveModal);
   private animatorService = inject(AnimatorService);
 
-  mode!: 'create' | 'update';
-  editedAnimator?: Animator;
+  vm = signal<ViewModel | undefined>(undefined);
 
   private uniqueNameAsyncValidator: AsyncValidatorFn = control => {
     return this.animatorService.getByName(control.value).pipe(
@@ -52,12 +61,16 @@ export class AnimatorEditionModalComponent {
   icons = icons;
 
   prepareForCreation() {
-    this.mode = 'create';
+    this.vm.set({
+      mode: 'create'
+    });
   }
 
   prepareForUpdate(animator: Animator) {
-    this.mode = 'update';
-    this.editedAnimator = animator;
+    this.vm.set({
+      mode: 'update',
+      editedAnimator: animator
+    });
     this.form.setValue({
       name: animator.name,
       emailConsent: animator.emailConsent ?? 'UNKNOWN',
@@ -67,12 +80,13 @@ export class AnimatorEditionModalComponent {
   }
 
   save() {
-    if (!this.form.valid) {
+    const vm = this.vm();
+    if (!this.form.valid || !vm) {
       return;
     }
 
     const formValue = this.form.getRawValue();
-    if (this.mode === 'create') {
+    if (vm.mode === 'create') {
       const command: AnimatorCommand = formValue;
       this.animatorService
         .create(command)
@@ -80,9 +94,9 @@ export class AnimatorEditionModalComponent {
         .subscribe(animator => {
           this.activeModal.close(animator);
         });
-    } else if (this.mode === 'update') {
+    } else if (vm.mode === 'update') {
       this.animatorService
-        .update(this.editedAnimator!.id, {
+        .update(vm.editedAnimator.id, {
           emailConsent: formValue.emailConsent,
           phoneConsent: formValue.phoneConsent
         })
