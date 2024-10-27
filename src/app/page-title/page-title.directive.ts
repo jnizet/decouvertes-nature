@@ -11,14 +11,11 @@ const DEFAULT_TITLE = 'Découvertes Nature';
 export class PageTitleDirective {
   title = input.required<string>();
 
-  constructor(
-    private titleService: Title,
-    destroyRef: DestroyRef
-  ) {
+  constructor(titleService: Title, destroyRef: DestroyRef) {
     effect(() => {
-      this.titleService.setTitle(`${this.title()} - ${DEFAULT_TITLE}`);
+      titleService.setTitle(`${this.title()} - ${DEFAULT_TITLE}`);
     });
 
-    destroyRef.onDestroy(() => this.titleService.setTitle(DEFAULT_TITLE));
+    destroyRef.onDestroy(() => titleService.setTitle(DEFAULT_TITLE));
   }
 }
