@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AdministeredUser, AdministeredUserCommand, UserService } from '../user.service';
@@ -14,6 +14,15 @@ import { UserCreatedModalComponent } from '../user-created-modal/user-created-mo
 import { SpinningIconComponent } from '../../shared/spinning-icon/spinning-icon.component';
 import * as icons from '../../icon/icons';
 
+type ViewModel =
+  | {
+      mode: 'create';
+    }
+  | {
+      mode: 'update';
+      editedUser: AdministeredUser;
+    };
+
 @Component({
   selector: 'dn-user-edition',
   templateUrl: './user-edition.component.html',
@@ -27,7 +36,8 @@ import * as icons from '../../icon/icons';
     LoadingSpinnerComponent,
     IconDirective,
     SpinningIconComponent
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class UserEditionComponent {
   private router = inject(Router);
@@ -41,8 +51,7 @@ export class UserEditionComponent {
     export: new FormControl(false),
     disabled: new FormControl(false)
   });
-  mode: 'create' | 'edit' | null = null;
-  editedUser: AdministeredUser | null = null;
+  vm = signal<ViewModel | undefined>(undefined);
   icons = icons;
 
   saving = new Spinner();
@@ -57,8 +66,11 @@ export class UserEditionComponent {
         first()
       )
       .subscribe(user => {
-        this.mode = user ? 'edit' : 'create';
-        this.editedUser = user;
+        if (user) {
+          this.vm.set({ mode: 'update', editedUser: user });
+        } else {
+          this.vm.set({ mode: 'create' });
+        }
 
         if (user) {
           const formValue = {
@@ -75,7 +87,8 @@ export class UserEditionComponent {
   }
 
   save() {
-    if (this.form.invalid) {
+    const vm = this.vm();
+    if (this.form.invalid || !vm) {
       return;
     }
 
@@ -88,12 +101,12 @@ export class UserEditionComponent {
       export: formValue.export!
     };
     const result$: Observable<unknown> =
-      this.mode === 'create'
+      vm.mode === 'create'
         ? this.userService.create(command)
-        : this.userService.update(this.editedUser!.uid, command);
+        : this.userService.update(vm.editedUser.uid, command);
     result$.pipe(this.saving.spinUntilFinalization()).subscribe(() => {
       this.router.navigate(['/users']);
-      if (this.mode === 'create') {
+      if (vm.mode === 'create') {
         const modalRef = this.modalService.open(UserCreatedModalComponent);
         (modalRef.componentInstance as UserCreatedModalComponent).userName.set(
           formValue.displayName!
