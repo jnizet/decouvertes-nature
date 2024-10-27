@@ -2,15 +2,15 @@
 <div class="row justify-content-md-center">
   <div class="col col-md-6 col-lg-4">
     <h1 class="fs-4">Choix du mot de passe</h1>
-    @if (verificationError) {
+    @if (verificationError()) {
       <div class="text-danger">
         Le lien de choix du mot de passe n'est plus valide.<br />
         Veuillez refaire une demande de réinitialisation de mot de passe.
       </div>
     }
-    @if (!verificationError && email) {
+    @if (!verificationError() && email()) {
       <form [formGroup]="form" (ngSubmit)="resetPassword()">
-        <p>Vous allez changer le mot de passe de l'utilisateur {{ email }}.</p>
+        <p>Vous allez changer le mot de passe de l'utilisateur {{ email() }}.</p>
         <div class="mb-3">
           <label for="password" class="form-label">Mot de passe</label>
           <input formControlName="password" type="password" class="form-control" id="password" />
@@ -21,7 +21,7 @@
           <div class="col-sm-auto">
             <button class="btn btn-primary">Choisir ce mot de passe</button>
           </div>
-          @if (resetError) {
+          @if (resetError()) {
             <div class="col-sm">
               <div class="text-danger">Une erreur s'est produite à la réinitialisation.</div>
             </div>
