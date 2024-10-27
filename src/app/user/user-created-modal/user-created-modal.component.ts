@@ -1,4 +1,4 @@
-import { Component, inject, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { IconDirective } from '../../icon/icon.directive';
 import * as icons from '../../icon/icons';
@@ -8,7 +8,8 @@ import * as icons from '../../icon/icons';
   templateUrl: './user-created-modal.component.html',
   styleUrls: ['./user-created-modal.component.scss'],
   standalone: true,
-  imports: [IconDirective]
+  imports: [IconDirective],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class UserCreatedModalComponent {
   readonly activeModal = inject(NgbActiveModal);
