@@ -18,7 +18,6 @@ import { PageTitleDirective } from '../page-title/page-title.directive';
   selector: 'dn-change-password',
   templateUrl: './change-password.component.html',
   styleUrls: ['./change-password.component.scss'],
-  standalone: true,
   imports: [
     ReactiveFormsModule,
     ValidationErrorsComponent,

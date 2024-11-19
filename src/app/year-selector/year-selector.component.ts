@@ -6,7 +6,6 @@ import * as icons from '../icon/icons';
 
 @Component({
   selector: 'dn-year-selector',
-  standalone: true,
   imports: [DecimalPipe, IconDirective],
   templateUrl: './year-selector.component.html',
   styleUrls: ['./year-selector.component.scss'],

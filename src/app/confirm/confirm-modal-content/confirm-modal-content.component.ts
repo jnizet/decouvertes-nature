@@ -6,7 +6,6 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
   templateUrl: './confirm-modal-content.component.html',
   styleUrls: ['./confirm-modal-content.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
   imports: []
 })
 export class ConfirmModalContentComponent {

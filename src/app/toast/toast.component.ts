@@ -4,7 +4,6 @@ import { IconDirective } from '../icon/icon.directive';
 
 @Component({
   selector: 'dn-toast',
-  standalone: true,
   imports: [IconDirective],
   templateUrl: './toast.component.html',
   styleUrls: ['./toast.component.scss'],

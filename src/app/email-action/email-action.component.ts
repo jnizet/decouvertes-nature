@@ -16,7 +16,6 @@ import { PageTitleDirective } from '../page-title/page-title.directive';
   selector: 'dn-email-action',
   templateUrl: './email-action.component.html',
   styleUrls: ['./email-action.component.scss'],
-  standalone: true,
   imports: [
     ReactiveFormsModule,
     ValidationErrorsComponent,

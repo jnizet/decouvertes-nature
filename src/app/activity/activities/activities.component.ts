@@ -14,7 +14,6 @@ import { toSignal } from '@angular/core/rxjs-interop';
   templateUrl: './activities.component.html',
   styleUrls: ['./activities.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
   imports: [PageTitleDirective, LoadingSpinnerComponent, ActivityCardComponent, MonthPipe]
 })
 export class ActivitiesComponent {

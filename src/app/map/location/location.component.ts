@@ -12,7 +12,6 @@ import * as icons from '../../icon/icons';
 
 @Component({
   selector: 'dn-location',
-  standalone: true,
   imports: [DecimalPipe, RouterLink, NgbCollapse, IconDirective, ActivityDatePipe],
   templateUrl: './location.component.html',
   styleUrls: ['./location.component.scss'],

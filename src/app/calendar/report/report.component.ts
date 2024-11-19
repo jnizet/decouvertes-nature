@@ -15,7 +15,6 @@ interface ViewModel {
   templateUrl: './report.component.html',
   styleUrls: ['./report.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
   imports: [DecimalPipe, PercentPipe]
 })
 export class ReportComponent {

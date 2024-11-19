@@ -18,7 +18,6 @@ interface Option {
   providers: [
     { provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => MultiChoiceComponent), multi: true }
   ],
-  standalone: true,
   imports: [IconDirective],
   changeDetection: ChangeDetectionStrategy.OnPush
 })

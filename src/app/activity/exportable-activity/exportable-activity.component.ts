@@ -9,7 +9,6 @@ import { ActivityDatePipe } from '../../activity-date-pipe/activity-date.pipe';
   templateUrl: './exportable-activity.component.html',
   styleUrls: ['./exportable-activity.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
   imports: [CurrencyPipe, DecimalPipe, ActivityTypePipe, ActivityDatePipe]
 })
 export class ExportableActivityComponent {

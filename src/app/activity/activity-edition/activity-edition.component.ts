@@ -154,7 +154,6 @@ type EditionMode =
   selector: 'dn-activity-edition',
   templateUrl: './activity-edition.component.html',
   styleUrls: ['./activity-edition.component.scss'],
-  standalone: true,
   imports: [
     ReactiveFormsModule,
     NgbTypeahead,

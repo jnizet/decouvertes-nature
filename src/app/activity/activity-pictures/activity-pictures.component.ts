@@ -24,7 +24,6 @@ interface ViewModel {
 
 @Component({
   selector: 'dn-activity-pictures',
-  standalone: true,
   imports: [IconDirective, SpinningIconComponent],
   templateUrl: './activity-pictures.component.html',
   styleUrls: ['./activity-pictures.component.scss'],

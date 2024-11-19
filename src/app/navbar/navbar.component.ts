@@ -17,7 +17,6 @@ import * as icons from '../icon/icons';
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
   imports: [
     RouterLink,
     NgbCollapse,

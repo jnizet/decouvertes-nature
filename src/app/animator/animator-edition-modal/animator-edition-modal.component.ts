@@ -25,7 +25,6 @@ type ViewModel =
 
 @Component({
   selector: 'dn-animator-edition-modal',
-  standalone: true,
   imports: [
     ReactiveFormsModule,
     SpinningIconComponent,

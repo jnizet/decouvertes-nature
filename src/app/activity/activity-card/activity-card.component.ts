@@ -12,7 +12,6 @@ import * as icons from '../../icon/icons';
   templateUrl: './activity-card.component.html',
   styleUrls: ['./activity-card.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
   imports: [RouterLink, IconDirective, ActivityTypePipe, ActivityDatePipe]
 })
 export class ActivityCardComponent {

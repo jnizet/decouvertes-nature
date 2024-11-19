@@ -14,7 +14,6 @@ import * as icons from '../icon/icons';
   selector: 'dn-reset-password',
   templateUrl: './reset-password.component.html',
   styleUrls: ['./reset-password.component.scss'],
-  standalone: true,
   imports: [
     ReactiveFormsModule,
     ValidationErrorsComponent,

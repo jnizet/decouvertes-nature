@@ -49,6 +49,11 @@
             "styles": [
               "src/styles.scss"
             ],
+            "stylePreprocessorOptions": {
+              "sass": {
+                "silenceDeprecations": ["import"]
+              }
+            },
             "scripts": [],
             "loader": {
               ".svg": "text"

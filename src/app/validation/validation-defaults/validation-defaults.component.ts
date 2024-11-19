@@ -12,7 +12,6 @@ import { DecimalPipe } from '@angular/common';
   templateUrl: './validation-defaults.component.html',
   styleUrls: ['./validation-defaults.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
   imports: [DecimalPipe, DefaultValidationErrorsDirective, ValidationErrorDirective]
 })
 export class ValidationDefaultsComponent {

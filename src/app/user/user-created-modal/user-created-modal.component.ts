@@ -7,7 +7,6 @@ import * as icons from '../../icon/icons';
   selector: 'dn-user-created-modal',
   templateUrl: './user-created-modal.component.html',
   styleUrls: ['./user-created-modal.component.scss'],
-  standalone: true,
   imports: [IconDirective],
   changeDetection: ChangeDetectionStrategy.OnPush
 })

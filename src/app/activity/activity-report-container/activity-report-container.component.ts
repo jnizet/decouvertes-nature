@@ -12,7 +12,6 @@ import { toSignal } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'dn-activity-report-container',
-  standalone: true,
   imports: [ActivityReportComponent, IconDirective, ActivityReportEditionComponent],
   templateUrl: './activity-report-container.component.html',
   styleUrls: ['./activity-report-container.component.scss'],
