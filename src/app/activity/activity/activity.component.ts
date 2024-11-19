@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Signal, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, Signal } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { map, switchMap } from 'rxjs';
 import { Activity, ActivityService } from '../activity.service';
@@ -9,8 +9,6 @@ import { IconDirective } from '../../icon/icon.directive';
 import { PageTitleDirective } from '../../page-title/page-title.directive';
 import { ActivityDatePipe } from '../../activity-date-pipe/activity-date.pipe';
 import { ActivityTypePipe } from '../../activity-type-pipe/activity-type.pipe';
-import { ActivityReportComponent } from '../activity-report/activity-report.component';
-import { ActivityReportEditionComponent } from '../activity-report-edition/activity-report-edition.component';
 import { CurrentActivityService } from '../current-activity.service';
 import { Animator, AnimatorService } from '../../animator/animator.service';
 import { ConsentComponent } from '../../animator/consent/consent.component';
@@ -26,7 +24,6 @@ interface ViewModel {
   templateUrl: './activity.component.html',
   styleUrls: ['./activity.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
   imports: [
     DecimalPipe,
     CurrencyPipe,
@@ -35,8 +32,6 @@ interface ViewModel {
     IconDirective,
     ActivityDatePipe,
     ActivityTypePipe,
-    ActivityReportComponent,
-    ActivityReportEditionComponent,
     ConsentComponent
   ]
 })

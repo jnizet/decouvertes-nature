@@ -4,7 +4,6 @@ import { Spinner } from '../spinner';
 
 @Component({
   selector: 'dn-spinning-icon',
-  standalone: true,
   imports: [IconDirective],
   templateUrl: './spinning-icon.component.html',
   styleUrls: ['./spinning-icon.component.scss'],

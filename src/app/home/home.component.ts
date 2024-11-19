@@ -12,7 +12,6 @@ import { toSignal } from '@angular/core/rxjs-interop';
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
   imports: [RouterLink, IconDirective, UsernamePipe]
 })
 export class HomeComponent {

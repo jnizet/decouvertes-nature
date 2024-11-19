@@ -54,7 +54,6 @@ function unmappedLocationId(location: string): string {
   templateUrl: './activities-map.component.html',
   styleUrls: ['./activities-map.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
   imports: [
     RouterLink,
     PageTitleDirective,

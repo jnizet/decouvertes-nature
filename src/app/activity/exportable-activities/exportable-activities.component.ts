@@ -26,7 +26,6 @@ import { toSignal } from '@angular/core/rxjs-interop';
   templateUrl: './exportable-activities.component.html',
   styleUrls: ['./exportable-activities.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
   imports: [
     ReactiveFormsModule,
     NgbTypeahead,

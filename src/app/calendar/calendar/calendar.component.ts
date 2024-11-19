@@ -34,7 +34,6 @@ interface ActivityWithDayRange extends Activity {
   templateUrl: './calendar.component.html',
   styleUrls: ['./calendar.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
   imports: [
     RouterLink,
     PageTitleDirective,

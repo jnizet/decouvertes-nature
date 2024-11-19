@@ -11,7 +11,6 @@ import { copied } from '../../icon/icons';
 
 @Component({
   selector: 'dn-reset-password-link-modal',
-  standalone: true,
   imports: [IconDirective, SpinningIconComponent],
   templateUrl: './reset-password-link-modal.component.html',
   styleUrls: ['./reset-password-link-modal.component.scss'],

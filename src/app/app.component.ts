@@ -8,7 +8,6 @@ import { ToastComponent } from './toast/toast.component';
   selector: 'dn-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
-  standalone: true,
   imports: [RouterOutlet, NavbarComponent, ValidationDefaultsComponent, ToastComponent],
   changeDetection: ChangeDetectionStrategy.OnPush
 })

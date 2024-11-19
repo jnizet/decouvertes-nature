@@ -2,7 +2,6 @@ import { ChangeDetectionStrategy, Component, inject, Signal } from '@angular/cor
 import { combineLatest, distinctUntilChanged, map, startWith } from 'rxjs';
 import { PageTitleDirective } from '../../page-title/page-title.directive';
 import { IconDirective } from '../../icon/icon.directive';
-import { RouterLink } from '@angular/router';
 import { LoadingSpinnerComponent } from '../../loading-spinner/loading-spinner.component';
 import { NonNullableFormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { Animator, AnimatorService } from '../animator.service';
@@ -15,11 +14,9 @@ import * as icons from '../../icon/icons';
 
 @Component({
   selector: 'dn-animators',
-  standalone: true,
   imports: [
     PageTitleDirective,
     IconDirective,
-    RouterLink,
     LoadingSpinnerComponent,
     ReactiveFormsModule,
     ConsentComponent

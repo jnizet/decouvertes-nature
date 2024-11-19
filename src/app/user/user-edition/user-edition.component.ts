@@ -8,7 +8,6 @@ import { ValidationErrorsComponent } from 'ngx-valdemort';
 import { FormControlValidationDirective } from '../../validation/form-control-validation.directive';
 import { PageTitleDirective } from '../../page-title/page-title.directive';
 import { LoadingSpinnerComponent } from '../../loading-spinner/loading-spinner.component';
-import { IconDirective } from '../../icon/icon.directive';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { UserCreatedModalComponent } from '../user-created-modal/user-created-modal.component';
 import { SpinningIconComponent } from '../../shared/spinning-icon/spinning-icon.component';
@@ -27,14 +26,12 @@ type ViewModel =
   selector: 'dn-user-edition',
   templateUrl: './user-edition.component.html',
   styleUrls: ['./user-edition.component.scss'],
-  standalone: true,
   imports: [
     ReactiveFormsModule,
     ValidationErrorsComponent,
     FormControlValidationDirective,
     PageTitleDirective,
     LoadingSpinnerComponent,
-    IconDirective,
     SpinningIconComponent
   ],
   changeDetection: ChangeDetectionStrategy.OnPush

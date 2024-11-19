@@ -28,7 +28,6 @@ type ViewModel =
 
 @Component({
   selector: 'dn-activity-picture-edition-modal',
-  standalone: true,
   imports: [
     ReactiveFormsModule,
     ValidationErrorsComponent,

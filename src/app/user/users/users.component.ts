@@ -17,7 +17,6 @@ import { toSignal } from '@angular/core/rxjs-interop';
   templateUrl: './users.component.html',
   styleUrls: ['./users.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
   imports: [RouterLink, PageTitleDirective, LoadingSpinnerComponent, IconDirective]
 })
 export class UsersComponent {

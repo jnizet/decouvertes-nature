@@ -8,7 +8,6 @@ import * as icons from '../../icon/icons';
   templateUrl: './activities-tabs.component.html',
   styleUrls: ['./activities-tabs.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
   imports: [RouterOutlet, RouterLink, RouterLinkActive, IconDirective]
 })
 export class ActivitiesTabsComponent {

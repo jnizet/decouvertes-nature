@@ -4,7 +4,6 @@ import { Consent } from '../animator.service';
 
 @Component({
   selector: 'dn-consent',
-  standalone: true,
   imports: [],
   templateUrl: './consent.component.html',
   styleUrls: ['./consent.component.scss'],

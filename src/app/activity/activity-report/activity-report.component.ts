@@ -9,7 +9,6 @@ import * as icons from '../../icon/icons';
   templateUrl: './activity-report.component.html',
   styleUrls: ['./activity-report.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
   imports: [DecimalPipe, IconDirective]
 })
 export class ActivityReportComponent {

@@ -11,7 +11,6 @@ import * as icons from '../../icon/icons';
   selector: 'dn-activity-report-edition',
   templateUrl: './activity-report-edition.component.html',
   styleUrls: ['./activity-report-edition.component.scss'],
-  standalone: true,
   imports: [
     ReactiveFormsModule,
     ValidationErrorsComponent,

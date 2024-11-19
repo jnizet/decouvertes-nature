@@ -1,3 +1,4 @@
+@use 'sass:color';
 @import 'bootstrap/scss/functions';
 
 // make the placeholders lighter
@@ -14,9 +15,9 @@ $form-label-margin-bottom: 0.2rem;
 $form-label-font-weight: 500;
 $enable-shadows: true;
 
-$dark: darken($primary, 20%);
+$dark: color.adjust($primary, $lightness: -20%);
 $body-bg-dark: $dark;
-$body-tertiary-bg-dark: darken($dark, 3%);
+$body-tertiary-bg-dark: color.adjust($dark, $lightness: -3%);
 
 $headings-color: $primary;
 

@@ -12,7 +12,6 @@ import { PageTitleDirective } from '../page-title/page-title.directive';
   selector: 'dn-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
-  standalone: true,
   imports: [
     ReactiveFormsModule,
     RouterLink,
