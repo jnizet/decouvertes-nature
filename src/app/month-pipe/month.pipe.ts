@@ -4,8 +4,7 @@ import { format, parseISO } from 'date-fns';
 import { fr } from 'date-fns/locale';
 
 @Pipe({
-  name: 'month',
-  standalone: true
+  name: 'month'
 })
 export class MonthPipe implements PipeTransform {
   transform(value: YearMonth, mode: 'with-year' | 'without-year' = 'with-year') {

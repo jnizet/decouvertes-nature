@@ -5,7 +5,6 @@ import { ValdemortConfig } from 'ngx-valdemort';
 
 @Directive({
   selector: '[formControlName]',
-  standalone: true,
   host: {
     '[class.is-invalid]': 'isInvalid'
   }

@@ -1,10 +1,9 @@
-import { computed, Directive, input, Signal, inject } from '@angular/core';
+import { computed, Directive, inject, input, Signal } from '@angular/core';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 
 @Directive({
   // eslint-disable-next-line @angular-eslint/directive-selector
   selector: 'dn-icon',
-  standalone: true,
   host: {
     '[innerHtml]': 'safeIcon()',
     '[attr.aria-hidden]': 'true'
