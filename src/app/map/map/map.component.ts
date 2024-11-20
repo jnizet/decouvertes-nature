@@ -4,10 +4,10 @@ import {
   Component,
   effect,
   ElementRef,
+  inject,
   input,
   NgZone,
-  ViewEncapsulation,
-  inject
+  ViewEncapsulation
 } from '@angular/core';
 import { ActivityLocation } from '../activities-map/activities-map.component';
 import * as L from 'leaflet';
@@ -2041,8 +2041,7 @@ const LOIRE: Array<LatLngExpression> = [
   templateUrl: './map.component.html',
   styleUrls: ['./map.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  encapsulation: ViewEncapsulation.None,
-  standalone: true
+  encapsulation: ViewEncapsulation.None
 })
 export class MapComponent {
   private elementRef = inject(ElementRef);

@@ -1,12 +1,11 @@
-import { DestroyRef, Directive, effect, input, inject } from '@angular/core';
+import { DestroyRef, Directive, effect, inject, input } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 
 const DEFAULT_TITLE = 'Découvertes Nature';
 
 @Directive({
   // eslint-disable-next-line @angular-eslint/directive-selector
-  selector: 'dn-page-title',
-  standalone: true
+  selector: 'dn-page-title'
 })
 export class PageTitleDirective {
   title = input.required<string>();
