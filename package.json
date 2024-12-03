@@ -61,7 +61,7 @@
     "firebase-admin": "13.0.1",
     "firebase-tools": "13.27.0",
     "globals": "15.13.0",
-    "jasmine-core": "5.4.0",
+    "jasmine-core": "5.5.0",
     "karma": "6.4.4",
     "karma-chrome-launcher": "3.2.0",
     "karma-coverage": "2.2.1",
