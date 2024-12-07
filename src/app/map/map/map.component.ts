@@ -1,8 +1,7 @@
 import {
-  afterNextRender,
+  afterRenderEffect,
   ChangeDetectionStrategy,
   Component,
-  effect,
   ElementRef,
   inject,
   input,
@@ -2054,11 +2053,10 @@ export class MapComponent {
   private markers: Array<L.Marker<any>> = [];
 
   constructor() {
-    afterNextRender(() => {
-      this.initMap();
-      this.setMarkers();
-    });
-    effect(() => {
+    afterRenderEffect(() => {
+      if (!this.map) {
+        this.initMap();
+      }
       this.setMarkers();
     });
   }
@@ -2086,30 +2084,27 @@ export class MapComponent {
   }
 
   private setMarkers(): void {
+    const locations = this.locations();
+    const focusedLocation = this.focusedLocation();
+    const locationsToMark = focusedLocation ? [focusedLocation] : locations;
     this.ngZone.runOutsideAngular(() => {
-      if (this.map) {
-        this.markers.forEach(marker => this.map.removeLayer(marker));
-
-        const focusedLocation = this.focusedLocation();
-        const locationsToMark = focusedLocation ? [focusedLocation] : this.locations();
-
-        this.markers = locationsToMark.map(location => {
-          const divIcon = L.divIcon({
-            className: 'border rounded activity-marker',
-            html: `${location.activities.length}`
-          });
-          const marker = L.marker(location.municipality.center, {
-            icon: divIcon,
-            keyboard: false
-          });
-          marker.bindTooltip(location.municipality.name, {
-            offset: [12, 3],
-            direction: 'right'
-          });
-          marker.addTo(this.map);
-          return marker;
+      this.markers.forEach(marker => this.map.removeLayer(marker));
+      this.markers = locationsToMark.map(location => {
+        const divIcon = L.divIcon({
+          className: 'border rounded activity-marker',
+          html: `${location.activities.length}`
         });
-      }
+        const marker = L.marker(location.municipality.center, {
+          icon: divIcon,
+          keyboard: false
+        });
+        marker.bindTooltip(location.municipality.name, {
+          offset: [12, 3],
+          direction: 'right'
+        });
+        marker.addTo(this.map);
+        return marker;
+      });
     });
   }
 }
