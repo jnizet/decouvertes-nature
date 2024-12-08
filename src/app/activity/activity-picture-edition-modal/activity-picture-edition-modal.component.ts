@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, inject, NgZone, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { NonNullableFormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ValidationErrorsComponent } from 'ngx-valdemort';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
@@ -31,8 +31,8 @@ type ViewModel =
   imports: [
     ReactiveFormsModule,
     ValidationErrorsComponent,
-    FormControlValidationDirective,
-    SpinningIconComponent
+    SpinningIconComponent,
+    FormControlValidationDirective
   ],
   templateUrl: './activity-picture-edition-modal.component.html',
   styleUrls: ['./activity-picture-edition-modal.component.scss'],
@@ -43,7 +43,6 @@ export class ActivityPictureEditionModalComponent {
   private storageService = inject(StorageService);
   private currentActivityService = inject(CurrentActivityService);
   private activityService = inject(ActivityService);
-  private ngZone = inject(NgZone);
 
   vm = signal<ViewModel | undefined>(undefined);
 
@@ -179,10 +178,8 @@ export class ActivityPictureEditionModalComponent {
 
           const blobCallback = (blob: Blob | null) => {
             // this is necessary because Zone.js doesn't patch canvas anymore: see https://github.com/angular/angular/issues/30939
-            this.ngZone.run(() => {
-              observer.next(blob!);
-              observer.complete();
-            });
+            observer.next(blob!);
+            observer.complete();
           };
 
           canvas.toBlob(blobCallback, 'image/jpeg', 0.8);
