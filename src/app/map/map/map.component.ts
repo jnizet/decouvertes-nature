@@ -5,7 +5,6 @@ import {
   ElementRef,
   inject,
   input,
-  NgZone,
   ViewEncapsulation
 } from '@angular/core';
 import { ActivityLocation } from '../activities-map/activities-map.component';
@@ -2044,7 +2043,6 @@ const LOIRE: Array<LatLngExpression> = [
 })
 export class MapComponent {
   private elementRef = inject(ElementRef);
-  private ngZone = inject(NgZone);
 
   locations = input.required<Array<ActivityLocation>>();
   focusedLocation = input<ActivityLocation | null>(null);
@@ -2062,49 +2060,45 @@ export class MapComponent {
   }
 
   private initMap(): void {
-    this.ngZone.runOutsideAngular(() => {
-      this.map = L.map(this.elementRef.nativeElement, {
-        center: [45.75624, 4.2246],
-        zoom: 9,
-        dragging: !L.Browser.mobile,
-        tapHold: !L.Browser.mobile
-      });
-
-      const tiles = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-      });
-
-      tiles.addTo(this.map);
-
-      const polyline = L.polyline(LOIRE, { className: 'contour' }).addTo(this.map);
-
-      // zoom the map to the polyline
-      this.map.fitBounds(polyline.getBounds());
+    this.map = L.map(this.elementRef.nativeElement, {
+      center: [45.75624, 4.2246],
+      zoom: 9,
+      dragging: !L.Browser.mobile,
+      tapHold: !L.Browser.mobile
     });
+
+    const tiles = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+    });
+
+    tiles.addTo(this.map);
+
+    const polyline = L.polyline(LOIRE, { className: 'contour' }).addTo(this.map);
+
+    // zoom the map to the polyline
+    this.map.fitBounds(polyline.getBounds());
   }
 
   private setMarkers(): void {
     const locations = this.locations();
     const focusedLocation = this.focusedLocation();
     const locationsToMark = focusedLocation ? [focusedLocation] : locations;
-    this.ngZone.runOutsideAngular(() => {
-      this.markers.forEach(marker => this.map.removeLayer(marker));
-      this.markers = locationsToMark.map(location => {
-        const divIcon = L.divIcon({
-          className: 'border rounded activity-marker',
-          html: `${location.activities.length}`
-        });
-        const marker = L.marker(location.municipality.center, {
-          icon: divIcon,
-          keyboard: false
-        });
-        marker.bindTooltip(location.municipality.name, {
-          offset: [12, 3],
-          direction: 'right'
-        });
-        marker.addTo(this.map);
-        return marker;
+    this.markers.forEach(marker => this.map.removeLayer(marker));
+    this.markers = locationsToMark.map(location => {
+      const divIcon = L.divIcon({
+        className: 'border rounded activity-marker',
+        html: `${location.activities.length}`
       });
+      const marker = L.marker(location.municipality.center, {
+        icon: divIcon,
+        keyboard: false
+      });
+      marker.bindTooltip(location.municipality.name, {
+        offset: [12, 3],
+        direction: 'right'
+      });
+      marker.addTo(this.map);
+      return marker;
     });
   }
 }

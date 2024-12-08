@@ -4,9 +4,9 @@
     @for (year of years; track year.year) {
       <div class="mb-4">
         <h2 class="fs-4">{{ year.year }}</h2>
-        @for (month of year.months; track month) {
+        @for (month of year.months; track month.month) {
           <h3 class="fs-5">{{ month.month | month }}</h3>
-          @for (activity of month.activities; track activity) {
+          @for (activity of month.activities; track activity.id) {
             <div
               class="card mb-2"
               [class.card-done]="activity.report && !activity.report.cancelled"
