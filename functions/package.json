@@ -20,8 +20,8 @@
   "devDependencies": {
     "@eslint/js": "9.17.0",
     "@types/node": "20.17.10",
-    "@typescript-eslint/eslint-plugin": "8.18.0",
-    "@typescript-eslint/parser": "8.18.0",
+    "@typescript-eslint/eslint-plugin": "8.18.2",
+    "@typescript-eslint/parser": "8.18.2",
     "eslint": "9.17.0",
     "eslint-config-prettier": "9.1.0",
     "eslint-plugin-prettier": "5.2.1",
@@ -29,7 +29,7 @@
     "globals": "15.13.0",
     "prettier": "3.4.2",
     "typescript": "5.6.3",
-    "typescript-eslint": "8.18.0"
+    "typescript-eslint": "8.18.2"
   },
   "private": true
 }
