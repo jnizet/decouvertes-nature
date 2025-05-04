@@ -34,7 +34,7 @@
     "@ng-bootstrap/ng-bootstrap": "18.0.0",
     "@popperjs/core": "2.11.8",
     "bootstrap": "5.3.5",
-    "bootstrap-icons": "1.11.3",
+    "bootstrap-icons": "1.12.1",
     "date-fns": "4.1.0",
     "firebase": "11.6.1",
     "leaflet": "1.9.4",
