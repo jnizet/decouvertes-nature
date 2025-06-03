@@ -76,5 +76,6 @@
   "resolutions": {
     "firebase": "11.8.1"
   },
-  "type": "module"
+  "type": "module",
+  "packageManager": "yarn@1.22.22"
 }
