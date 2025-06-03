@@ -329,14 +329,14 @@
   dependencies:
     tslib "^2.3.0"
 
-"@angular/fire@19.1.0":
-  version "19.1.0"
-  resolved "https://registry.yarnpkg.com/@angular/fire/-/fire-19.1.0.tgz#f5010c1ce071d514e8690514ce7228032423e12b"
-  integrity sha512-yyELJQLxF56EoGW8HUxfATBUeX5rzNpt/PjNAhSlmWdQ12jXVkgGeWyWsl5gvUlxhpFKIt+EVp3nYvwIlzey6Q==
+"@angular/fire@19.2.0":
+  version "19.2.0"
+  resolved "https://registry.yarnpkg.com/@angular/fire/-/fire-19.2.0.tgz#e58c18acb4e22d1b9cec35a54ca8ad8a5852dc12"
+  integrity sha512-XoIggKcwY75JioGDNtNQFn4d2RpsBR4ugPN8bNWhylZIcWe47o760BxwnXn111I+P5FfZ6DMX8BOW7SmrC6VTQ==
   dependencies:
     "@angular-devkit/schematics" "^19.0.0"
     "@schematics/angular" "^19.0.0"
-    firebase "^11.2.0"
+    firebase "^11.8.0"
     rxfire "^6.1.0"
     tslib "^2.3.0"
 
@@ -7001,7 +7001,7 @@ firebase-tools@14.4.0:
     zod "^3.24.3"
     zod-to-json-schema "^3.24.5"
 
-firebase@11.8.1, firebase@^11.2.0:
+firebase@11.8.1, firebase@^11.8.0:
   version "11.8.1"
   resolved "https://registry.yarnpkg.com/firebase/-/firebase-11.8.1.tgz#7658c4fed6c10102d8a2b00de576b903af78d767"
   integrity sha512-oetXhPCvJZM4DVL/n/06442emMU+KzM0JLZjszpwlU6mqdFZqBwumBxn6hQkLukJyU5wsjihZHUY8HEAE2micg==
