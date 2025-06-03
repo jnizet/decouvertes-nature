@@ -48,7 +48,7 @@
     "@angular/cli": "19.2.14",
     "@angular/compiler-cli": "19.2.14",
     "@angular/localize": "19.2.14",
-    "@axe-core/playwright": "4.10.1",
+    "@axe-core/playwright": "4.10.2",
     "@eslint/js": "9.28.0",
     "@playwright/test": "1.52.0",
     "@types/jasmine": "5.1.8",
