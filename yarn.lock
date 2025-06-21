@@ -6428,10 +6428,10 @@ netmask@^2.0.2:
   resolved "https://registry.yarnpkg.com/netmask/-/netmask-2.0.2.tgz#8b01a07644065d536383835823bc52004ebac5e7"
   integrity sha512-dBpDMdxv9Irdq66304OLfEmQ9tbNRFnFTuZiLo+bD+r332bBmMJ8GBLXklIXXgxd3+v9+KUnZaUR5PJMa75Gsg==
 
-ngx-valdemort@13.0.0:
-  version "13.0.0"
-  resolved "https://registry.yarnpkg.com/ngx-valdemort/-/ngx-valdemort-13.0.0.tgz#5ad44a3153a534911f326ac9959f1fa6879af9dd"
-  integrity sha512-eWCdOvIrtap7XzV/wY4Ar+fI4xreXo02mJwvtU5bythvmnYBL0HqN+bCulr91g9KjzTECxHpdYs6W42h0YGivQ==
+ngx-valdemort@14.0.0:
+  version "14.0.0"
+  resolved "https://registry.yarnpkg.com/ngx-valdemort/-/ngx-valdemort-14.0.0.tgz#065e7828809053fca818b9b9d224db155b1b7d3e"
+  integrity sha512-xhrnLFjPhva7EfzbnnqMkrdfuKc5JmSCs5aAOXy55TN3DwHHVokFd4QGWtzArO++jsPqHlzqWEbgBw4+8o6uJA==
   dependencies:
     tslib "2.8.1"
 
