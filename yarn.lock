@@ -1644,10 +1644,10 @@
     "@napi-rs/nice-win32-ia32-msvc" "1.0.1"
     "@napi-rs/nice-win32-x64-msvc" "1.0.1"
 
-"@ng-bootstrap/ng-bootstrap@19.0.0-rc.0":
-  version "19.0.0-rc.0"
-  resolved "https://registry.yarnpkg.com/@ng-bootstrap/ng-bootstrap/-/ng-bootstrap-19.0.0-rc.0.tgz#06bc11f6e43b51bc9494a3b13f80d7fdb90ed0a9"
-  integrity sha512-V/e4pdAbcgifhbQrr/o+q50Jng2nSnAb26XNWVYRu/Y4Rms4M5iDGJyymOAnj6ET2AXFvag2gST8Wo66R0pjFg==
+"@ng-bootstrap/ng-bootstrap@19.0.0":
+  version "19.0.0"
+  resolved "https://registry.yarnpkg.com/@ng-bootstrap/ng-bootstrap/-/ng-bootstrap-19.0.0.tgz#4422ac4f864f9a75d3bb547df74bc12c429ffe76"
+  integrity sha512-Ryd7L3VdT0zQ5+Y9uA5Kze+4FylUQ7FS04DCiFAjU3eCLxrGirhXiwpE2poMSciZi0nqXodKgKKdUSynZEYY+Q==
   dependencies:
     tslib "^2.3.0"
 
