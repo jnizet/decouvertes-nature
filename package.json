@@ -35,7 +35,7 @@
     "bootstrap": "5.3.7",
     "bootstrap-icons": "1.13.1",
     "date-fns": "4.1.0",
-    "firebase": "11.9.1",
+    "firebase": "11.10.0",
     "leaflet": "1.9.4",
     "ngx-valdemort": "14.0.0",
     "rxjs": "7.8.2",
@@ -73,7 +73,7 @@
     "wait-on": "8.0.3"
   },
   "resolutions": {
-    "firebase": "11.9.1"
+    "firebase": "11.10.0"
   },
   "type": "module",
   "packageManager": "yarn@1.22.22"
