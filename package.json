@@ -70,7 +70,7 @@
     "serve": "14.2.4",
     "typescript": "5.8.3",
     "typescript-eslint": "8.38.0",
-    "wait-on": "8.0.3"
+    "wait-on": "8.0.4"
   },
   "resolutions": {
     "firebase": "12.0.0"
