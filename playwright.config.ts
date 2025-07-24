@@ -43,7 +43,7 @@ const config: PlaywrightTestConfig = {
     storageState: {
       origins: [
         {
-          origin: '',
+          origin: 'http://localhost:4201',
           localStorage: [
             {
               name: 'year',
@@ -69,7 +69,7 @@ const config: PlaywrightTestConfig = {
       use: {
         ...devices['Desktop Firefox']
       }
-    },
+    }
     // {
     //   name: 'webkit',
     //   use: {
